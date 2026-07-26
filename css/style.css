@@ -1541,7 +1541,9 @@ body.director-page {
   min-height: 50vh;
   display: flex;
   align-items: center;
-  background: var(--teal-dark);
+  background:
+    linear-gradient(rgba(60, 96, 90, 0.78), rgba(60, 96, 90, 0.78)),
+    url("../assets/images/director.jpg") center 42% / cover no-repeat;
 }
 
 .director__bridge-copy {
@@ -1834,6 +1836,10 @@ body.director-page {
 
   .director__quote {
     margin: 3.5rem 0;
+  }
+
+  .director__bridge {
+    background-position: center, 68% center;
   }
 
   .about-hub__intro {
