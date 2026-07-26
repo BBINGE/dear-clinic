@@ -272,7 +272,7 @@ body.philosophy-page {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: center;
-  border-radius: 18px;
+  border-radius: 20px;
 }
 
 .philosophy-value__index {
@@ -296,7 +296,7 @@ body.philosophy-page {
   margin-top: 0.85rem;
   color: rgba(245, 242, 235, 0.74);
   font-size: 0.94rem;
-  line-height: 1.8;
+  line-height: 1.9;
   word-break: keep-all;
 }
 
