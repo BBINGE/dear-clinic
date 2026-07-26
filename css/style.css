@@ -11,6 +11,365 @@
   --gap: clamp(1.5rem, 4vw, 4rem);
 }
 
+/* ============ Care 상태 중심 페이지 (care.html) ============ */
+body.care-page {
+  background: var(--bg-base);
+  color: var(--text-secondary);
+}
+
+.care-eyebrow,
+.care-panel__label,
+.care-panel dt {
+  color: var(--teal-soft);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.care-hero {
+  min-height: clamp(440px, 52vh, 520px);
+  display: flex;
+  align-items: center;
+  padding: 8rem var(--gap) 4rem;
+  overflow: hidden;
+}
+
+.care-hero__inner {
+  position: relative;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+.care-hero h1 {
+  margin-top: 1rem;
+  color: var(--green-deep);
+  font-size: clamp(2.625rem, 5vw, 4.125rem);
+  line-height: 1.25;
+  word-break: keep-all;
+}
+
+.care-hero__body {
+  max-width: 680px;
+  margin-top: 2rem;
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  line-height: 1.85;
+  word-break: keep-all;
+}
+
+.care-hero__motif {
+  position: absolute;
+  right: 2%;
+  bottom: -5rem;
+  width: 20rem;
+  height: 20rem;
+  border: 1px solid rgba(0, 108, 120, 0.08);
+  border-radius: 58% 42% 62% 38%;
+  transform: rotate(24deg);
+}
+
+.care-viewer {
+  padding: clamp(6rem, 10vw, 9rem) var(--gap);
+  background: rgba(232, 228, 226, 0.32);
+}
+
+.care-viewer__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(210px, 0.2fr) minmax(440px, 0.46fr) minmax(300px, 0.34fr);
+  grid-template-areas: "tabs media panels";
+  gap: clamp(2.5rem, 4vw, 4rem);
+  align-items: center;
+}
+
+.care-tabs {
+  grid-area: tabs;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.care-tab {
+  position: relative;
+  width: 100%;
+  padding: 1.25rem 0 1.25rem 1rem;
+  border: 0;
+  border-bottom: 1px solid rgba(85, 85, 80, 0.22);
+  background: transparent;
+  color: rgba(85, 85, 80, 0.62);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.care-tab:first-child {
+  border-top: 1px solid rgba(85, 85, 80, 0.22);
+}
+
+.care-tab::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--green-deep);
+  transition: width 0.25s ease;
+}
+
+.care-tab span,
+.care-tab strong,
+.care-tab small {
+  display: block;
+}
+
+.care-tab span {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.care-tab strong {
+  margin-top: 0.25rem;
+  font-size: 1.12rem;
+  font-weight: 600;
+}
+
+.care-tab small {
+  margin-top: 0.35rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.care-tab:hover,
+.care-tab.is-active {
+  color: var(--green-deep);
+}
+
+.care-tab.is-active {
+  padding-left: 1.4rem;
+  font-weight: 600;
+}
+
+.care-tab.is-active::before {
+  width: 0.75rem;
+}
+
+.care-tab:focus-visible {
+  outline: 2px solid var(--teal-pattern);
+  outline-offset: 4px;
+  z-index: 1;
+}
+
+.care-viewer__media {
+  grid-area: media;
+}
+
+.care-viewer__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 58% center;
+  border-radius: 16px;
+}
+
+.care-panels {
+  grid-area: panels;
+  min-width: 0;
+}
+
+.care-panel {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.18s ease, transform 0.4s ease;
+}
+
+.care-panel[hidden] {
+  display: none;
+}
+
+.care-panel.is-leaving {
+  opacity: 0;
+}
+
+.care-panel.is-entering {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.care-panel h2 {
+  margin-top: 0.9rem;
+  color: var(--green-deep);
+  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.care-panel__description {
+  margin-top: 1.5rem;
+  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  line-height: 1.85;
+  word-break: keep-all;
+}
+
+.care-panel dl {
+  margin-top: 2.4rem;
+}
+
+.care-panel dl div {
+  padding: 1.2rem 0;
+  border-top: 1px solid rgba(85, 85, 80, 0.22);
+}
+
+.care-panel dd {
+  margin-top: 0.65rem;
+  color: var(--text-secondary);
+  line-height: 1.85;
+  word-break: keep-all;
+}
+
+.care-cta {
+  padding: clamp(8rem, 13vw, 12rem) var(--gap);
+}
+
+.care-cta__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.care-cta h2 {
+  margin-top: 1rem;
+  color: var(--green-deep);
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.care-cta__inner > p:not(.care-eyebrow) {
+  margin-top: 2rem;
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.care-cta a {
+  display: inline-block;
+  margin-top: 2.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--green-deep);
+  color: var(--green-deep);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.care-cta a:focus-visible {
+  outline: 2px solid var(--teal-pattern);
+  outline-offset: 5px;
+}
+
+@media (max-width: 1024px) {
+  .care-viewer__inner {
+    grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
+    grid-template-areas: "tabs panels" "media media";
+    align-items: start;
+  }
+
+  .care-viewer__media {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .care-hero {
+    min-height: auto;
+    padding: 8rem 24px 5.5rem;
+  }
+
+  .care-hero h1 {
+    font-size: clamp(2.45rem, 11vw, 3.4rem);
+  }
+
+  .care-hero__motif {
+    display: none;
+  }
+
+  .care-viewer {
+    padding: 5.5rem 24px 6.5rem;
+  }
+
+  .care-viewer__inner {
+    grid-template-columns: 1fr;
+    grid-template-areas: "media" "tabs" "panels";
+    gap: 2.5rem;
+  }
+
+  .care-tabs {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1.6rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+    padding: 0.25rem 0 0.75rem;
+  }
+
+  .care-tab {
+    flex: 0 0 auto;
+    width: min(44vw, 170px);
+    padding: 0 0 0.9rem;
+    border-top: 0;
+  }
+
+  .care-tab:first-child {
+    border-top: 0;
+  }
+
+  .care-tab::before {
+    top: auto;
+    bottom: -1px;
+    width: 0;
+  }
+
+  .care-tab.is-active {
+    padding-left: 0;
+  }
+
+  .care-tab.is-active::before {
+    width: 2.5rem;
+  }
+
+  .care-tab small {
+    min-height: 3em;
+  }
+
+  .care-panel h2 {
+    font-size: clamp(2rem, 9vw, 2.7rem);
+  }
+
+  .care-panel__description,
+  .care-panel dd {
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  .care-cta {
+    padding: 7rem 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .care-page .js-reveal,
+  .care-panel,
+  .care-tab::before {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
 /* ============ DEAR SERVICES 허브 (services.html) ============ */
 body.services-page {
   background: var(--bg-base);

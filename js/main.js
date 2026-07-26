@@ -112,3 +112,77 @@ if (philosophyChapters.length && philosophyImages.length) {
   window.addEventListener("resize", requestPhilosophyUpdate);
   philosophyDesktop.addEventListener("change", requestPhilosophyUpdate);
 }
+
+// Care 페이지: 고정 이미지 옆의 다섯 상태 설명만 전환한다.
+const careTabs = [...document.querySelectorAll('[role="tab"][data-care-index]')];
+const carePanels = [...document.querySelectorAll("[data-care-panel]")];
+
+if (careTabs.length === 5 && carePanels.length === 5) {
+  let activeCareIndex = 0;
+  let careTransitionToken = 0;
+
+  const activateCare = (nextIndex, moveFocus = false) => {
+    if (nextIndex < 0 || nextIndex >= careTabs.length) return;
+    const token = ++careTransitionToken;
+    const currentPanel = carePanels[activeCareIndex];
+    const nextPanel = carePanels[nextIndex];
+    const delay = prefersReducedMotion ? 0 : 180;
+
+    careTabs.forEach((tab, index) => {
+      const isActive = index === nextIndex;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+
+    if (moveFocus) careTabs[nextIndex].focus();
+
+    if (nextIndex === activeCareIndex) {
+      if (window.innerWidth <= 768) {
+        careTabs[nextIndex].scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest", inline: "center" });
+      }
+      return;
+    }
+
+    currentPanel.classList.add("is-leaving");
+
+    window.setTimeout(() => {
+      if (token !== careTransitionToken) return;
+      carePanels.forEach((panel, index) => {
+        panel.hidden = index !== nextIndex;
+        panel.classList.remove("is-active", "is-leaving");
+      });
+      nextPanel.classList.add("is-entering");
+      window.requestAnimationFrame(() => {
+        if (token !== careTransitionToken) return;
+        nextPanel.classList.remove("is-entering");
+        nextPanel.classList.add("is-active");
+      });
+      activeCareIndex = nextIndex;
+    }, delay);
+
+    if (window.innerWidth <= 768) {
+      careTabs[nextIndex].scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "nearest", inline: "center" });
+    }
+  };
+
+  careTabs.forEach((tab, index) => {
+    tab.addEventListener("click", () => activateCare(index));
+    tab.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        activateCare(index);
+        return;
+      }
+      let nextIndex = index;
+      if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = (index + 1) % careTabs.length;
+      if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = (index - 1 + careTabs.length) % careTabs.length;
+      if (event.key === "Home") nextIndex = 0;
+      if (event.key === "End") nextIndex = careTabs.length - 1;
+      if (nextIndex !== index) {
+        event.preventDefault();
+        activateCare(nextIndex, true);
+      }
+    });
+  });
+}
