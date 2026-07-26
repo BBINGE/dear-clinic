@@ -24,7 +24,9 @@ const navMenu = document.getElementById("navMenu");
 if (nav && navMenu) {
   const pageLanguage = document.documentElement.lang || "ko";
   const isLocalizedPage = ["en", "ja", "zh-CN"].includes(pageLanguage);
-  const languageBase = isLocalizedPage ? "../" : "";
+  const currentPage = window.location.pathname.endsWith("/")
+    ? "index.html"
+    : window.location.pathname.split("/").pop() || "index.html";
   const languageLabels = {
     ko: "KO",
     en: "EN",
@@ -32,10 +34,10 @@ if (nav && navMenu) {
     "zh-CN": "中文",
   };
   const languageLinks = {
-    ko: `${languageBase}index.html`,
-    en: `${languageBase}en/`,
-    ja: `${languageBase}ja/`,
-    "zh-CN": `${languageBase}zh-cn/`,
+    ko: isLocalizedPage ? `../${currentPage}` : currentPage,
+    en: isLocalizedPage ? `../en/${currentPage}` : `en/${currentPage}`,
+    ja: isLocalizedPage ? `../ja/${currentPage}` : `ja/${currentPage}`,
+    "zh-CN": isLocalizedPage ? `../zh-cn/${currentPage}` : `zh-cn/${currentPage}`,
   };
   const languageItem = document.createElement("li");
   languageItem.className = "nav__language";

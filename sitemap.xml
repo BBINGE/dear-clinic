@@ -20,6 +20,27 @@
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+  <url><loc>https://bbinge.github.io/dear-clinic/en/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/en/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/en/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/en/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/en/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/en/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/en/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/ja/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/ja/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/ja/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/ja/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/ja/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/ja/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/ja/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <!-- COLUMN_SITEMAP_END -->
   <url>
     <loc>https://bbinge.github.io/dear-clinic/about.html</loc>
