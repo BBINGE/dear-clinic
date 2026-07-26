@@ -843,6 +843,7 @@ body.director-page {
 .director__copy {
   max-width: 720px;
   margin: 0 auto;
+  text-align: left;
 }
 
 .director__copy p {
@@ -902,6 +903,7 @@ body.director-page {
 .director__intro-copy {
   max-width: 640px;
   margin: 0 auto;
+  text-align: left;
 }
 
 .director__intro-copy p {
