@@ -6,6 +6,7 @@
   --teal-soft: #5a96a2;    /* 호버 효과, 소소한 포인트 (소량만) */
   --bg-base: #f8f8f6;      /* 페이지 기본 배경 */
   --warm-gray: #e8e4e2;    /* 보조 면, 사진 프레임, 구분 영역 */
+  --text-secondary: #555550; /* 서브 페이지 등 본문 텍스트 */
   --white: #ffffff;
   --gap: clamp(1.5rem, 4vw, 4rem);
 }
@@ -38,23 +39,24 @@ img, video {
   max-width: 100%;
 }
 
-/* ============ 사진 프레임 (공진단 지그재그 섹션 공용, 프레임 1개 + 슬라이드쇼) ============ */
-/* 기본값은 항상 보이는 상태. JS가 정상 동작할 때만 reveal-pending을 붙여 페이드업을 준비한다
-   (JS 실패·prefers-reduced-motion 환경에서도 사진이 사라지지 않도록 하기 위함). */
-.photo-frame {
-  background: var(--warm-gray);
-  padding: 0.75rem;
-}
-
-.photo-frame.reveal-pending {
+/* ============ 스크롤 진입 페이드업 (사이트 공통) ============ */
+/* main.js가 .js-reveal 요소에 reveal-pending을 붙이고, 뷰포트에 들어오면 is-visible을 추가한다.
+   기본값은 항상 보이는 상태라 JS 실패·prefers-reduced-motion 환경에서도 콘텐츠가 사라지지 않는다. */
+.js-reveal.reveal-pending {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.photo-frame.reveal-pending.is-visible {
+.js-reveal.reveal-pending.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ============ 사진 프레임 (공진단 지그재그 섹션 공용, 프레임 1개 + 슬라이드쇼) ============ */
+.photo-frame {
+  background: var(--warm-gray);
+  padding: 0.75rem;
 }
 
 .photo-frame__clip {
@@ -290,6 +292,10 @@ img, video {
   color: var(--teal-soft);
 }
 
+.nav__link[aria-current="page"] {
+  font-weight: 700;
+}
+
 .nav__toggle {
   display: none;
   flex-direction: column;
@@ -351,6 +357,20 @@ img, video {
 .about__copy p {
   margin-bottom: 1.25rem;
   font-size: 1.05rem;
+}
+
+.about__link {
+  display: inline-block;
+  color: var(--green-deep);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.1rem;
+  transition: color 0.2s ease;
+}
+
+.about__link:hover {
+  color: var(--teal-soft);
 }
 
 /* ============ 3, 4. 공진단 (지그재그 2단) ============ */
@@ -776,6 +796,183 @@ img, video {
   background: rgba(255, 255, 255, 0.25);
 }
 
+/* ============ 서브 페이지: 원장 소개 (about-director.html) ============ */
+body.director-page {
+  background: var(--bg-base);
+}
+
+.director__section {
+  position: relative;
+}
+
+.director__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.director__corner-label {
+  position: absolute;
+  right: var(--gap);
+  bottom: 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+}
+
+.director__corner-label--light {
+  color: var(--white);
+  opacity: 0.45;
+}
+
+.director__heading {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--green-deep);
+  line-height: 1.4;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.director__heading span {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.director__copy {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.director__copy p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin-bottom: 1.5rem;
+}
+
+.director__copy p:last-child {
+  margin-bottom: 0;
+}
+
+/* 1. 진입부 */
+.director__intro-top {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--gap);
+  align-items: center;
+}
+
+.director__intro-title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--green-deep);
+  line-height: 1.3;
+}
+
+.director__intro-title span {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.director__intro-photo {
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.director__intro-bottom {
+  margin-top: clamp(3rem, 6vw, 5rem);
+  text-align: center;
+}
+
+.director__intro-slogan {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  color: var(--green-deep);
+  margin-bottom: 2rem;
+}
+
+.director__intro-slogan strong {
+  color: var(--teal-pattern);
+  font-weight: 700;
+}
+
+.director__intro-copy {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.director__intro-copy p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  margin-bottom: 1rem;
+}
+
+/* 2, 3. Why DEAR / What I hope for */
+.director__narrative--alt {
+  background: var(--warm-gray);
+}
+
+/* 4. 프로필 (반투명 배경 사진 + 리스트) */
+.director__profile {
+  background: var(--teal-dark);
+  color: var(--white);
+  overflow: hidden;
+}
+
+.director__profile .placeholder-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  opacity: 0.35;
+  border: none;
+}
+
+.director__profile-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.director__profile .director__heading {
+  color: var(--white);
+}
+
+.director__profile-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.director__profile-list li {
+  color: var(--white);
+  opacity: 0.9;
+}
+
+/* 5. 마무리 편지 */
+.director__copy--letter p {
+  font-style: italic;
+}
+
+.director__signature {
+  max-width: 720px;
+  margin: 2rem auto 0;
+  text-align: right;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--green-deep);
+}
+
 /* ============ 반응형 ============ */
 @media (max-width: 768px) {
   .nav__menu {
@@ -816,6 +1013,14 @@ img, video {
 
   .info__inner {
     grid-template-columns: 1fr;
+  }
+
+  .director__intro-top {
+    grid-template-columns: 1fr;
+  }
+
+  .director__intro-photo {
+    aspect-ratio: 4 / 5;
   }
 
   .footer__top {

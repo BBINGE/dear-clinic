@@ -1,14 +1,19 @@
 // 스크롤 시 네비게이션 배경 전환 (히어로를 벗어나면 밝은 배경 + 어두운 텍스트)
+// 히어로가 없는 서브 페이지에서는 처음부터 밝은 배경 상태로 고정한다.
 const nav = document.querySelector(".nav");
 const heroEl = document.querySelector(".hero");
 
-function updateNavOnScroll() {
-  const threshold = heroEl.offsetHeight - 80;
-  nav.classList.toggle("is-scrolled", window.scrollY > threshold);
-}
+if (heroEl) {
+  function updateNavOnScroll() {
+    const threshold = heroEl.offsetHeight - 80;
+    nav.classList.toggle("is-scrolled", window.scrollY > threshold);
+  }
 
-window.addEventListener("scroll", updateNavOnScroll);
-updateNavOnScroll();
+  window.addEventListener("scroll", updateNavOnScroll);
+  updateNavOnScroll();
+} else {
+  nav.classList.add("is-scrolled");
+}
 
 // 모바일 네비게이션 토글
 const navToggle = document.getElementById("navToggle");
