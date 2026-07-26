@@ -19,8 +19,8 @@ navToggle.addEventListener("click", () => {
   navToggle.setAttribute("aria-expanded", String(isOpen));
 });
 
-// 준비중인 메뉴 처리 (Care / Columns / DEAR SERVICES / Contact)
-document.querySelectorAll('.nav__link[data-ready="false"]').forEach((link) => {
+// 준비중인 링크 처리 (nav 메뉴 + 푸터 법적 링크 공통)
+document.querySelectorAll('[data-ready="false"]').forEach((link) => {
   link.addEventListener("click", (e) => {
     e.preventDefault();
     alert("준비중입니다. 곧 만나보실 수 있어요.");

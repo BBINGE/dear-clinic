@@ -416,33 +416,303 @@ img, video {
   color: var(--warm-gray);
 }
 
-/* ============ Footer ============ */
+/* ============ 7. 진료 안내 ============ */
+.info {
+  background: var(--bg-base);
+}
+
+.info__inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info__col {
+  background: var(--white);
+  padding: clamp(2rem, 4vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.info__icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--warm-gray);
+  color: var(--green-deep);
+  margin-bottom: 0.5rem;
+}
+
+.info__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.info__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--green-deep);
+}
+
+.info__hours {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  list-style: none;
+  margin: 0.25rem 0;
+}
+
+.info__hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-weight: 600;
+  gap: 1rem;
+}
+
+.info__day {
+  color: var(--teal-dark);
+}
+
+.info__time {
+  color: var(--green-deep);
+}
+
+.info__sub {
+  font-size: 0.82rem;
+  color: var(--teal-soft);
+  margin-top: 0.15rem;
+}
+
+.info__notice {
+  font-size: 0.85rem;
+  color: var(--teal-dark);
+  border-top: 1px solid var(--warm-gray);
+  padding-top: 0.85rem;
+  margin-top: 0.25rem;
+  width: 100%;
+}
+
+.info__desc {
+  font-size: 0.95rem;
+}
+
+.info__phone {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--green-deep);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.info__phone:hover {
+  color: var(--teal-soft);
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn--primary {
+  background: var(--green-deep);
+  color: var(--white);
+}
+
+.btn--primary:hover {
+  background: var(--teal-soft);
+}
+
+/* ============ 8. 오시는 길 ============ */
+.map {
+  padding: 0;
+  line-height: 0;
+}
+
+.map__frame {
+  display: block;
+  width: 100%;
+  height: 400px;
+  filter: grayscale(75%) contrast(1.05) brightness(1.02);
+}
+
+/* ============ 다크 푸터 ============ */
 .footer {
   background: var(--teal-dark);
   border-top: 1px solid var(--teal-pattern);
   color: var(--white);
-  padding: 3rem var(--gap);
-  text-align: center;
+  padding: clamp(3rem, 6vw, 4rem) var(--gap) 2rem;
 }
 
-.footer__brand {
-  font-size: 1.5rem;
+.footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.footer__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.footer__logo {
+  font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.1em;
-  margin-bottom: 1rem;
+}
+
+.footer__slogan {
+  font-size: 0.85rem;
+  color: var(--warm-gray);
+  letter-spacing: 0.1em;
+  margin-top: 0.35rem;
+}
+
+.footer__sns {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer__sns a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.footer__sns svg {
+  width: 18px;
+  height: 18px;
+}
+
+.footer__sns a:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--warm-gray);
+}
+
+.footer__nap-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  font-size: 0.9rem;
 }
 
 .footer__nap {
   font-style: normal;
-  font-size: 0.9rem;
   color: var(--warm-gray);
-  margin-bottom: 1.5rem;
-  line-height: 1.8;
+  line-height: 1.9;
+}
+
+.footer__nap a {
+  color: var(--white);
+  text-decoration: none;
+}
+
+.footer__nap a:hover {
+  text-decoration: underline;
+}
+
+.footer__legal-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.footer__legal-links a {
+  color: var(--warm-gray);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.footer__legal-links a:hover {
+  color: var(--white);
+  text-decoration: underline;
 }
 
 .footer__copyright {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--teal-soft);
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.03em;
+}
+
+/* ============ 플로팅 퀵메뉴 ============ */
+.quickmenu {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background: var(--teal-dark);
+  padding: 0.6rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(28, 46, 41, 0.25);
+}
+
+.quickmenu__btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  transition: background-color 0.2s ease;
+}
+
+.quickmenu__btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.quickmenu__btn:hover {
+  background: var(--teal-soft);
+}
+
+.quickmenu__btn--top {
+  position: relative;
+  margin-top: 0.6rem;
+}
+
+.quickmenu__btn--top::before {
+  content: "";
+  position: absolute;
+  top: -0.7rem;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* ============ 반응형 ============ */
@@ -478,5 +748,49 @@ img, video {
   .gongjindan--1 .gongjindan__images,
   .space__photos {
     grid-template-columns: 1fr;
+  }
+
+  .info__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer__nap-row {
+    flex-direction: column;
+  }
+
+  /* 우측 플로팅 퀵메뉴 → 하단 고정 바로 전환 (화면을 가리지 않도록) */
+  body {
+    padding-bottom: 64px;
+  }
+
+  .quickmenu {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    flex-direction: row;
+    justify-content: space-around;
+    border-radius: 0;
+    padding: 0.5rem clamp(0.5rem, 3vw, 1rem);
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+
+  .quickmenu__btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .quickmenu__btn--top {
+    margin-top: 0;
+  }
+
+  .quickmenu__btn--top::before {
+    display: none;
   }
 }

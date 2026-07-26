@@ -19,16 +19,13 @@
 <link rel="stylesheet" href="css/style.css">
 
 <!-- JSON-LD: LocalBusiness (NAP) -->
-<!--
-  전화번호 / 진료시간(openingHoursSpecification)은 아직 확인되지 않아 미기재 상태입니다.
-  기획자 확인 후 telephone, openingHoursSpecification 필드를 추가해주세요.
--->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "MedicalClinic",
   "name": "디어한의원",
   "alternateName": "DEAR",
+  "telephone": "02-3486-1777",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "사임당로 143 3층 309호, 310호",
@@ -36,7 +33,33 @@
     "addressRegion": "서울특별시",
     "addressCountry": "KR"
   },
-  "medicalSpecialty": ["다이어트 한약", "공진단", "통증 및 내과적 진료"]
+  "medicalSpecialty": ["다이어트 한약", "공진단", "통증 및 내과적 진료"],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Friday"],
+      "opens": "10:00",
+      "closes": "13:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Friday"],
+      "opens": "14:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Thursday",
+      "opens": "14:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "10:00",
+      "closes": "15:00"
+    }
+  ]
 }
 </script>
 </head>
@@ -59,7 +82,7 @@
       <li><a href="#" class="nav__link" data-ready="false">Columns</a></li>
       <li><a href="#" class="nav__link" data-ready="false">Care</a></li>
       <li><a href="#" class="nav__link" data-ready="false">DEAR SERVICES</a></li>
-      <li><a href="#" class="nav__link" data-ready="false">Contact</a></li>
+      <li><a href="#info" class="nav__link" data-ready="true">Contact</a></li>
     </ul>
   </nav>
 
@@ -156,17 +179,125 @@
     </div>
   </section>
 
+  <!-- ============ 7. 진료 안내 ============ -->
+  <section class="info" id="info">
+    <div class="info__inner">
+      <div class="info__col">
+        <span class="info__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.5V12l3.2 1.8"/></svg>
+        </span>
+        <h3 class="info__title">진료시간</h3>
+        <ul class="info__hours">
+          <li>
+            <div class="info__hours-row"><span class="info__day">월·화·수·금</span><span class="info__time">10:00 – 20:00</span></div>
+            <p class="info__sub">휴게시간 13:00 – 14:00 · 접수마감 19:30</p>
+          </li>
+          <li>
+            <div class="info__hours-row"><span class="info__day">목</span><span class="info__time">14:00 – 20:00</span></div>
+            <p class="info__sub">접수마감 19:30</p>
+          </li>
+          <li>
+            <div class="info__hours-row"><span class="info__day">토</span><span class="info__time">10:00 – 15:00</span></div>
+            <p class="info__sub">접수마감 14:30</p>
+          </li>
+          <li>
+            <div class="info__hours-row"><span class="info__day">일요일</span><span class="info__time">정기휴무</span></div>
+          </li>
+        </ul>
+        <p class="info__notice">더 나은 진료를 위해 예약우선제로 운영합니다.</p>
+      </div>
+
+      <div class="info__col">
+        <span class="info__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 4.5h-3a1 1 0 0 0-1 1c0 8.3 6.7 15 15 15a1 1 0 0 0 1-1v-3a1 1 0 0 0-.8-1l-3.3-.7a1 1 0 0 0-1 .3l-1.2 1.4a12.4 12.4 0 0 1-5.7-5.7l1.4-1.2a1 1 0 0 0 .3-1L9.5 5.3a1 1 0 0 0-1-.8z"/></svg>
+        </span>
+        <h3 class="info__title">진료문의</h3>
+        <p class="info__desc">전화로 편하게 문의해 주세요.</p>
+        <a class="info__phone" href="tel:02-3486-1777">02-3486-1777</a>
+      </div>
+
+      <div class="info__col">
+        <span class="info__icon" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 9.5h16M8 3.5v3M16 3.5v3"/><path d="M9 13.6l1.8 1.8L15 11.4"/></svg>
+        </span>
+        <h3 class="info__title">온라인예약</h3>
+        <p class="info__desc">네이버 예약으로 원하는 시간에<br>빠르고 편하게 예약하세요.</p>
+        <a class="btn btn--primary" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">예약하기</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. 오시는 길 ============ -->
+  <section class="map">
+    <iframe
+      class="map__frame"
+      src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%20%EC%84%9C%EC%B4%88%EA%B5%AC%20%EC%82%AC%EC%9E%84%EB%8B%B9%EB%A1%9C%20143&t=&z=17&ie=UTF8&iwloc=&output=embed"
+      width="100%" height="400" style="border:0"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="디어한의원 오시는 길 지도 (서울 서초구 사임당로 143)"></iframe>
+  </section>
+
 </main>
 
-<!-- ============ Footer (NAP) ============ -->
+<!-- ============ 다크 푸터 (NAP) ============ -->
 <footer class="footer" id="contact">
-  <p class="footer__brand">DEAR</p>
-  <address class="footer__nap">
-    디어한의원 · 서울 서초구 사임당로 143 3층 309호, 310호<br>
-    전화번호 확인 필요 · 진료시간 확인 필요
-  </address>
-  <p class="footer__copyright">&copy; 2026 디어한의원. All rights reserved.</p>
+  <div class="footer__inner">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <p class="footer__logo">DEAR</p>
+        <p class="footer__slogan">ALWAYS "DEAR" YOU</p>
+      </div>
+      <div class="footer__sns">
+        <a href="https://www.instagram.com/dearhani__/" target="_blank" rel="noopener" aria-label="인스타그램">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="16.2" cy="7.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://blog.naver.com/blanchard2552" target="_blank" rel="noopener" aria-label="블로그">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4.5"/></svg>
+        </a>
+        <a href="https://talk.naver.com/ct/w5zr5u" target="_blank" rel="noopener" aria-label="네이버 톡톡">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.3 6.4L4 20l1.2-3.6A7.9 7.9 0 0 1 4 12z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer__nap-row">
+      <address class="footer__nap">
+        디어한의원 · 대표자 김민지<br>
+        서울 서초구 사임당로 143 3층 309호, 310호<br>
+        <a href="tel:02-3486-1777">02-3486-1777</a>
+      </address>
+      <div class="footer__legal-links">
+        <a href="#" data-ready="false">개인정보처리방침</a>
+        <a href="#" data-ready="false">비급여항목 안내</a>
+      </div>
+    </div>
+
+    <p class="footer__copyright">COPYRIGHT &copy; 2026 DEAR CLINIC. ALL RIGHTS RESERVED.</p>
+  </div>
 </footer>
+
+<!-- ============ 플로팅 퀵메뉴 ============ -->
+<nav class="quickmenu" aria-label="빠른 메뉴">
+  <a class="quickmenu__btn" href="tel:02-3486-1777" aria-label="전화 문의">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 4.5h-3a1 1 0 0 0-1 1c0 8.3 6.7 15 15 15a1 1 0 0 0 1-1v-3a1 1 0 0 0-.8-1l-3.3-.7a1 1 0 0 0-1 .3l-1.2 1.4a12.4 12.4 0 0 1-5.7-5.7l1.4-1.2a1 1 0 0 0 .3-1L9.5 5.3a1 1 0 0 0-1-.8z"/></svg>
+  </a>
+  <a class="quickmenu__btn" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener" aria-label="네이버 예약">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="14" rx="2"/><path d="M4 9.5h16M8 3.5v3M16 3.5v3"/><path d="M9 13.6l1.8 1.8L15 11.4"/></svg>
+  </a>
+  <a class="quickmenu__btn" href="https://talk.naver.com/ct/w5zr5u" target="_blank" rel="noopener" aria-label="네이버 톡톡">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 1 3.3 6.4L4 20l1.2-3.6A7.9 7.9 0 0 1 4 12z"/></svg>
+  </a>
+  <a class="quickmenu__btn" href="https://blog.naver.com/blanchard2552" target="_blank" rel="noopener" aria-label="블로그">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.5" width="14" height="17" rx="1.5"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4.5"/></svg>
+  </a>
+  <a class="quickmenu__btn" href="https://www.instagram.com/dearhani__/" target="_blank" rel="noopener" aria-label="인스타그램">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="16.2" cy="7.8" r="0.9" fill="currentColor" stroke="none"/></svg>
+  </a>
+  <a class="quickmenu__btn quickmenu__btn--top" href="#top" aria-label="맨 위로">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6M6.5 11.5L12 6l5.5 5.5"/></svg>
+  </a>
+</nav>
 
 <script src="js/main.js"></script>
 </body>
