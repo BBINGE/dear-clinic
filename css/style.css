@@ -285,6 +285,67 @@ img, video {
   background: var(--bg-base);
 }
 
+/* 공진단 II 무한 흐름 갤러리 (섹션 패딩을 벗어나 풀블리드) */
+.marquee-wrap {
+  overflow: hidden;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  align-items: center;
+  gap: var(--gap);
+  width: max-content;
+  animation: marquee-scroll 50s linear infinite;
+}
+
+.marquee-wrap:hover .marquee__track,
+.marquee-wrap:focus-within .marquee__track,
+.marquee-wrap:active .marquee__track,
+.marquee-wrap.is-touching .marquee__track {
+  animation-play-state: paused;
+}
+
+.marquee__group {
+  display: contents;
+}
+
+.marquee__item {
+  height: clamp(180px, 28vw, 320px);
+  width: auto;
+  display: block;
+}
+
+@keyframes marquee-scroll {
+  from {
+    /* 트랙에 동일한 사진 시퀀스를 두 번 이어붙였으므로 -50% 지점이 0%와 같은 배열이 되어 이음새 없이 반복된다.
+       -50%에서 0%로 이동 = 사진이 화면 왼쪽에서 나타나 오른쪽으로 빠져나가는 좌→우 흐름 */
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+  }
+
+  .marquee__group[data-clone="true"] {
+    display: none;
+  }
+}
+
 /* ============ 5, 6. 공간 ============ */
 .space {
   position: relative;

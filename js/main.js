@@ -34,3 +34,10 @@ document.querySelectorAll(".nav__link").forEach((link) => {
     navToggle.setAttribute("aria-expanded", "false");
   });
 });
+
+// 마퀴 갤러리: 터치 중 일시정지 (iOS Safari는 :active만으로 터치 홀드를 감지하지 못해 보정)
+document.querySelectorAll(".marquee-wrap").forEach((marquee) => {
+  marquee.addEventListener("touchstart", () => marquee.classList.add("is-touching"), { passive: true });
+  marquee.addEventListener("touchend", () => marquee.classList.remove("is-touching"));
+  marquee.addEventListener("touchcancel", () => marquee.classList.remove("is-touching"));
+});
