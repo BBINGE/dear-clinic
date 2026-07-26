@@ -59,17 +59,5 @@ if (!prefersReducedMotion && "IntersectionObserver" in window && revealTargets.l
   revealTargets.forEach((el) => revealObserver.observe(el));
 }
 
-// 공진단 사진 프레임: 자동 크로스페이드 슬라이드쇼 (모션 감소 설정 시 첫 장만 고정 표시)
-if (!prefersReducedMotion) {
-  document.querySelectorAll(".slideshow").forEach((slideshow) => {
-    const images = slideshow.querySelectorAll(".slideshow__img");
-    if (images.length < 2) return;
-
-    let activeIndex = 0;
-    setInterval(() => {
-      images[activeIndex].classList.remove("is-active");
-      activeIndex = (activeIndex + 1) % images.length;
-      images[activeIndex].classList.add("is-active");
-    }, 3500);
-  });
-}
+// 공진단 사진 프레임의 자동 슬라이드쇼는 순수 CSS 키프레임(style.css의 gj-slideshow-2/3)으로 동작한다.
+// JS 실행 여부·타이밍에 영향받지 않도록 의도적으로 JS 의존 없이 구현했다.
