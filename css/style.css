@@ -11,6 +11,81 @@
   --gap: clamp(1.5rem, 4vw, 4rem);
 }
 
+@media (min-width: 769px) and (max-width: 1100px) {
+  .nav {
+    padding-inline: 1.5rem;
+  }
+
+  .nav__menu {
+    gap: 0.8rem;
+  }
+
+  .nav__link {
+    font-size: 0.8rem;
+  }
+
+  .nav__language {
+    gap: 0.25rem;
+    margin-left: 0;
+    font-size: 0.62rem;
+  }
+}
+
+/* 전 페이지 공통 언어 선택기 */
+.nav__language {
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  margin-left: 0.65rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.nav__language a {
+  color: inherit;
+  opacity: 0.58;
+  text-decoration: none;
+  transition: opacity 180ms ease;
+}
+
+.nav__language a:hover,
+.nav__language a[aria-current="true"] {
+  opacity: 1;
+}
+
+.nav__language span {
+  opacity: 0.25;
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .nav {
+    padding-inline: 1.5rem;
+  }
+
+  .nav__menu {
+    gap: 0.8rem;
+  }
+
+  .nav__link {
+    font-size: 0.8rem;
+  }
+
+  .nav__language {
+    gap: 0.25rem;
+    margin-left: 0;
+    font-size: 0.62rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav__language {
+    margin: 1rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(36, 120, 96, 0.15);
+  }
+}
+
 /* ============ Columns ============ */
 .columns-page-body,
 .column-article-body {
@@ -3365,5 +3440,25 @@ body.director-page {
 
   .quickmenu__btn--top::before {
     display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .nav {
+    padding-inline: 1.5rem;
+  }
+
+  .nav__menu {
+    gap: 0.8rem;
+  }
+
+  .nav__link {
+    font-size: 0.8rem;
+  }
+
+  .nav__language {
+    gap: 0.25rem;
+    margin-left: 0;
+    font-size: 0.62rem;
   }
 }

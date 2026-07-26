@@ -19,7 +19,37 @@ if (heroEl) {
 const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
 
-navToggle.addEventListener("click", () => {
+// 전 페이지 공통 언어 선택기.
+// 한국어 상세 페이지에서는 현재 페이지와 관계없이 각 언어의 대표 페이지로 이동한다.
+if (nav && navMenu) {
+  const pageLanguage = document.documentElement.lang || "ko";
+  const isLocalizedPage = ["en", "ja", "zh-CN"].includes(pageLanguage);
+  const languageBase = isLocalizedPage ? "../" : "";
+  const languageLabels = {
+    ko: "KO",
+    en: "EN",
+    ja: "日本語",
+    "zh-CN": "中文",
+  };
+  const languageLinks = {
+    ko: `${languageBase}index.html`,
+    en: `${languageBase}en/`,
+    ja: `${languageBase}ja/`,
+    "zh-CN": `${languageBase}zh-cn/`,
+  };
+  const languageItem = document.createElement("li");
+  languageItem.className = "nav__language";
+  languageItem.setAttribute("aria-label", "Language");
+  languageItem.innerHTML = Object.entries(languageLinks)
+    .map(([language, href]) => {
+      const current = language === pageLanguage ? ' aria-current="true"' : "";
+      return `<a href="${href}" lang="${language}"${current}>${languageLabels[language]}</a>`;
+    })
+    .join('<span aria-hidden="true">·</span>');
+  navMenu.appendChild(languageItem);
+}
+
+navToggle?.addEventListener("click", () => {
   const isOpen = navMenu.classList.toggle("is-open");
   navToggle.setAttribute("aria-expanded", String(isOpen));
 });
@@ -35,8 +65,8 @@ document.querySelectorAll('[data-ready="false"]').forEach((link) => {
 // 메뉴 클릭 시 모바일 메뉴 닫기
 document.querySelectorAll(".nav__link").forEach((link) => {
   link.addEventListener("click", () => {
-    navMenu.classList.remove("is-open");
-    navToggle.setAttribute("aria-expanded", "false");
+    navMenu?.classList.remove("is-open");
+    navToggle?.setAttribute("aria-expanded", "false");
   });
 });
 
