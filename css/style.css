@@ -862,7 +862,12 @@ body.director-page {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: var(--gap);
-  align-items: center;
+  align-items: stretch;
+}
+
+.director__intro-content {
+  display: flex;
+  flex-direction: column;
 }
 
 .director__intro-title {
@@ -878,13 +883,17 @@ body.director-page {
 }
 
 .director__intro-photo {
+  width: 100%;
+  height: 100%;
   border-radius: 20px;
-  overflow: hidden;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
 }
 
 .director__intro-bottom {
-  margin-top: clamp(3rem, 6vw, 5rem);
+  margin-top: auto;
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
   text-align: center;
 }
 
@@ -914,14 +923,32 @@ body.director-page {
 }
 
 /* 2, 3. Why DEAR / What I hope for */
-.director__narrative--alt {
-  background: var(--warm-gray);
+.director__narrative {
+  min-height: 85vh;
 }
 
-/* 프로필 (career.html) — 반투명 원장 사진을 우측에 은은하게 깔고, 좌측에 자격·학회·경력 리스트 */
+.director__narrative .director__heading {
+  text-align: right;
+}
+
+.director__narrative .director__copy {
+  max-width: none;
+  margin: 0;
+}
+
+.director__narrative--alt {
+  background: var(--bg-base);
+}
+
+.director__letter .director__copy {
+  max-width: none;
+  margin: 0;
+}
+
+/* 프로필 (career.html) — 흰 배경 위에 원장 사진을 은은하게 깔고, 좌측에 자격·학회·경력 리스트 */
 .director__profile {
-  background: var(--teal-dark);
-  color: var(--white);
+  background: var(--white);
+  color: #1f1f1f;
   overflow: hidden;
 }
 
@@ -932,13 +959,19 @@ body.director-page {
   height: 100%;
   object-fit: cover;
   object-position: right center;
-  opacity: 0.35;
+  opacity: 0.22;
 }
 
 .director__profile-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, var(--teal-dark) 0%, var(--teal-dark) 40%, transparent 85%);
+  background: linear-gradient(
+    to right,
+    var(--white) 0%,
+    var(--white) 42%,
+    rgba(255, 255, 255, 0.9) 62%,
+    rgba(255, 255, 255, 0.58) 100%
+  );
 }
 
 .director__profile-inner {
@@ -950,7 +983,7 @@ body.director-page {
 }
 
 .director__profile .director__heading {
-  color: var(--white);
+  color: #1f1f1f;
   text-align: left;
 }
 
@@ -961,12 +994,11 @@ body.director-page {
 }
 
 .director__profile-group-title {
-  font-size: 0.8rem;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
   font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--warm-gray);
-  margin-bottom: 0.9rem;
+  letter-spacing: 0.04em;
+  color: #1f1f1f;
+  margin-bottom: 1rem;
 }
 
 .director__profile-list {
@@ -979,13 +1011,14 @@ body.director-page {
 }
 
 .director__profile-list li {
-  color: var(--white);
-  opacity: 0.85;
+  color: #222;
+  opacity: 0.82;
 }
 
 .director__profile-list li.is-current {
   opacity: 1;
   font-weight: 700;
+  color: #111;
 }
 
 /* 5. 마무리 편지 */
@@ -1111,6 +1144,11 @@ body.director-page {
 
   .director__intro-top {
     grid-template-columns: 1fr;
+  }
+
+  .director__intro-bottom {
+    margin-top: 2rem;
+    padding: 0;
   }
 
   .director__intro-photo {
