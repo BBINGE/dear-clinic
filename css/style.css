@@ -1,12 +1,12 @@
-/* ============ 변수 ============ */
+/* ============ 변수: 확정 팔레트 ============ */
 :root {
-  --mint: #8fc9b4;
-  --deep-green: #1f4b3f;
-  --dark-bg: #10231d;
+  --green-deep: #247860;   /* 헤드라인, 타이틀, 버튼, 링크 (메인 브랜드 색) */
+  --teal-pattern: #006c78; /* 그래픽 요소, 아이콘, 장식 라인, 구분선 포인트 */
+  --teal-dark: #3c605a;    /* 다크 섹션 배경 계열, 무게감 필요한 영역 */
+  --teal-soft: #5a96a2;    /* 호버 효과, 소소한 포인트 (소량만) */
+  --bg-base: #f8f8f6;      /* 페이지 기본 배경 */
+  --warm-gray: #e8e4e2;    /* 보조 면, 사진 프레임, 구분 영역 */
   --white: #ffffff;
-  --off-white: #f7faf9;
-  --text-dark: #1c2b26;
-  --text-light: #f2f6f4;
   --gap: clamp(1.5rem, 4vw, 4rem);
 }
 
@@ -22,7 +22,7 @@ html {
 
 body {
   font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--text-dark);
+  color: var(--teal-dark);
   background: var(--white);
   line-height: 1.7;
   overflow-x: hidden;
@@ -38,19 +38,31 @@ img, video {
   max-width: 100%;
 }
 
-/* ============ 플레이스홀더 이미지 ============ */
+/* ============ 사진 프레임 (공진단 / 공간 라이트 공용) ============ */
+.photo-frame {
+  background: var(--warm-gray);
+  padding: 0.75rem;
+}
+
+.photo-frame img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* ============ 플레이스홀더 이미지 (자산 미확보 구간용) ============ */
 .placeholder-img {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
   background: repeating-linear-gradient(
     45deg,
-    #e3ede9,
-    #e3ede9 10px,
-    #d3e3dc 10px,
-    #d3e3dc 20px
+    var(--bg-base),
+    var(--bg-base) 10px,
+    var(--warm-gray) 10px,
+    var(--warm-gray) 20px
   );
-  border: 1px dashed var(--deep-green);
+  border: 1px dashed var(--teal-pattern);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,7 +72,7 @@ img, video {
 .placeholder-img::after {
   content: attr(data-label);
   font-size: 0.85rem;
-  color: var(--deep-green);
+  color: var(--green-deep);
   padding: 0.5rem 1rem;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 4px;
@@ -73,16 +85,16 @@ img, video {
 .placeholder-img--dark {
   background: repeating-linear-gradient(
     45deg,
-    #1a2e28,
-    #1a2e28 10px,
-    #142520 10px,
-    #142520 20px
+    var(--teal-dark),
+    var(--teal-dark) 10px,
+    color-mix(in srgb, var(--teal-dark) 70%, black) 10px,
+    color-mix(in srgb, var(--teal-dark) 70%, black) 20px
   );
-  border-color: var(--mint);
+  border-color: var(--teal-pattern);
 }
 
 .placeholder-img--dark::after {
-  color: var(--mint);
+  color: var(--teal-soft);
   background: rgba(0, 0, 0, 0.5);
 }
 
@@ -106,7 +118,7 @@ img, video {
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(16, 35, 29, 0.35), rgba(16, 35, 29, 0.55));
+  background: linear-gradient(to bottom, rgba(28, 46, 41, 0.35), rgba(28, 46, 41, 0.55));
 }
 
 .hero__content {
@@ -166,16 +178,11 @@ img, video {
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
-  opacity: 0.9;
-  transition: opacity 0.2s, color 0.3s ease;
+  transition: color 0.2s ease;
 }
 
 .nav__link:hover {
-  opacity: 1;
-}
-
-.nav__link[data-ready="false"] {
-  position: relative;
+  color: var(--teal-soft);
 }
 
 .nav__toggle {
@@ -199,27 +206,26 @@ img, video {
 /* 히어로를 벗어나 스크롤되었을 때: 밝은 배경 섹션 위에서도 보이도록 전환 */
 .nav.is-scrolled {
   background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 1px 12px rgba(16, 35, 29, 0.08);
+  box-shadow: 0 1px 12px rgba(36, 120, 96, 0.1);
 }
 
 .nav.is-scrolled .nav__logo,
 .nav.is-scrolled .nav__link {
-  color: var(--deep-green);
+  color: var(--green-deep);
 }
 
 .nav.is-scrolled .nav__toggle span {
-  background: var(--deep-green);
+  background: var(--green-deep);
 }
 
 /* 모바일 메뉴가 열려있을 때는 메뉴 패널 자체가 배경을 가지므로 흰 텍스트 유지 */
-.nav.is-scrolled .nav__menu.is-open ~ .nav__toggle span,
 .nav__menu.is-open .nav__link {
   color: var(--white);
 }
 
 /* ============ 2. About Us ============ */
 .about {
-  background: var(--off-white);
+  background: var(--bg-base);
 }
 
 .about__inner {
@@ -233,14 +239,13 @@ img, video {
 .about__title {
   font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 700;
-  color: var(--deep-green);
+  color: var(--green-deep);
   line-height: 1.4;
 }
 
 .about__copy p {
   margin-bottom: 1.25rem;
   font-size: 1.05rem;
-  color: var(--text-dark);
 }
 
 /* ============ 3, 4. 공진단 ============ */
@@ -252,7 +257,7 @@ img, video {
 .gongjindan__text h2 {
   font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   font-weight: 700;
-  color: var(--deep-green);
+  color: var(--green-deep);
   line-height: 1.5;
   margin-bottom: 1.5rem;
 }
@@ -260,7 +265,7 @@ img, video {
 .gongjindan__text h3 {
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--mint);
+  color: var(--teal-soft);
   margin-bottom: 1rem;
 }
 
@@ -277,7 +282,7 @@ img, video {
 }
 
 .gongjindan--2 {
-  background: var(--off-white);
+  background: var(--bg-base);
 }
 
 /* ============ 5, 6. 공간 ============ */
@@ -286,16 +291,28 @@ img, video {
   padding: 0;
 }
 
+.space__photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+}
+
+.space__photo {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 .space__caption {
   padding: clamp(2rem, 5vw, 3rem) var(--gap);
   text-align: center;
-  background: var(--white);
+  background: var(--warm-gray);
 }
 
 .space__slogan {
   letter-spacing: 0.15em;
   font-size: 0.9rem;
-  color: var(--mint);
+  color: var(--teal-soft);
   font-weight: 600;
   margin-bottom: 0.75rem;
 }
@@ -303,22 +320,18 @@ img, video {
 .space__title {
   font-size: clamp(1.4rem, 3vw, 2rem);
   font-weight: 700;
-  color: var(--deep-green);
+  color: var(--green-deep);
   margin-bottom: 0.5rem;
-}
-
-.space--light .space__title {
-  color: var(--deep-green);
 }
 
 .space__en {
   font-size: 0.95rem;
-  color: #6b8079;
+  color: var(--teal-dark);
   font-style: italic;
 }
 
 .space--dark {
-  background: var(--dark-bg);
+  background: var(--teal-dark);
 }
 
 .space__overlay-text {
@@ -330,7 +343,7 @@ img, video {
   justify-content: center;
   text-align: center;
   gap: 1rem;
-  color: var(--text-light);
+  color: var(--white);
   padding: var(--gap);
 }
 
@@ -339,13 +352,14 @@ img, video {
 }
 
 .space--dark .space__en {
-  color: var(--mint);
+  color: var(--warm-gray);
 }
 
 /* ============ Footer ============ */
 .footer {
-  background: var(--dark-bg);
-  color: var(--text-light);
+  background: var(--teal-dark);
+  border-top: 1px solid var(--teal-pattern);
+  color: var(--white);
   padding: 3rem var(--gap);
   text-align: center;
 }
@@ -360,14 +374,14 @@ img, video {
 .footer__nap {
   font-style: normal;
   font-size: 0.9rem;
-  color: #c3d3cd;
+  color: var(--warm-gray);
   margin-bottom: 1.5rem;
   line-height: 1.8;
 }
 
 .footer__copyright {
   font-size: 0.8rem;
-  color: #7c9089;
+  color: var(--teal-soft);
 }
 
 /* ============ 반응형 ============ */
@@ -379,7 +393,7 @@ img, video {
     height: 100vh;
     width: 70%;
     max-width: 320px;
-    background: var(--deep-green);
+    background: var(--green-deep);
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -400,7 +414,8 @@ img, video {
     grid-template-columns: 1fr;
   }
 
-  .gongjindan--1 .gongjindan__images {
+  .gongjindan--1 .gongjindan__images,
+  .space__photos {
     grid-template-columns: 1fr;
   }
 }
