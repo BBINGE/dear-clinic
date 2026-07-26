@@ -35,9 +35,26 @@ document.querySelectorAll(".nav__link").forEach((link) => {
   });
 });
 
-// 마퀴 갤러리: 터치 중 일시정지 (iOS Safari는 :active만으로 터치 홀드를 감지하지 못해 보정)
-document.querySelectorAll(".marquee-wrap").forEach((marquee) => {
-  marquee.addEventListener("touchstart", () => marquee.classList.add("is-touching"), { passive: true });
-  marquee.addEventListener("touchend", () => marquee.classList.remove("is-touching"));
-  marquee.addEventListener("touchcancel", () => marquee.classList.remove("is-touching"));
-});
+// 공진단 사진: 스크롤 진입 시 페이드업
+// 기본 상태는 항상 노출이며, IntersectionObserver를 쓸 수 있고 모션 감소 설정이 아닐 때만
+// reveal-pending을 붙여 애니메이션을 준비한다. (스크립트 실패 시에도 사진이 사라지지 않도록)
+const revealTargets = document.querySelectorAll(".js-reveal");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!prefersReducedMotion && "IntersectionObserver" in window && revealTargets.length) {
+  revealTargets.forEach((el) => el.classList.add("reveal-pending"));
+
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.2 }
+  );
+
+  revealTargets.forEach((el) => revealObserver.observe(el));
+}

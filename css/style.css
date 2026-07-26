@@ -38,16 +38,51 @@ img, video {
   max-width: 100%;
 }
 
-/* ============ 사진 프레임 (공진단 / 공간 라이트 공용) ============ */
+/* ============ 사진 프레임 (공진단 지그재그 섹션 공용) ============ */
+/* 기본값은 항상 보이는 상태. JS가 정상 동작할 때만 reveal-pending을 붙여 페이드업을 준비한다
+   (JS 실패·prefers-reduced-motion 환경에서도 사진이 사라지지 않도록 하기 위함). */
 .photo-frame {
   background: var(--warm-gray);
   padding: 0.75rem;
 }
 
-.photo-frame img {
+.photo-frame.reveal-pending {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.photo-frame.reveal-pending.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.photo-frame__clip {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.photo-frame__img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  animation: photo-kenburns 16s ease-in-out infinite alternate;
+}
+
+@keyframes photo-kenburns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-frame__img {
+    animation: none;
+  }
 }
 
 /* ============ 플레이스홀더 이미지 (자산 미확보 구간용) ============ */
@@ -248,10 +283,17 @@ img, video {
   font-size: 1.05rem;
 }
 
-/* ============ 3, 4. 공진단 ============ */
+/* ============ 3, 4. 공진단 (지그재그 2단) ============ */
 .gongjindan {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.gongjindan__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gap);
+  align-items: center;
 }
 
 .gongjindan__text h2 {
@@ -274,75 +316,20 @@ img, video {
   max-width: 640px;
 }
 
-.gongjindan--1 .gongjindan__images {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.gongjindan__photos {
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
-  margin-top: 3rem;
 }
 
 .gongjindan--2 {
   background: var(--bg-base);
 }
 
-/* 공진단 II 무한 흐름 갤러리 (섹션 패딩을 벗어나 풀블리드) */
-.marquee-wrap {
-  overflow: hidden;
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: clamp(3rem, 6vw, 5rem);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-}
-
-.marquee__track {
-  display: flex;
-  align-items: center;
-  gap: var(--gap);
-  width: max-content;
-  animation: marquee-scroll 50s linear infinite;
-}
-
-.marquee-wrap:hover .marquee__track,
-.marquee-wrap:focus-within .marquee__track,
-.marquee-wrap:active .marquee__track,
-.marquee-wrap.is-touching .marquee__track {
-  animation-play-state: paused;
-}
-
-.marquee__group {
-  display: contents;
-}
-
-.marquee__item {
-  height: clamp(180px, 28vw, 320px);
-  width: auto;
-  display: block;
-}
-
-@keyframes marquee-scroll {
-  from {
-    /* 트랙에 동일한 사진 시퀀스를 두 번 이어붙였으므로 -50% 지점이 0%와 같은 배열이 되어 이음새 없이 반복된다.
-       -50%에서 0%로 이동 = 사진이 화면 왼쪽에서 나타나 오른쪽으로 빠져나가는 좌→우 흐름 */
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee__track {
-    animation: none;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: auto;
-  }
-
-  .marquee__group[data-clone="true"] {
-    display: none;
+/* 공진단 II는 텍스트가 DOM상 먼저 오지만(모바일 스택 순서), 데스크톱에서는 사진을 좌측에 배치 */
+@media (min-width: 769px) {
+  .gongjindan--2 .gongjindan__photos {
+    order: -1;
   }
 }
 
@@ -754,7 +741,10 @@ img, video {
     grid-template-columns: 1fr;
   }
 
-  .gongjindan--1 .gongjindan__images,
+  .gongjindan__grid {
+    grid-template-columns: 1fr;
+  }
+
   .space__photos {
     grid-template-columns: 1fr;
   }
