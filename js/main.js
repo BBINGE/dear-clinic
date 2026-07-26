@@ -66,3 +66,49 @@ if (!prefersReducedMotion && "IntersectionObserver" in window && revealTargets.l
 
 // 공진단 사진 프레임의 자동 슬라이드쇼는 순수 CSS 키프레임(style.css의 gj-slideshow-2/3)으로 동작한다.
 // JS 실행 여부·타이밍에 영향받지 않도록 의도적으로 JS 의존 없이 구현했다.
+
+// 진료 철학 페이지: 화면 중앙에 가장 가까운 ME / YOU / US 챕터에 맞춰 sticky 사진을 교체한다.
+const philosophyChapters = [...document.querySelectorAll("[data-philosophy-chapter]")];
+const philosophyImages = [...document.querySelectorAll(".philosophy-story__image")];
+const philosophyDesktop = window.matchMedia("(min-width: 769px)");
+
+if (philosophyChapters.length && philosophyImages.length) {
+  let philosophyFramePending = false;
+
+  const updatePhilosophyStory = () => {
+    philosophyFramePending = false;
+    if (!philosophyDesktop.matches) return;
+
+    const viewportCenter = window.innerHeight * 0.5;
+    let activeIndex = 0;
+    let closestDistance = Infinity;
+
+    philosophyChapters.forEach((chapter, index) => {
+      const rect = chapter.getBoundingClientRect();
+      const chapterCenter = rect.top + rect.height / 2;
+      const distance = Math.abs(chapterCenter - viewportCenter);
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        activeIndex = index;
+      }
+    });
+
+    philosophyChapters.forEach((chapter, index) => {
+      chapter.classList.toggle("is-active", index === activeIndex);
+    });
+    philosophyImages.forEach((image, index) => {
+      image.classList.toggle("is-active", index === activeIndex);
+    });
+  };
+
+  const requestPhilosophyUpdate = () => {
+    if (philosophyFramePending) return;
+    philosophyFramePending = true;
+    window.requestAnimationFrame(updatePhilosophyStory);
+  };
+
+  updatePhilosophyStory();
+  window.addEventListener("scroll", requestPhilosophyUpdate, { passive: true });
+  window.addEventListener("resize", requestPhilosophyUpdate);
+  philosophyDesktop.addEventListener("change", requestPhilosophyUpdate);
+}
