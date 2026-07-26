@@ -6,6 +6,7 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+  <!-- COLUMN_SITEMAP_END -->
   <url>
     <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/philosophy.html</loc>
     <changefreq>monthly</changefreq>
