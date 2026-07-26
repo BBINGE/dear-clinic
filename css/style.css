@@ -257,51 +257,47 @@ body.philosophy-page {
 .philosophy-values__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2vw, 1.75rem);
   margin-top: clamp(3.5rem, 7vw, 6rem);
 }
 
 .philosophy-value {
   min-width: 0;
-  padding: 0 clamp(1.25rem, 2.5vw, 2.5rem);
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0;
 }
 
-.philosophy-value:first-child {
-  padding-left: 0;
-  border-left: 0;
-}
-
-.philosophy-value svg {
+.philosophy-value__image {
   display: block;
-  width: 52px;
-  height: 52px;
-  fill: none;
-  stroke: var(--teal-soft);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 18px;
 }
 
 .philosophy-value__index {
-  margin: 1.5rem 0 0.8rem;
+  margin: 1.75rem 0 0.75rem;
   color: var(--teal-soft);
   font-size: 0.78rem;
   letter-spacing: 0.12em;
 }
 
 .philosophy-value h3 {
-  min-height: 3.8em;
+  min-height: 3.4em;
+  max-width: 14em;
   color: #f5f2eb;
   font-size: clamp(1.05rem, 1.5vw, 1.28rem);
-  line-height: 1.65;
+  line-height: 1.55;
+  word-break: keep-all;
 }
 
 .philosophy-value > p:last-child {
-  margin-top: 1rem;
+  max-width: 19em;
+  margin-top: 0.85rem;
   color: rgba(245, 242, 235, 0.74);
   font-size: 0.94rem;
-  line-height: 1.9;
+  line-height: 1.8;
+  word-break: keep-all;
 }
 
 .philosophy-next {
@@ -353,12 +349,7 @@ body.philosophy-page {
 @media (max-width: 1024px) and (min-width: 769px) {
   .philosophy-values__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 3rem 0;
-  }
-
-  .philosophy-value:nth-child(3) {
-    padding-left: 0;
-    border-left: 0;
+    gap: 3.5rem 1.5rem;
   }
 }
 
@@ -431,18 +422,23 @@ body.philosophy-page {
   .philosophy-value,
   .philosophy-value:first-child,
   .philosophy-value:nth-child(3) {
-    padding: 2.5rem 0;
+    padding: 2.75rem 0;
     border-left: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .philosophy-value:first-child {
+    padding-top: 0;
+    border-top: 0;
   }
 
   .philosophy-value h3 {
     min-height: 0;
   }
 
-  .philosophy-value svg {
-    width: 42px;
-    height: 42px;
+  .philosophy-value__image {
+    aspect-ratio: 16 / 10;
+    border-radius: 16px;
   }
 
   .philosophy-next__links {
