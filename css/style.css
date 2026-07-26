@@ -1330,54 +1330,34 @@ body.director-page {
 
 .director__section {
   position: relative;
+  overflow: clip;
 }
 
 .director__inner {
-  max-width: 1200px;
+  width: min(100% - 3rem, 1240px);
   margin: 0 auto;
 }
 
-.director__corner-label {
-  position: absolute;
-  right: var(--gap);
-  bottom: 1.5rem;
-  font-size: 0.8rem;
+.director__eyebrow,
+.director__chapter-en,
+.director__letter-label {
+  font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--warm-gray);
-}
-
-.director__corner-label--light {
-  color: var(--white);
-  opacity: 0.45;
-}
-
-.director__heading {
-  font-size: clamp(1.8rem, 4vw, 2.6rem);
-  font-weight: 700;
-  color: var(--green-deep);
-  line-height: 1.4;
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.director__heading span {
-  color: var(--text-secondary);
-  font-weight: 400;
 }
 
 .director__copy {
-  max-width: 720px;
-  margin: 0 auto;
+  max-width: 680px;
   text-align: left;
 }
 
 .director__copy p {
   color: var(--text-secondary);
-  font-size: 1.05rem;
-  line-height: 1.9;
-  margin-bottom: 1.5rem;
+  font-size: 1.04rem;
+  line-height: 2;
+  margin-bottom: 1.8rem;
+  word-break: keep-all;
 }
 
 .director__copy p:last-child {
@@ -1385,23 +1365,37 @@ body.director-page {
 }
 
 /* 1. 진입부 */
+.director__intro {
+  min-height: clamp(720px, 78vh, 820px);
+  display: flex;
+  align-items: center;
+  padding: 7.5rem 0 4.5rem;
+}
+
 .director__intro-top {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: var(--gap);
-  align-items: stretch;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 0.88fr);
+  gap: clamp(3rem, 7vw, 7.5rem);
+  align-items: center;
 }
 
 .director__intro-content {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  padding-left: clamp(0rem, 2vw, 2rem);
+}
+
+.director__eyebrow {
+  color: var(--teal-soft);
+  margin-bottom: 0.9rem;
 }
 
 .director__intro-title {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-size: clamp(2.8rem, 4.5vw, 4.5rem);
   font-weight: 700;
   color: var(--green-deep);
-  line-height: 1.3;
+  line-height: 1.12;
 }
 
 .director__intro-title span {
@@ -1409,9 +1403,14 @@ body.director-page {
   font-weight: 400;
 }
 
+.director__name {
+  margin-top: 1.1rem;
+  color: var(--text-secondary);
+  font-size: 0.98rem;
+}
+
 .director__intro-photo {
   width: 100%;
-  height: 100%;
   border-radius: 20px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
@@ -1419,56 +1418,165 @@ body.director-page {
 }
 
 .director__intro-bottom {
-  margin-top: auto;
-  padding: clamp(3rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
-  text-align: center;
+  margin-top: clamp(3.5rem, 7vh, 5.5rem);
+  padding: 0;
+  text-align: left;
 }
 
 .director__intro-slogan {
-  font-size: clamp(1.4rem, 3vw, 2rem);
+  margin-top: 2rem;
+  margin-bottom: 0;
+  font-size: 0.82rem;
   font-weight: 600;
-  color: var(--green-deep);
-  margin-bottom: 2rem;
+  letter-spacing: 0.16em;
+  color: var(--teal-soft);
 }
 
 .director__intro-slogan strong {
-  color: var(--teal-pattern);
+  color: var(--green-deep);
   font-weight: 700;
 }
 
 .director__intro-copy {
-  max-width: 640px;
-  margin: 0 auto;
+  max-width: 520px;
   text-align: left;
 }
 
 .director__intro-copy p {
   color: var(--text-secondary);
-  font-size: 1.05rem;
+  font-size: 1.06rem;
   line-height: 1.9;
-  margin-bottom: 1rem;
+  margin-bottom: 0.45rem;
 }
 
-/* 2, 3. Why DEAR / What I hope for */
-.director__narrative {
-  min-height: 85vh;
+/* 2, 4. 에디토리얼 스토리 */
+.director__story {
+  padding: clamp(7rem, 12vw, 11rem) 0;
 }
 
-.director__narrative .director__heading {
-  text-align: right;
+.director__story-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.32fr) minmax(0, 0.64fr);
+  justify-content: space-between;
+  gap: clamp(4rem, 8vw, 8rem);
+  align-items: start;
 }
 
-.director__narrative .director__copy {
-  max-width: none;
+.director__story-grid--reverse {
+  grid-template-columns: minmax(0, 0.64fr) minmax(240px, 0.32fr);
+}
+
+.director__chapter {
+  position: sticky;
+  top: 9rem;
+  border-top: 1px solid rgba(0, 108, 120, 0.35);
+  padding-top: 1.4rem;
+}
+
+.director__chapter-number {
+  display: block;
+  margin-bottom: 3.5rem;
+  font-size: clamp(2.8rem, 4vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--warm-gray);
+}
+
+.director__chapter-en {
+  margin-bottom: 0.8rem;
+  color: var(--teal-soft);
+}
+
+.director__chapter-title {
+  color: var(--green-deep);
+  font-size: clamp(1.55rem, 2.4vw, 2.2rem);
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.director__story-copy {
   margin: 0;
 }
 
-.director__narrative--alt {
-  background: var(--bg-base);
+.director__quote {
+  position: relative;
+  margin: clamp(4.5rem, 8vw, 7rem) 0;
+  padding-left: clamp(1.4rem, 3vw, 2.4rem);
+  border-left: 2px solid var(--teal-pattern);
+  color: var(--green-deep);
+  font-size: clamp(2.25rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.42;
+  word-break: keep-all;
+}
+
+.director__story--hope {
+  background: #f2f0ed;
+}
+
+.director__quote--hope {
+  margin-top: 0;
+  border-left: 0;
+  padding-left: 0;
+}
+
+.director__promise {
+  max-width: 520px;
+  margin-top: 4.5rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--teal-pattern);
+  color: var(--green-deep) !important;
+  font-size: clamp(1.5rem, 2.6vw, 1.9rem) !important;
+  font-weight: 600;
+  line-height: 1.75 !important;
+}
+
+/* 3. 브랜드 브리지 */
+.director__bridge {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  background: var(--teal-dark);
+}
+
+.director__bridge-copy {
+  max-width: 760px;
+  margin: 0 auto;
+  color: var(--bg-base);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 500;
+  line-height: 1.65;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.director__bridge-decoration {
+  position: absolute;
+  right: 6%;
+  bottom: -8rem;
+  width: 24rem;
+  height: 24rem;
+  border: 1px solid rgba(248, 248, 246, 0.055);
+  border-radius: 46% 54% 42% 58%;
+  transform: rotate(26deg);
+}
+
+/* 5. 마무리 편지 */
+.director__letter {
+  padding: clamp(7rem, 12vw, 11rem) 0 clamp(4rem, 7vw, 6rem);
+}
+
+.director__letter .director__inner {
+  max-width: 720px;
+}
+
+.director__letter-label {
+  margin-bottom: 3rem;
+  color: var(--teal-soft);
 }
 
 .director__letter .director__copy {
-  max-width: none;
+  max-width: 720px;
   margin: 0;
 }
 
@@ -1550,7 +1658,9 @@ body.director-page {
 
 /* 5. 마무리 편지 */
 .director__copy--letter p {
-  font-style: italic;
+  font-style: normal;
+  line-height: 2;
+  margin-bottom: 1.8rem;
 }
 
 .director__signature {
@@ -1563,6 +1673,10 @@ body.director-page {
 }
 
 /* 5. 원장 소개(경력) 페이지 연결 버튼 */
+.director__cta {
+  padding: 0 0 clamp(6rem, 10vw, 9rem);
+}
+
 .director__cta-inner {
   text-align: center;
 }
@@ -1673,13 +1787,48 @@ body.director-page {
     grid-template-columns: 1fr;
   }
 
+  .director__intro {
+    min-height: auto;
+    padding: 7rem 0 4rem;
+  }
+
+  .director__intro-content {
+    padding-left: 0;
+  }
+
   .director__intro-bottom {
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     padding: 0;
   }
 
   .director__intro-photo {
     aspect-ratio: 4 / 5;
+  }
+
+  .director__story {
+    padding: 6rem 0;
+  }
+
+  .director__story-grid,
+  .director__story-grid--reverse {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .director__story-grid--reverse .director__chapter {
+    grid-row: 1;
+  }
+
+  .director__chapter {
+    position: static;
+  }
+
+  .director__chapter-number {
+    margin-bottom: 2rem;
+  }
+
+  .director__quote {
+    margin: 3.5rem 0;
   }
 
   .about-hub__intro {
