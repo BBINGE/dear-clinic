@@ -272,11 +272,15 @@ body.philosophy-page {
 }
 
 .philosophy-value svg {
-  width: 100px;
-  height: 36px;
+  display: block;
+  width: 52px;
+  height: 52px;
   fill: none;
   stroke: var(--teal-soft);
-  stroke-width: 1.4;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
 .philosophy-value__index {
@@ -434,6 +438,11 @@ body.philosophy-page {
 
   .philosophy-value h3 {
     min-height: 0;
+  }
+
+  .philosophy-value svg {
+    width: 42px;
+    height: 42px;
   }
 
   .philosophy-next__links {
