@@ -58,3 +58,18 @@ if (!prefersReducedMotion && "IntersectionObserver" in window && revealTargets.l
 
   revealTargets.forEach((el) => revealObserver.observe(el));
 }
+
+// 공진단 사진 프레임: 자동 크로스페이드 슬라이드쇼 (모션 감소 설정 시 첫 장만 고정 표시)
+if (!prefersReducedMotion) {
+  document.querySelectorAll(".slideshow").forEach((slideshow) => {
+    const images = slideshow.querySelectorAll(".slideshow__img");
+    if (images.length < 2) return;
+
+    let activeIndex = 0;
+    setInterval(() => {
+      images[activeIndex].classList.remove("is-active");
+      activeIndex = (activeIndex + 1) % images.length;
+      images[activeIndex].classList.add("is-active");
+    }, 3500);
+  });
+}
