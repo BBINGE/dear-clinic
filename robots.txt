@@ -1,5 +1,4 @@
-# 도메인 구매 후 아래 Sitemap URL을 실제 도메인으로 교체해주세요.
 User-agent: *
 Allow: /
 
-Sitemap: https://REPLACE-WITH-ACTUAL-DOMAIN/sitemap.xml
+Sitemap: https://bbinge.github.io/dear-clinic/sitemap.xml

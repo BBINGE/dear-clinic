@@ -1,45 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 도메인 구매 후 아래 loc 값을 실제 도메인으로 교체해주세요. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/</loc>
+    <loc>https://bbinge.github.io/dear-clinic/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <!-- COLUMN_SITEMAP_END -->
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/philosophy.html</loc>
+    <loc>https://bbinge.github.io/dear-clinic/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/services.html</loc>
+    <loc>https://bbinge.github.io/dear-clinic/director.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://bbinge.github.io/dear-clinic/career.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://bbinge.github.io/dear-clinic/philosophy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/care.html</loc>
+    <loc>https://bbinge.github.io/dear-clinic/services.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/columns.html</loc>
+    <loc>https://bbinge.github.io/dear-clinic/care.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bbinge.github.io/dear-clinic/columns.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/columns/seocho-diet-clinic.html</loc>
+    <loc>https://bbinge.github.io/dear-clinic/columns/seocho-diet-clinic.html</loc>
     <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/privacy.html</loc>
+    <loc>https://bbinge.github.io/dear-clinic/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://REPLACE-WITH-ACTUAL-DOMAIN/patient-rights.html</loc>
+    <loc>https://bbinge.github.io/dear-clinic/patient-rights.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

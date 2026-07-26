@@ -107,7 +107,7 @@ function Generate {
   $mapPath = Join-Path $root 'sitemap.xml'
   $map = [IO.File]::ReadAllText($mapPath,[Text.Encoding]::UTF8)
   if (!$map.Contains("/columns/$id.html")) {
-    $entry = "  <url><loc>https://REPLACE-WITH-ACTUAL-DOMAIN/columns/$id.html</loc><lastmod>$iso</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`r`n  <!-- COLUMN_SITEMAP_END -->"
+    $entry = "  <url><loc>https://bbinge.github.io/dear-clinic/columns/$id.html</loc><lastmod>$iso</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`r`n  <!-- COLUMN_SITEMAP_END -->"
     WriteUtf8 $mapPath $map.Replace('  <!-- COLUMN_SITEMAP_END -->',$entry)
   }
   $slug.Text = $id
