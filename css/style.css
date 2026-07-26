@@ -916,47 +916,74 @@ body.director-page {
   background: var(--warm-gray);
 }
 
-/* 4. 프로필 (반투명 배경 사진 + 리스트) */
+/* 프로필 (career.html) — 반투명 원장 사진을 우측에 은은하게 깔고, 좌측에 자격·학회·경력 리스트 */
 .director__profile {
   background: var(--teal-dark);
   color: var(--white);
   overflow: hidden;
 }
 
-.director__profile .placeholder-img {
+.director__profile-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: right center;
   opacity: 0.35;
-  border: none;
+}
+
+.director__profile-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--teal-dark) 0%, var(--teal-dark) 40%, transparent 85%);
 }
 
 .director__profile-inner {
   position: relative;
   z-index: 1;
-  max-width: 720px;
-  margin: 0 auto;
-  text-align: center;
+  max-width: 560px;
+  margin: 0;
+  text-align: left;
 }
 
 .director__profile .director__heading {
   color: var(--white);
+  text-align: left;
+}
+
+.director__profile-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.director__profile-group-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  margin-bottom: 0.9rem;
 }
 
 .director__profile-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.9rem;
+  gap: 0.6rem;
   font-size: 1rem;
   line-height: 1.8;
 }
 
 .director__profile-list li {
   color: var(--white);
-  opacity: 0.9;
+  opacity: 0.85;
+}
+
+.director__profile-list li.is-current {
+  opacity: 1;
+  font-weight: 700;
 }
 
 /* 5. 마무리 편지 */
@@ -971,6 +998,11 @@ body.director-page {
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--green-deep);
+}
+
+/* 5. 원장 소개(경력) 페이지 연결 버튼 */
+.director__cta-inner {
+  text-align: center;
 }
 
 /* ============ 서브 페이지: About DEAR 허브 (about.html) ============ */

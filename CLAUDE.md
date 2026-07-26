@@ -17,7 +17,8 @@
 
 예외: 기획자 요청으로 2단계 서브 페이지 중 **About DEAR** 영역을 MVP 완료 전에 먼저 착수함 (2026-07-26). 구조:
 - `about.html` — About DEAR 허브(인덱스). 카드 2개(의료진 소개 / 진료 철학) + Read More 버튼
-- `director.html` — 원장 소개 상세 페이지 (허브의 "의료진 소개" 카드에서 연결). 카피는 전부 플레이스홀더 상태이며 기획자 검수 후 확정 예정
+- `director.html` — 원장 소개 상세 페이지 (허브의 "의료진 소개" 카드에서 연결). 진입부 → Why DEAR → What I hope for → 마무리 편지 → "원장 소개" 버튼(career.html로 연결) 순. 카피는 전부 플레이스홀더 상태이며 기획자 검수 후 확정 예정
+- `career.html` — 원장 자격·학회·경력 상세 페이지 (director.html 하단 "원장 소개" 버튼에서 연결). 리스트는 확정 문구 반영 완료(2026-07-26)
 - "진료 철학" 카드는 아직 연결할 페이지가 없어 준비중 처리
 
 로드맵:
@@ -115,6 +116,7 @@
 ├── index.html
 ├── about.html           # About DEAR 허브 (카드 2개 인덱스, 2단계 서브 페이지 선착수)
 ├── director.html        # About DEAR > 원장 소개 상세
+├── career.html          # About DEAR > 원장 소개 > 자격·학회·경력 상세
 ├── CLAUDE.md
 ├── assets/
 │   ├── video/        # 히어로 영상 (mp4, 웹 압축본)
