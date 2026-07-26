@@ -575,17 +575,16 @@ img, video {
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.footer__logo {
-  font-size: 1.6rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+.footer__logo-img {
+  height: clamp(120px, 20vw, 150px);
+  width: auto;
 }
 
 .footer__slogan {
   font-size: 0.85rem;
   color: var(--warm-gray);
   letter-spacing: 0.1em;
-  margin-top: 0.35rem;
+  margin-top: 0.75rem;
 }
 
 .footer__sns {
