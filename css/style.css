@@ -131,8 +131,7 @@ body.services-page {
 
 .services-index a:focus-visible,
 .find-care a:focus-visible,
-.services-cta a:focus-visible,
-.service-details summary:focus-visible {
+.services-cta a:focus-visible {
   outline: 2px solid var(--teal-pattern);
   outline-offset: 5px;
 }
@@ -230,53 +229,6 @@ body.services-page {
   color: var(--teal-soft);
   font-size: 0.78rem;
   padding-top: 0.2rem;
-}
-
-.service-details {
-  margin-top: 1.75rem;
-  border-bottom: 1px solid rgba(36, 120, 96, 0.35);
-}
-
-.service-details summary {
-  position: relative;
-  padding: 0.8rem 2rem 0.8rem 0;
-  color: var(--green-deep);
-  font-weight: 700;
-  cursor: pointer;
-  list-style: none;
-}
-
-.service-details summary::-webkit-details-marker {
-  display: none;
-}
-
-.service-details summary::after {
-  content: "＋";
-  position: absolute;
-  right: 0;
-  font-weight: 400;
-}
-
-.service-details[open] summary::after {
-  content: "－";
-}
-
-.service-details__close {
-  display: none;
-}
-
-.service-details[open] .service-details__open {
-  display: none;
-}
-
-.service-details[open] .service-details__close {
-  display: inline;
-}
-
-.service-details p {
-  padding: 0.5rem 0 1.2rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
 }
 
 .find-care {
@@ -1733,6 +1685,7 @@ img, video {
 
 .footer__legal-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
   align-items: flex-start;
 }
