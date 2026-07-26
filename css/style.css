@@ -11,6 +11,121 @@
   --gap: clamp(1.5rem, 4vw, 4rem);
 }
 
+/* Legal information pages */
+.legal-page-body {
+  background: var(--bg-base);
+  color: var(--text-secondary);
+}
+
+.legal-page {
+  padding: clamp(8rem, 12vw, 11rem) var(--gap) clamp(6rem, 10vw, 9rem);
+}
+
+.legal-hero,
+.legal-content {
+  width: min(100%, 920px);
+  margin-inline: auto;
+}
+
+.legal-hero {
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  border-bottom: 1px solid rgba(61, 88, 80, 0.18);
+}
+
+.legal-eyebrow {
+  margin-bottom: 1.25rem;
+  color: var(--teal-pattern);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.legal-hero h1 {
+  margin-bottom: 1.75rem;
+  color: var(--green-deep);
+  font-size: clamp(2.25rem, 5vw, 4.5rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+}
+
+.legal-hero > p:not(.legal-eyebrow):not(.legal-effective) {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.9;
+}
+
+.legal-effective {
+  margin-top: 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.legal-content section {
+  padding: clamp(2.5rem, 5vw, 4rem) 0;
+  border-bottom: 1px solid rgba(61, 88, 80, 0.12);
+}
+
+.legal-content section:last-child {
+  border-bottom: 0;
+}
+
+.legal-content h2 {
+  margin-bottom: 1.75rem;
+  color: var(--green-deep);
+  font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.025em;
+}
+
+.legal-content h3 {
+  margin: 2rem 0 0.75rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.legal-content p,
+.legal-content li {
+  font-size: clamp(0.95rem, 1.25vw, 1.05rem);
+  line-height: 1.95;
+  word-break: keep-all;
+}
+
+.legal-content p + p,
+.legal-content ul + p {
+  margin-top: 1rem;
+}
+
+.legal-content ul {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+}
+
+.legal-content li {
+  padding-left: 0.2rem;
+}
+
+.legal-info {
+  margin-top: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: 18px;
+  background: rgba(223, 231, 225, 0.55);
+}
+
+@media (max-width: 680px) {
+  .legal-page {
+    padding-inline: 24px;
+  }
+
+  .legal-hero br,
+  .legal-content br {
+    display: none;
+  }
+}
+
 /* ============ Care 상태 중심 페이지 (care.html) ============ */
 body.care-page {
   background: var(--bg-base);
