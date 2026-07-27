@@ -1,4 +1,4 @@
-# 디어한의원 칼럼 관리자 설정 v3
+# 디어한의원 칼럼 관리자 설정 v4
 media:
   - name: column_images
     label: 칼럼 사진 보관함
@@ -147,6 +147,150 @@ content:
           categories: [image]
           rename: safe
           switcher: false
+
+      - name: designBlocks
+        label: 화면 디자인 블록 (선택)
+        type: block
+        blockKey: type
+        description: >-
+          예시 칼럼처럼 큰 소제목, 좌우 확인표, 번호 카드, 진한 핵심 박스를 넣는 곳입니다. 기본 본문만으로 충분하면 비워 두세요. 필요한 블록을 추가한 뒤 끌어서 순서를 바꿀 수 있습니다. 이 기능은 글의 내용을 바꾸는 장식이 아니라 긴 글을 환자가 훑어보기 쉽게 나누고 핵심을 기억하게 하는 편집 도구입니다.
+        list:
+          max: 12
+          collapsible:
+            collapsed: false
+        blocks:
+          - name: section
+            label: 큰 소제목과 설명 문단
+            fields:
+              - name: eyebrow
+                label: 제목 위 작은 분류 문구 (선택)
+                type: select
+                required: false
+                description: >-
+                  큰 제목 위에 작게 보이는 영문 분류 문구입니다. 독자가 글의 흐름을 빠르게 파악하게 돕습니다. 맞는 항목이 없으면 비워 두세요.
+                options:
+                  placeholder: 작은 분류 문구 없이 사용
+                  values:
+                    - name: "MEDICAL BASIS"
+                      label: 의학적 배경
+                    - name: "WHAT WE CHECK"
+                      label: 진료에서 확인하는 것
+                    - name: "POSSIBLE PATHS"
+                      label: 상태에 따른 방향
+                    - name: "DEAR NOTE"
+                      label: 디어의 설명
+              - name: heading
+                label: 화면에 크게 보일 소제목
+                type: string
+                required: true
+                description: >-
+                  예시 칼럼의 큰 초록색 제목처럼 한 구간의 핵심 결론을 보여 줍니다. 검색어를 억지로 반복하기보다 독자가 아래 내용을 바로 이해할 수 있는 문장으로 적어 주세요.
+              - name: text
+                label: 소제목 아래 설명
+                type: text
+                required: true
+                description: >-
+                  큰 제목을 뒷받침하는 설명입니다. 문단을 나누려면 한 줄을 비우세요. 확정적 치료 효과보다 확인할 점과 이유를 차분하게 설명해 주세요.
+
+          - name: checklist
+            label: 진료에서 확인하는 항목표
+            fields:
+              - name: heading
+                label: 확인표의 큰 제목
+                type: string
+                required: true
+                description: >-
+                  확인 항목들을 하나로 묶는 결론형 제목입니다. 화면에는 WHAT WE CHECK라는 작은 분류 문구와 함께 표시됩니다.
+              - name: items
+                label: 확인 항목
+                type: object
+                required: true
+                description: >-
+                  왼쪽에는 짧은 항목명, 오른쪽에는 왜 확인하는지 설명이 나옵니다. 환자가 진료 과정을 구체적으로 이해하고 신뢰할 수 있게 하는 부분입니다. 2~8개를 권장합니다.
+                list:
+                  min: 2
+                  max: 8
+                  collapsible:
+                    collapsed: false
+                    summary: "{fields.title}"
+                fields:
+                  - name: title
+                    label: 짧은 항목명
+                    type: string
+                    required: true
+                    description: "예: 수면과 스트레스"
+                  - name: text
+                    label: 확인하는 이유
+                    type: text
+                    required: true
+                    description: "무엇을 살펴보고 왜 필요한지 환자가 이해할 수 있는 말로 적어 주세요."
+
+          - name: cards
+            label: 경우의 수 번호 카드
+            fields:
+              - name: heading
+                label: 카드 묶음의 큰 제목
+                type: string
+                required: true
+                description: >-
+                  서로 다른 상태나 선택지를 묶는 제목입니다. 화면에는 POSSIBLE PATHS라는 작은 분류 문구와 함께 표시됩니다.
+              - name: items
+                label: 경우 카드
+                type: object
+                required: true
+                description: >-
+                  01, 02처럼 자동 번호가 붙는 카드입니다. 모두에게 같은 방법을 단정하지 않고 상태에 따라 방향이 달라질 수 있음을 설명할 때 유용합니다. 2~6개까지 넣을 수 있습니다.
+                list:
+                  min: 2
+                  max: 6
+                  collapsible:
+                    collapsed: false
+                    summary: "{fields.title}"
+                fields:
+                  - name: title
+                    label: 경우의 제목
+                    type: string
+                    required: true
+                    description: "독자가 자신의 상황을 빠르게 구분할 수 있는 짧은 제목을 적어 주세요."
+                  - name: text
+                    label: 경우의 설명
+                    type: text
+                    required: true
+                    description: "이 경우에 살펴볼 점이나 가능한 다음 방향을 단정하지 않는 말로 설명해 주세요."
+
+          - name: keypoint
+            label: 진한 배경의 핵심 문장
+            fields:
+              - name: text
+                label: 가장 기억시키고 싶은 문장
+                type: text
+                required: true
+                description: >-
+                  진한 초록색 박스 중앙에 크게 보입니다. 글 전체의 결론이나 독자가 기억해야 할 태도를 1~3문장으로 적어 주세요. 과장된 효과나 광고 문구보다는 차분한 핵심 메시지에 적합합니다.
+
+          - name: image
+            label: 본문 사진과 설명
+            fields:
+              - name: image
+                label: 넣을 사진
+                type: image
+                required: true
+                description: "글의 흐름을 실제로 이해하는 데 도움이 되는 사진을 선택해 주세요."
+                options:
+                  media: column_images
+                  path: media/columns
+                  extensions: [jpg, jpeg, png, webp]
+                  rename: safe
+              - name: alt
+                label: 사진을 글로 설명
+                type: string
+                required: true
+                description: "사진을 볼 수 없는 독자도 장면을 알 수 있도록 보이는 내용을 짧게 적어 주세요."
+              - name: caption
+                label: 사진 아래 설명 (선택)
+                type: string
+                required: false
+                description: "사진의 출처나 독자가 알아야 할 보충 설명이 있을 때만 적어 주세요."
 
       - name: lead
         label: 제목 아래 소개 문장 (선택)

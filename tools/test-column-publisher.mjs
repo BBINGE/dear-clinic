@@ -82,6 +82,12 @@ try {
   assert.match(article, /href="#제목-3도-칼럼-소제목으로-표시됩니다"/);
   assert.match(article, /class="column-rich-section"><h2>제목 3도 칼럼 소제목으로 표시됩니다<\/h2>/);
   assert.doesNotMatch(article, /<h3><strong>제목 3도/);
+  assert.match(article, /href="#design-section-1"/);
+  assert.match(article, /class="column-designed-section"><p class="column-section-label">MEDICAL BASIS<\/p>/);
+  assert.match(article, /class="column-checklist">/);
+  assert.match(article, /class="column-cases">/);
+  assert.match(article, /<p>KEY POINT<\/p>/);
+  assert.match(article, /design-5\.webp/);
   assert.match(article, /칼럼 본문 테스트 이미지/);
   assert.match(article, /#수면/);
   assert.match(article, /#생활 리듬/);
@@ -99,6 +105,10 @@ try {
   );
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "body-1.webp")),
+    true,
+  );
+  assert.equal(
+    fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "design-5.webp")),
     true,
   );
 

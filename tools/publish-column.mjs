@@ -153,6 +153,7 @@ function validateContent(content, { requireReady = true } = {}) {
     tags: content.tags,
     body: content.body,
     blocks: content.blocks,
+    designBlocks: content.designBlocks,
     faqs: content.faqs,
   });
   const blockedClaims = ["완치", "100% 효과", "부작용 없음", "무조건 낫", "치료를 보장", "효과를 보장"];
@@ -361,6 +362,134 @@ function renderRichBody(content, mediaRoot, siteRoot, assetSlug = content.slug) 
   flushParagraph();
   flushList();
   return { html: html.join("\n"), toc };
+}
+
+function renderBlockMarkdown(value, label) {
+  assertString(value, label, 2, 8000);
+  const lines = value.replace(/\r\n?/g, "\n").split("\n");
+  const html = [];
+  let paragraph = [];
+  let listType = "";
+  let listItems = [];
+
+  function flushParagraph() {
+    if (!paragraph.length) return;
+    html.push(`<p>${inlineMarkdown(paragraph.join("\n"))}</p>`);
+    paragraph = [];
+  }
+
+  function flushList() {
+    if (!listItems.length) return;
+    const tag = listType === "ol" ? "ol" : "ul";
+    html.push(`<${tag}>${listItems.map((item) => `<li>${inlineMarkdown(item)}</li>`).join("")}</${tag}>`);
+    listType = "";
+    listItems = [];
+  }
+
+  lines.forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushParagraph();
+      flushList();
+      return;
+    }
+
+    const heading = trimmed.match(/^#{1,3}\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      html.push(`<h3>${inlineMarkdown(heading[1])}</h3>`);
+      return;
+    }
+
+    const unorderedItem = trimmed.match(/^[-*]\s+(.+)$/);
+    const orderedItem = trimmed.match(/^\d+[.)]\s+(.+)$/);
+    if (unorderedItem || orderedItem) {
+      flushParagraph();
+      const nextType = orderedItem ? "ol" : "ul";
+      if (listType && listType !== nextType) flushList();
+      listType = nextType;
+      listItems.push((orderedItem || unorderedItem)[1]);
+      return;
+    }
+
+    flushList();
+    paragraph.push(trimmed);
+  });
+
+  flushParagraph();
+  flushList();
+  return html.join("");
+}
+
+function renderDesignBlocks(content, mediaRoot, siteRoot, assetSlug = content.slug) {
+  if (!content.designBlocks?.length) {
+    return { html: "", toc: [] };
+  }
+  if (!Array.isArray(content.designBlocks) || content.designBlocks.length > 12) {
+    throw new Error("화면 디자인 블록은 최대 12개까지 사용할 수 있습니다.");
+  }
+
+  const toc = [];
+  const html = content.designBlocks.map((block, index) => {
+    const position = `${index + 1}번째 화면 디자인 블록`;
+    if (!block || !["section", "checklist", "cards", "keypoint", "image"].includes(block.type)) {
+      throw new Error(`${position}의 종류가 올바르지 않습니다.`);
+    }
+
+    if (block.type === "section") {
+      assertString(block.heading, `${position} 제목`, 2, 160);
+      const id = `design-section-${index + 1}`;
+      toc.push({ id, title: block.heading });
+      const eyebrow = block.eyebrow
+        ? `<p class="column-section-label">${escapeHtml(block.eyebrow)}</p>`
+        : "";
+      return `<section id="${id}" class="column-designed-section">${eyebrow}<h2>${textWithBreaks(block.heading)}</h2><div class="column-designed-copy">${renderBlockMarkdown(block.text, `${position} 설명`)}</div></section>`;
+    }
+
+    if (block.type === "checklist") {
+      assertString(block.heading, `${position} 제목`, 2, 160);
+      if (!Array.isArray(block.items) || block.items.length < 2 || block.items.length > 8) {
+        throw new Error(`${position}의 확인 항목은 2~8개로 입력해 주세요.`);
+      }
+      const id = `design-checklist-${index + 1}`;
+      toc.push({ id, title: block.heading });
+      const items = block.items.map((item, itemIndex) => {
+        assertString(item.title, `${position} ${itemIndex + 1}번 항목 제목`, 2, 80);
+        assertString(item.text, `${position} ${itemIndex + 1}번 항목 설명`, 2, 500);
+        return `<li><strong>${escapeHtml(item.title)}</strong><span>${inlineMarkdown(item.text)}</span></li>`;
+      }).join("");
+      return `<section id="${id}" class="column-designed-section"><p class="column-section-label">WHAT WE CHECK</p><h2>${textWithBreaks(block.heading)}</h2><ul class="column-checklist">${items}</ul></section>`;
+    }
+
+    if (block.type === "cards") {
+      assertString(block.heading, `${position} 제목`, 2, 160);
+      if (!Array.isArray(block.items) || block.items.length < 2 || block.items.length > 6) {
+        throw new Error(`${position}의 경우 카드는 2~6개로 입력해 주세요.`);
+      }
+      const id = `design-cards-${index + 1}`;
+      toc.push({ id, title: block.heading });
+      const items = block.items.map((item, itemIndex) => {
+        assertString(item.title, `${position} ${itemIndex + 1}번 카드 제목`, 2, 100);
+        assertString(item.text, `${position} ${itemIndex + 1}번 카드 설명`, 2, 800);
+        return `<div><span>${String(itemIndex + 1).padStart(2, "0")}</span><h3>${escapeHtml(item.title)}</h3><p>${inlineMarkdown(item.text)}</p></div>`;
+      }).join("");
+      return `<section id="${id}" class="column-designed-section"><p class="column-section-label">POSSIBLE PATHS</p><h2>${textWithBreaks(block.heading)}</h2><div class="column-cases">${items}</div></section>`;
+    }
+
+    if (block.type === "keypoint") {
+      assertString(block.text, `${position} 핵심 문장`, 5, 500);
+      return `<aside class="column-keypoint"><p>KEY POINT</p><strong>${textWithBreaks(block.text)}</strong></aside>`;
+    }
+
+    assertString(block.image, `${position} 이미지`, 3, 500);
+    assertString(block.alt, `${position} 이미지 설명`, 3, 160);
+    const imagePath = copyMedia(mediaRoot, siteRoot, assetSlug, block.image, `design-${index + 1}`);
+    const caption = block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : "";
+    return `<figure class="column-article__body-image"><img src="../${imagePath}" alt="${escapeHtml(block.alt)}" loading="lazy">${caption}</figure>`;
+  }).join("\n");
+
+  return { html, toc };
 }
 
 function renderFaq(content) {
@@ -589,9 +718,12 @@ function main() {
 
   const assetSlug = isPreview ? `preview-${content.slug}` : content.slug;
   const coverPath = copyMedia(mediaRoot, siteRoot, assetSlug, content.coverImage, "cover");
-  const { html: body, toc } = content.body
+  const { html: basicBody, toc: basicToc } = content.body
     ? renderRichBody(content, mediaRoot, siteRoot, assetSlug)
     : renderBlocks(content, mediaRoot, siteRoot, assetSlug);
+  const design = renderDesignBlocks(content, mediaRoot, siteRoot, assetSlug);
+  const body = [basicBody, design.html].filter(Boolean).join("\n");
+  const toc = [...basicToc, ...design.toc];
   const faq = renderFaq(content);
   const sources = renderSources(content);
   const article = buildArticle(content, coverPath, body, toc, faq, sources, { preview: isPreview });

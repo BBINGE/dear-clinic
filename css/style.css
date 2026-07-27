@@ -393,7 +393,7 @@
   grid-template-columns: 220px minmax(0, 760px);
   justify-content: center;
   gap: clamp(3rem, 7vw, 7rem);
-  margin-top: clamp(4rem, 8vw, 7rem);
+  margin-top: clamp(2.5rem, 4vw, 4rem);
 }
 
 .column-toc {
@@ -439,11 +439,12 @@
 
 .column-article__content section {
   scroll-margin-top: 110px;
-  margin-top: clamp(5rem, 10vw, 8rem);
+  margin-top: clamp(3rem, 5vw, 4.5rem);
+  padding: 0;
 }
 
 .column-article__content h2 {
-  margin: 1.2rem 0 2rem;
+  margin: 1rem 0 1.6rem;
   color: var(--green-deep);
   font-size: clamp(2rem, 4vw, 3.4rem);
   font-weight: 500;
@@ -452,15 +453,46 @@
 }
 
 .column-article__content .column-rich-section {
-  margin-top: clamp(4.5rem, 8vw, 7rem);
+  margin-top: clamp(2.5rem, 4vw, 3.5rem);
 }
 
 .column-rich-section h2 {
   max-width: 680px;
 }
 
+.column-designed-section > h2 {
+  max-width: 700px;
+}
+
+.column-designed-copy {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.column-designed-copy p,
+.column-designed-copy li {
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 2;
+  word-break: keep-all;
+}
+
+.column-designed-copy h3 {
+  margin: 1rem 0 0.2rem;
+  color: var(--green-deep);
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.column-designed-copy ul,
+.column-designed-copy ol {
+  display: grid;
+  gap: 0.55rem;
+  padding-left: 1.2rem;
+}
+
 .column-checklist {
   display: grid;
+  margin-top: 2rem;
   padding: 0;
   border-top: 1px solid rgba(60, 96, 90, 0.2);
   list-style: none;
@@ -482,6 +514,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
+  margin-top: 2rem;
   overflow: hidden;
   border: 1px solid rgba(60, 96, 90, 0.16);
   border-radius: 18px;
@@ -509,7 +542,7 @@
 }
 
 .column-keypoint {
-  margin: clamp(5rem, 10vw, 8rem) 0;
+  margin: clamp(3rem, 5vw, 4.5rem) 0;
   padding: clamp(2.5rem, 6vw, 5rem);
   border-radius: 18px;
   background: var(--teal-dark);
@@ -531,7 +564,7 @@
 }
 
 .column-article__body-image {
-  margin: clamp(3.5rem, 7vw, 5.5rem) 0;
+  margin: clamp(2.75rem, 5vw, 4rem) 0;
 }
 
 .column-article__body-image img {
@@ -547,7 +580,7 @@
   line-height: 1.7;
 }
 
-.column-consult {
+.column-article__content .column-consult {
   padding: clamp(2.5rem, 6vw, 5rem);
   border-radius: 18px;
   background: var(--warm-gray);
@@ -583,7 +616,7 @@
   padding: 0 0 1.6rem;
 }
 
-.column-sources {
+.column-article__content .column-sources {
   padding-top: 2rem;
   border-top: 1px solid rgba(60, 96, 90, 0.18);
 }
@@ -606,7 +639,7 @@
   font-size: 0.9rem !important;
 }
 
-.column-nap {
+.column-article__content .column-nap {
   padding: clamp(2.5rem, 6vw, 4.5rem);
   border-radius: 18px;
   background: var(--green-deep);
