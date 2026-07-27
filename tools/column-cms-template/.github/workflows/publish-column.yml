@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: dear-column-publish
+  group: dear-column-site-write
   cancel-in-progress: false
 
 jobs:
@@ -20,12 +20,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 비공개 칼럼 원고 가져오기
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: content-source
 
       - name: 공개 홈페이지 가져오기
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: BBINGE/dear-clinic
           ssh-key: ${{ secrets.DEAR_PUBLIC_REPO_SSH_KEY }}

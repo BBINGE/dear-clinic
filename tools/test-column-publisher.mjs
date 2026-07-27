@@ -45,6 +45,26 @@ try {
     true,
   );
 
+  const hostileDraft = {
+    ...draft,
+    slug: "security-escaping-check",
+    title: "보안 검사 <script>alert('xss')</script>",
+    summary: "사용자 입력의 HTML 코드가 화면에서 실행되지 않는지 확인하는 보안 검사 문장입니다.",
+    description: "사용자 입력의 HTML 코드가 검색 설명에서 실행되지 않는지 확인하는 보안 검사 문장입니다.",
+    lead: "사용자 입력의 HTML 코드가 제목과 본문에서 안전하게 표시되는지 확인하는 보안 검사 문장입니다.",
+    body: "본문에 <img src=x onerror=alert('xss')> 코드를 입력합니다.\n\n[위험한 링크](javascript:alert('xss'))도 실행되면 안 됩니다.",
+  };
+  const hostilePath = path.join(testRoot, "hostile.json");
+  fs.writeFileSync(hostilePath, JSON.stringify(hostileDraft), "utf8");
+  const hostilePreview = publish(hostilePath, "preview");
+  assert.equal(hostilePreview.status, 0, hostilePreview.stderr);
+  const hostileArticle = fs.readFileSync(path.join(testRoot, "preview", "security-escaping-check.html"), "utf8");
+  assert.doesNotMatch(hostileArticle, /<script>alert\('xss'\)<\/script>/);
+  assert.doesNotMatch(hostileArticle, /<img src=x onerror=/);
+  assert.doesNotMatch(hostileArticle, /href="javascript:/);
+  assert.match(hostileArticle, /&lt;script&gt;alert/);
+  assert.match(hostileArticle, /&lt;img src=x onerror=/);
+
   const first = publish();
   assert.equal(first.status, 0, first.stderr);
   const second = publish();
