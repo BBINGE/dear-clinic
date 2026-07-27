@@ -154,10 +154,7 @@ content:
         blockKey: type
         description: >-
           예시 칼럼처럼 큰 소제목, 좌우 확인표, 번호 카드, 진한 핵심 박스를 넣는 곳입니다. 기본 본문만으로 충분하면 비워 두세요. 필요한 블록을 추가한 뒤 끌어서 순서를 바꿀 수 있습니다. 이 기능은 글의 내용을 바꾸는 장식이 아니라 긴 글을 환자가 훑어보기 쉽게 나누고 핵심을 기억하게 하는 편집 도구입니다.
-        list:
-          max: 12
-          collapsible:
-            collapsed: false
+        list: true
         blocks:
           - name: section
             label: 큰 소제목과 설명 문단
