@@ -40,6 +40,8 @@ try {
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
   assert.match(article, /칼럼 본문 테스트 이미지/);
+  assert.match(article, /<meta name="description" content="수면과 생활 리듬을 함께 살펴보는 디어한의원의 칼럼 발행 테스트입니다.">/);
+  assert.match(article, /<p class="column-article__lead">수면과 생활 리듬을 함께 살펴보는 디어한의원의 칼럼 발행 테스트입니다.<\/p>/);
   const schemaText = article.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(schemaText, "구조화 데이터를 찾지 못했습니다.");
   assert.equal(JSON.parse(schemaText)["@context"], "https://schema.org");

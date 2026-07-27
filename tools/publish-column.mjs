@@ -68,6 +68,20 @@ function assertString(value, label, min = 1, max = 10000) {
   }
 }
 
+function applyOptionalFieldDefaults(content) {
+  const summary = typeof content.summary === "string" ? content.summary.trim() : "";
+  const description = typeof content.description === "string" ? content.description.trim() : "";
+  const lead = typeof content.lead === "string" ? content.lead.trim() : "";
+
+  return {
+    ...content,
+    summary,
+    description: description || summary,
+    lead: lead || summary,
+    modifiedAt: content.modifiedAt || content.publishedAt,
+  };
+}
+
 function validateContent(content) {
   assertString(content.title, "제목", 5, 100);
   assertString(content.slug, "영문 URL", 3, 80);
@@ -80,9 +94,9 @@ function validateContent(content) {
   if (content.status !== "ready") {
     throw new Error("작성 상태를 ‘발행 준비 완료’로 바꾼 뒤 발행해 주세요.");
   }
-  assertString(content.summary, "목록 요약", 20, 220);
-  assertString(content.description, "검색 설명", 30, 180);
-  assertString(content.lead, "도입 문장", 20, 300);
+  assertString(content.summary, "목록에 보일 한 줄 소개", 20, 220);
+  assertString(content.description, "검색 결과용 글 설명", 20, 180);
+  assertString(content.lead, "제목 아래 소개 문장", 20, 300);
   assertString(content.coverImage, "대표 이미지 경로", 3, 500);
   assertString(content.coverAlt, "대표 이미지 설명", 5, 160);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(content.publishedAt || "")) {
@@ -516,7 +530,7 @@ function main() {
   const siteRoot = path.resolve(args["site-root"] || defaultSiteRoot);
   const mediaRoot = path.resolve(args["media-root"] || path.dirname(path.resolve(args.content)));
   const contentPath = path.resolve(args.content);
-  const content = JSON.parse(fs.readFileSync(contentPath, "utf8"));
+  const content = applyOptionalFieldDefaults(JSON.parse(fs.readFileSync(contentPath, "utf8")));
   validateContent(content);
 
   const articlePath = path.join(siteRoot, "columns", `${content.slug}.html`);

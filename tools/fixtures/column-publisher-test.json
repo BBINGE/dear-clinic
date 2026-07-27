@@ -5,8 +5,6 @@
   "editorName": "김민지",
   "category": "Calm",
   "summary": "수면과 생활 리듬을 함께 살펴보는 디어한의원의 칼럼 발행 테스트입니다.",
-  "description": "수면과 생활 리듬을 함께 살펴보는 디어한의원 Columns 자동 발행 결과를 검증하기 위한 테스트 칼럼입니다.",
-  "lead": "잠드는 시간만이 아니라 하루의 생활 리듬을 함께 살펴보는 과정을 설명합니다.",
   "coverImage": "assets/images/columns/seocho-diet-clinic.webp",
   "coverAlt": "건강한 생활 기록을 상징하는 테이블",
   "publishedAt": "2026-07-27",
