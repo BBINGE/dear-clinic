@@ -13,11 +13,11 @@
 
 ## 저장소에 필요한 비밀 값
 
-- 이름: `DEAR_PUBLIC_REPO_TOKEN`
+- 이름: `DEAR_PUBLIC_REPO_SSH_KEY`
 - 용도: 비공개 콘텐츠 저장소의 발행 작업이 공개 `BBINGE/dear-clinic` 저장소에 발행 파일을 push할 때만 사용합니다.
-- 권한: `BBINGE/dear-clinic` 한 저장소의 Contents 읽기/쓰기만 허용하는 fine-grained token을 사용합니다.
+- 권한: `BBINGE/dear-clinic` 한 저장소에만 쓰기를 허용하는 전용 Deploy key를 사용합니다.
 
-토큰을 파일이나 `.pages.yml`에 직접 적지 않습니다. GitHub 저장소의
+개인 계정 토큰은 사용하지 않습니다. 비공개 키를 파일이나 `.pages.yml`에 직접 적지 않고 GitHub 저장소의
 `Settings → Secrets and variables → Actions`에만 저장합니다.
 
 ## 관리자 구분
