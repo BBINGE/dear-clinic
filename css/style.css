@@ -451,6 +451,14 @@
   letter-spacing: -0.045em;
 }
 
+.column-article__content .column-rich-section {
+  margin-top: clamp(4.5rem, 8vw, 7rem);
+}
+
+.column-rich-section h2 {
+  max-width: 680px;
+}
+
 .column-checklist {
   display: grid;
   padding: 0;

@@ -290,6 +290,19 @@ function renderRichBody(content, mediaRoot, siteRoot, assetSlug = content.slug) 
     return candidate;
   }
 
+  function normalizeHeadingTitle(value) {
+    let title = String(value || "").trim();
+    if (
+      (title.startsWith("**") && title.endsWith("**"))
+      || (title.startsWith("__") && title.endsWith("__"))
+    ) {
+      title = title.slice(2, -2).trim();
+    } else if (title.startsWith("*") && title.endsWith("*")) {
+      title = title.slice(1, -1).trim();
+    }
+    return title;
+  }
+
   lines.forEach((line, index) => {
     const trimmed = line.trim();
     if (!trimmed) {
@@ -315,11 +328,10 @@ function renderRichBody(content, mediaRoot, siteRoot, assetSlug = content.slug) 
     if (heading) {
       flushParagraph();
       flushList();
-      const title = heading[2].trim();
+      const title = normalizeHeadingTitle(heading[2]);
       const id = uniqueHeadingId(title, index);
-      const level = heading[1].length >= 3 ? 3 : 2;
-      if (level === 2) toc.push({ id, title });
-      html.push(`<section id="${id}"><h${level}>${inlineMarkdown(title)}</h${level}></section>`);
+      toc.push({ id, title });
+      html.push(`<section id="${id}" class="column-rich-section"><h2>${inlineMarkdown(title)}</h2></section>`);
       return;
     }
 

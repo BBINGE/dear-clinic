@@ -79,6 +79,9 @@ try {
   assert.match(article, /rel="canonical" href="https:\/\/bbinge\.github\.io\/dear-clinic\/columns\/publisher-test-column\.html"/);
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
+  assert.match(article, /href="#제목-3도-칼럼-소제목으로-표시됩니다"/);
+  assert.match(article, /class="column-rich-section"><h2>제목 3도 칼럼 소제목으로 표시됩니다<\/h2>/);
+  assert.doesNotMatch(article, /<h3><strong>제목 3도/);
   assert.match(article, /칼럼 본문 테스트 이미지/);
   assert.match(article, /#수면/);
   assert.match(article, /#생활 리듬/);
