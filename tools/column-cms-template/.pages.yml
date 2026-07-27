@@ -1,0 +1,260 @@
+media:
+  - name: column_images
+    label: 칼럼 이미지
+    input: media/columns
+    output: media/columns
+    rename: safe
+    extensions: [jpg, jpeg, png, webp]
+    categories: [image]
+
+settings:
+  hide: true
+  commit:
+    identity: app
+    templates:
+      create: "칼럼 초안 저장: {name}"
+      update: "칼럼 초안 수정: {name}"
+      delete: "칼럼 초안 삭제: {name}"
+
+content:
+  - name: columns
+    label: 디어 칼럼
+    type: collection
+    path: content/columns
+    format: json
+    exclude: [".gitkeep"]
+    filename:
+      template: "{fields.slug}.json"
+      field: false
+    operations:
+      create: true
+      rename: false
+      delete: false
+    view:
+      fields: [title, status, publishedAt, editorName]
+      primary: title
+      sort: [modifiedAt, publishedAt, title]
+      default:
+        sort: modifiedAt
+        order: desc
+    fields:
+      - name: title
+        label: 제목
+        type: string
+        required: true
+        options:
+          minlength: 5
+          maxlength: 100
+      - name: slug
+        label: 영문 주소
+        type: string
+        required: true
+        description: 영문 소문자와 하이픈만 입력합니다. 발행 후에는 바꾸지 않습니다.
+        pattern:
+          regex: "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          message: "예: seocho-diet-clinic"
+      - name: status
+        label: 작성 상태
+        type: select
+        required: true
+        default: draft
+        options:
+          values:
+            - name: draft
+              label: 초안
+            - name: review
+              label: 검수 중
+            - name: ready
+              label: 발행 준비 완료
+      - name: editorName
+        label: 작성자
+        type: select
+        required: true
+        options:
+          values:
+            - name: 박성호
+              label: 박성호
+            - name: 김민지
+              label: 김민지 대표원장
+      - name: category
+        label: 분류
+        type: select
+        required: true
+        options:
+          values:
+            - name: Focus
+              label: 집중
+            - name: Calm
+              label: 마음
+            - name: Restore
+              label: 채움
+            - name: Relief
+              label: 불편
+            - name: Shape
+              label: 변화
+      - name: summary
+        label: Columns 목록 요약
+        type: text
+        required: true
+        description: 목록 카드에 표시할 1~2문장입니다.
+        options:
+          minlength: 20
+          maxlength: 220
+      - name: description
+        label: Google 검색 설명
+        type: text
+        required: true
+        description: 검색 결과에 표시될 수 있는 설명입니다. 80~160자를 권장합니다.
+        options:
+          minlength: 30
+          maxlength: 180
+      - name: lead
+        label: 첫 화면 도입 문장
+        type: text
+        required: true
+        options:
+          minlength: 20
+          maxlength: 300
+      - name: coverImage
+        label: 대표 이미지
+        type: image
+        required: true
+        options:
+          media: column_images
+          path: media/columns
+          extensions: [jpg, jpeg, png, webp]
+          rename: safe
+      - name: coverAlt
+        label: 대표 이미지 설명
+        type: string
+        required: true
+        description: 사진을 보지 못하는 사람도 이해할 수 있게 설명합니다.
+      - name: publishedAt
+        label: 최초 게시일
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: modifiedAt
+        label: 최종 수정일
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: blocks
+        label: 본문
+        type: block
+        list: true
+        required: true
+        blockKey: type
+        blocks:
+          - name: paragraph
+            label: 본문 문단
+            fields:
+              - name: text
+                label: 내용
+                type: rich-text
+                required: true
+                options:
+                  format: markdown
+                  media: false
+                  switcher: false
+          - name: heading
+            label: 소제목
+            fields:
+              - name: label
+                label: 영문 라벨
+                type: string
+              - name: title
+                label: 소제목
+                type: text
+                required: true
+              - name: id
+                label: 목차 영문 주소
+                type: string
+                description: 비워두면 소제목 기준으로 자동 생성합니다.
+          - name: list
+            label: 핵심 목록
+            fields:
+              - name: items
+                label: 목록 항목
+                type: object
+                list: true
+                required: true
+                fields:
+                  - name: title
+                    label: 항목 제목
+                    type: string
+                  - name: text
+                    label: 설명
+                    type: text
+          - name: quote
+            label: 강조 문구
+            fields:
+              - name: label
+                label: 영문 라벨
+                type: string
+                default: KEY POINT
+              - name: text
+                label: 강조 문구
+                type: text
+                required: true
+          - name: image
+            label: 본문 이미지
+            fields:
+              - name: image
+                label: 이미지
+                type: image
+                required: true
+                options:
+                  media: column_images
+                  path: media/columns
+                  extensions: [jpg, jpeg, png, webp]
+                  rename: safe
+              - name: alt
+                label: 이미지 설명
+                type: string
+                required: true
+              - name: caption
+                label: 사진 아래 설명
+                type: string
+      - name: faqs
+        label: 자주 묻는 질문
+        type: object
+        list: true
+        fields:
+          - name: question
+            label: 질문
+            type: string
+            required: true
+          - name: answer
+            label: 답변
+            type: text
+            required: true
+      - name: sources
+        label: 참고한 의학 정보
+        type: object
+        list: true
+        fields:
+          - name: title
+            label: 자료명
+            type: string
+            required: true
+          - name: url
+            label: 원문 주소
+            type: string
+            required: true
+            pattern:
+              regex: "^https://.+$"
+              message: "https://로 시작하는 주소를 입력해 주세요."
+    actions:
+      - name: publish-column
+        label: 발행하기
+        scope: entry
+        workflow: publish-column.yml
+        ref: current
+        cancelable: false
+        confirm:
+          title: 이 칼럼을 홈페이지에 발행할까요?
+          message: 저장된 최신 내용으로 홈페이지 칼럼, 목록, 사이트맵을 갱신합니다.
+          button: 발행하기
