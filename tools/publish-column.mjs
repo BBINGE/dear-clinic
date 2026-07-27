@@ -50,7 +50,7 @@ function safeId(value, fallback) {
 }
 
 function textWithBreaks(value = "") {
-  return escapeHtml(value).replace(/\r?\n/g, "<br>");
+  return escapeHtml(value).replace(/\r?\n/g, "<br> ");
 }
 
 function inlineMarkdown(value = "") {

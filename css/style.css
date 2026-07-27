@@ -2317,7 +2317,7 @@ img, video {
   height: 2px;
   background: var(--white);
   display: block;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, opacity 0.2s ease, transform 0.25s ease;
 }
 
 /* 히어로를 벗어나 스크롤되었을 때: 밝은 배경 섹션 위에서도 보이도록 전환 */
@@ -3316,6 +3316,7 @@ body.director-page {
     position: fixed;
     top: 0;
     right: 0;
+    z-index: 101;
     height: 100vh;
     width: 70%;
     max-width: 320px;
@@ -3334,6 +3335,28 @@ body.director-page {
 
   .nav__toggle {
     display: flex;
+    position: relative;
+    z-index: 102;
+  }
+
+  .nav__toggle.is-open span {
+    background: var(--white);
+  }
+
+  .nav__toggle.is-open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav__toggle.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav__toggle.is-open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  body.nav-open {
+    overflow: hidden;
   }
 
   .about__inner {

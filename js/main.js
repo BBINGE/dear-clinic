@@ -51,9 +51,29 @@ if (nav && navMenu) {
   navMenu.appendChild(languageItem);
 }
 
+function setMobileMenuState(isOpen) {
+  navMenu?.classList.toggle("is-open", isOpen);
+  navToggle?.classList.toggle("is-open", isOpen);
+  navToggle?.setAttribute("aria-expanded", String(isOpen));
+  navToggle?.setAttribute("aria-label", isOpen ? "메뉴 닫기" : "메뉴 열기");
+  document.body.classList.toggle("nav-open", isOpen);
+}
+
 navToggle?.addEventListener("click", () => {
-  const isOpen = navMenu.classList.toggle("is-open");
-  navToggle.setAttribute("aria-expanded", String(isOpen));
+  setMobileMenuState(!navMenu.classList.contains("is-open"));
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && navMenu?.classList.contains("is-open")) {
+    setMobileMenuState(false);
+    navToggle?.focus();
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 768 && navMenu?.classList.contains("is-open")) {
+    setMobileMenuState(false);
+  }
 });
 
 // 준비중인 링크 처리 (nav 메뉴 + 푸터 법적 링크 공통)
@@ -67,8 +87,7 @@ document.querySelectorAll('[data-ready="false"]').forEach((link) => {
 // 메뉴 클릭 시 모바일 메뉴 닫기
 document.querySelectorAll(".nav__link").forEach((link) => {
   link.addEventListener("click", () => {
-    navMenu?.classList.remove("is-open");
-    navToggle?.setAttribute("aria-expanded", "false");
+    setMobileMenuState(false);
   });
 });
 
