@@ -3339,7 +3339,7 @@ body.director-page {
     z-index: 102;
   }
 
-  .nav__toggle.is-open span {
+  .nav .nav__toggle.is-open span {
     background: var(--white);
   }
 
