@@ -38,7 +38,8 @@ try {
   assert.match(article, /GENERATED_BY_DEAR_COLUMN_PUBLISHER/);
   assert.match(article, /rel="canonical" href="https:\/\/bbinge\.github\.io\/dear-clinic\/columns\/publisher-test-column\.html"/);
   assert.match(article, /"@type":"FAQPage"/);
-  assert.match(article, /href="#daily-rhythm"/);
+  assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
+  assert.match(article, /칼럼 본문 테스트 이미지/);
   const schemaText = article.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
   assert.ok(schemaText, "구조화 데이터를 찾지 못했습니다.");
   assert.equal(JSON.parse(schemaText)["@context"], "https://schema.org");
@@ -46,6 +47,10 @@ try {
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
+    true,
+  );
+  assert.equal(
+    fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "body-1.webp")),
     true,
   );
 

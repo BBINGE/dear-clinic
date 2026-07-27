@@ -141,83 +141,19 @@ content:
         required: true
         options:
           format: yyyy-MM-dd
-      - name: blocks
+      - name: body
         label: 본문
-        type: block
-        list: true
+        type: rich-text
         required: true
-        blockKey: type
-        blocks:
-          - name: paragraph
-            label: 본문 문단
-            fields:
-              - name: text
-                label: 내용
-                type: rich-text
-                required: true
-                options:
-                  format: markdown
-                  media: false
-                  switcher: false
-          - name: heading
-            label: 소제목
-            fields:
-              - name: label
-                label: 영문 라벨
-                type: string
-              - name: title
-                label: 소제목
-                type: text
-                required: true
-              - name: id
-                label: 목차 영문 주소
-                type: string
-                description: 비워두면 소제목 기준으로 자동 생성합니다.
-          - name: list
-            label: 핵심 목록
-            fields:
-              - name: items
-                label: 목록 항목
-                type: object
-                list: true
-                required: true
-                fields:
-                  - name: title
-                    label: 항목 제목
-                    type: string
-                  - name: text
-                    label: 설명
-                    type: text
-          - name: quote
-            label: 강조 문구
-            fields:
-              - name: label
-                label: 영문 라벨
-                type: string
-                default: KEY POINT
-              - name: text
-                label: 강조 문구
-                type: text
-                required: true
-          - name: image
-            label: 본문 이미지
-            fields:
-              - name: image
-                label: 이미지
-                type: image
-                required: true
-                options:
-                  media: column_images
-                  path: media/columns
-                  extensions: [jpg, jpeg, png, webp]
-                  rename: safe
-              - name: alt
-                label: 이미지 설명
-                type: string
-                required: true
-              - name: caption
-                label: 사진 아래 설명
-                type: string
+        description: 네이버 에디터처럼 문단, 소제목, 굵게, 목록, 링크, 이미지를 한 화면에서 편집합니다.
+        options:
+          format: markdown
+          media: column_images
+          path: media/columns
+          extensions: [jpg, jpeg, png, webp]
+          categories: [image]
+          rename: safe
+          switcher: false
       - name: faqs
         label: 자주 묻는 질문
         type: object

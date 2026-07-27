@@ -56,6 +56,8 @@ function textWithBreaks(value = "") {
 function inlineMarkdown(value = "") {
   let output = escapeHtml(value);
   output = output.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  output = output.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+  output = output.replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>");
   output = output.replace(/\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
   return output.replace(/\r?\n/g, "<br>");
 }
@@ -92,15 +94,21 @@ function validateContent(content) {
   if (content.modifiedAt && content.modifiedAt < content.publishedAt) {
     throw new Error("최종 수정일은 최초 게시일보다 빠를 수 없습니다.");
   }
-  if (!Array.isArray(content.blocks) || content.blocks.length === 0) {
-    throw new Error("본문 블록을 한 개 이상 입력해 주세요.");
+  const hasRichBody = typeof content.body === "string" && content.body.trim().length > 0;
+  const hasBlocks = Array.isArray(content.blocks) && content.blocks.length > 0;
+  if (!hasRichBody && !hasBlocks) {
+    throw new Error("본문을 입력해 주세요.");
   }
-  const allowedBlocks = new Set(["paragraph", "heading", "list", "quote", "image"]);
-  content.blocks.forEach((block, index) => {
-    if (!block || !allowedBlocks.has(block.type)) {
-      throw new Error(`${index + 1}번째 본문 블록의 종류가 올바르지 않습니다.`);
-    }
-  });
+  if (hasRichBody) {
+    assertString(content.body, "본문", 20, 50000);
+  } else {
+    const allowedBlocks = new Set(["paragraph", "heading", "list", "quote", "image"]);
+    content.blocks.forEach((block, index) => {
+      if (!block || !allowedBlocks.has(block.type)) {
+        throw new Error(`${index + 1}번째 본문 블록의 종류가 올바르지 않습니다.`);
+      }
+    });
+  }
   if (content.faqs && !Array.isArray(content.faqs)) {
     throw new Error("FAQ 형식이 올바르지 않습니다.");
   }
@@ -112,6 +120,7 @@ function validateContent(content) {
     summary: content.summary,
     description: content.description,
     lead: content.lead,
+    body: content.body,
     blocks: content.blocks,
     faqs: content.faqs,
   });
@@ -192,6 +201,123 @@ function renderBlocks(content, mediaRoot, siteRoot) {
     return `<figure class="column-article__body-image"><img src="../${imagePath}" alt="${escapeHtml(block.alt)}" loading="lazy">${caption}</figure>`;
   }).join("\n");
   return { html, toc };
+}
+
+function normalizeMediaReference(value) {
+  let normalized = String(value || "").trim().replace(/^<|>$/g, "");
+  if (/^https?:\/\//i.test(normalized)) {
+    throw new Error("본문 이미지는 외부 주소가 아니라 관리자에서 직접 업로드해 주세요.");
+  }
+  normalized = normalized.split(/[?#]/, 1)[0];
+  try {
+    normalized = decodeURIComponent(normalized);
+  } catch {
+    throw new Error(`본문 이미지 경로를 해석할 수 없습니다: ${value}`);
+  }
+  return normalized.replace(/^\.?\//, "");
+}
+
+function renderRichBody(content, mediaRoot, siteRoot) {
+  const lines = content.body.replace(/\r\n?/g, "\n").split("\n");
+  const html = [];
+  const toc = [];
+  const usedIds = new Set();
+  let paragraph = [];
+  let listType = "";
+  let listItems = [];
+  let imageIndex = 0;
+
+  function flushParagraph() {
+    if (!paragraph.length) return;
+    html.push(`<p>${inlineMarkdown(paragraph.join("\n"))}</p>`);
+    paragraph = [];
+  }
+
+  function flushList() {
+    if (!listItems.length) return;
+    const tag = listType === "ol" ? "ol" : "ul";
+    const className = tag === "ul" ? ' class="column-checklist"' : "";
+    html.push(`<${tag}${className}>${listItems.map((item) => `<li>${inlineMarkdown(item)}</li>`).join("")}</${tag}>`);
+    listType = "";
+    listItems = [];
+  }
+
+  function uniqueHeadingId(title, index) {
+    const base = String(title || "")
+      .trim()
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}-]+/gu, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "") || `section-${index + 1}`;
+    let candidate = base;
+    let suffix = 2;
+    while (usedIds.has(candidate)) {
+      candidate = `${base}-${suffix}`;
+      suffix += 1;
+    }
+    usedIds.add(candidate);
+    return candidate;
+  }
+
+  lines.forEach((line, index) => {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      flushParagraph();
+      flushList();
+      return;
+    }
+
+    const image = trimmed.match(/^!\[([^\]]*)\]\((\S+?)(?:\s+["']([^"']*)["'])?\)$/);
+    if (image) {
+      flushParagraph();
+      flushList();
+      imageIndex += 1;
+      const mediaPath = normalizeMediaReference(image[2]);
+      const copiedPath = copyMedia(mediaRoot, siteRoot, content.slug, mediaPath, `body-${imageIndex}`);
+      const alt = image[1].trim() || "칼럼 본문 이미지";
+      const caption = image[3]?.trim() ? `<figcaption>${escapeHtml(image[3].trim())}</figcaption>` : "";
+      html.push(`<figure class="column-article__body-image"><img src="../${copiedPath}" alt="${escapeHtml(alt)}" loading="lazy">${caption}</figure>`);
+      return;
+    }
+
+    const heading = trimmed.match(/^(#{1,3})\s+(.+)$/);
+    if (heading) {
+      flushParagraph();
+      flushList();
+      const title = heading[2].trim();
+      const id = uniqueHeadingId(title, index);
+      const level = heading[1].length >= 3 ? 3 : 2;
+      if (level === 2) toc.push({ id, title });
+      html.push(`<section id="${id}"><h${level}>${inlineMarkdown(title)}</h${level}></section>`);
+      return;
+    }
+
+    const unorderedItem = trimmed.match(/^[-*]\s+(.+)$/);
+    const orderedItem = trimmed.match(/^\d+[.)]\s+(.+)$/);
+    if (unorderedItem || orderedItem) {
+      flushParagraph();
+      const nextType = orderedItem ? "ol" : "ul";
+      if (listType && listType !== nextType) flushList();
+      listType = nextType;
+      listItems.push((orderedItem || unorderedItem)[1]);
+      return;
+    }
+
+    const quote = trimmed.match(/^>\s?(.+)$/);
+    if (quote) {
+      flushParagraph();
+      flushList();
+      html.push(`<aside class="column-keypoint"><strong>${inlineMarkdown(quote[1])}</strong></aside>`);
+      return;
+    }
+
+    flushList();
+    paragraph.push(trimmed);
+  });
+
+  flushParagraph();
+  flushList();
+  return { html: html.join("\n"), toc };
 }
 
 function renderFaq(content) {
@@ -402,7 +528,9 @@ function main() {
   }
 
   const coverPath = copyMedia(mediaRoot, siteRoot, content.slug, content.coverImage, "cover");
-  const { html: body, toc } = renderBlocks(content, mediaRoot, siteRoot);
+  const { html: body, toc } = content.body
+    ? renderRichBody(content, mediaRoot, siteRoot)
+    : renderBlocks(content, mediaRoot, siteRoot);
   const faq = renderFaq(content);
   const sources = renderSources(content);
   const article = buildArticle(content, coverPath, body, toc, faq, sources);
