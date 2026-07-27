@@ -68,6 +68,21 @@ function assertString(value, label, min = 1, max = 10000) {
   }
 }
 
+function normalizeTags(value) {
+  if (value == null) return [];
+  if (!Array.isArray(value)) {
+    throw new Error("검색 주제 태그 형식이 올바르지 않습니다.");
+  }
+  const tags = [...new Set(value
+    .map((tag) => String(tag || "").trim().replace(/^#+\s*/, ""))
+    .filter(Boolean))];
+  if (tags.length > 5) {
+    throw new Error("검색 주제 태그는 최대 5개까지 입력해 주세요.");
+  }
+  tags.forEach((tag, index) => assertString(tag, `${index + 1}번째 검색 주제 태그`, 2, 30));
+  return tags;
+}
+
 function applyOptionalFieldDefaults(content) {
   const summary = typeof content.summary === "string" ? content.summary.trim() : "";
   const description = typeof content.description === "string" ? content.description.trim() : "";
@@ -79,10 +94,11 @@ function applyOptionalFieldDefaults(content) {
     description: description || summary,
     lead: lead || summary,
     modifiedAt: content.modifiedAt || content.publishedAt,
+    tags: normalizeTags(content.tags),
   };
 }
 
-function validateContent(content) {
+function validateContent(content, { requireReady = true } = {}) {
   assertString(content.title, "제목", 5, 100);
   assertString(content.slug, "영문 URL", 3, 80);
   if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(content.slug)) {
@@ -91,7 +107,7 @@ function validateContent(content) {
   if (!CATEGORY_MAP[content.category]) {
     throw new Error("분류 값이 올바르지 않습니다.");
   }
-  if (content.status !== "ready") {
+  if (requireReady && content.status !== "ready") {
     throw new Error("작성 상태를 ‘발행 준비 완료’로 바꾼 뒤 발행해 주세요.");
   }
   assertString(content.summary, "목록에 보일 한 줄 소개", 20, 220);
@@ -134,6 +150,7 @@ function validateContent(content) {
     summary: content.summary,
     description: content.description,
     lead: content.lead,
+    tags: content.tags,
     body: content.body,
     blocks: content.blocks,
     faqs: content.faqs,
@@ -175,7 +192,7 @@ function copyMedia(mediaRoot, siteRoot, slug, relativePath, suffix = "") {
   return `assets/images/columns/${slug}/${outputName}`;
 }
 
-function renderBlocks(content, mediaRoot, siteRoot) {
+function renderBlocks(content, mediaRoot, siteRoot, assetSlug = content.slug) {
   const toc = [];
   const html = content.blocks.map((block, index) => {
     if (block.type === "paragraph") {
@@ -210,7 +227,7 @@ function renderBlocks(content, mediaRoot, siteRoot) {
     }
     assertString(block.image, `${index + 1}번째 본문 이미지`, 3, 500);
     assertString(block.alt, `${index + 1}번째 이미지 설명`, 3, 160);
-    const imagePath = copyMedia(mediaRoot, siteRoot, content.slug, block.image, `body-${index + 1}`);
+    const imagePath = copyMedia(mediaRoot, siteRoot, assetSlug, block.image, `body-${index + 1}`);
     const caption = block.caption ? `<figcaption>${escapeHtml(block.caption)}</figcaption>` : "";
     return `<figure class="column-article__body-image"><img src="../${imagePath}" alt="${escapeHtml(block.alt)}" loading="lazy">${caption}</figure>`;
   }).join("\n");
@@ -231,7 +248,7 @@ function normalizeMediaReference(value) {
   return normalized.replace(/^\.?\//, "");
 }
 
-function renderRichBody(content, mediaRoot, siteRoot) {
+function renderRichBody(content, mediaRoot, siteRoot, assetSlug = content.slug) {
   const lines = content.body.replace(/\r\n?/g, "\n").split("\n");
   const html = [];
   const toc = [];
@@ -287,7 +304,7 @@ function renderRichBody(content, mediaRoot, siteRoot) {
       flushList();
       imageIndex += 1;
       const mediaPath = normalizeMediaReference(image[2]);
-      const copiedPath = copyMedia(mediaRoot, siteRoot, content.slug, mediaPath, `body-${imageIndex}`);
+      const copiedPath = copyMedia(mediaRoot, siteRoot, assetSlug, mediaPath, `body-${imageIndex}`);
       const alt = image[1].trim() || "칼럼 본문 이미지";
       const caption = image[3]?.trim() ? `<figcaption>${escapeHtml(image[3].trim())}</figcaption>` : "";
       html.push(`<figure class="column-article__body-image"><img src="../${copiedPath}" alt="${escapeHtml(alt)}" loading="lazy">${caption}</figure>`);
@@ -374,7 +391,7 @@ function renderSources(content) {
   return `<section class="column-sources"><h2>참고한 의학 정보</h2><ul>${items}</ul><p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다. 증상과 건강 상태에 따라 의료진의 진찰이 필요합니다.</p></section>`;
 }
 
-function buildArticle(content, coverPath, body, toc, faq, sources) {
+function buildArticle(content, coverPath, body, toc, faq, sources, { preview = false } = {}) {
   const category = CATEGORY_MAP[content.category];
   const publishedDisplay = content.publishedAt.replaceAll("-", ".");
   const modifiedAt = content.modifiedAt && /^\d{4}-\d{2}-\d{2}$/.test(content.modifiedAt)
@@ -387,6 +404,7 @@ function buildArticle(content, coverPath, body, toc, faq, sources) {
       "@type": "Article",
       headline: content.title,
       description: content.description,
+      keywords: content.tags,
       image: imageUrl,
       datePublished: content.publishedAt,
       dateModified: modifiedAt,
@@ -420,6 +438,15 @@ function buildArticle(content, coverPath, body, toc, faq, sources) {
   const tocHtml = tocItems.length
     ? `<aside class="column-toc" aria-label="목차"><p>CONTENTS</p><ol>${tocItems.join("")}</ol></aside>`
     : '<aside class="column-toc"><p>DEAR COLUMN</p><a href="../columns.html">다른 칼럼 보기 →</a></aside>';
+  const tagsHtml = content.tags.length
+    ? `<ul class="column-tags" aria-label="검색 주제">${content.tags.map((tag) => `<li>#${escapeHtml(tag)}</li>`).join("")}</ul>`
+    : "";
+  const previewMeta = preview
+    ? '  <meta name="robots" content="noindex,nofollow,noarchive">\n  <meta name="googlebot" content="noindex,nofollow,noarchive">\n'
+    : "";
+  const previewNotice = preview
+    ? '<div class="column-preview-notice" role="status"><strong>홈페이지 미리보기</strong><span>검색엔진과 칼럼 목록에는 공개되지 않습니다.</span></div>'
+    : "";
 
   return `<!DOCTYPE html>
 <html lang="ko">
@@ -428,7 +455,7 @@ function buildArticle(content, coverPath, body, toc, faq, sources) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#F8F8F6">
-  <title>${escapeHtml(content.title)}</title>
+${previewMeta}  <title>${escapeHtml(content.title)}</title>
   <meta name="description" content="${escapeHtml(content.description)}">
   <link rel="canonical" href="${articleUrl}">
   <meta property="og:type" content="article">
@@ -440,8 +467,9 @@ function buildArticle(content, coverPath, body, toc, faq, sources) {
   <link rel="stylesheet" href="../css/style.css">
   <script type="application/ld+json">${schema}</script>
 </head>
-<body class="column-article-body">
+<body class="column-article-body${preview ? " is-preview" : ""}">
 ${PUBLISHER_MARKER}
+${previewNotice}
 <nav class="nav" id="top">
   <a href="../index.html" class="nav__logo">DEAR</a>
   <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -454,6 +482,7 @@ ${PUBLISHER_MARKER}
     <h1>${textWithBreaks(content.title)}</h1>
     <p class="column-article__lead">${textWithBreaks(content.lead)}</p>
     <div class="column-byline"><span>김민지 대표원장</span><time datetime="${content.publishedAt}">${publishedDisplay}</time></div>
+    ${tagsHtml}
   </header>
   <figure class="column-article__hero"><img src="../${coverPath}" alt="${escapeHtml(content.coverAlt)}"></figure>
   <div class="column-article__layout">
@@ -480,7 +509,7 @@ function updateColumnsIndex(siteRoot, content, coverPath) {
   const category = CATEGORY_MAP[content.category];
   const start = `        <!-- COLUMN_CARD:${content.slug}:START -->`;
   const end = `        <!-- COLUMN_CARD:${content.slug}:END -->`;
-  const searchText = escapeHtml(`${content.title} ${content.summary} ${category.label} ${content.category}`);
+  const searchText = escapeHtml(`${content.title} ${content.summary} ${content.tags.join(" ")} ${category.label} ${content.category}`);
   const card = `${start}
         <a class="column-card js-reveal" href="columns/${content.slug}.html" data-column-slug="${content.slug}" data-category="${content.category}" data-search="${searchText}">
           <div class="column-card__image"><img src="${coverPath}" alt="" loading="lazy"></div>
@@ -531,37 +560,44 @@ function main() {
   const mediaRoot = path.resolve(args["media-root"] || path.dirname(path.resolve(args.content)));
   const contentPath = path.resolve(args.content);
   const content = applyOptionalFieldDefaults(JSON.parse(fs.readFileSync(contentPath, "utf8")));
-  validateContent(content);
+  const mode = args.mode || "publish";
+  if (!["publish", "preview"].includes(mode)) {
+    throw new Error("--mode는 publish 또는 preview만 사용할 수 있습니다.");
+  }
+  const isPreview = mode === "preview";
+  validateContent(content, { requireReady: !isPreview });
 
-  const articlePath = path.join(siteRoot, "columns", `${content.slug}.html`);
+  const articlePath = path.join(siteRoot, isPreview ? "preview" : "columns", `${content.slug}.html`);
   if (fs.existsSync(articlePath)) {
     const existing = fs.readFileSync(articlePath, "utf8");
     if (!existing.includes(PUBLISHER_MARKER)) {
-      throw new Error(`수동 제작 칼럼은 자동으로 덮어쓸 수 없습니다: columns/${content.slug}.html`);
+      throw new Error(`수동 제작 칼럼은 자동으로 덮어쓸 수 없습니다: ${isPreview ? "preview" : "columns"}/${content.slug}.html`);
     }
   }
 
-  const coverPath = copyMedia(mediaRoot, siteRoot, content.slug, content.coverImage, "cover");
+  const assetSlug = isPreview ? `preview-${content.slug}` : content.slug;
+  const coverPath = copyMedia(mediaRoot, siteRoot, assetSlug, content.coverImage, "cover");
   const { html: body, toc } = content.body
-    ? renderRichBody(content, mediaRoot, siteRoot)
-    : renderBlocks(content, mediaRoot, siteRoot);
+    ? renderRichBody(content, mediaRoot, siteRoot, assetSlug)
+    : renderBlocks(content, mediaRoot, siteRoot, assetSlug);
   const faq = renderFaq(content);
   const sources = renderSources(content);
-  const article = buildArticle(content, coverPath, body, toc, faq, sources);
+  const article = buildArticle(content, coverPath, body, toc, faq, sources, { preview: isPreview });
 
   fs.mkdirSync(path.dirname(articlePath), { recursive: true });
   fs.writeFileSync(articlePath, article, "utf8");
-  updateColumnsIndex(siteRoot, content, coverPath);
-  updateSitemap(siteRoot, content);
+  if (!isPreview) {
+    updateColumnsIndex(siteRoot, content, coverPath);
+    updateSitemap(siteRoot, content);
+  }
 
   const result = {
-    status: "published",
+    status: isPreview ? "previewed" : "published",
     slug: content.slug,
-    url: `${BASE_URL}/columns/${content.slug}.html`,
+    url: `${BASE_URL}/${isPreview ? "preview" : "columns"}/${content.slug}.html`,
     files: [
       path.relative(siteRoot, articlePath).replaceAll(path.sep, "/"),
-      "columns.html",
-      "sitemap.xml",
+      ...(!isPreview ? ["columns.html", "sitemap.xml"] : []),
       coverPath,
     ],
   };

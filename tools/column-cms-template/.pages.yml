@@ -44,7 +44,7 @@ content:
         type: string
         required: true
         description: >-
-          홈페이지 칼럼 목록과 글 첫 화면, 검색 결과의 제목으로 쓰입니다. 독자가 어떤 고민의 답을 얻는지 자연스럽고 구체적으로 적어 주세요. 예: 잠이 오지 않는 밤, 생활 리듬부터 살펴보는 이유
+          오른쪽 위 Save는 비공개 초안 임시저장입니다. Save만 눌러서는 홈페이지에 공개되지 않습니다. 이 제목은 홈페이지 칼럼 목록과 글 첫 화면, 검색 결과에 쓰입니다. 독자가 어떤 고민의 답을 얻는지 자연스럽고 구체적으로 적어 주세요. 예: 잠이 오지 않는 밤, 생활 리듬부터 살펴보는 이유
         options:
           minlength: 5
           maxlength: 100
@@ -102,6 +102,17 @@ content:
         options:
           minlength: 20
           maxlength: 220
+
+      - name: tags
+        label: 검색 주제 태그 (선택)
+        type: string
+        description: >-
+          홈페이지에서 관련 주제를 보여 주고 칼럼 검색에 활용합니다. 검색 순위를 올리는 해시태그 칸은 아니므로 핵심 주제만 2~5개 적어 주세요. # 기호는 쓰지 않아도 됩니다. 예: 공진단, 피로, 생활 리듬
+        list:
+          max: 5
+        options:
+          minlength: 2
+          maxlength: 30
 
       - name: coverImage
         label: 목록과 첫 화면의 대표 사진
@@ -240,6 +251,16 @@ content:
           format: yyyy-MM-dd
 
     actions:
+      - name: preview-column
+        label: 미리보기 만들기
+        scope: entry
+        workflow: preview-column.yml
+        ref: current
+        cancelable: false
+        confirm:
+          title: 저장된 내용으로 홈페이지 미리보기를 만들까요?
+          message: 먼저 오른쪽 위 Save를 눌러 최신 내용을 임시저장했는지 확인해 주세요. 미리보기는 칼럼 목록과 검색 사이트맵에 들어가지 않으며 검색엔진 노출을 차단합니다.
+          button: 미리보기 만들기
       - name: publish-column
         label: 홈페이지에 발행
         scope: entry

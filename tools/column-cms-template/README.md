@@ -5,11 +5,18 @@
 
 ## 운영 구조
 
-1. Pages CMS에서 이메일로 로그인해 원고와 이미지를 저장합니다.
-2. 저장한 내용은 비공개 콘텐츠 저장소에만 남습니다.
-3. `발행하기`를 눌렀을 때 `publish-column.yml`이 실행됩니다.
-4. 공개 홈페이지의 `tools/publish-column.mjs`가 칼럼 HTML, Columns 목록, sitemap.xml을 생성합니다.
-5. 공개 홈페이지 `master`에 발행 커밋이 push되고 GitHub Pages가 갱신됩니다.
+1. Pages CMS에서 이메일로 로그인해 원고와 이미지를 작성합니다.
+2. 오른쪽 위 `Save`를 누르면 비공개 콘텐츠 저장소에만 초안이 임시저장됩니다.
+3. 저장된 글에서 `미리보기 만들기`를 누르면 실제 홈페이지 디자인의 검토용 페이지가 생성됩니다.
+4. 미리보기 주소는 `https://bbinge.github.io/dear-clinic/preview/{글 주소용 영문 이름}.html`입니다.
+5. 검토가 끝나면 `저장·발행 상태`를 `홈페이지 발행 준비 완료`로 바꾸고 다시 `Save`합니다.
+6. `홈페이지에 발행`을 눌렀을 때 `publish-column.yml`이 실행됩니다.
+7. 공개 홈페이지의 `tools/publish-column.mjs`가 칼럼 HTML, Columns 목록, sitemap.xml을 생성합니다.
+8. 공개 홈페이지 `master`에 발행 커밋이 push되고 GitHub Pages가 갱신됩니다.
+
+`Save`, `미리보기 만들기`, `홈페이지에 발행`은 서로 다른 동작입니다. 미리보기는 Columns 목록과
+사이트맵에 포함되지 않고 `noindex` 및 `robots.txt`로 검색 노출을 차단하지만, 주소를 아는 사람은
+열 수 있으므로 환자 개인정보나 공개하면 안 되는 원고는 넣지 않습니다.
 
 ## 저장소에 필요한 비밀 값
 

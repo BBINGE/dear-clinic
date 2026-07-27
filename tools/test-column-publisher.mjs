@@ -11,12 +11,13 @@ const siteRoot = path.resolve(toolsDir, "..");
 const testRoot = fs.mkdtempSync(path.join(os.tmpdir(), "dear-column-publisher-test-"));
 const contentPath = path.join(toolsDir, "fixtures", "column-publisher-test.json");
 
-function publish() {
+function publish(content = contentPath, mode = "publish") {
   return spawnSync(process.execPath, [
     path.join(toolsDir, "publish-column.mjs"),
-    "--content", contentPath,
+    "--content", content,
     "--media-root", siteRoot,
     "--site-root", testRoot,
+    "--mode", mode,
   ], { encoding: "utf8" });
 }
 
@@ -24,6 +25,25 @@ try {
   fs.mkdirSync(path.join(testRoot, "columns"), { recursive: true });
   fs.copyFileSync(path.join(siteRoot, "columns.html"), path.join(testRoot, "columns.html"));
   fs.copyFileSync(path.join(siteRoot, "sitemap.xml"), path.join(testRoot, "sitemap.xml"));
+
+  const draft = JSON.parse(fs.readFileSync(contentPath, "utf8"));
+  draft.status = "draft";
+  const draftPath = path.join(testRoot, "draft.json");
+  fs.writeFileSync(draftPath, JSON.stringify(draft), "utf8");
+  const indexBeforePreview = fs.readFileSync(path.join(testRoot, "columns.html"), "utf8");
+  const sitemapBeforePreview = fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8");
+  const preview = publish(draftPath, "preview");
+  assert.equal(preview.status, 0, preview.stderr);
+  const previewArticle = fs.readFileSync(path.join(testRoot, "preview", "publisher-test-column.html"), "utf8");
+  assert.match(previewArticle, /name="robots" content="noindex,nofollow,noarchive"/);
+  assert.match(previewArticle, /홈페이지 미리보기/);
+  assert.match(previewArticle, /#생활 리듬/);
+  assert.equal(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), indexBeforePreview);
+  assert.equal(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), sitemapBeforePreview);
+  assert.equal(
+    fs.existsSync(path.join(testRoot, "assets", "images", "columns", "preview-publisher-test-column", "cover.webp")),
+    true,
+  );
 
   const first = publish();
   assert.equal(first.status, 0, first.stderr);
@@ -40,6 +60,9 @@ try {
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
   assert.match(article, /칼럼 본문 테스트 이미지/);
+  assert.match(article, /#수면/);
+  assert.match(article, /#생활 리듬/);
+  assert.doesNotMatch(article, /name="robots" content="noindex/);
   assert.match(article, /<meta name="description" content="수면과 생활 리듬을 함께 살펴보는 디어한의원의 칼럼 발행 테스트입니다.">/);
   assert.match(article, /<p class="column-article__lead">수면과 생활 리듬을 함께 살펴보는 디어한의원의 칼럼 발행 테스트입니다.<\/p>/);
   const schemaText = article.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1];
@@ -56,10 +79,6 @@ try {
     true,
   );
 
-  const draft = JSON.parse(fs.readFileSync(contentPath, "utf8"));
-  draft.status = "draft";
-  const draftPath = path.join(testRoot, "draft.json");
-  fs.writeFileSync(draftPath, JSON.stringify(draft), "utf8");
   const blockedDraft = spawnSync(process.execPath, [
     path.join(toolsDir, "publish-column.mjs"),
     "--content", draftPath,

@@ -1,0 +1,89 @@
+name: 디어 칼럼 미리보기
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Pages CMS가 전달한 미리보기 정보
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dear-column-preview
+  cancel-in-progress: false
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 비공개 칼럼 원고 가져오기
+        uses: actions/checkout@v4
+        with:
+          path: content-source
+
+      - name: 공개 홈페이지 가져오기
+        uses: actions/checkout@v4
+        with:
+          repository: BBINGE/dear-clinic
+          ssh-key: ${{ secrets.DEAR_PUBLIC_REPO_SSH_KEY }}
+          path: public-site
+
+      - name: 미리볼 원고 확인
+        id: entry
+        shell: bash
+        env:
+          PAGES_CMS_PAYLOAD: ${{ inputs.payload }}
+        run: |
+          node <<'NODE'
+          const fs = require("fs");
+          const payload = JSON.parse(process.env.PAGES_CMS_PAYLOAD);
+          const entryPath = payload?.context?.path;
+          if (!entryPath || !/^content\/columns\/[a-z0-9-]+\.json$/.test(entryPath)) {
+            throw new Error("미리볼 칼럼 파일을 확인할 수 없습니다.");
+          }
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `path=${entryPath}\n`);
+          NODE
+
+      - name: 홈페이지 모습으로 미리보기 생성
+        run: >
+          node public-site/tools/publish-column.mjs
+          --content "content-source/${{ steps.entry.outputs.path }}"
+          --media-root content-source
+          --site-root public-site
+          --mode preview
+
+      - name: 미리보기 변경 검증
+        working-directory: public-site
+        run: |
+          git diff --check
+          test -z "$(git status --short -- HANDOFF.md)"
+          test -n "$(git status --short -- preview assets/images/columns/preview-*)"
+          test -z "$(git status --short -- columns.html sitemap.xml)"
+
+      - name: 검색 제외 미리보기 올리기
+        working-directory: public-site
+        run: |
+          git config user.name "디어 칼럼 미리보기"
+          git config user.email "column-preview@users.noreply.github.com"
+          git add -- preview assets/images/columns/preview-*
+          git commit -m "칼럼 미리보기: ${{ steps.entry.outputs.path }}"
+          git push origin master
+
+      - name: 미리보기 주소 안내
+        shell: bash
+        env:
+          ENTRY_PATH: ${{ steps.entry.outputs.path }}
+        run: |
+          SLUG="$(basename "$ENTRY_PATH" .json)"
+          {
+            echo "## 미리보기 생성 완료"
+            echo
+            echo "GitHub Pages 반영에 약 1분이 걸릴 수 있습니다."
+            echo
+            echo "미리보기: https://bbinge.github.io/dear-clinic/preview/$SLUG.html"
+            echo
+            echo "이 주소는 칼럼 목록과 사이트맵에 포함되지 않으며 검색엔진 노출을 차단합니다."
+          } >> "$GITHUB_STEP_SUMMARY"
