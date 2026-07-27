@@ -2039,8 +2039,10 @@ img, video {
 
 /* ============ 사진 프레임 (공진단 지그재그 섹션 공용, 프레임 1개 + 슬라이드쇼) ============ */
 .photo-frame {
-  background: var(--warm-gray);
-  padding: 0.75rem;
+  background: var(--white);
+  border: 1px solid rgba(60, 96, 90, 0.16);
+  padding: clamp(0.35rem, 0.7vw, 0.5rem);
+  box-shadow: 0 1.25rem 3rem rgba(36, 120, 96, 0.08);
 }
 
 .photo-frame__clip {
@@ -2396,7 +2398,7 @@ img, video {
 
 .gongjindan--1,
 .gongjindan--2 {
-  background: var(--bg-base);
+  background: var(--white);
 }
 
 /* 공진단 II는 텍스트가 DOM상 먼저 오지만(모바일 스택 순서), 데스크톱에서는 사진을 좌측에 배치 */
