@@ -1,0 +1,203 @@
+# 디어한의원 홈페이지 — 공용 인수인계
+
+최종 갱신: 2026-07-27
+
+대상: Claude, Codex 및 이후 유지보수 담당자
+
+공개 저장소: https://github.com/BBINGE/dear-clinic
+
+배포 주소: https://bbinge.github.io/dear-clinic/
+
+기준 브랜치: `master`
+
+이 파일은 집·회사 PC와 Claude·Codex 사이에서 공유하는 현재 상태 문서다. 이제 Git에 커밋한다. 정적인 커밋 번호를 최신 상태로 믿지 말고 작업 시작 때 반드시 `git fetch`, `git status`, `git log`로 확인한다.
+
+## 1. 작업 시작 절차
+
+```powershell
+git fetch origin
+git status --short --branch
+git log -10 --oneline
+```
+
+로컬 변경이 없고 `master`가 원격보다 뒤처졌다면:
+
+```powershell
+git pull --ff-only origin master
+```
+
+그다음 `AGENTS.md`, `CLAUDE.md`, 이 파일을 읽는다. 로컬 변경이 있으면 출처를 확인하기 전에는 pull, 덮어쓰기, 삭제를 하지 않는다.
+
+## 2. 저장소 역할
+
+### 공개 홈페이지
+
+- 저장소: `BBINGE/dear-clinic`
+- 정적 HTML/CSS/Vanilla JS
+- GitHub Pages는 `master`의 공개 사이트를 배포한다.
+- 칼럼 발행기가 생성한 HTML, Columns 카드, sitemap, 공개 이미지를 포함한다.
+
+### 비공개 칼럼 콘텐츠
+
+- 저장소: `BBINGE/dear-clinic-content`
+- Pages CMS 설정, 비공개 초안 JSON, 원고 이미지를 저장한다.
+- Pages CMS: https://app.pagescms.org/bbinge/dear-clinic-content/main
+- 별도의 `AGENTS.md`, `CLAUDE.md`, `HANDOFF.md`가 있으며 CMS 작업은 그 문서를 함께 따른다.
+- 공개 저장소에 비공개 원고, 인증정보, Deploy key를 복사하지 않는다.
+
+## 3. 현재 공개 페이지
+
+한국어 주요 페이지:
+
+- `index.html` — 홈페이지
+- `about.html` — About DEAR 허브
+- `director.html` — 김민지 대표원장 소개
+- `career.html` — 자격·학회·경력
+- `philosophy.html` — 진료 철학
+- `care.html` — Focus / Calm / Restore / Relief / Shape
+- `services.html` — 비디어 다이어트, 디어 공진단, 원내탕전 체질한약, 디어밸런스
+- `columns.html` — 공개 칼럼 목록
+- `privacy.html`, `patient-rights.html` — 법률·환자 안내
+
+다국어 초벌 페이지:
+
+- 영어 `en/`
+- 일본어 `ja/`
+- 중국어 간체 `zh-cn/`
+
+다국어 문구는 기계 번역 초벌이며 의료 용어, 경력, 제품 표현은 검수 전 확정 카피가 아니다. 한국어 원본을 번역 수정과 함께 바꾸지 않는다.
+
+## 4. 칼럼 현재 상태
+
+공개 칼럼:
+
+- `columns/seocho-diet-clinic.html` — 최초 수동 제작 예시 칼럼
+- `columns/seocho-diet-herbal-medicine.html` — Pages CMS 발행 칼럼
+
+미리보기:
+
+- `preview/seocho-diet-herbal-medicine.html`
+- 미리보기는 `noindex`, `nofollow`, `robots.txt` 차단 대상이다.
+
+발행기:
+
+- `tools/publish-column.mjs`
+- 테스트: `tools/test-column-publisher.mjs`
+- 테스트 자료: `tools/fixtures/column-publisher-test.json`
+- CMS 설치 템플릿: `tools/column-cms-template/`
+
+발행기 변경 후 필수:
+
+```powershell
+node tools/test-column-publisher.mjs
+git diff --check
+```
+
+## 5. Pages CMS 작성·발행 흐름
+
+`Save`, `미리보기 만들기`, `홈페이지에 발행`은 서로 다른 동작이다.
+
+1. Pages CMS에서 작성한다.
+2. 오른쪽 위 `Save`는 비공개 저장소에 초안을 저장한다. 홈페이지에 공개되지 않는다.
+3. `미리보기 만들기`는 공개 저장소의 `preview/{slug}.html`을 갱신한다. Columns 목록과 sitemap에는 추가하지 않는다.
+4. 검토 후 `저장·발행 상태`를 `홈페이지 발행 준비 완료`로 바꾸고 다시 `Save`한다.
+5. `홈페이지에 발행`을 실행하면 공개 칼럼, `columns.html`, `sitemap.xml`, 공개 이미지가 갱신된다.
+6. GitHub Pages 반영 후 실제 공개 주소를 확인한다.
+
+현재 Pages CMS 설정 버전은 `.pages.yml`의 `v4.1`이다. 화면 디자인 블록:
+
+- 큰 소제목과 설명 문단
+- 진료에서 확인하는 항목표
+- 경우의 수 번호 카드
+- 진한 배경의 핵심 문장
+- 본문 사진과 설명
+
+Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스템 문구는 영어로 남을 수 있지만 입력 항목과 설명은 한글이다.
+
+## 6. 생성 파일과 수정 경계
+
+- `<!-- GENERATED_BY_DEAR_COLUMN_PUBLISHER -->`가 있는 칼럼은 발행기가 다시 생성할 수 있다.
+- 수동 제작 칼럼을 발행기로 덮어쓰지 않는다. 발행기가 마커 없는 기존 파일을 발견하면 중단하도록 되어 있다.
+- CMS 원고의 확정 카피를 공개 HTML에서만 고치면 다음 발행 때 사라진다. CMS 원본 JSON을 먼저 수정한다.
+- 대표 이미지와 본문 이미지는 5MB 이하 JPG/JPEG/PNG/WebP만 허용한다.
+- URL slug는 영문 소문자·숫자·하이픈만 사용하며 발행 후 바꾸지 않는다.
+
+## 7. 보안과 개인정보
+
+- 환자 개인정보를 수집하거나 저장하는 기능은 없다.
+- 문의·예약은 네이버 예약, 전화, 톡톡 등 외부 서비스로 연결한다.
+- 칼럼과 미리보기에 환자 이름, 연락처, 진료 기록, 식별 가능한 사례를 넣지 않는다.
+- 비공개 저장소의 Actions secret 이름은 `DEAR_PUBLIC_REPO_SSH_KEY`다. 값은 GitHub Secrets에만 있고 파일이나 문서에 기록하지 않는다.
+- Deploy key는 공개 `BBINGE/dear-clinic` 한 저장소에만 쓰기 권한을 갖는다.
+- GitHub Actions는 커밋 SHA로 고정한 `actions/checkout`을 사용한다.
+
+## 8. SEO·검색 상태
+
+- `robots.txt`, `sitemap.xml`, canonical, 기본 meta/OG, JSON-LD가 있다.
+- Google Search Console 속성 및 sitemap 제출이 완료됐다.
+- 홈페이지는 Google 색인 등록 상태를 확인했다.
+- 새 칼럼 발행 후 사용자가 Google Search Console URL 검사에서 색인 생성을 요청한다.
+- 네이버 서치어드바이저는 GitHub Pages 주소 등록에 제약이 있었다. 독립 도메인 연결 후 재등록하는 방향이다.
+- 독립 도메인은 아직 연결하지 않았다.
+
+도메인 연결 시 함께 바꿀 대상:
+
+1. canonical과 Open Graph URL
+2. hreflang
+3. `sitemap.xml`
+4. `robots.txt`
+5. Search Console 속성
+6. 네이버 서치어드바이저 등록
+
+## 9. 현재 남은 주요 작업
+
+- 실제 글쓰기 경험을 통해 Pages CMS 디자인 블록 사용성을 추가 점검
+- 기존 CMS 발행 칼럼에 디자인 블록이 필요하면 카피를 임의 변경하지 말고 사용자와 구성을 먼저 결정
+- 영어·일본어·중국어 의료 문구 검수
+- 독립 도메인 구매·연결
+- 새 칼럼 발행 후 Google·네이버 수집 요청
+
+## 10. 검증 기준
+
+- HTML/CSS/JS 문법
+- `git diff --check`
+- 내부 링크와 외부 CTA
+- Chrome 계열 데스크톱
+- 768px 태블릿
+- 390px 전후 모바일
+- 긴 한국어 제목과 줄바꿈
+- GitHub Pages 실제 배포
+- 칼럼 변경 시 미리보기와 발행의 분리
+
+## 11. 작업 종료 절차
+
+1. 변경 파일과 사용자 기존 변경을 구분한다.
+2. 테스트와 화면 검증을 수행한다.
+3. 운영 상태·절차·남은 작업이 달라졌으면 이 파일을 갱신한다.
+4. `HANDOFF.local.md`, 비밀번호, 토큰, 키, 환자정보가 staging에 없는지 확인한다.
+5. 한국어 커밋 메시지로 커밋한다.
+6. `git push origin master`
+7. 원격과 실제 GitHub Pages 결과를 확인한다.
+
+## 12. 다른 PC에서 처음 시작
+
+공개 홈페이지:
+
+```powershell
+git clone https://github.com/BBINGE/dear-clinic.git
+cd dear-clinic
+```
+
+비공개 칼럼 콘텐츠는 GitHub 권한이 있는 계정으로 별도 clone한다.
+
+```powershell
+git clone https://github.com/BBINGE/dear-clinic-content.git
+cd dear-clinic-content
+```
+
+Claude 또는 Codex에 보낼 첫 문장:
+
+```text
+저장소 루트의 AGENTS.md, CLAUDE.md, HANDOFF.md를 처음부터 끝까지 읽고,
+git status와 최근 커밋, 원격 브랜치 상태를 확인한 뒤 현재 상태에서 이어서 작업해줘.
+```
