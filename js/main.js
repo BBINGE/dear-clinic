@@ -124,17 +124,11 @@ const noticePopups = document.getElementById("noticePopups");
 if (noticePopups) {
   const popupCards = [...noticePopups.querySelectorAll("[data-popup-id]")];
   const todayKey = new Date().toLocaleDateString("sv-SE");
-  let lastFocusedElement = null;
 
   const refreshPopupVisibility = () => {
     const visibleCards = popupCards.filter((card) => !card.hidden);
     const shouldShow = visibleCards.length > 0;
     noticePopups.hidden = !shouldShow;
-    document.body.classList.toggle("notice-popups-open", shouldShow);
-
-    if (!shouldShow && lastFocusedElement instanceof HTMLElement) {
-      lastFocusedElement.focus();
-    }
   };
 
   popupCards.forEach((card) => {
@@ -151,29 +145,7 @@ if (noticePopups) {
     });
   });
 
-  noticePopups.querySelectorAll("[data-popup-close-all]").forEach((button) => {
-    button.addEventListener("click", () => {
-      popupCards.forEach((card) => {
-        if (!card.hidden && card.querySelector("[data-popup-today]")?.checked) {
-          localStorage.setItem(`dear-popup-${card.dataset.popupId}`, todayKey);
-        }
-        card.hidden = true;
-      });
-      refreshPopupVisibility();
-    });
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !noticePopups.hidden) {
-      noticePopups.querySelector("[data-popup-close-all]")?.click();
-    }
-  });
-
-  lastFocusedElement = document.activeElement;
   refreshPopupVisibility();
-  if (!noticePopups.hidden) {
-    noticePopups.querySelector(".notice-popups__close-all")?.focus();
-  }
 }
 
 // 진료 철학 페이지: 화면 중앙에 가장 가까운 ME / YOU / US 챕터에 맞춰 sticky 사진을 교체한다.
