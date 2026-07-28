@@ -434,6 +434,231 @@
   }
 }
 
+/* ============ 메인 DEAR HEALTH SYSTEM ============ */
+.dear-health {
+  padding: clamp(6rem, 10vw, 9rem) clamp(1.5rem, 5vw, 5rem);
+    color: #1f1f1f;
+  background: var(--bg-base);
+}
+
+.dear-health__inner {
+  width: min(1360px, 100%);
+  margin: 0 auto;
+}
+
+.dear-health__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+  justify-content: space-between;
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: end;
+  margin-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.dear-health__eyebrow {
+  margin-bottom: 1.5rem;
+  color: var(--teal-soft);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+}
+
+.dear-health h2 {
+  margin: 0;
+  color: var(--green-deep);
+  font-size: clamp(2.25rem, 4.25vw, 4.35rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.045em;
+}
+
+.dear-health__lead {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+  line-height: 2;
+}
+
+.dear-health__tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--warm-gray);
+  border-bottom: 1px solid var(--warm-gray);
+}
+
+.dear-health__tab {
+  min-height: 205px;
+  padding: 1.5rem clamp(1rem, 2.4vw, 2rem);
+  border: 0;
+  border-right: 1px solid var(--warm-gray);
+    color: #1f1f1f;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.25s ease, background 0.25s ease;
+}
+
+.dear-health__tab:last-child {
+  border-right: 0;
+}
+
+.dear-health__tab:hover,
+.dear-health__tab:focus-visible {
+  background: rgba(36, 120, 96, 0.07);
+}
+
+.dear-health__tab.is-active {
+  color: var(--white);
+  background: var(--green-deep);
+}
+
+.dear-health__tab-number {
+  display: block;
+  margin-bottom: 2.6rem;
+  color: var(--teal-soft);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+}
+
+.dear-health__tab.is-active .dear-health__tab-number {
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.dear-health__tab strong {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: clamp(0.95rem, 1.25vw, 1.12rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.dear-health__tab > span:last-child {
+  display: block;
+  max-width: 310px;
+  color: var(--text-secondary);
+  font-size: clamp(0.8rem, 0.94vw, 0.9rem);
+  line-height: 1.7;
+}
+
+.dear-health__tab.is-active > span:last-child {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.dear-health__panel {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  padding: clamp(3rem, 6vw, 5rem) 0;
+  border-bottom: 1px solid var(--warm-gray);
+}
+
+.dear-health__panel[hidden] {
+  display: none;
+}
+
+.dear-health__panel-code {
+  margin: 0 0 1.1rem;
+  color: var(--teal-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.dear-health__panel h3 {
+  margin: 0 0 1.1rem;
+  color: var(--green-deep);
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+}
+
+.dear-health__panel-intro > p:not(.dear-health__panel-code) {
+  margin: 0 0 1.5rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+
+.dear-health__link {
+  display: inline-flex;
+  gap: 0.8rem;
+  align-items: center;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--green-deep);
+  color: var(--green-deep);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.dear-health__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem clamp(1.5rem, 4vw, 3rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dear-health__items li {
+  padding-top: 1rem;
+  border-top: 1px solid var(--warm-gray);
+}
+
+.dear-health__items li > span {
+  display: block;
+  margin-bottom: 0.7rem;
+  color: var(--teal-soft);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.dear-health__items strong {
+  display: block;
+  margin-bottom: 0.65rem;
+    color: #1f1f1f;
+  font-size: 0.98rem;
+  font-weight: 600;
+}
+
+.dear-health__items p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.75;
+}
+
+.dear-health__principle {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin: 1.5rem 0 0;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  line-height: 1.7;
+}
+
+.dear-health__principle span {
+  flex: none;
+  color: var(--green-deep);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 980px) {
+  .dear-health__intro {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .dear-health__panel {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
 /* ============ 메인 안내 팝업 ============ */
 .notice-popups[hidden] {
   display: none;
@@ -547,6 +772,71 @@
 }
 
 @media (max-width: 768px) {
+  .dear-health {
+    padding: 5.5rem 1.25rem;
+  }
+
+  .dear-health__intro {
+    margin-bottom: 3.5rem;
+  }
+
+  .dear-health h2 {
+    font-size: clamp(2.05rem, 9.5vw, 2.8rem);
+  }
+
+  .dear-health__lead br {
+    display: none;
+  }
+
+  .dear-health__tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .dear-health__tab {
+    display: grid;
+    grid-template-columns: minmax(105px, 0.65fr) minmax(0, 1fr);
+    gap: 0.35rem 1rem;
+    min-height: auto;
+    padding: 1.25rem 0.9rem;
+    border-right: 0;
+    border-bottom: 1px solid var(--warm-gray);
+  }
+
+  .dear-health__tab:last-child {
+    border-bottom: 0;
+  }
+
+  .dear-health__tab-number {
+    grid-column: 1 / -1;
+    margin-bottom: 0.5rem;
+  }
+
+  .dear-health__tab strong {
+    margin: 0;
+  }
+
+  .dear-health__tab > span:last-child {
+    margin: 0;
+  }
+
+  .dear-health__panel {
+    padding: 3rem 0;
+  }
+
+  .dear-health__items {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .dear-health__principle {
+    display: block;
+  }
+
+  .dear-health__principle span {
+    display: block;
+    margin-bottom: 0.45rem;
+  }
+
   .dear-standard {
     padding: 5.5rem 1.25rem;
   }

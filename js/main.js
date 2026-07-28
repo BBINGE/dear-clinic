@@ -148,6 +148,28 @@ if (noticePopups) {
   refreshPopupVisibility();
 }
 
+// 메인 DEAR HEALTH SYSTEM: 진료 체계의 세 축을 탭으로 전환한다.
+const healthSystemTabs = [...document.querySelectorAll("[data-health-tab]")];
+const healthSystemPanels = [...document.querySelectorAll("[data-health-panel]")];
+
+if (healthSystemTabs.length === 3 && healthSystemPanels.length === 3) {
+  const activateHealthSystem = (selectedKey) => {
+    healthSystemTabs.forEach((tab) => {
+      const isActive = tab.dataset.healthTab === selectedKey;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+    });
+
+    healthSystemPanels.forEach((panel) => {
+      panel.hidden = panel.dataset.healthPanel !== selectedKey;
+    });
+  };
+
+  healthSystemTabs.forEach((tab) => {
+    tab.addEventListener("click", () => activateHealthSystem(tab.dataset.healthTab));
+  });
+}
+
 // 진료 철학 페이지: 화면 중앙에 가장 가까운 ME / YOU / US 챕터에 맞춰 sticky 사진을 교체한다.
 const philosophyChapters = [...document.querySelectorAll("[data-philosophy-chapter]")];
 const philosophyImages = [...document.querySelectorAll(".philosophy-story__image")];

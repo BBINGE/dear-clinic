@@ -25,7 +25,7 @@
 <!-- Pretendard -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
-<link rel="stylesheet" href="css/style.css?v=20260728-6">
+<link rel="stylesheet" href="css/style.css?v=20260728-7">
 
 <!-- JSON-LD: LocalBusiness (NAP) -->
 <script type="application/ld+json">
@@ -250,7 +250,85 @@
     </div>
   </section>
 
-  <!-- ============ 5. 공진단 I ============ -->
+  <!-- ============ 5. DEAR HEALTH SYSTEM ============ -->
+  <section class="dear-health" aria-labelledby="dear-health-title">
+    <div class="dear-health__inner">
+      <div class="dear-health__intro">
+        <div class="dear-health__heading js-reveal">
+          <p class="dear-health__eyebrow">DEAR HEALTH SYSTEM</p>
+          <h2 id="dear-health-title">필요에 따라 나뉘고,<br>하나의 진료 안에서 연결됩니다.</h2>
+        </div>
+        <p class="dear-health__lead js-reveal">프로그램, 진료 영역, 한약 처방은 서로 다른 층위입니다.<br>디어는 이를 같은 서비스 목록으로 나열하지 않고,<br>진료 목적과 현재 상태에 따라 구분해 안내합니다.</p>
+      </div>
+
+      <div class="dear-health__tabs js-reveal" role="tablist" aria-label="디어 진료 체계">
+        <button class="dear-health__tab is-active" id="health-tab-program" type="button" role="tab" aria-selected="true" aria-controls="health-panel-program" data-health-tab="program">
+          <span class="dear-health__tab-number">01 · PURPOSE-BASED</span>
+          <strong>PROGRAM</strong>
+          <span>특정한 건강 목표를 중심으로 평가와 관리를 연결한 프로그램</span>
+        </button>
+        <button class="dear-health__tab" id="health-tab-care" type="button" role="tab" aria-selected="false" aria-controls="health-panel-care" data-health-tab="care">
+          <span class="dear-health__tab-number">02 · CLINICAL FIELD</span>
+          <strong>CLINICAL CARE</strong>
+          <span>증상과 기능상의 불편을 평가하고 진료하는 임상 영역</span>
+        </button>
+        <button class="dear-health__tab" id="health-tab-herbal" type="button" role="tab" aria-selected="false" aria-controls="health-panel-herbal" data-health-tab="herbal">
+          <span class="dear-health__tab-number">03 · THERAPEUTIC METHOD</span>
+          <strong>HERBAL MEDICINE</strong>
+          <span>진찰과 판단에 따라 선택되는 한약 처방과 조제 방식</span>
+        </button>
+      </div>
+
+      <div class="dear-health__panel" id="health-panel-program" role="tabpanel" aria-labelledby="health-tab-program" data-health-panel="program">
+        <div class="dear-health__panel-intro">
+          <p class="dear-health__panel-code">PROGRAM · 01</p>
+          <h3>BE DEER</h3>
+          <p>체중이라는 한 가지 수치만이 아니라 식욕, 수면, 소화, 활동과 생활의 리듬을 함께 살피는 다이어트 진료 프로그램입니다.</p>
+          <a href="be-deer.html?v=20260728-3" class="dear-health__link">BE DEER 자세히 보기 <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="dear-health__items">
+          <li><span>ASSESS</span><strong>초기 평가</strong><p>체중·체성분과 건강 상태, 생활요인을 확인합니다.</p></li>
+          <li><span>PLAN</span><strong>진료 계획</strong><p>목표와 현재 상태를 고려해 진료 방향을 정합니다.</p></li>
+          <li><span>GUIDE</span><strong>생활 관리</strong><p>식사·수면·활동에서 조정할 요인을 함께 살핍니다.</p></li>
+          <li><span>FOLLOW</span><strong>경과 확인</strong><p>변화와 반응을 확인해 계획을 유지하거나 조정합니다.</p></li>
+        </ul>
+      </div>
+
+      <div class="dear-health__panel" id="health-panel-care" role="tabpanel" aria-labelledby="health-tab-care" data-health-panel="care" hidden>
+        <div class="dear-health__panel-intro">
+          <p class="dear-health__panel-code">CLINICAL CARE · 02</p>
+          <h3>증상과 기능의 회복</h3>
+          <p>현재의 증상과 발생 경과, 일상 기능에 미치는 영향을 확인하고 필요한 진료 방향을 판단합니다.</p>
+          <a href="care.html" class="dear-health__link">진료 영역 자세히 보기 <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="dear-health__items">
+          <li><span>PAIN</span><strong>통증 진료</strong><p>통증의 부위와 양상, 움직임과 생활에 미치는 영향을 평가합니다.</p></li>
+          <li><span>ACCIDENT</span><strong>교통사고 후 불편</strong><p>사고 이후 나타난 증상과 경과를 확인합니다.</p></li>
+          <li><span>INTERNAL</span><strong>내과적 불편</strong><p>소화·수면·피로 등 일상에서 반복되는 불편을 살핍니다.</p></li>
+          <li><span>INDIVIDUAL</span><strong>상태별 진료</strong><p>필요한 평가와 감별을 거쳐 적용 가능한 진료를 안내합니다.</p></li>
+        </ul>
+      </div>
+
+      <div class="dear-health__panel" id="health-panel-herbal" role="tabpanel" aria-labelledby="health-tab-herbal" data-health-panel="herbal" hidden>
+        <div class="dear-health__panel-intro">
+          <p class="dear-health__panel-code">HERBAL MEDICINE · 03</p>
+          <h3>진찰에 근거한 한약 진료</h3>
+          <p>한약을 독립된 상품으로 제시하지 않고, 진찰과 임상적 판단에 따라 선택되는 진료 방법으로 안내합니다.</p>
+          <a href="services.html" class="dear-health__link">한약 진료 자세히 보기 <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="dear-health__items">
+          <li><span>PRESCRIPTION</span><strong>개인별 한약 처방</strong><p>현재 상태와 복용약, 생활요인을 고려해 처방을 판단합니다.</p></li>
+          <li><span>PREPARATION</span><strong>원내탕전</strong><p>처방 목적에 맞춰 원내에서 조제와 탕전 과정을 관리합니다.</p></li>
+          <li><span>GONGJINDAN</span><strong>디어 공진단</strong><p>복용 목적과 상태를 확인한 뒤 적합성을 판단합니다.</p></li>
+          <li><span>MONITOR</span><strong>복약과 경과 관리</strong><p>복약 반응과 불편 여부를 확인해 필요한 사항을 안내합니다.</p></li>
+        </ul>
+      </div>
+
+      <p class="dear-health__principle js-reveal"><span>COMMON CLINICAL FLOW</span> 진료 목적 확인 → 필요한 평가 → 임상적 판단 → 설명과 선택 → 경과 확인</p>
+    </div>
+  </section>
+
+  <!-- ============ 6. 공진단 I ============ -->
   <section class="gongjindan gongjindan--1">
     <div class="gongjindan__grid">
       <div class="gongjindan__text">
@@ -459,7 +537,7 @@
   </a>
 </nav>
 
-<script src="js/main.js?v=20260728-4"></script>
+<script src="js/main.js?v=20260728-5"></script>
 <script src="js/click-tracking.js?v=20260728"></script>
 </body>
 </html>
