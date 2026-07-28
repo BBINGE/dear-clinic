@@ -1,6 +1,6 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
-최종 갱신: 2026-07-27
+최종 갱신: 2026-07-28
 
 대상: Claude, Codex 및 이후 유지보수 담당자
 
@@ -56,6 +56,7 @@ git pull --ff-only origin master
 - `philosophy.html` — 진료 철학
 - `care.html` — Focus / Calm / Restore / Relief / Shape
 - `services.html` — 비디어 다이어트, 디어 공진단, 원내탕전 체질한약, 디어밸런스
+- `be-deer.html` — BE DEER 다이어트 독립 소개, 대표원장 운동 관련 자격, 진료 흐름, 작성자 식별 정보를 가린 네이버 영수증 리뷰와 생성형 인물 이미지
 - `columns.html` — 공개 칼럼 목록
 - `privacy.html`, `patient-rights.html` — 법률·환자 안내
 
@@ -151,6 +152,7 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 
 ## 9. 현재 남은 주요 작업
 
+- BE DEER 페이지의 실제 공개 반응과 PC·태블릿·모바일 사용성을 확인하고, 후기·생성형 이미지의 의료광고 심의 필요성을 운영 전 재점검
 - 실제 글쓰기 경험을 통해 Pages CMS 디자인 블록 사용성을 추가 점검
 - 기존 CMS 발행 칼럼에 디자인 블록이 필요하면 카피를 임의 변경하지 말고 사용자와 구성을 먼저 결정
 - 영어·일본어·중국어 의료 문구 검수

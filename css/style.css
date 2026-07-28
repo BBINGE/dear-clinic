@@ -11,6 +11,249 @@
   --gap: clamp(1.5rem, 4vw, 4rem);
 }
 
+/* ============ 메인: BE DEER CTA ============ */
+.home-be-deer {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(5.5rem, 9vw, 9rem) var(--gap);
+  background: #173f37;
+  color: var(--white);
+}
+
+.home-be-deer::before {
+  content: "";
+  position: absolute;
+  width: min(54vw, 780px);
+  aspect-ratio: 1;
+  right: -15%;
+  bottom: -55%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+}
+
+.home-be-deer__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1320px);
+  min-height: clamp(560px, 50vw, 720px);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.84fr) minmax(460px, 1.16fr);
+  gap: clamp(3rem, 7vw, 7.5rem);
+  align-items: center;
+}
+
+.home-be-deer__copy {
+  padding-block: 1.5rem;
+}
+
+.home-be-deer__eyebrow {
+  margin: 0 0 1.3rem;
+  color: #8bc2b4;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+}
+
+.home-be-deer__brand {
+  margin: 0 0 1.8rem;
+  color: rgba(255, 255, 255, 0.38);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.6rem, 4.5vw, 4.8rem);
+  line-height: 0.9;
+  letter-spacing: -0.065em;
+}
+
+.home-be-deer h2 {
+  margin: 0;
+  font-size: clamp(2.35rem, 3.8vw, 3.85rem);
+  font-weight: 550;
+  line-height: 1.14;
+  letter-spacing: -0.055em;
+}
+
+.home-be-deer__body {
+  margin: clamp(1.7rem, 3vw, 2.6rem) 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
+  line-height: 1.85;
+}
+
+.home-be-deer__keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-be-deer__keywords li {
+  padding: 0.48rem 0.78rem;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+}
+
+.home-be-deer__link {
+  width: min(100%, 300px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: clamp(2.2rem, 4vw, 3.4rem);
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+  color: var(--white);
+  font-size: 0.87rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.home-be-deer__link span:last-child {
+  font-size: 1.2rem;
+  transition: transform 220ms ease;
+}
+
+.home-be-deer__link:hover span:last-child,
+.home-be-deer__link:focus-visible span:last-child {
+  transform: translateX(0.45rem);
+}
+
+.home-be-deer__visual {
+  position: relative;
+  min-height: clamp(500px, 46vw, 650px);
+}
+
+.home-be-deer__photo {
+  position: absolute;
+  overflow: hidden;
+  margin: 0;
+  background: var(--warm-gray);
+  box-shadow: 0 1.8rem 4.5rem rgba(6, 29, 24, 0.22);
+}
+
+.home-be-deer__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 900ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.home-be-deer__visual:hover .home-be-deer__photo img {
+  transform: scale(1.018);
+}
+
+.home-be-deer__photo--main {
+  inset: 3% 0 13% 10%;
+  border-radius: 1.1rem;
+}
+
+.home-be-deer__photo--main img {
+  object-position: 52% center;
+}
+
+.home-be-deer__photo--sub {
+  width: 43%;
+  aspect-ratio: 4 / 3;
+  left: 0;
+  bottom: 0;
+  border: 0.55rem solid #173f37;
+  border-radius: 0.85rem;
+}
+
+.home-be-deer__visual-label {
+  position: absolute;
+  right: -0.5rem;
+  top: 0;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.58rem;
+  line-height: 1.5;
+  letter-spacing: 0.2em;
+  text-align: right;
+}
+
+@media (min-width: 769px) and (max-width: 1100px) {
+  .home-be-deer__inner {
+    grid-template-columns: minmax(280px, 0.88fr) minmax(380px, 1.12fr);
+    gap: 3rem;
+    min-height: 570px;
+  }
+
+  .home-be-deer h2 {
+    font-size: clamp(2.15rem, 4.3vw, 2.9rem);
+  }
+
+  .home-be-deer__brand {
+    font-size: clamp(2.7rem, 6vw, 3.9rem);
+  }
+
+  .home-be-deer__visual {
+    min-height: 510px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-be-deer {
+    padding: 6.5rem 1.25rem 5.5rem;
+  }
+
+  .home-be-deer::before {
+    width: 115vw;
+    right: -54%;
+    bottom: -12%;
+  }
+
+  .home-be-deer__inner {
+    display: flex;
+    min-height: 0;
+    flex-direction: column;
+    gap: 4rem;
+    align-items: stretch;
+  }
+
+  .home-be-deer__copy {
+    padding: 0;
+  }
+
+  .home-be-deer__brand {
+    margin-bottom: 1.5rem;
+    font-size: clamp(3rem, 16vw, 4.3rem);
+  }
+
+  .home-be-deer h2 {
+    font-size: clamp(2.15rem, 10vw, 2.75rem);
+    line-height: 1.16;
+  }
+
+  .home-be-deer__body {
+    font-size: 0.95rem;
+  }
+
+  .home-be-deer__link {
+    width: 100%;
+  }
+
+  .home-be-deer__visual {
+    min-height: 118vw;
+  }
+
+  .home-be-deer__photo--main {
+    inset: 0 0 14% 7%;
+  }
+
+  .home-be-deer__photo--sub {
+    width: 56%;
+    border-width: 0.4rem;
+  }
+
+  .home-be-deer__visual-label {
+    top: -1.8rem;
+    right: 0;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1100px) {
   .nav {
     padding-inline: 1.5rem;
