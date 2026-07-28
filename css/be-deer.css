@@ -34,6 +34,7 @@ img { display: block; width: 100%; }
   display: grid;
   grid-template-columns: 54% 46%;
   overflow: hidden;
+  color: var(--text);
 }
 .hero__copy {
   align-self: center;
@@ -41,6 +42,7 @@ img { display: block; width: 100%; }
 }
 .hero h1 {
   margin: 0;
+  color: var(--text);
   font-size: clamp(44px, 4.7vw, 74px);
   line-height: 1.02;
   letter-spacing: -.065em;
@@ -99,6 +101,18 @@ img { display: block; width: 100%; }
 .hero__orbit--one { width: 33vw; height: 33vw; top: 8%; right: -20%; }
 .hero__orbit--two { width: 15vw; height: 15vw; top: 22%; left: 7%; }
 .hero__index { position: absolute; left: 4vw; bottom: 30px; font-size: 11px; letter-spacing: .2em; }
+
+.be-deer-page .nav {
+  background-color: rgba(248, 248, 246, .96);
+  box-shadow: 0 1px 12px rgba(36, 120, 96, .08);
+}
+.be-deer-page .nav__logo,
+.be-deer-page .nav__link {
+  color: var(--green);
+}
+.be-deer-page .nav__toggle span {
+  background: var(--green);
+}
 
 .manifesto {
   min-height: 105vh;
