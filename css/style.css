@@ -194,6 +194,155 @@
   }
 }
 
+/* ============ 메인 DEAR STANDARD ============ */
+.dear-standard {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6rem, 10vw, 9rem) clamp(1.5rem, 5vw, 5rem);
+  color: var(--white);
+  background: var(--green-deep);
+}
+
+.dear-standard::before {
+  content: "DEAR";
+  position: absolute;
+  top: -0.2em;
+  right: -0.04em;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(10rem, 24vw, 24rem);
+  line-height: 1;
+  letter-spacing: -0.09em;
+  pointer-events: none;
+}
+
+.dear-standard__inner {
+  position: relative;
+  z-index: 1;
+  width: min(1360px, 100%);
+  margin: 0 auto;
+}
+
+.dear-standard__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.7fr);
+  justify-content: space-between;
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: end;
+  margin-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.dear-standard__eyebrow {
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+}
+
+.dear-standard h2 {
+  margin: 0;
+  font-size: clamp(2.35rem, 4.5vw, 4.65rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.045em;
+}
+
+.dear-standard__lead {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  line-height: 2;
+}
+
+.dear-standard__steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.24);
+  list-style: none;
+}
+
+.dear-standard__step {
+  min-height: 230px;
+  padding: 1.45rem clamp(1rem, 2vw, 1.75rem);
+  border-right: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.dear-standard__step:last-child {
+  border-right: 0;
+}
+
+.dear-standard__number {
+  display: block;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.dear-standard__step strong {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: clamp(0.88rem, 1.1vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.dear-standard__step p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: clamp(0.82rem, 1vw, 0.94rem);
+  line-height: 1.75;
+}
+
+.dear-standard__signature {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.45rem;
+  margin: 2rem 0 0;
+  color: rgba(255, 255, 255, 0.54);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+}
+
+.dear-standard__signature span {
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 600;
+  letter-spacing: 0.13em;
+}
+
+@media (max-width: 980px) {
+  .dear-standard__intro {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .dear-standard__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dear-standard__step {
+    min-height: 190px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  }
+
+  .dear-standard__step:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .dear-standard__step:last-child {
+    grid-column: 1 / -1;
+    min-height: auto;
+  }
+
+  .dear-standard__number {
+    margin-bottom: 2.5rem;
+  }
+}
+
 /* ============ 메인 안내 팝업 ============ */
 .notice-popups[hidden] {
   display: none;
@@ -307,6 +456,61 @@
 }
 
 @media (max-width: 768px) {
+  .dear-standard {
+    padding: 5.5rem 1.25rem;
+  }
+
+  .dear-standard::before {
+    top: 0.1em;
+    font-size: 10rem;
+  }
+
+  .dear-standard__intro {
+    margin-bottom: 3.5rem;
+  }
+
+  .dear-standard h2 {
+    font-size: clamp(2.15rem, 10vw, 3rem);
+  }
+
+  .dear-standard__lead br {
+    display: none;
+  }
+
+  .dear-standard__steps {
+    grid-template-columns: 1fr;
+  }
+
+  .dear-standard__step,
+  .dear-standard__step:last-child {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 0.75fr) minmax(0, 1fr);
+    grid-column: auto;
+    gap: 0.75rem;
+    align-items: start;
+    min-height: auto;
+    padding: 1.35rem 0.2rem;
+    border-right: 0;
+  }
+
+  .dear-standard__number,
+  .dear-standard__step strong {
+    margin: 0;
+  }
+
+  .dear-standard__step p br {
+    display: none;
+  }
+
+  .dear-standard__signature {
+    display: block;
+    line-height: 1.8;
+  }
+
+  .dear-standard__signature span {
+    display: block;
+  }
+
   .home-be-deer {
     padding: 6.5rem 1.25rem 5.5rem;
   }
