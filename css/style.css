@@ -1906,9 +1906,9 @@ body.care-page {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 3 / 1;
   object-fit: cover;
-  object-position: center 42%;
+  object-position: center 52%;
 }
 
 .care-hero__media figcaption {
@@ -1993,14 +1993,15 @@ body.care-page {
 .care-moment img {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 3 / 1;
   object-fit: cover;
+  object-position: center 56%;
   transition: transform 0.7s ease;
 }
 
 .care-moment--wide img {
-  aspect-ratio: 16 / 7;
-  object-position: center 42%;
+  aspect-ratio: 3 / 1;
+  object-position: center 58%;
 }
 
 .care-moment--space img {
@@ -2337,7 +2338,7 @@ body.care-page {
   }
 
   .care-hero__media img {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
   }
 
   .care-visual-flow {
@@ -2373,7 +2374,7 @@ body.care-page {
 
   .care-moment img,
   .care-moment--wide img {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
   }
 
   .care-moment figcaption {
