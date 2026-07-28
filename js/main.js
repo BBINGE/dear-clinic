@@ -118,6 +118,64 @@ if (!prefersReducedMotion && "IntersectionObserver" in window && revealTargets.l
 // 공진단 사진 프레임의 자동 슬라이드쇼는 순수 CSS 키프레임(style.css의 gj-slideshow-2/3)으로 동작한다.
 // JS 실행 여부·타이밍에 영향받지 않도록 의도적으로 JS 의존 없이 구현했다.
 
+// 메인 안내 팝업: 각 안내를 닫거나 오늘 하루 동안 숨길 수 있다.
+const noticePopups = document.getElementById("noticePopups");
+
+if (noticePopups) {
+  const popupCards = [...noticePopups.querySelectorAll("[data-popup-id]")];
+  const todayKey = new Date().toLocaleDateString("sv-SE");
+  let lastFocusedElement = null;
+
+  const refreshPopupVisibility = () => {
+    const visibleCards = popupCards.filter((card) => !card.hidden);
+    const shouldShow = visibleCards.length > 0;
+    noticePopups.hidden = !shouldShow;
+    document.body.classList.toggle("notice-popups-open", shouldShow);
+
+    if (!shouldShow && lastFocusedElement instanceof HTMLElement) {
+      lastFocusedElement.focus();
+    }
+  };
+
+  popupCards.forEach((card) => {
+    const popupId = card.dataset.popupId;
+    const storageKey = `dear-popup-${popupId}`;
+    card.hidden = localStorage.getItem(storageKey) === todayKey;
+
+    card.querySelector("[data-popup-close]")?.addEventListener("click", () => {
+      if (card.querySelector("[data-popup-today]")?.checked) {
+        localStorage.setItem(storageKey, todayKey);
+      }
+      card.hidden = true;
+      refreshPopupVisibility();
+    });
+  });
+
+  noticePopups.querySelectorAll("[data-popup-close-all]").forEach((button) => {
+    button.addEventListener("click", () => {
+      popupCards.forEach((card) => {
+        if (!card.hidden && card.querySelector("[data-popup-today]")?.checked) {
+          localStorage.setItem(`dear-popup-${card.dataset.popupId}`, todayKey);
+        }
+        card.hidden = true;
+      });
+      refreshPopupVisibility();
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !noticePopups.hidden) {
+      noticePopups.querySelector("[data-popup-close-all]")?.click();
+    }
+  });
+
+  lastFocusedElement = document.activeElement;
+  refreshPopupVisibility();
+  if (!noticePopups.hidden) {
+    noticePopups.querySelector(".notice-popups__close-all")?.focus();
+  }
+}
+
 // 진료 철학 페이지: 화면 중앙에 가장 가까운 ME / YOU / US 챕터에 맞춰 sticky 사진을 교체한다.
 const philosophyChapters = [...document.querySelectorAll("[data-philosophy-chapter]")];
 const philosophyImages = [...document.querySelectorAll(".philosophy-story__image")];
