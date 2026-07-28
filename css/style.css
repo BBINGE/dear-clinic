@@ -1834,20 +1834,20 @@ body.care-page {
 }
 
 .care-hero {
-  min-height: min(780px, 88vh);
+  min-height: min(680px, 80vh);
   display: flex;
   align-items: center;
-  padding: 8.5rem var(--gap) 5rem;
+  padding: 7.5rem var(--gap) 4.5rem;
   overflow: hidden;
 }
 
 .care-hero__inner {
   width: 100%;
-  max-width: 1380px;
+  max-width: 1240px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(360px, 0.78fr) minmax(520px, 1.22fr);
-  gap: clamp(3rem, 6vw, 7rem);
+  grid-template-columns: minmax(340px, 0.82fr) minmax(480px, 1.18fr);
+  gap: clamp(2.5rem, 5vw, 5.5rem);
   align-items: center;
 }
 
@@ -1859,14 +1859,14 @@ body.care-page {
 .care-hero h1 {
   margin-top: 1rem;
   color: var(--green-deep);
-  font-size: clamp(2.5rem, 4.2vw, 4.2rem);
+  font-size: clamp(2.35rem, 3.7vw, 3.65rem);
   line-height: 1.2;
   word-break: keep-all;
 }
 
 .care-hero__body {
   max-width: 560px;
-  margin-top: 2rem;
+  margin-top: 1.6rem;
   font-size: clamp(1rem, 1.4vw, 1.12rem);
   line-height: 1.85;
   word-break: keep-all;
@@ -1876,7 +1876,7 @@ body.care-page {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-top: 2.5rem;
+  margin-top: 2rem;
   color: var(--teal-dark);
   font-size: 0.68rem;
   font-weight: 700;
@@ -1932,13 +1932,13 @@ body.care-page {
 }
 
 .care-visual-flow {
-  padding: clamp(7rem, 11vw, 11rem) var(--gap);
+  padding: clamp(6rem, 8vw, 8rem) var(--gap);
   background: var(--teal-dark);
   color: rgba(255, 255, 255, 0.82);
 }
 
 .care-visual-flow__inner {
-  max-width: 1380px;
+  max-width: 1180px;
   margin: 0 auto;
 }
 
@@ -1947,7 +1947,7 @@ body.care-page {
   grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1.1fr);
   gap: clamp(3rem, 8vw, 8rem);
   align-items: end;
-  margin-bottom: clamp(3.5rem, 6vw, 6rem);
+  margin-bottom: clamp(3rem, 4.5vw, 4.5rem);
 }
 
 .care-visual-flow__header .care-eyebrow {
@@ -1958,7 +1958,7 @@ body.care-page {
 
 .care-visual-flow__header h2 {
   color: var(--white);
-  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-size: clamp(2.05rem, 3.3vw, 3.15rem);
   font-weight: 600;
   line-height: 1.28;
   word-break: keep-all;
@@ -1999,7 +1999,7 @@ body.care-page {
 }
 
 .care-moment--wide img {
-  aspect-ratio: 16 / 8.2;
+  aspect-ratio: 16 / 7.2;
   object-position: center 42%;
 }
 
@@ -2050,27 +2050,47 @@ body.care-page {
   word-break: keep-all;
 }
 
-.care-visual-flow__disclosure {
-  margin-top: 1.25rem;
-  color: rgba(255, 255, 255, 0.48);
-  font-size: 0.72rem;
-  line-height: 1.7;
-  text-align: right;
-  word-break: keep-all;
-}
-
 .care-viewer {
-  padding: clamp(6rem, 10vw, 9rem) var(--gap);
+  padding: clamp(5.5rem, 8vw, 7.5rem) var(--gap);
   background: rgba(232, 228, 226, 0.32);
 }
 
-.care-viewer__inner {
+.care-viewer__intro {
   max-width: 1240px;
+  margin: 0 auto clamp(4rem, 6vw, 5.5rem);
+  display: grid;
+  grid-template-columns: minmax(420px, 1.2fr) minmax(300px, 0.8fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: end;
+}
+
+.care-viewer__intro .care-eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: -1.35rem;
+}
+
+.care-viewer__intro h2 {
+  color: var(--green-deep);
+  font-size: clamp(2rem, 3.25vw, 3.15rem);
+  font-weight: 600;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.care-viewer__intro > p:last-child {
+  padding-bottom: 0.3rem;
+  font-size: 1rem;
+  line-height: 1.85;
+  word-break: keep-all;
+}
+
+.care-viewer__inner {
+  max-width: 1160px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(210px, 0.2fr) minmax(440px, 0.46fr) minmax(300px, 0.34fr);
   grid-template-areas: "tabs media panels";
-  gap: clamp(2.5rem, 4vw, 4rem);
+  gap: clamp(2rem, 3.5vw, 3.25rem);
   align-items: center;
 }
 
@@ -2085,7 +2105,7 @@ body.care-page {
 .care-tab {
   position: relative;
   width: 100%;
-  padding: 1.25rem 0 1.25rem 1rem;
+  padding: 1rem 0 1rem 0.85rem;
   border: 0;
   border-bottom: 1px solid rgba(85, 85, 80, 0.22);
   background: transparent;
@@ -2123,13 +2143,13 @@ body.care-page {
 
 .care-tab strong {
   margin-top: 0.25rem;
-  font-size: 1.12rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .care-tab small {
   margin-top: 0.35rem;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   line-height: 1.5;
 }
 
@@ -2194,21 +2214,21 @@ body.care-page {
 .care-panel h2 {
   margin-top: 0.9rem;
   color: var(--green-deep);
-  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  font-size: clamp(1.7rem, 2.5vw, 2.35rem);
   font-weight: 600;
   line-height: 1.35;
   word-break: keep-all;
 }
 
 .care-panel__description {
-  margin-top: 1.5rem;
-  font-size: clamp(1rem, 1.4vw, 1.1rem);
+  margin-top: 1.25rem;
+  font-size: clamp(0.95rem, 1.25vw, 1.04rem);
   line-height: 1.85;
   word-break: keep-all;
 }
 
 .care-panel dl {
-  margin-top: 2.4rem;
+  margin-top: 2rem;
 }
 
 .care-panel dl div {
@@ -2286,16 +2306,16 @@ body.care-page {
 @media (max-width: 768px) {
   .care-hero {
     min-height: auto;
-    padding: 7.25rem 24px 5.5rem;
+    padding: 6.75rem 24px 5rem;
   }
 
   .care-hero__inner {
     grid-template-columns: 1fr;
-    gap: 3.75rem;
+    gap: 3.25rem;
   }
 
   .care-hero h1 {
-    font-size: clamp(2.3rem, 10.5vw, 3.25rem);
+    font-size: clamp(2.15rem, 9vw, 2.85rem);
   }
 
   .care-hero__body br {
@@ -2314,7 +2334,7 @@ body.care-page {
   }
 
   .care-visual-flow {
-    padding: 6.5rem 24px;
+    padding: 5.5rem 24px;
   }
 
   .care-visual-flow__header {
@@ -2329,7 +2349,7 @@ body.care-page {
   }
 
   .care-visual-flow__header h2 {
-    font-size: clamp(2rem, 9vw, 2.8rem);
+    font-size: clamp(1.9rem, 8vw, 2.5rem);
   }
 
   .care-visual-flow__header > p:last-child br {
@@ -2359,12 +2379,27 @@ body.care-page {
     text-align: left;
   }
 
-  .care-visual-flow__disclosure {
-    text-align: left;
+  .care-viewer {
+    padding: 5rem 24px 6rem;
   }
 
-  .care-viewer {
-    padding: 5.5rem 24px 6.5rem;
+  .care-viewer__intro {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3.75rem;
+  }
+
+  .care-viewer__intro .care-eyebrow {
+    grid-column: auto;
+    margin-bottom: 0;
+  }
+
+  .care-viewer__intro h2 {
+    font-size: clamp(1.85rem, 7.8vw, 2.45rem);
+  }
+
+  .care-viewer__intro > p:last-child br {
+    display: none;
   }
 
   .care-viewer__inner {
@@ -2413,7 +2448,7 @@ body.care-page {
   }
 
   .care-panel h2 {
-    font-size: clamp(2rem, 9vw, 2.7rem);
+    font-size: clamp(1.85rem, 8vw, 2.4rem);
   }
 
   .care-panel__description,
