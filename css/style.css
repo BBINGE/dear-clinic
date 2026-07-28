@@ -1891,7 +1891,10 @@ body.care-page {
 
 .care-hero__media {
   position: relative;
+  height: clamp(340px, 22vw, 400px);
   margin: 0;
+  align-self: center;
+  overflow: hidden;
 }
 
 .care-hero__media::before {
@@ -1906,7 +1909,7 @@ body.care-page {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 1;
+  height: 100%;
   object-fit: cover;
   object-position: center 52%;
 }
@@ -1993,6 +1996,7 @@ body.care-page {
 .care-moment img {
   display: block;
   width: 100%;
+  height: auto;
   aspect-ratio: 3 / 1;
   object-fit: cover;
   object-position: center 56%;
@@ -2337,7 +2341,13 @@ body.care-page {
     background: transparent;
   }
 
+  .care-hero__media {
+    height: auto;
+    overflow: visible;
+  }
+
   .care-hero__media img {
+    height: auto;
     aspect-ratio: 16 / 9;
   }
 
