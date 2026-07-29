@@ -96,6 +96,14 @@ git diff --check
 
 ## 5. Pages CMS 작성·발행 흐름
 
+### 로컬 LIVE 칼럼 에디터
+
+- 저장소 루트의 `칼럼작성기 열기.cmd`를 더블클릭하면 `tools/column-editor-server.mjs`가 로컬 전용 웹 에디터를 `http://127.0.0.1:4174/editor`에서 연다. 실행 중 나타나는 검은 창을 닫으면 에디터도 종료된다.
+- 화면은 왼쪽 글쓰기, 오른쪽 실제 칼럼 LIVE 미리보기로 나뉜다. 제목·본문·소제목·굵게·목록·인용·링크를 입력하면 즉시 반영되며 PC·모바일 폭을 전환할 수 있다.
+- 첫 샘플에서 확정한 왼쪽 sticky 목차와 `MEDICAL BASIS` 큰 소제목, `WHAT WE CHECK` 확인표, `POSSIBLE PATHS` 번호 카드, `KEY POINT`, 본문 사진, 상담 CTA, FAQ, 참고문헌, NAP 디자인을 유지한다. 디자인 블록은 추가·삭제·순서 변경할 수 있고 목차는 본문 및 디자인 블록의 소제목에서 자동 생성한다.
+- 임시 저장 JSON과 업로드 원본은 Git에서 제외되는 `.column-editor/`에만 둔다. `미리보기 만들기`는 기존 `publish-column.mjs --mode preview`를 사용하고, `홈페이지에 발행`은 같은 발행기로 완성 HTML·목록·sitemap·해당 글의 공개 이미지만 생성해 커밋·push한다. 작성 중 초안은 공개 저장소에 커밋하지 않는다.
+- 사용법은 `tools/칼럼작성기 사용법.txt`에 있다. 기존 `tools/column-editor.ps1`은 과거 WinForms 작성기 기록으로 남겨 두지만 기본 실행 경로에서는 사용하지 않는다.
+
 `Save`, `미리보기 만들기`, `홈페이지에 발행`은 서로 다른 동작이다.
 
 1. Pages CMS에서 작성한다.

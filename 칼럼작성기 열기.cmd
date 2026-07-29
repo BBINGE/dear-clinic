@@ -1,5 +1,5 @@
 @echo off
 chcp 65001 > nul
 cd /d "%~dp0"
-powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0tools\column-editor.ps1"
+node "%~dp0tools\column-editor-server.mjs"
 if errorlevel 1 pause
