@@ -112,6 +112,13 @@ try {
     true,
   );
 
+  const removed = publish(contentPath, "remove");
+  assert.equal(removed.status, 0, removed.stderr);
+  assert.equal(fs.existsSync(articlePath), false);
+  assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
+  assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
+  assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
+
   const blockedDraft = spawnSync(process.execPath, [
     path.join(toolsDir, "publish-column.mjs"),
     "--content", draftPath,

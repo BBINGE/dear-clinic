@@ -690,6 +690,37 @@ ${end}`;
   fs.writeFileSync(filePath, source, "utf8");
 }
 
+function removeGeneratedColumn(siteRoot, slug) {
+  const articlePath = path.join(siteRoot, "columns", `${slug}.html`);
+  if (fs.existsSync(articlePath)) {
+    const existing = fs.readFileSync(articlePath, "utf8");
+    if (!existing.includes(PUBLISHER_MARKER)) {
+      throw new Error(`수동 제작 칼럼은 자동으로 내리거나 삭제할 수 없습니다: columns/${slug}.html`);
+    }
+    fs.rmSync(articlePath);
+  }
+
+  const indexPath = path.join(siteRoot, "columns.html");
+  let index = fs.readFileSync(indexPath, "utf8");
+  const cardStart = `        <!-- COLUMN_CARD:${slug}:START -->`;
+  const cardEnd = `        <!-- COLUMN_CARD:${slug}:END -->`;
+  const cardPattern = new RegExp(`${cardStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${cardEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);
+  index = index.replace(cardPattern, "");
+  fs.writeFileSync(indexPath, index, "utf8");
+
+  const sitemapPath = path.join(siteRoot, "sitemap.xml");
+  let sitemap = fs.readFileSync(sitemapPath, "utf8");
+  const mapStart = `  <!-- COLUMN_SITEMAP:${slug}:START -->`;
+  const mapEnd = `  <!-- COLUMN_SITEMAP:${slug}:END -->`;
+  const mapPattern = new RegExp(`${mapStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${mapEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);
+  sitemap = sitemap.replace(mapPattern, "");
+  fs.writeFileSync(sitemapPath, sitemap, "utf8");
+
+  const assetsPath = path.join(siteRoot, "assets", "images", "columns", slug);
+  if (fs.existsSync(assetsPath)) fs.rmSync(assetsPath, { recursive: true, force: true });
+  return { articlePath, assetsPath };
+}
+
 function main() {
   const args = parseArgs(process.argv.slice(2));
   if (!args.content) {
@@ -700,10 +731,25 @@ function main() {
   const siteRoot = path.resolve(args["site-root"] || defaultSiteRoot);
   const mediaRoot = path.resolve(args["media-root"] || path.dirname(path.resolve(args.content)));
   const contentPath = path.resolve(args.content);
-  const content = applyOptionalFieldDefaults(JSON.parse(fs.readFileSync(contentPath, "utf8")));
+  const rawContent = JSON.parse(fs.readFileSync(contentPath, "utf8"));
+  const content = applyOptionalFieldDefaults(rawContent);
   const mode = args.mode || "publish";
-  if (!["publish", "preview"].includes(mode)) {
-    throw new Error("--mode는 publish 또는 preview만 사용할 수 있습니다.");
+  if (!["publish", "preview", "remove"].includes(mode)) {
+    throw new Error("--mode는 publish, preview 또는 remove만 사용할 수 있습니다.");
+  }
+  if (mode === "remove") {
+    assertString(content.slug, "영문 URL", 3, 80);
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(content.slug)) {
+      throw new Error("영문 URL은 영문 소문자, 숫자, 하이픈만 사용할 수 있습니다.");
+    }
+    removeGeneratedColumn(siteRoot, content.slug);
+    process.stdout.write(`${JSON.stringify({
+      status: "removed",
+      slug: content.slug,
+      url: `${BASE_URL}/columns/${content.slug}.html`,
+      files: ["columns.html", "sitemap.xml", `columns/${content.slug}.html`, `assets/images/columns/${content.slug}`],
+    }, null, 2)}\n`);
+    return;
   }
   const isPreview = mode === "preview";
   validateContent(content, { requireReady: !isPreview });
