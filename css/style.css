@@ -1283,11 +1283,15 @@
   letter-spacing: -0.06em;
   word-break: keep-all;
   overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .column-article__lead {
   font-size: clamp(1.1rem, 1.8vw, 1.4rem);
   line-height: 1.85;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
 .column-byline {
@@ -1388,6 +1392,8 @@
   font-size: clamp(1rem, 1.35vw, 1.1rem);
   line-height: 2;
   word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: pretty;
 }
 
 .column-article__content > p + p,
@@ -1404,10 +1410,13 @@
 .column-article__content h2 {
   margin: 1rem 0 1.6rem;
   color: var(--green-deep);
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
   font-weight: 500;
   line-height: 1.25;
   letter-spacing: -0.045em;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .column-article__content .column-rich-section {
@@ -1694,6 +1703,16 @@
 
   .column-article__hero {
     aspect-ratio: 4 / 3;
+  }
+
+  .column-article__header h1 {
+    font-size: clamp(2rem, 10vw, 2.65rem);
+    line-height: 1.16;
+  }
+
+  .column-article__content h2 {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+    line-height: 1.3;
   }
 
   .column-checklist li {
