@@ -5010,3 +5010,141 @@ body.director-page {
     font-size: 0.62rem;
   }
 }
+/* =========================================================
+   404
+   ========================================================= */
+.error-page {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(90, 150, 162, 0.12), transparent 34rem),
+    var(--bg-base);
+}
+
+.error-page__main {
+  min-height: 100vh;
+  padding: 10rem 1.5rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.error-page__code {
+  margin: 0;
+  color: rgba(36, 120, 96, 0.12);
+  font-size: clamp(7rem, 18vw, 14rem);
+  font-weight: 700;
+  line-height: 0.72;
+  letter-spacing: -0.08em;
+}
+
+.error-page__eyebrow {
+  margin: 2.5rem 0 0.8rem;
+  color: var(--green-deep);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+}
+
+.error-page__main h1 {
+  margin: 0;
+  color: var(--teal-dark);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.error-page__description {
+  margin: 1.5rem 0 0;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.error-page__actions {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-page__languages {
+  margin-top: 3.5rem;
+}
+
+.error-page__languages h2 {
+  margin: 0 0 0.9rem;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.error-page__languages div,
+.error-page__contact {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.1rem;
+}
+
+.error-page__languages a,
+.error-page__contact a {
+  color: var(--teal-dark);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(60, 96, 90, 0.25);
+}
+
+.error-page__contact {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+  .error-page__main {
+    padding-top: 8rem;
+  }
+
+  .error-page__description br {
+    display: none;
+  }
+
+  .error-page__actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* Multilingual philosophy pages: keep long Japanese/Chinese text inside the
+   mobile viewport. Placed last so it wins over the shared section spacing. */
+@media (max-width: 768px) {
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
+  .philosophy-hero {
+    width: 100%;
+    padding: 72px 0 0;
+    overflow: hidden;
+  }
+
+  .philosophy-hero__image,
+  .philosophy-hero__content {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .philosophy-statement {
+    overflow: hidden;
+  }
+
+  .philosophy-statement__inner,
+  .philosophy-next__inner {
+    width: calc(100% - (var(--gap) * 2));
+    max-width: 100%;
+  }
+}

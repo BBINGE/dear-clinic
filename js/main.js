@@ -85,7 +85,7 @@ const navMenu = document.getElementById("navMenu");
 
 // 전 페이지 공통 언어 선택기.
 // 한국어 상세 페이지에서는 현재 페이지와 관계없이 각 언어의 대표 페이지로 이동한다.
-if (nav && navMenu) {
+if (nav && navMenu && !document.body.classList.contains("error-page")) {
   const pageLanguage = document.documentElement.lang || "ko";
   const isLocalizedPage = ["en", "ja", "zh-CN"].includes(pageLanguage);
   const currentPage = window.location.pathname.endsWith("/")
