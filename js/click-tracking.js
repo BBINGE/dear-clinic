@@ -1,6 +1,10 @@
 (function () {
   "use strict";
 
+  // 공통 main.js에서 이미 추적을 시작한 페이지에서는 중복 이벤트를 만들지 않는다.
+  if (window.__dearCtaTrackingInitialized) return;
+  window.__dearCtaTrackingInitialized = true;
+
   var destinations = [
     { match: "tel:", action: "phone" },
     { match: "m.booking.naver.com", action: "naver_booking" },

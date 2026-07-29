@@ -1,3 +1,67 @@
+// Google Analytics 4 공통 설정
+// 모든 공개 페이지가 이 파일을 불러오므로 새 칼럼에도 같은 측정 설정이 적용된다.
+(function initializeDearAnalytics() {
+  "use strict";
+
+  const measurementId = "G-E5M36LQ66P";
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag =
+    window.gtag ||
+    function gtag() {
+      window.dataLayer.push(arguments);
+    };
+
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId);
+
+  const googleTag = document.createElement("script");
+  googleTag.async = true;
+  googleTag.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
+  document.head.appendChild(googleTag);
+
+  if (window.__dearCtaTrackingInitialized) return;
+  window.__dearCtaTrackingInitialized = true;
+
+  const destinations = [
+    { match: "tel:", action: "phone" },
+    { match: "m.booking.naver.com", action: "naver_booking" },
+    { match: "talk.naver.com", action: "naver_talk" },
+    { match: "blog.naver.com", action: "naver_blog" },
+    { match: "instagram.com", action: "instagram" },
+    { match: "be-deer.html", action: "be_deer" },
+  ];
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+
+    const href = link.getAttribute("href") || "";
+    const matchedDestination = destinations.find(({ match }) => href.includes(match));
+    const action = link.dataset.trackAction || matchedDestination?.action;
+    if (!action) return;
+
+    const payload = {
+      cta_action: action,
+      cta_label: (link.getAttribute("aria-label") || link.textContent || "")
+        .trim()
+        .replace(/\s+/g, " ")
+        .slice(0, 80),
+      cta_location:
+        link.dataset.trackLocation ||
+        (link.closest(".quickmenu")
+          ? "quickmenu"
+          : link.closest("section")
+            ? link.closest("section").className.split(" ")[0]
+            : "navigation"),
+      page_path: window.location.pathname,
+      destination: href,
+    };
+
+    window.gtag("event", "dear_cta_click", payload);
+  });
+})();
+
 // 스크롤 시 네비게이션 배경 전환 (히어로를 벗어나면 밝은 배경 + 어두운 텍스트)
 // 히어로가 없는 서브 페이지에서는 처음부터 밝은 배경 상태로 고정한다.
 const nav = document.querySelector(".nav");
