@@ -1277,7 +1277,7 @@
 .column-article__header h1 {
   margin: 1.25rem 0 2rem;
   color: var(--green-deep);
-  font-size: clamp(2.7rem, 6vw, 5.8rem);
+  font-size: clamp(2.35rem, 4.8vw, 4.8rem);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.06em;
@@ -1392,7 +1392,7 @@
 
 .column-article__content > p + p,
 .column-article__content section > p + p {
-  margin-top: 1.2rem;
+  margin-top: 2rem;
 }
 
 .column-article__content section {
@@ -1667,8 +1667,7 @@
     padding-inline: 24px;
   }
 
-  .columns-hero br,
-  .column-article__header br {
+  .columns-hero br {
     display: none;
   }
 
