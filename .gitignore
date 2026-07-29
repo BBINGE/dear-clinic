@@ -3,3 +3,4 @@ Thumbs.db
 .claude/settings.local.json
 HANDOFF.local.md
 .column-editor/
+/admin-app/
