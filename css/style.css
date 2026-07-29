@@ -1579,8 +1579,14 @@
   cursor: pointer;
 }
 
-.column-faq details p {
+.column-faq__answer {
+  display: grid;
+  gap: 1.3rem;
   padding: 0 0 1.6rem;
+}
+
+.column-faq__answer p {
+  margin: 0;
 }
 
 .column-article__content .column-sources {

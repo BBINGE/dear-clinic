@@ -502,7 +502,7 @@ function renderFaq(content) {
     return {
       question: item.question,
       answer: item.answer,
-      html: `<details><summary>${escapeHtml(item.question)}</summary><p>${inlineMarkdown(item.answer)}</p></details>`,
+      html: `<details><summary>${escapeHtml(item.question)}</summary><div class="column-faq__answer">${renderBlockMarkdown(item.answer, `${index + 1}번째 FAQ 답변`)}</div></details>`,
     };
   });
   return {
