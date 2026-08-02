@@ -15,7 +15,7 @@
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link rel="stylesheet" href="css/style.css?v=20260728-3">
-  <link rel="stylesheet" href="css/be-deer.css?v=20260802-1">
+  <link rel="stylesheet" href="css/be-deer.css?v=20260802-2">
 </head>
 <body class="be-deer-page">
   <nav class="nav" id="top">
@@ -165,48 +165,57 @@
     <section class="voices" aria-labelledby="voices-title">
       <header class="voices__intro reveal">
         <p class="eyebrow">REAL RECEIPT REVIEWS</p>
-        <h2 id="voices-title">화면 속 문장보다,<br><em>실제로 남겨진 이야기.</em></h2>
-        <p>네이버 영수증 리뷰의 작성자 식별 영역을 가린 UI 데모입니다.</p>
+        <h2 id="voices-title"><span>실제 환자분들의</span><br><strong>생생한 후기 모음</strong></h2>
+        <p>실제 디어한의원 NAVER 플레이스에 남겨진 리뷰들입니다.</p>
       </header>
 
       <div class="review-editorial">
-        <article class="review-showcase reveal" data-review-showcase>
-          <figure class="review-showcase__visual">
-            <img src="assets/images/be-deer/review-04.jpg" alt="작성자 식별 정보를 가린 디어한의원 네이버 영수증 리뷰" loading="lazy" data-review-image>
-            <figcaption>NAVER RECEIPT REVIEW</figcaption>
-          </figure>
-
-          <div class="review-selector" role="group" aria-label="네이버 영수증 리뷰 선택">
-            <button class="review-selector__item is-active" type="button" aria-pressed="true"
-              data-review-image-src="assets/images/be-deer/review-04.jpg"
-              data-review-image-alt="작성자 식별 정보를 가린 디어한의원 네이버 영수증 리뷰">
+        <div class="review-rail reveal" aria-label="디어한의원 네이버 영수증 리뷰 4개">
+          <article class="review-card">
+            <figure class="review-card__visual">
+              <img src="assets/images/be-deer/review-04.jpg" alt="작성자 식별 정보를 가린 디어한의원 네이버 영수증 리뷰" loading="lazy">
+              <figcaption>NAVER RECEIPT REVIEW</figcaption>
+            </figure>
+            <div class="review-card__copy">
               <span class="review-selector__meta">01 / MOVEMENT</span>
               <blockquote>“원장선생님이 운동 이야기에 <strong>진심으로 반응하는 게</strong> 느껴질 때가 있다.”</blockquote>
               <p>운동처방과 근육학, 요가와 필라테스를 공부해 온 한의사가 몸의 움직임까지 함께 살핍니다.</p>
-            </button>
-            <button class="review-selector__item" type="button" aria-pressed="false"
-              data-review-image-src="assets/images/be-deer/review-01.jpg"
-              data-review-image-alt="작성자 식별 정보를 가린 BE DEER 제품 사진 포함 네이버 영수증 리뷰">
+            </div>
+          </article>
+          <article class="review-card">
+            <figure class="review-card__visual">
+              <img src="assets/images/be-deer/review-01.jpg" alt="작성자 식별 정보를 가린 BE DEER 제품 사진 포함 네이버 영수증 리뷰" loading="lazy">
+              <figcaption>NAVER RECEIPT REVIEW</figcaption>
+            </figure>
+            <div class="review-card__copy">
               <span class="review-selector__meta">02 / CHECK</span>
               <blockquote>“방문할 때마다 <strong>제 몸 상태를</strong> 꼼꼼하게 체크해 주세요.”</blockquote>
               <p>한 번 정한 계획을 그대로 밀어붙이기보다, 진료를 통해 현재 상태와 변화를 확인합니다.</p>
-            </button>
-            <button class="review-selector__item" type="button" aria-pressed="false"
-              data-review-image-src="assets/images/be-deer/review-03.jpg"
-              data-review-image-alt="작성자 식별 정보를 가린 BE DEER 파우치 사진 포함 네이버 영수증 리뷰">
+            </div>
+          </article>
+          <article class="review-card">
+            <figure class="review-card__visual">
+              <img src="assets/images/be-deer/review-03.jpg" alt="작성자 식별 정보를 가린 BE DEER 파우치 사진 포함 네이버 영수증 리뷰" loading="lazy">
+              <figcaption>NAVER RECEIPT REVIEW</figcaption>
+            </figure>
+            <div class="review-card__copy">
               <span class="review-selector__meta">03 / CONVERSATION</span>
               <blockquote>“어려울 때마다 <strong>조언도 해주셔서</strong> 계속 다니고 있어요.”</blockquote>
               <p>몸의 변화뿐 아니라 실제 생활에서 막히는 순간도 편하게 이야기할 수 있도록.</p>
-            </button>
-            <button class="review-selector__item" type="button" aria-pressed="false"
-              data-review-image-src="assets/images/be-deer/review-02.jpg"
-              data-review-image-alt="작성자 식별 정보를 가린 네이버 영수증 리뷰">
+            </div>
+          </article>
+          <article class="review-card">
+            <figure class="review-card__visual">
+              <img src="assets/images/be-deer/review-02.jpg" alt="작성자 식별 정보를 가린 네이버 영수증 리뷰" loading="lazy">
+              <figcaption>NAVER RECEIPT REVIEW</figcaption>
+            </figure>
+            <div class="review-card__copy">
               <span class="review-selector__meta">04 / TRUST</span>
               <blockquote>“환자를 대하실 때 <strong>진심이 느껴져서</strong> 믿음이 갑니다.”</blockquote>
               <p>진료실에서 나누는 설명과 태도까지, 한 사람의 과정을 함께 만드는 부분이라고 생각합니다.</p>
-            </button>
-          </div>
-        </article>
+            </div>
+          </article>
+        </div>
 
         <article class="review-wall reveal" aria-label="실제 리뷰에서 받은 인상을 바탕으로 제작한 생성형 인물 이미지">
           <div class="review-wall__copy">
@@ -267,7 +276,7 @@
   </nav>
 
   <script src="js/main.js?v=20260729"></script>
-  <script src="js/be-deer.js?v=20260802-2"></script>
+  <script src="js/be-deer.js?v=20260802-3"></script>
   <script src="js/click-tracking.js?v=20260728"></script>
 </body>
 </html>
