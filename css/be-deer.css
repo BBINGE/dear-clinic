@@ -47,12 +47,10 @@ img { display: block; width: 100%; }
   font-size: clamp(42px, 4.25vw, 66px);
   line-height: 1.08;
   letter-spacing: -.065em;
-  font-weight: 650;
+  font-weight: 700;
 }
-.hero h1 em {
+.hero__highlight {
   color: var(--green);
-  font-family: Pretendard, Arial, sans-serif;
-  font-weight: 400;
 }
 .hero__body {
   margin: 38px 0 34px;
@@ -87,7 +85,7 @@ img { display: block; width: 100%; }
   z-index: 2;
   left: 7%;
   bottom: 7%;
-  color: #fff;
+  color: rgba(255,255,255,.82);
   font-family: var(--font-en);
   font-size: clamp(80px, 10.5vw, 180px);
   font-weight: 700;
