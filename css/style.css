@@ -81,6 +81,17 @@
   letter-spacing: -0.055em;
 }
 
+.home-be-deer__title-lead,
+.home-be-deer__title-main { display: block; }
+
+.home-be-deer__title-lead {
+  white-space: nowrap;
+  font-size: clamp(1.95rem, 3vw, 3.15rem);
+  letter-spacing: -0.07em;
+}
+
+.home-be-deer__title-main { margin-top: 0.12em; }
+
 .home-be-deer__body {
   margin: clamp(1.7rem, 3vw, 2.6rem) 0 0;
   color: rgba(255, 255, 255, 0.72);
@@ -171,6 +182,8 @@
   border: 0.55rem solid #173f37;
   border-radius: 0.85rem;
 }
+
+.home-be-deer__photo--sub img { object-position: center; }
 
 .home-be-deer__visual-label {
   position: absolute;
@@ -950,6 +963,11 @@
   .home-be-deer h2 {
     font-size: clamp(2.15rem, 10vw, 2.75rem);
     line-height: 1.16;
+  }
+
+  .home-be-deer__title-lead {
+    font-size: clamp(1.65rem, 7.15vw, 2rem);
+    letter-spacing: -0.075em;
   }
 
   .home-be-deer__body {
