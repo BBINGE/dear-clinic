@@ -25,6 +25,37 @@
   });
 })();
 
+// Receipt review selector
+(() => {
+  const showcase = document.querySelector("[data-review-showcase]");
+  if (!showcase) return;
+
+  const image = showcase.querySelector("[data-review-image]");
+  const items = Array.from(showcase.querySelectorAll(".review-selector__item"));
+  if (!image || !items.length) return;
+  let imageChangeTimer;
+
+  items.forEach((item) => {
+    item.addEventListener("click", () => {
+      if (item.classList.contains("is-active")) return;
+
+      items.forEach((candidate) => {
+        const active = candidate === item;
+        candidate.classList.toggle("is-active", active);
+        candidate.setAttribute("aria-pressed", String(active));
+      });
+
+      window.clearTimeout(imageChangeTimer);
+      image.classList.add("is-changing");
+      imageChangeTimer = window.setTimeout(() => {
+        image.src = item.dataset.reviewImageSrc;
+        image.alt = item.dataset.reviewImageAlt;
+        image.classList.remove("is-changing");
+      }, 140);
+    });
+  });
+})();
+
 // BE DEER clinical flow activation
 (() => {
   const process = document.querySelector(".process");
