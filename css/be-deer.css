@@ -91,7 +91,7 @@ img { display: block; width: 100%; }
   font-family: var(--font-en);
   font-size: clamp(80px, 10.5vw, 180px);
   font-weight: 700;
-  line-height: .7;
+  line-height: .84;
   letter-spacing: -.08em;
 }
 .hero__orbit {
