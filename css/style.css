@@ -84,8 +84,8 @@
 .home-be-deer__body {
   margin: clamp(1.7rem, 3vw, 2.6rem) 0 0;
   color: rgba(255, 255, 255, 0.72);
-  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
-  line-height: 1.85;
+  font-size: clamp(1.1rem, 1.35vw, 1.25rem);
+  line-height: 1.75;
 }
 
 .home-be-deer__keywords {
@@ -953,7 +953,8 @@
   }
 
   .home-be-deer__body {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    line-height: 1.75;
   }
 
   .home-be-deer__link {
