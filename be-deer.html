@@ -15,7 +15,7 @@
   <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link rel="stylesheet" href="css/style.css?v=20260728-3">
-  <link rel="stylesheet" href="css/be-deer.css?v=20260802-2">
+  <link rel="stylesheet" href="css/be-deer.css?v=20260803-1">
 </head>
 <body class="be-deer-page">
   <nav class="nav" id="top">
@@ -217,25 +217,66 @@
           </article>
         </div>
 
-        <article class="review-wall reveal" aria-label="실제 리뷰에서 받은 인상을 바탕으로 제작한 생성형 인물 이미지">
-          <div class="review-wall__copy">
-            <p class="eyebrow">LIFE AFTER THE VISIT</p>
-            <h3>각자의 속도로,<br>각자의 생활 안에서.</h3>
-            <p class="review-wall__notice">아래 이미지는 실제 방문자 리뷰에서 받은 인상을 바탕으로 구성한 생성형 이미지입니다. 특정 환자나 치료 결과를 재현한 사진이 아닙니다.</p>
+        <section class="self-check reveal" aria-labelledby="self-check-title">
+          <header class="self-check__intro">
+            <p class="eyebrow">후기로 확인되는 BE DEER 체중관리</p>
+            <h3 id="self-check-title">이런 경우라면,<br>BE DEER 상담을 고려해보세요.</h3>
+            <p>실제 후기에서 확인된 변화는 특별한 몇 사람의 이야기가 아니라,<br>식사·수면·생활 리듬이 흔들리는 일상 속에서 시작되는 경우가 많습니다.</p>
+          </header>
+
+          <div class="self-check__row">
+            <figure class="self-check__photo">
+              <img src="assets/images/be-deer/daily-rhythm-evening.webp" alt="늦은 저녁 집에서 피곤한 하루를 쉬어가는 일상 장면" loading="lazy">
+            </figure>
+            <div class="self-check__cards">
+              <article class="self-check-card">
+                <div class="self-check-card__top"><span>01</span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M11 13c5-6 15-6 19 0 4 6 0 15-7 16-6 1-11-4-10-9"/><path d="m9 17 4 3 3-4"/></svg></div>
+                <h4>반복되는 감량과 요요</h4>
+                <p>체중은 줄어도 식사와 생활 리듬이 다시 무너지며 비슷한 감량과 회복을 반복하는 경우</p>
+              </article>
+              <article class="self-check-card">
+                <div class="self-check-card__top"><span>02</span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 24c5 0 5-9 10-9s5 12 10 12 4-7 7-7"/><path d="M9 31h22"/></svg></div>
+                <h4>식욕 조절이 어려운 경우</h4>
+                <p>특정 시간대의 허기, 야식이나 폭식이 반복되어 혼자서 식사 흐름을 조절하기 어려운 경우</p>
+              </article>
+              <article class="self-check-card">
+                <div class="self-check-card__top"><span>03</span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 7c0 8-9 10-9 19a9 9 0 0 0 18 0c0-9-9-11-9-19Z"/><path d="M15 27c2 3 6 4 9 1"/></svg></div>
+                <h4>몸 상태의 불편이 함께 있는 경우</h4>
+                <p>수면, 소화, 배변, 부종 같은 불편이 함께 느껴져 체중만으로는 설명되지 않는 경우</p>
+              </article>
+            </div>
           </div>
-          <figure>
-            <img src="assets/images/be-deer/mirror-selfie-20s-woman.jpg" alt="20대 여성의 일상적인 거울 셀카를 표현한 생성형 이미지" loading="lazy">
-            <figcaption>FICTIONAL PORTRAIT · 20s</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/images/be-deer/mirror-selfie-30s-man.jpg" alt="30대 남성의 일상적인 거울 셀카를 표현한 생성형 이미지" loading="lazy">
-            <figcaption>FICTIONAL PORTRAIT · 30s</figcaption>
-          </figure>
-          <figure>
-            <img src="assets/images/be-deer/mirror-selfie-40s-woman.jpg" alt="40대 여성의 일상적인 거울 셀카를 표현한 생성형 이미지" loading="lazy">
-            <figcaption>FICTIONAL PORTRAIT · 40s</figcaption>
-          </figure>
-        </article>
+
+          <div class="self-check__row self-check__row--reverse">
+            <div class="self-check__cards">
+              <article class="self-check-card">
+                <div class="self-check-card__top"><span>04</span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 29V18m8 11V11m8 18V21m8 8V14"/><path d="M7 33h26"/></svg></div>
+                <h4>생활 패턴이 불규칙한 경우</h4>
+                <p>식사 시간, 수면, 활동량이 일정하지 않아 체중관리의 방향을 잡기 어려운 경우</p>
+              </article>
+              <article class="self-check-card">
+                <div class="self-check-card__top"><span>05</span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 20s5-8 14-8 14 8 14 8-5 8-14 8S6 20 6 20Z"/><circle cx="20" cy="20" r="4"/></svg></div>
+                <h4>숫자보다 현재 상태를 함께 보고 싶은 경우</h4>
+                <p>체중 숫자만 줄이는 방식보다 지금의 몸과 생활을 함께 살펴보고 싶은 경우</p>
+              </article>
+              <article class="self-check-card">
+                <div class="self-check-card__top"><span>06</span><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M9 25c3 6 12 8 18 3 7-6 4-17-4-19-6-2-12 2-13 8"/><path d="m7 13 3 4 5-2"/></svg></div>
+                <h4>이전 다이어트가 오래 가지 않았던 경우</h4>
+                <p>단기간 감량보다 현재 생활 안에서 지속할 수 있는 관리 방향이 필요한 경우</p>
+              </article>
+            </div>
+            <figure class="self-check__photo">
+              <img src="assets/images/be-deer/daily-rhythm-meal.webp" alt="업무와 늦은 식사가 한 책상에 겹친 불규칙한 일상 장면" loading="lazy">
+            </figure>
+          </div>
+
+          <div class="self-check__bridge">
+            <span>하나라도 지금의 생활과 닮아 있다면</span>
+            <p>체중 숫자보다 먼저, 현재의 상태를 이야기해보세요.</p>
+            <span aria-hidden="true">↓</span>
+          </div>
+          <p class="self-check__photo-note">사진은 일상의 장면을 재구성한 이미지이며, 실제 환자의 치료 사례가 아닙니다.</p>
+        </section>
       </div>
     </section>
 
