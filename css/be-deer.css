@@ -39,7 +39,7 @@ img { display: block; width: 100%; }
 }
 .hero__copy {
   align-self: center;
-  padding: 140px 7vw 90px;
+  padding: 118px 7vw 82px;
 }
 .hero h1 {
   margin: 0;
@@ -89,7 +89,7 @@ img { display: block; width: 100%; }
   bottom: 7%;
   color: #fff;
   font-family: var(--font-en);
-  font-size: clamp(92px, 13vw, 230px);
+  font-size: clamp(80px, 10.5vw, 180px);
   font-weight: 700;
   line-height: .7;
   letter-spacing: -.08em;
@@ -369,10 +369,10 @@ img { display: block; width: 100%; }
 
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
-  .hero__copy { min-height: 68svh; padding: 116px 24px 64px; }
+  .hero__copy { min-height: 64svh; padding: 96px 24px 58px; }
   .hero h1 { font-size: clamp(36px, 10.8vw, 50px); line-height: 1.12; }
   .hero__visual { min-height: 62svh; }
-  .hero__word { left: 20px; bottom: 40px; font-size: 32vw; }
+  .hero__word { left: 20px; bottom: 36px; font-size: 26vw; }
   .hero__index { display: none; }
   .manifesto { min-height: auto; padding: 104px 24px 84px; }
   .manifesto__lines p { font-size: clamp(34px, 9.8vw, 52px); }
