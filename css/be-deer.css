@@ -55,8 +55,8 @@ img { display: block; width: 100%; }
 .hero__body {
   margin: 38px 0 34px;
   color: var(--secondary);
-  font-size: clamp(15px, 1.15vw, 16px);
-  line-height: 1.9;
+  font-size: clamp(18px, 1.4vw, 22px);
+  line-height: 1.8;
 }
 .text-link {
   display: inline-flex;
@@ -64,7 +64,7 @@ img { display: block; width: 100%; }
   align-items: center;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--text);
-  font-size: 14px;
+  font-size: clamp(17px, 1.25vw, 20px);
   font-weight: 700;
 }
 .hero__visual {
