@@ -115,8 +115,8 @@ img { display: block; width: 100%; }
 }
 
 .manifesto {
-  min-height: 92vh;
-  padding: clamp(110px, 11vw, 158px) 8vw clamp(90px, 8vw, 120px);
+  min-height: 84vh;
+  padding: clamp(100px, 9.5vw, 140px) 8vw clamp(82px, 7vw, 106px);
   background: var(--dark);
   color: #fff;
 }
@@ -130,16 +130,16 @@ img { display: block; width: 100%; }
 }
 .manifesto__lines .manifesto__accent { color: #fff; }
 .manifesto__note {
-  margin: 8vw 0 0 auto;
-  width: min(440px, 100%);
+  margin: clamp(54px, 6vw, 86px) 0 0 auto;
+  width: min(740px, 100%);
   display: grid;
-  grid-template-columns: 130px 1fr;
-  gap: 28px;
-  padding-top: 24px;
+  grid-template-columns: 150px 1fr;
+  gap: 32px;
+  padding-top: 28px;
   border-top: 1px solid rgba(255,255,255,.35);
 }
-.manifesto__note span { color: var(--soft); font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: .17em; }
-.manifesto__note p { margin: 0; font-size: 15px; line-height: 1.8; }
+.manifesto__note span { color: var(--soft); font-family: var(--font-en); font-size: clamp(12px, .78vw, 14px); font-weight: 600; letter-spacing: .17em; }
+.manifesto__note p { margin: 0; font-size: clamp(17px, 1.25vw, 21px); line-height: 1.75; }
 
 .observe { padding: clamp(100px, 8.5vw, 132px) 7vw; }
 .section-heading { display: grid; grid-template-columns: 1fr 2fr; margin-bottom: clamp(64px, 6vw, 92px); }
@@ -378,9 +378,11 @@ img { display: block; width: 100%; }
   .hero__visual { min-height: 62svh; }
   .hero__word { left: 20px; bottom: 36px; font-size: 26vw; }
   .hero__index { display: none; }
-  .manifesto { min-height: auto; padding: 104px 24px 84px; }
+  .manifesto { min-height: auto; padding: 92px 24px 72px; }
   .manifesto__lines p { font-size: clamp(34px, 9.8vw, 52px); }
-  .manifesto__note { margin-top: 80px; grid-template-columns: 1fr; gap: 14px; }
+  .manifesto__note { margin-top: 64px; grid-template-columns: 1fr; gap: 16px; padding-top: 22px; }
+  .manifesto__note span { font-size: 12px; }
+  .manifesto__note p { font-size: 18px; }
   .observe { padding: 88px 20px; }
   .section-heading { grid-template-columns: 1fr; gap: 30px; margin-bottom: 60px; }
   .section-heading h2 { font-size: clamp(33px, 9.3vw, 44px); }
