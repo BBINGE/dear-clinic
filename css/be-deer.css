@@ -201,16 +201,16 @@ img { display: block; width: 100%; }
   background: var(--base);
   font-size: 12px;
 }
-.director-block__copy { align-self: center; padding: clamp(72px, 7vw, 108px); }
+.director-block__copy { align-self: center; padding: clamp(68px, 4.5vw, 96px); }
 .director-block__copy h2 {
   margin: 0 0 46px;
-  font-size: clamp(34px, 3.35vw, 50px);
+  font-size: clamp(38px, 3.65vw, 56px);
   line-height: 1.14;
   letter-spacing: -.06em;
 }
-.director-block__copy > p:not(.eyebrow) { margin: 0 0 18px; font-size: 16px; line-height: 1.9; color: var(--secondary); }
-.credentials { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 44px; }
-.credentials span { padding: 10px 14px; border: 1px solid rgba(36,120,96,.35); border-radius: 99px; color: var(--green); font-size: 12px; }
+.director-block__copy > p:not(.eyebrow) { margin: 0 0 18px; font-size: 19px; line-height: 1.9; color: var(--secondary); }
+.credentials { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 46px; }
+.credentials span { padding: 12px 17px; border: 1px solid rgba(36,120,96,.35); border-radius: 99px; color: var(--green); font-size: 14px; }
 
 .process { padding: clamp(100px, 8.5vw, 132px) 8vw; background: var(--teal); color: #fff; }
 .section-heading--light .eyebrow { color: rgba(255,255,255,.6); }
@@ -371,6 +371,12 @@ img { display: block; width: 100%; }
   .review-wall figure { max-height: 460px; transform: none !important; }
 }
 
+@media (min-width: 901px) and (max-width: 1080px) {
+  .director-block { grid-template-columns: 1fr; }
+  .director-block__photo { min-height: 72svh; }
+  .director-block__copy { padding: 82px 6vw; }
+}
+
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero__copy { min-height: 64svh; padding: 96px 24px 58px; }
@@ -394,7 +400,10 @@ img { display: block; width: 100%; }
   .director-block { grid-template-columns: 1fr; }
   .director-block__photo { min-height: 72svh; }
   .director-block__copy { padding: 82px 24px; }
-  .director-block__copy h2 { font-size: clamp(33px, 9vw, 43px); }
+  .director-block__copy h2 { font-size: clamp(36px, 9.5vw, 46px); }
+  .director-block__copy > p:not(.eyebrow) { font-size: 18px; }
+  .credentials { gap: 9px; margin-top: 40px; }
+  .credentials span { padding: 11px 15px; font-size: 13px; }
   .process { padding: 88px 24px; }
   .process__list li { grid-template-columns: 25% 1fr; padding: 26px 0; }
   .process__list li div { grid-template-columns: 1fr; gap: 12px; }
