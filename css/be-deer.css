@@ -24,8 +24,9 @@ img { display: block; width: 100%; }
 .eyebrow {
   margin: 0 0 22px;
   color: var(--green);
+  font-family: var(--font-en);
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: .26em;
 }
 .hero {
@@ -50,7 +51,7 @@ img { display: block; width: 100%; }
 }
 .hero h1 em {
   color: var(--green);
-  font-family: Georgia, serif;
+  font-family: Pretendard, Arial, sans-serif;
   font-weight: 400;
 }
 .hero__body {
@@ -87,8 +88,9 @@ img { display: block; width: 100%; }
   left: 7%;
   bottom: 7%;
   color: #fff;
-  font-family: Georgia, serif;
+  font-family: var(--font-en);
   font-size: clamp(92px, 13vw, 230px);
+  font-weight: 700;
   line-height: .7;
   letter-spacing: -.08em;
 }
@@ -100,7 +102,7 @@ img { display: block; width: 100%; }
 }
 .hero__orbit--one { width: 33vw; height: 33vw; top: 8%; right: -20%; }
 .hero__orbit--two { width: 15vw; height: 15vw; top: 22%; left: 7%; }
-.hero__index { position: absolute; left: 4vw; bottom: 30px; font-size: 11px; letter-spacing: .2em; }
+.hero__index { position: absolute; left: 4vw; bottom: 30px; font-family: var(--font-en); font-size: 11px; font-weight: 600; letter-spacing: .2em; }
 
 .be-deer-page .nav {
   background-color: rgba(248, 248, 246, .96);
@@ -138,7 +140,7 @@ img { display: block; width: 100%; }
   padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,.35);
 }
-.manifesto__note span { color: var(--soft); font-size: 10px; letter-spacing: .17em; }
+.manifesto__note span { color: var(--soft); font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: .17em; }
 .manifesto__note p { margin: 0; font-size: 15px; line-height: 1.8; }
 
 .observe { padding: clamp(100px, 8.5vw, 132px) 7vw; }
@@ -216,7 +218,7 @@ img { display: block; width: 100%; }
   min-height: 138px;
   border-bottom: 1px solid rgba(255,255,255,.35);
 }
-.process__list li > span { font-family: Georgia, serif; font-size: 38px; color: rgba(255,255,255,.5); }
+.process__list li > span { font-family: var(--font-en); font-size: 38px; font-weight: 600; color: rgba(255,255,255,.5); }
 .process__list li div { display: grid; grid-template-columns: 1fr 1fr; align-items: center; }
 .process__list h3 { margin: 0; font-size: 25px; }
 .process__list p { margin: 0; color: rgba(255,255,255,.72); font-size: 15px; line-height: 1.75; }
@@ -231,7 +233,7 @@ img { display: block; width: 100%; }
   line-height: 1.12;
   letter-spacing: -.06em;
 }
-.voices__intro h2 em { color: var(--green); font-family: Georgia, serif; font-weight: 400; }
+.voices__intro h2 em { color: var(--green); font-family: Pretendard, Arial, sans-serif; font-weight: 400; }
 .voices__intro > p:last-child { grid-column: 2; margin: 28px 0 0; color: var(--secondary); line-height: 1.75; font-size: 13px; }
 .review-editorial { display: flex; flex-direction: column; gap: clamp(110px, 10vw, 154px); }
 .review-spread {
@@ -263,7 +265,7 @@ img { display: block; width: 100%; }
   letter-spacing: .12em;
 }
 .review-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.review-pullquote > span { color: var(--green); font-size: 10px; font-weight: 800; letter-spacing: .22em; }
+.review-pullquote > span { color: var(--green); font-family: var(--font-en); font-size: 10px; font-weight: 600; letter-spacing: .22em; }
 .review-pullquote blockquote {
   margin: 30px 0;
   font-size: clamp(28px, 2.85vw, 41px);
