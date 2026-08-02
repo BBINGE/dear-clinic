@@ -24,3 +24,55 @@
     observer.observe(target);
   });
 })();
+
+// BE DEER clinical flow activation
+(() => {
+  const process = document.querySelector(".process");
+  const steps = Array.from(document.querySelectorAll("[data-flow-step]"));
+
+  if (!process || !steps.length || !("IntersectionObserver" in window)) return;
+
+  const setActiveStep = (activeIndex) => {
+    steps.forEach((step, index) => {
+      step.classList.toggle("is-past", index < activeIndex);
+      step.classList.toggle("is-active", index === activeIndex);
+    });
+
+    const progress = ((activeIndex + 1) / steps.length) * 100;
+    process.style.setProperty("--flow-progress", `${progress}%`);
+  };
+
+  const findClosestStep = () => {
+    const viewportCenter = window.innerHeight / 2;
+    return steps.reduce((closestIndex, step, index) => {
+      const rect = step.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const closestRect = steps[closestIndex].getBoundingClientRect();
+      const closestCenter = closestRect.top + closestRect.height / 2;
+      return Math.abs(center - viewportCenter) < Math.abs(closestCenter - viewportCenter)
+        ? index
+        : closestIndex;
+    }, 0);
+  };
+
+  process.classList.add("is-flow-ready");
+  const processRect = process.getBoundingClientRect();
+  if (processRect.top < window.innerHeight && processRect.bottom > 0) {
+    setActiveStep(findClosestStep());
+  }
+
+  const flowObserver = new IntersectionObserver((entries) => {
+    const centeredEntry = entries
+      .filter((entry) => entry.isIntersecting)
+      .sort((a, b) => Math.abs(a.boundingClientRect.top + a.boundingClientRect.height / 2 - window.innerHeight / 2)
+        - Math.abs(b.boundingClientRect.top + b.boundingClientRect.height / 2 - window.innerHeight / 2))[0];
+
+    if (!centeredEntry) return;
+    setActiveStep(steps.indexOf(centeredEntry.target));
+  }, {
+    threshold: 0,
+    rootMargin: "-42% 0px -42% 0px"
+  });
+
+  steps.forEach((step) => flowObserver.observe(step));
+})();
