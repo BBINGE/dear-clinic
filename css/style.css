@@ -3948,12 +3948,13 @@ img, video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 40%;
 }
 
 .hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(22, 54, 46, 0.82) 0%, rgba(22, 54, 46, 0.57) 43%, rgba(22, 54, 46, 0.17) 76%, rgba(22, 54, 46, 0.08) 100%);
+  background: linear-gradient(90deg, rgba(22, 54, 46, 0.64) 0%, rgba(22, 54, 46, 0.38) 43%, rgba(22, 54, 46, 0.1) 76%, rgba(22, 54, 46, 0.04) 100%);
 }
 
 .hero__content {
@@ -3973,6 +3974,7 @@ img, video {
   font-size: clamp(1rem, 1.55vw, 1.5rem);
   font-weight: 300;
   letter-spacing: -0.025em;
+  text-shadow: 0 1px 10px rgba(7, 25, 20, 0.4);
 }
 
 .hero__title {
@@ -3980,6 +3982,7 @@ img, video {
   font-size: clamp(2.75rem, 5vw, 4.75rem);
   font-weight: 700;
   line-height: 1.05;
+  text-shadow: 0 2px 18px rgba(7, 25, 20, 0.34);
   letter-spacing: -0.04em;
 }
 
@@ -5078,8 +5081,12 @@ body.director-page {
 
 /* ============ 반응형 ============ */
 @media (max-width: 768px) {
+  .hero__video {
+    object-position: center 42%;
+  }
+
   .hero__overlay {
-    background: linear-gradient(0deg, rgba(22, 54, 46, 0.86) 0%, rgba(22, 54, 46, 0.52) 56%, rgba(22, 54, 46, 0.14) 100%);
+    background: linear-gradient(0deg, rgba(22, 54, 46, 0.72) 0%, rgba(22, 54, 46, 0.38) 56%, rgba(22, 54, 46, 0.08) 100%);
   }
 
   .hero__content {
