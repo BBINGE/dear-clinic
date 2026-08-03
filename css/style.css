@@ -4281,14 +4281,6 @@ img, video {
   fill: var(--green-deep);
 }
 
-.gongjindan-map__origin-pulse {
-  fill: none;
-  stroke: var(--green-deep);
-  stroke-width: 2;
-  transform-origin: center;
-  animation: gongjindan-origin-pulse 2.4s ease-out infinite;
-}
-
 .gongjindan-map__origin-label {
   fill: var(--teal-soft) !important;
   font-size: 11px !important;
@@ -4326,15 +4318,9 @@ img, video {
   30%, 58% { opacity: 1; }
 }
 
-@keyframes gongjindan-origin-pulse {
-  0% { opacity: 0.65; transform: scale(0.55); }
-  70%, 100% { opacity: 0; transform: scale(1.45); }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .gongjindan-map__routes path,
-  .gongjindan-map__destination,
-  .gongjindan-map__origin-pulse {
+  .gongjindan-map__destination {
     animation: none;
   }
 
