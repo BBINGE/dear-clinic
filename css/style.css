@@ -196,6 +196,99 @@
   text-align: right;
 }
 
+/* ============ 메인: BE DEER → 공진단 브랜드 브릿지 ============ */
+.home-care-bridge {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6.5rem, 11vw, 11rem) var(--gap);
+  color: #20332d;
+  background: var(--bg-base);
+}
+
+.home-care-bridge::before {
+  content: "DEAR";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  color: rgba(36, 120, 96, 0.035);
+  font-family: var(--font-en);
+  font-size: clamp(9rem, 25vw, 24rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.09em;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.home-care-bridge__inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1180px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.home-care-bridge__eyebrow {
+  margin: 0 0 1.6rem;
+  color: var(--green-deep);
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+}
+
+.home-care-bridge h2 {
+  margin: 0;
+  color: var(--green-deep);
+  font-size: clamp(2.45rem, 5vw, 4.8rem);
+  font-weight: 500;
+  line-height: 1.16;
+  letter-spacing: -0.065em;
+}
+
+.home-care-bridge__body {
+  margin: clamp(1.8rem, 3.5vw, 3rem) 0 0;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+  line-height: 1.85;
+}
+
+.home-care-bridge__flow {
+  width: min(100%, 900px);
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) auto;
+  gap: clamp(1rem, 2.5vw, 2rem);
+  align-items: center;
+  margin: clamp(3.5rem, 7vw, 6rem) auto 0;
+  color: var(--green-deep);
+  font-family: var(--font-en);
+  font-size: 0.67rem;
+  font-weight: 600;
+  letter-spacing: 0.17em;
+}
+
+.home-care-bridge__flow svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.home-care-bridge__flow path {
+  fill: none;
+  stroke: rgba(36, 120, 96, 0.35);
+  stroke-width: 1.2;
+}
+
+.home-care-bridge__flow circle {
+  fill: var(--green-deep);
+}
+
+.home-care-bridge__principle {
+  margin: -0.6rem 0 0;
+  color: var(--green-deep);
+  font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+  line-height: 1.7;
+}
+
 @media (min-width: 769px) and (max-width: 1100px) {
   .home-be-deer__inner {
     grid-template-columns: minmax(280px, 0.88fr) minmax(380px, 1.12fr);
@@ -995,6 +1088,39 @@
   .home-be-deer__visual-label {
     top: -1.8rem;
     right: 0;
+  }
+
+  .home-care-bridge {
+    padding-block: 6rem;
+  }
+
+  .home-care-bridge::before {
+    top: 47%;
+    font-size: clamp(8rem, 42vw, 12rem);
+  }
+
+  .home-care-bridge h2 {
+    font-size: clamp(2.1rem, 10vw, 3rem);
+    line-height: 1.18;
+  }
+
+  .home-care-bridge__body br {
+    display: none;
+  }
+
+  .home-care-bridge__flow {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0.6rem;
+    margin-top: 3.5rem;
+  }
+
+  .home-care-bridge__flow svg {
+    width: min(100%, 310px);
+  }
+
+  .home-care-bridge__principle {
+    margin-top: 0.8rem;
   }
 }
 

@@ -171,7 +171,8 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 - 메인 `index.html`의 `DEAR CLINICAL PROCESS`와 `DEAR HEALTH SYSTEM` 두 섹션은 사용자 요청으로 화면에서 임시 제외했다.
 - 삭제하지 않고 `<template id="archived-main-clinical-sections-20260803">` 안에 HTML 원형을 그대로 보관했다. 관련 CSS와 `js/main.js`의 탭 코드도 유지한다.
 - 복원할 때는 두 섹션을 감싼 `<template>` 시작·종료 태그와 임시 보관 주석만 제거하면 된다.
-- 현재 메인 화면은 BE DEER 소개 다음에 공진단 소개가 바로 이어진다.
+- 기존 두 섹션 대신 BE DEER와 공진단 사이에 짧은 브랜드 브릿지를 추가했다. `ONE PERSON, MANY NEEDS`와 “이름이 다른 진료도, 결국 한 사람의 오늘에서 시작됩니다.” 문장, 두 진료 이야기를 잇는 곡선 심볼로 구성한다.
+- 새 브릿지는 진료 체계를 다시 설명하지 않고, 서로 다른 진료도 한 사람의 몸과 생활을 먼저 본다는 디어의 태도만 전달한다.
 
 ### 2026-08-03 다국어 번역 전면 재검수
 
