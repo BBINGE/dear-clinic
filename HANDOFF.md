@@ -166,6 +166,13 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 
 ## 9. 현재 남은 주요 작업
 
+### 2026-08-03 메인 진료 체계 섹션 임시 보관
+
+- 메인 `index.html`의 `DEAR CLINICAL PROCESS`와 `DEAR HEALTH SYSTEM` 두 섹션은 사용자 요청으로 화면에서 임시 제외했다.
+- 삭제하지 않고 `<template id="archived-main-clinical-sections-20260803">` 안에 HTML 원형을 그대로 보관했다. 관련 CSS와 `js/main.js`의 탭 코드도 유지한다.
+- 복원할 때는 두 섹션을 감싼 `<template>` 시작·종료 태그와 임시 보관 주석만 제거하면 된다.
+- 현재 메인 화면은 BE DEER 소개 다음에 공진단 소개가 바로 이어진다.
+
 ### 2026-08-03 다국어 번역 전면 재검수
 
 - 영어·일본어·중국어 24개 페이지를 다시 대조해 공진단을 `resonance groups`로 옮긴 영어 오역, 비급여를 급여(월급)로 해석한 일본어 `非給与`, 중국어의 `一妃的恭谨丹`, `不达标`, `补货`처럼 의미가 달라진 기계 번역을 교정했다.
