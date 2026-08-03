@@ -220,15 +220,6 @@ img { display: block; width: 100%; }
 }
 .director-block__photo { position: relative; overflow: hidden; min-height: 760px; }
 .director-block__photo img { height: 100%; object-fit: cover; object-position: center 20%; filter: saturate(.8); }
-.director-block__photo p {
-  position: absolute;
-  left: 30px;
-  bottom: 24px;
-  margin: 0;
-  padding: 10px 16px;
-  background: var(--base);
-  font-size: 12px;
-}
 .director-block__copy { align-self: center; padding: clamp(68px, 4.5vw, 96px); }
 .director-block__copy h2 {
   margin: 0 0 46px;
