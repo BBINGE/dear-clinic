@@ -3806,10 +3806,9 @@ img, video {
   object-fit: cover;
 }
 
-/* 순수 CSS 키프레임 크로스페이드 — JS 실행 여부·타이밍과 무관하게 항상 동작한다.
-   이미지당 약 3.5초 노출, 앞뒤 1초씩 겹쳐 부드럽게 전환된다. */
+/* 순수 CSS 키프레임 크로스페이드 — 공진단 사진 5장을 상단 섹션에 모아 순환한다. */
 .gongjindan--1 .slideshow__img {
-  animation: gj-slideshow-2 7s ease-in-out infinite;
+  animation: gj-slideshow-5 20s ease-in-out infinite;
 }
 
 .gongjindan--1 .slideshow__img:nth-child(1) {
@@ -3817,54 +3816,26 @@ img, video {
 }
 
 .gongjindan--1 .slideshow__img:nth-child(2) {
-  animation-delay: -3.5s;
+  animation-delay: -16s;
 }
 
-@keyframes gj-slideshow-2 {
-  0% {
+.gongjindan--1 .slideshow__img:nth-child(3) {
+  animation-delay: -12s;
+}
+
+.gongjindan--1 .slideshow__img:nth-child(4) {
+  animation-delay: -8s;
+}
+
+.gongjindan--1 .slideshow__img:nth-child(5) {
+  animation-delay: -4s;
+}
+
+@keyframes gj-slideshow-5 {
+  0%, 16% {
     opacity: 1;
   }
-  35.71% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-  85.71% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.gongjindan--2 .slideshow__img {
-  animation: gj-slideshow-3 10.5s ease-in-out infinite;
-}
-
-.gongjindan--2 .slideshow__img:nth-child(1) {
-  animation-delay: 0s;
-}
-
-.gongjindan--2 .slideshow__img:nth-child(2) {
-  animation-delay: -3.5s;
-}
-
-.gongjindan--2 .slideshow__img:nth-child(3) {
-  animation-delay: -7s;
-}
-
-@keyframes gj-slideshow-3 {
-  0% {
-    opacity: 1;
-  }
-  23.81% {
-    opacity: 1;
-  }
-  33.33% {
-    opacity: 0;
-  }
-  90.48% {
+  20%, 96% {
     opacity: 0;
   }
   100% {
@@ -3873,8 +3844,7 @@ img, video {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gongjindan--1 .slideshow__img,
-  .gongjindan--2 .slideshow__img {
+  .gongjindan--1 .slideshow__img {
     animation: none;
     opacity: 0;
   }
@@ -4191,10 +4161,166 @@ img, video {
   background: var(--white);
 }
 
-/* 공진단 II는 텍스트가 DOM상 먼저 오지만(모바일 스택 순서), 데스크톱에서는 사진을 좌측에 배치 */
+/* 공진단 II는 텍스트가 DOM상 먼저 오지만(모바일 스택 순서), 데스크톱에서는 지도를 좌측에 배치 */
 @media (min-width: 769px) {
-  .gongjindan--2 .photo-frame {
+  .gongjindan--2 .gongjindan-map {
     order: -1;
+  }
+}
+
+.gongjindan-map {
+  position: relative;
+  min-height: 580px;
+  overflow: hidden;
+  border: 1px solid rgba(60, 96, 90, 0.14);
+  background:
+    radial-gradient(circle at 24% 22%, rgba(90, 150, 162, 0.12), transparent 32%),
+    linear-gradient(145deg, #fff 0%, var(--bg-base) 100%);
+  box-shadow: 0 1.25rem 3rem rgba(36, 120, 96, 0.08);
+}
+
+.gongjindan-map::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.28;
+  background-image: radial-gradient(rgba(60, 96, 90, 0.24) 0.8px, transparent 0.8px);
+  background-size: 18px 18px;
+  mask-image: linear-gradient(to bottom, #000, transparent 78%);
+}
+
+.gongjindan-map__heading {
+  position: absolute;
+  z-index: 2;
+  top: clamp(1.5rem, 4vw, 2.5rem);
+  left: clamp(1.5rem, 4vw, 2.5rem);
+  display: grid;
+  gap: 0.28rem;
+  color: var(--teal-dark);
+}
+
+.gongjindan-map__heading span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.gongjindan-map__heading strong {
+  font-family: "Manrope", sans-serif;
+  font-size: clamp(1.35rem, 2.3vw, 1.85rem);
+  letter-spacing: -0.03em;
+}
+
+.gongjindan-map__svg {
+  position: absolute;
+  inset: 1.3rem 0 0;
+  width: 100%;
+  height: calc(100% - 1.3rem);
+}
+
+.gongjindan-map__land,
+.gongjindan-map__island {
+  fill: url(#dear-map-fill);
+  stroke: rgba(60, 96, 90, 0.38);
+  stroke-width: 1.5;
+  filter: url(#dear-map-shadow);
+}
+
+.gongjindan-map__routes path {
+  fill: none;
+  stroke: var(--teal-soft);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 6 9;
+  opacity: 0.7;
+  animation: gongjindan-route 3.8s linear infinite;
+  animation-delay: var(--route-delay);
+}
+
+.gongjindan-map__destination {
+  color: var(--teal-dark);
+  animation: gongjindan-destination 3.8s ease-in-out infinite;
+  animation-delay: var(--node-delay);
+}
+
+.gongjindan-map__destination circle {
+  fill: currentColor;
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.gongjindan-map__destination text,
+.gongjindan-map__origin text {
+  fill: var(--teal-dark);
+  font-family: "Pretendard", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gongjindan-map__origin path,
+.gongjindan-map__origin-dot {
+  fill: var(--green-deep);
+}
+
+.gongjindan-map__origin-pulse {
+  fill: none;
+  stroke: var(--green-deep);
+  stroke-width: 2;
+  transform-origin: center;
+  animation: gongjindan-origin-pulse 2.4s ease-out infinite;
+}
+
+.gongjindan-map__origin-label {
+  fill: var(--teal-soft) !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em;
+}
+
+.gongjindan-map__caption {
+  position: absolute;
+  z-index: 2;
+  right: clamp(1.5rem, 4vw, 2.5rem);
+  bottom: clamp(1.5rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.gongjindan-map__caption span {
+  width: 2rem;
+  height: 1px;
+  background: var(--teal-soft);
+}
+
+@keyframes gongjindan-route {
+  from { stroke-dashoffset: 60; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes gongjindan-destination {
+  0%, 18%, 100% { opacity: 0.45; }
+  30%, 58% { opacity: 1; }
+}
+
+@keyframes gongjindan-origin-pulse {
+  0% { opacity: 0.65; transform: scale(0.55); }
+  70%, 100% { opacity: 0; transform: scale(1.45); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gongjindan-map__routes path,
+  .gongjindan-map__destination,
+  .gongjindan-map__origin-pulse {
+    animation: none;
+  }
+
+  .gongjindan-map__destination {
+    opacity: 1;
   }
 }
 
@@ -5161,6 +5287,10 @@ body.director-page {
 
   .gongjindan__grid {
     grid-template-columns: 1fr;
+  }
+
+  .gongjindan-map {
+    min-height: 520px;
   }
 
   .space__photos {
