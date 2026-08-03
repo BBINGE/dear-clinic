@@ -112,10 +112,11 @@
 
 <!-- ============ 1. 히어로 ============ -->
 <header class="hero" id="top">
-  <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-dear-20260728-poster.webp">
-    <source src="assets/video/hero-dear-20260728.webm" type="video/webm">
-    <source src="assets/video/hero-dear-20260728.mp4" type="video/mp4">
-  </video>
+  <div class="hero__slideshow" aria-hidden="true">
+    <img class="hero__slide hero__slide--space" src="assets/images/waiting-room-1.jpg" alt="">
+    <img class="hero__slide hero__slide--assessment" src="assets/images/services-01-be-deer.jpg" alt="">
+    <img class="hero__slide hero__slide--herbal" src="assets/images/services-03-herbal-decoction.jpg" alt="">
+  </div>
   <div class="hero__overlay"></div>
 
   <nav class="nav">
@@ -134,8 +135,9 @@
   </nav>
 
   <div class="hero__content">
-    <p class="hero__slogan">ALWAYS "DEAR" YOU</p>
-    <h1 class="hero__title">디어한의원</h1>
+    <h1 class="hero__title">Always "DEAR" You</h1>
+    <p class="hero__slogan">오늘도 소중한 당신의 디어한의원입니다.</p>
+    <span class="hero__progress" aria-hidden="true"></span>
   </div>
 </header>
 
