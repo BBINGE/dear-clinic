@@ -520,7 +520,7 @@ function renderFaq(content) {
 
 function renderSources(content) {
   if (!content.sources?.length) {
-    return `<section class="column-sources"><p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다. 증상과 건강 상태에 따라 의료진의 진찰이 필요합니다.</p></section>`;
+    return `<section class="column-sources"><p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다. 증상과 건강 상태에 따라 진찰이 필요할 수 있습니다.</p></section>`;
   }
   const items = content.sources.map((item, index) => {
     assertString(item.title, `${index + 1}번째 참고자료 제목`, 2, 240);
@@ -529,7 +529,7 @@ function renderSources(content) {
     }
     return `<li><a href="${escapeHtml(item.url)}" target="_blank" rel="noopener">${escapeHtml(item.title)}</a></li>`;
   }).join("");
-  return `<section class="column-sources"><h2>참고한 의학 정보</h2><ul>${items}</ul><p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다. 증상과 건강 상태에 따라 의료진의 진찰이 필요합니다.</p></section>`;
+  return `<section class="column-sources"><h2>참고한 의학 정보</h2><ul>${items}</ul><p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다. 증상과 건강 상태에 따라 진찰이 필요할 수 있습니다.</p></section>`;
 }
 
 function buildArticle(content, coverPath, body, toc, faq, sources, { preview = false } = {}) {

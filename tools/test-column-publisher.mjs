@@ -80,6 +80,7 @@ try {
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
   assert.match(article, /href="#제목-3도-칼럼-소제목으로-표시됩니다"/);
+  assert.doesNotMatch(article, /의료진/);
   const napCard = article.match(/<section class="column-nap"[\s\S]*?<\/section>/)?.[0];
   assert.ok(napCard, "컬럼 NAP 카드를 찾지 못했습니다.");
   assert.doesNotMatch(napCard, /사업자등록번호/);

@@ -1,4 +1,4 @@
-﻿Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 [System.Windows.Forms.Application]::EnableVisualStyles()
 
@@ -89,7 +89,7 @@ function Generate {
 <main class="column-article"><article><header class="column-article__header"><nav class="column-breadcrumb"><a href="../index.html">홈</a><span>›</span><a href="../columns.html">Columns</a><span>›</span><span>$(Enc $category.SelectedItem)</span></nav><p class="column-meta">$($cat.en) · $(Enc $category.SelectedItem)</p><h1>$t</h1><p class="column-article__lead">$s</p><div class="column-byline"><span>김민지 대표원장</span><time datetime="$iso">$display</time></div></header>
 <figure class="column-article__hero"><img src="../assets/images/columns/$imgName" alt=""></figure><div class="column-article__layout"><aside class="column-toc"><p>DEAR COLUMN</p><a href="../columns.html">다른 칼럼 보기 →</a></aside><div class="column-article__content">$b
 <section class="column-consult"><p class="column-section-label">CONSULTATION</p><h2>현재의 상태를<br>함께 살펴보고 싶다면</h2><p>불편함과 생활의 변화를 편하게 이야기해 주세요.<br>진찰을 통해 확인이 필요한 부분과 가능한 방향을 설명해 드립니다.</p><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">네이버 진료 예약 →</a></section>$faqHtml
-<section class="column-sources"><p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다. 증상과 건강 상태에 따라 의료진의 진찰이 필요합니다.</p></section>
+<section class="column-sources"><p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다. 증상과 건강 상태에 따라 진찰이 필요할 수 있습니다.</p></section>
 <section class="column-nap"><p class="column-section-label">DEAR KOREAN MEDICINE CLINIC</p><h2>디어한의원</h2><address>대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address></section></div></div></article></main>
 <footer class="footer" id="contact"><div class="footer__inner"><div class="footer__brand"><img class="footer__logo-img" src="../assets/images/logo-full-white.png" alt="디어한의원 로고"><p class="footer__slogan">ALWAYS "DEAR" YOU</p></div><div class="footer__nap-row"><address class="footer__nap">디어한의원 · 대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호<br>02-3486-1777</address></div><p class="footer__copyright">COPYRIGHT © 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p></div></footer><script src="../js/main.js"></script></body></html>
 "@

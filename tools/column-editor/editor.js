@@ -118,7 +118,7 @@ $("#title").addEventListener("blur",()=>{if(!$("#slug").value)$("#slug").value=s
 function draft(includeImages=true) {
   return { content:{title:$("#title").value.trim(),slug:$("#slug").value.trim(),status:"draft",editorName:$("#editorName").value,category:$("#category").value,summary:$("#summary").value.trim(),lead:$("#summary").value.trim(),description:$("#summary").value.trim(),tags:$("#tags").value.split(",").map(v=>v.trim()).filter(Boolean),coverImage:state.coverPath,coverAlt:$("#coverAlt").value.trim(),publishedAt:$("#publishedAt").value,modifiedAt:today,body:$("#body").value.trim(),designBlocks:state.blocks.map(({preview,...b})=>b),faqs:state.faqs,sources:state.sources},...(includeImages?{coverData:state.coverData,blockImages:state.blockImages}:{})};}
 async function action(kind) {
-  const button=$(`#${kind}Button`); if(kind==="publish"&&!confirm("의료진 검토를 마친 이 글을 홈페이지에 공개할까요?"))return;
+  const button=$(`#${kind}Button`); if(kind==="publish"&&!confirm("원고 검토를 마친 이 글을 홈페이지에 공개할까요?"))return;
   $$(".topbar button").forEach(b=>b.disabled=true);
   try{const response=await fetch(`/api/${kind}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(draft())});const data=await response.json();if(!response.ok)throw new Error(data.message);state.coverPath=data.content?.coverImage||state.coverPath;state.coverData="";toast(data.message);if(data.localUrl)window.open(data.localUrl,"_blank");}
   catch(error){toast(error.message,true);}finally{$$(".topbar button").forEach(b=>b.disabled=false);}
