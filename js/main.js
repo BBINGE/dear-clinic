@@ -353,3 +353,59 @@ if (careTabs.length === 5 && carePanels.length === 5) {
     });
   });
 }
+
+// 컬럼 페이지: sticky 목차에서 현재 읽는 구간을 표시한다.
+const columnTocLinks = [...document.querySelectorAll('.column-toc a[href^="#"]')];
+
+if (columnTocLinks.length) {
+  const columnTocItems = columnTocLinks.map((link) => {
+    try {
+      return { link, target: document.getElementById(decodeURIComponent(link.hash.slice(1))) };
+    } catch {
+      return { link, target: null };
+    }
+  }).filter((item) => item.target);
+
+  if (columnTocItems.length) {
+    let columnTocFramePending = false;
+
+    const setActiveColumnToc = (activeLink) => {
+      columnTocLinks.forEach((link) => {
+        const isActive = link === activeLink;
+        link.classList.toggle("is-active", isActive);
+        if (isActive) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      });
+    };
+
+    const updateColumnToc = () => {
+      columnTocFramePending = false;
+      const readingLine = Math.max(140, window.innerHeight * 0.28);
+      let activeItem = columnTocItems[0];
+
+      columnTocItems.forEach((item) => {
+        if (item.target.getBoundingClientRect().top <= readingLine) activeItem = item;
+      });
+
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) {
+        activeItem = columnTocItems[columnTocItems.length - 1];
+      }
+
+      setActiveColumnToc(activeItem.link);
+    };
+
+    const requestColumnTocUpdate = () => {
+      if (columnTocFramePending) return;
+      columnTocFramePending = true;
+      window.requestAnimationFrame(updateColumnToc);
+    };
+
+    columnTocItems.forEach(({ link }) => {
+      link.addEventListener("click", () => setActiveColumnToc(link));
+    });
+
+    updateColumnToc();
+    window.addEventListener("scroll", requestColumnTocUpdate, { passive: true });
+    window.addEventListener("resize", requestColumnTocUpdate);
+  }
+}

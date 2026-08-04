@@ -605,7 +605,7 @@ ${previewMeta}  <title>${escapeHtml(content.title)}</title>
   <meta property="og:image" content="${imageUrl}">
   <meta property="og:url" content="${articleUrl}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260805-2">
+  <link rel="stylesheet" href="../css/style.css?v=20260805-3">
   <script type="application/ld+json">${schema}</script>
 </head>
 <body class="column-article-body${preview ? " is-preview" : ""}">
@@ -638,7 +638,7 @@ ${previewNotice}
   </div>
 </article></main>
 <footer class="footer" id="contact"><div class="footer__inner"><div class="footer__top"><div class="footer__brand"><img class="footer__logo-img" src="../assets/images/logo-full-white.png" alt="디어한의원 로고" width="84" height="140" loading="lazy"><p class="footer__slogan">ALWAYS "DEAR" YOU</p></div></div><div class="footer__nap-row"><address class="footer__nap">디어한의원 · 대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address><div class="footer__legal-links"><a href="../privacy.html">개인정보처리방침</a><a href="#" data-ready="false">비급여항목 안내</a><a href="../patient-rights.html">환자의 권리와 의무</a></div></div><p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p></div></footer>
-<script src="../js/main.js"></script>
+<script src="../js/main.js?v=20260805-1"></script>
 </body>
 </html>
 `;
