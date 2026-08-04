@@ -4205,7 +4205,6 @@ img, video {
   object-position: center 56%;
   opacity: 0;
   transform: scale(1.04);
-  transition: opacity 900ms ease;
   animation: weather-lens-scene 14s ease-in-out infinite alternate;
 }
 
