@@ -1,7 +1,7 @@
 {
   "state": "cloudy",
   "isDay": true,
-  "observedAt": null,
-  "updatedAt": null,
+  "observedAt": "202608041200",
+  "updatedAt": "2026-08-04T03:36:11.786Z",
   "source": "기상청"
 }

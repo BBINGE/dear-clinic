@@ -171,6 +171,7 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 - 메인 `index.html`의 `오늘도 소중한 당신에게` 소개 섹션은 `js/weather-scene.js`가 디어한의원 고정 좌표(기존 지도 좌표)의 현재 날씨를 확인해 화창·흐림·비·눈·천둥 WebGL 장면으로 자동 전환한다.
 - 날씨 데이터는 기상청 `단기예보 조회서비스`의 초단기예보를 사용한다. GitHub Actions의 `KMA_SERVICE_KEY` 저장소 Secret으로 인증하며, `.github/workflows/deploy-pages.yml`이 매시 17분·47분에 `tools/fetch-kma-weather.mjs`를 실행해 공개 배포물에 키가 빠진 `weather-data.json`만 생성한다. 방문자 위치 권한은 요청하지 않는다.
 - 날씨 데이터 출처는 소개 섹션 오른쪽 아래에 `날씨 데이터: 기상청`으로 표시한다. Pages 배포 방식은 GitHub Actions이며, `master` push·30분 주기·수동 실행 때 전체 정적 사이트를 다시 배포한다.
+- 기상청 서버 연결이 일시적으로 지연되면 공개 중인 마지막 정상 `weather-data.json`을 보존한 채 사이트를 배포하고 다음 30분 주기에 다시 시도한다.
 - 날씨 조회 실패, WebGL 미지원, 동작 줄이기 환경에서는 CSS 정적 배경과 흰색 카피가 그대로 보인다. WebGL은 섹션이 화면 밖에 있거나 브라우저 탭이 숨겨지면 정지하고 모바일에서는 렌더 해상도를 낮춘다.
 - 제목은 `오늘도 / 소중한 당신에게`이며 따옴표 없이 `소중한`만 Pretendard 700으로 강조한다. 본문과 CTA는 흰색과 낮은 농도의 어두운 그림자를 사용한다.
 
