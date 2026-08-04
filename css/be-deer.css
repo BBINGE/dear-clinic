@@ -962,10 +962,30 @@ img { display: block; width: 100%; }
 }
 
 @media (max-width: 640px) {
+  .hero__copy {
+    min-height: auto;
+    padding: 104px 24px 52px;
+  }
+  .hero__visual {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+  .hero__visual img { object-position: center 42%; }
+  .hero__word { bottom: 24px; font-size: 22vw; }
+  .manifesto { padding-top: 76px; padding-bottom: 64px; }
+  .observe,
+  .process,
+  .voices { padding-top: 76px; padding-bottom: 84px; }
   .observe__grid { grid-template-columns: 1fr; }
   .observe-card { min-height: 0; padding: 30px 24px 34px; }
   .observe-card h3 { margin-top: 30px; }
   .observe__summary p { font-size: 16px; }
+  .director-block__photo { min-height: 0; aspect-ratio: 4 / 3; }
+  .director-block__photo img { object-position: center 24%; }
+  .director-block__copy { padding-top: 68px; padding-bottom: 72px; }
+  .result-story { margin-bottom: 88px; }
+  .review-editorial { gap: 68px; }
+  .self-check__photo { aspect-ratio: 4 / 3; }
 }
 
 @media (prefers-reduced-motion: reduce) {
