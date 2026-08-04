@@ -568,6 +568,13 @@ img { display: block; width: 100%; }
   font-size: clamp(14px, 1vw, 16px);
   line-height: 1.75;
 }
+.self-check-card__key {
+  color: rgba(255,255,255,.94);
+  font-weight: 700;
+  background: linear-gradient(transparent 64%, rgba(226,190,72,.52) 64%, rgba(226,190,72,.52) 95%, transparent 95%);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
 .self-check__bridge {
   display: flex;
   align-items: center;
