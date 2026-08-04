@@ -4222,7 +4222,7 @@ img, video {
 .about[data-daylight="night"][data-weather="heavy-rain"] .weather-lens__scene--rain-night,
 .about[data-daylight="night"][data-weather="storm"] .weather-lens__scene--rain-night,
 .about[data-weather="snow"] .weather-lens__scene--snow,
-.about[data-weather="heavy-snow"] .weather-lens__scene--snow { opacity: 1; }
+.about[data-weather="heavy-snow"] .weather-lens__scene--snow { opacity: 1 !important; }
 
 .about[data-daylight="day"][data-weather="cloudy"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="strong-wind"] .weather-lens__scene--day {
