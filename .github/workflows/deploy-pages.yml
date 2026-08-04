@@ -1,0 +1,41 @@
+name: 기상청 날씨 갱신 및 Pages 배포
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "17,47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: 공개 사이트 구성
+        run: |
+          mkdir _site
+          rsync -a --exclude='.git' --exclude='.github' --exclude='admin-app' --exclude='_site' --exclude='*.patch' ./ _site/
+      - name: 기상청 현재 날씨 저장
+        env:
+          KMA_SERVICE_KEY: ${{ secrets.KMA_SERVICE_KEY }}
+        run: node tools/fetch-kma-weather.mjs _site/weather-data.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: GitHub Pages 배포
+        id: deployment
+        uses: actions/deploy-pages@v4

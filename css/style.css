@@ -4034,10 +4034,57 @@ img, video {
 
 /* ============ 2. About Us ============ */
 .about {
-  background: var(--bg-base);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #64777c;
+  color: var(--white);
+}
+
+.about__weather-canvas,
+.about__weather-fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.about__weather-canvas {
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.about.is-weather-ready .about__weather-canvas {
+  opacity: 1;
+}
+
+.about__weather-fallback {
+  z-index: 0;
+  background: linear-gradient(145deg, #788b8f, #b8c1c0 58%, #d4d5cf);
+  transition: background 0.5s ease;
+}
+
+.about[data-weather="sunny"] .about__weather-fallback {
+  background: linear-gradient(145deg, #6f9eaf, #b5cbcf 58%, #d8dad4);
+}
+
+.about[data-weather="rain"] .about__weather-fallback {
+  background: linear-gradient(145deg, #41545b, #758486 58%, #aeb4b0);
+}
+
+.about[data-weather="snow"] .about__weather-fallback {
+  background: linear-gradient(145deg, #728990, #b7c1c1 58%, #e1e2de);
+}
+
+.about[data-weather="storm"] .about__weather-fallback {
+  background: linear-gradient(145deg, #26343a, #4c5b5e 58%, #808886);
 }
 
 .about__inner {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--gap);
@@ -4047,28 +4094,64 @@ img, video {
 
 .about__title {
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  color: var(--green-deep);
+  font-weight: 500;
+  color: var(--white);
   line-height: 1.4;
+  text-shadow: 0 2px 3px rgba(11, 27, 32, 0.48), 0 8px 24px rgba(11, 27, 32, 0.2);
+}
+
+.about__weather-source {
+  position: absolute;
+  z-index: 2;
+  right: 1rem;
+  bottom: 0.7rem;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.68rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 1px 3px rgba(11, 27, 32, 0.48);
+}
+
+.about__title strong {
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+}
+
+.about__title::before,
+.about__copy::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -3rem -4.5rem;
+  background: radial-gradient(ellipse, rgba(18, 35, 40, 0.2) 0%, rgba(18, 35, 40, 0.11) 48%, rgba(18, 35, 40, 0.025) 72%, transparent 84%);
+  filter: blur(18px);
+  pointer-events: none;
+}
+
+.about__title,
+.about__copy {
+  position: relative;
+  isolation: isolate;
 }
 
 .about__copy p {
   margin-bottom: 1.25rem;
   font-size: 1.05rem;
+  text-shadow: 0 1px 2px rgba(11, 27, 32, 0.56), 0 5px 18px rgba(11, 27, 32, 0.18);
 }
 
 .about__link {
   display: inline-block;
-  color: var(--green-deep);
+  color: var(--white);
   font-weight: 600;
   text-decoration: none;
   border-bottom: 1px solid currentColor;
   padding-bottom: 0.1rem;
   transition: color 0.2s ease;
+  text-shadow: 0 1px 2px rgba(11, 27, 32, 0.56), 0 5px 18px rgba(11, 27, 32, 0.18);
 }
 
 .about__link:hover {
-  color: var(--teal-soft);
+  color: rgba(255, 255, 255, 0.76);
 }
 
 /* ============ 3, 4. 공진단 (지그재그 2단) ============ */
