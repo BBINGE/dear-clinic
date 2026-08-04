@@ -4202,7 +4202,23 @@ img, video {
 .about[data-weather="snow"] .weather-lens__scene--snow,
 .about[data-weather="heavy-snow"] .weather-lens__scene--snow { opacity: 1; }
 
-.about[data-daylight="night"] .weather-lens__scene:not(.weather-lens__scene--snow) {
+.about[data-weather="cloudy"] .weather-lens__scene--cloudy,
+.about[data-weather="strong-wind"] .weather-lens__scene--cloudy {
+  filter: brightness(0.86) saturate(0.78) contrast(0.94);
+}
+
+.about[data-weather="rain"] .weather-lens__scene--rain,
+.about[data-weather="heavy-rain"] .weather-lens__scene--rain,
+.about[data-weather="storm"] .weather-lens__scene--rain {
+  filter: brightness(0.66) saturate(0.68) contrast(1.02) hue-rotate(4deg);
+}
+
+.about[data-weather="snow"] .weather-lens__scene--snow,
+.about[data-weather="heavy-snow"] .weather-lens__scene--snow {
+  filter: brightness(0.9) saturate(0.64) contrast(0.94) hue-rotate(5deg);
+}
+
+.about[data-daylight="night"] .weather-lens__scene {
   filter: brightness(0.48) saturate(0.72) hue-rotate(8deg);
 }
 
