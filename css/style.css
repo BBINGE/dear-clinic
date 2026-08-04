@@ -4034,6 +4034,7 @@ img, video {
 
 /* ============ 2. About Us ============ */
 .about {
+  position: relative;
   background: var(--bg-base);
 }
 
@@ -4062,16 +4063,21 @@ img, video {
 }
 
 .weather-card {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
   width: fit-content;
   max-width: calc(100% - (var(--gap) * 2));
-  margin: 0 auto 2.4rem;
+  margin: 0;
   padding: 0.45rem 0.7rem;
   background: rgba(36, 120, 96, 0.055);
   border-radius: 999px;
+  transform: translateX(-50%);
 }
 
 .weather-card__icon {
@@ -5424,12 +5430,14 @@ body.director-page {
   }
 
   .weather-card {
+    position: static;
     justify-content: flex-start;
     width: 100%;
     max-width: none;
     margin-bottom: 1.6rem;
     padding: 0.55rem 0.7rem;
     border-radius: 0.75rem;
+    transform: none;
   }
 
   .weather-card__icon {
