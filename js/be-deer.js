@@ -41,6 +41,15 @@
     });
   };
 
+  const setFinalDeltas = (group) => {
+    group.querySelectorAll(".result-metric__delta[data-delta-to]").forEach((delta) => {
+      const target = Number(delta.dataset.deltaTo);
+      const decimals = Number(delta.dataset.decimals || 0);
+      delta.textContent = `${target < 0 ? "−" : "+"}${Math.abs(target).toFixed(decimals)}`;
+    });
+    group.querySelectorAll(".result-metric__delta-wrap").forEach((delta) => delta.classList.add("is-circled"));
+  };
+
   const play = (group) => {
     if (group.dataset.countPlayed === "true") return;
     group.dataset.countPlayed = "true";
@@ -49,6 +58,7 @@
 
     if (reduceMotion) {
       setFinalValues(numbers);
+      setFinalDeltas(group);
       return;
     }
 
@@ -85,6 +95,44 @@
 
       requestAnimationFrame(tick);
     });
+
+    const deltas = Array.from(group.querySelectorAll(".result-metric__delta[data-delta-to]"));
+    deltas.forEach((delta, index) => {
+      const target = Number(delta.dataset.deltaTo);
+      const decimals = Number(delta.dataset.decimals || 0);
+      const duration = 1180;
+      const delay = index * 65;
+      let startTime;
+
+      delta.textContent = `${target < 0 ? "−" : "+"}${(0).toFixed(decimals)}`;
+
+      const tick = (time) => {
+        if (!startTime) startTime = time;
+        const elapsed = time - startTime;
+        if (elapsed < delay) {
+          requestAnimationFrame(tick);
+          return;
+        }
+        const progress = Math.min((elapsed - delay) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        delta.textContent = `${target < 0 ? "−" : "+"}${Math.abs(target * eased).toFixed(decimals)}`;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+          return;
+        }
+        delta.textContent = `${target < 0 ? "−" : "+"}${Math.abs(target).toFixed(decimals)}`;
+        delta.classList.add("is-counted");
+      };
+
+      requestAnimationFrame(tick);
+    });
+
+    if (deltas.length) {
+      const circleStart = 1580;
+      deltas.forEach((delta, index) => {
+        window.setTimeout(() => delta.closest(".result-metric__delta-wrap")?.classList.add("is-circled"), circleStart + index * 480);
+      });
+    }
   };
 
   if (!("IntersectionObserver" in window)) {
