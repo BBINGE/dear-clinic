@@ -520,7 +520,6 @@ img { display: block; width: 100%; }
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-.result-story__note { margin: 20px 0 0; color: #7c827f; font-size: 10px; line-height: 1.7; text-align: center; }
 .voices__intro { display: grid; grid-template-columns: 1fr 2fr; align-items: end; margin-bottom: 9vw; }
 .voices__intro .eyebrow { align-self: start; }
 .voices__intro h2 {
@@ -698,13 +697,6 @@ img { display: block; width: 100%; }
 }
 .self-check__bridge p { margin: 0 auto 0 0; font-size: clamp(17px, 1.35vw, 21px); font-weight: 600; }
 .self-check__bridge span:last-child { color: #fff; font-size: 20px; }
-.self-check__photo-note {
-  margin: 18px 0 0;
-  color: rgba(255,255,255,.4);
-  font-size: 10px;
-  line-height: 1.7;
-}
-
 .final-cta {
   position: relative;
   min-height: 78vh;
@@ -866,7 +858,6 @@ img { display: block; width: 100%; }
   .result-panel__reading { font-size: 16px; }
   .result-story__summary { margin-top: 54px; text-align: left; }
   .result-story__summary strong { font-size: clamp(23px, 6.5vw, 29px); }
-  .result-story__note { text-align: left; }
   .voices__intro { display: block; margin-bottom: 80px; }
   .voices__intro h2 { font-size: clamp(33px, 9.3vw, 44px); }
   .voices__intro > p:last-child { margin-top: 24px; }
