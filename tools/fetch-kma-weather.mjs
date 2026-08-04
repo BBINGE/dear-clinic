@@ -96,10 +96,22 @@ const query = new URLSearchParams({
   nx: String(nx),
   ny: String(ny),
 });
-const endpoint = `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${serviceKey}&${query}`;
-const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-if (!response.ok) throw new Error(`KMA request failed: ${response.status}`);
-const payload = await response.json();
+const encodedServiceKey = serviceKey.includes("%") ? serviceKey : encodeURIComponent(serviceKey);
+const endpoint = `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${encodedServiceKey}&${query}`;
+let payload;
+let lastError;
+for (let attempt = 1; attempt <= 3; attempt += 1) {
+  try {
+    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
+    if (!response.ok) throw new Error(`KMA request failed: ${response.status}`);
+    payload = await response.json();
+    break;
+  } catch (error) {
+    lastError = error;
+    if (attempt < 3) await new Promise((resolveDelay) => setTimeout(resolveDelay, attempt * 4000));
+  }
+}
+if (!payload) throw lastError;
 const resultCode = payload?.response?.header?.resultCode;
 if (resultCode !== "00") {
   throw new Error(`KMA response failed: ${resultCode || "unknown"} ${payload?.response?.header?.resultMsg || ""}`);
