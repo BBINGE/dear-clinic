@@ -141,6 +141,7 @@ if (!values) throw new Error("KMA response contained no forecast items");
 const weather = {
   state: classify(values),
   isDay: daylightAt(),
+  temperature: Number.parseFloat(values.T1H),
   hourlyRain: Number.parseFloat(values.RN1) || 0,
   windSpeed: Number.parseFloat(values.WSD) || 0,
   observedAt: selectedKey,

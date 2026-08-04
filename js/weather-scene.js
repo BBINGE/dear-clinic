@@ -12,6 +12,7 @@
   const previewParams = new URLSearchParams(window.location.search);
   const previewState = previewParams.get("weather-preview");
   const previewDaylight = previewParams.get("weather-time");
+  const previewTemperature = Number.parseFloat(previewParams.get("weather-temp"));
   const WEATHER = {
     sunny: {
       label: "맑음",
@@ -124,12 +125,31 @@
     const state = WEATHER[previewState] ? previewState : (WEATHER[data?.state] ? data.state : "cloudy");
     const content = WEATHER[state];
     const daylight = previewDaylight === "night" || (previewDaylight !== "day" && data?.isDay === false) ? "night" : "day";
+    const temperature = Number.isFinite(previewTemperature) ? previewTemperature : Number.parseFloat(data?.temperature);
+    const roundedTemperature = Number.isFinite(temperature) ? Math.round(temperature) : null;
+    const defaultLabel = daylight === "night" && content.nightLabel ? content.nightLabel : content.label;
+    let weatherMessage = daylight === "night" && content.nightMessage ? content.nightMessage : content.message;
+
+    if (!["rain", "heavy-rain", "snow", "heavy-snow", "storm", "strong-wind"].includes(state) && roundedTemperature !== null) {
+      if (daylight === "night" && roundedTemperature >= 28) {
+        weatherMessage = `밤에도 기온이 ${roundedTemperature}°C로 높아요. 이동 전후로 물을 충분히 드시고, 더위에 무리하지 않도록 천천히 오세요.`;
+      } else if (daylight === "day" && roundedTemperature >= 33) {
+        weatherMessage = `현재 기온이 ${roundedTemperature}°C로 매우 높아요. 한낮 이동은 되도록 피하고, 물을 자주 드시며 천천히 오세요.`;
+      } else if (daylight === "day" && roundedTemperature >= 30) {
+        weatherMessage = `현재 기온이 ${roundedTemperature}°C로 더운 날이에요. 이동 전후로 물을 충분히 드시고, 햇볕을 오래 쬐지 않도록 주의해 주세요.`;
+      } else if (roundedTemperature <= -10) {
+        weatherMessage = `현재 기온이 ${roundedTemperature}°C로 매우 낮아요. 따뜻하게 입고, 빙판이 생긴 곳은 천천히 살펴 오세요.`;
+      } else if (roundedTemperature <= 0) {
+        weatherMessage = `현재 기온이 ${roundedTemperature}°C로 추운 날이에요. 체온을 지킬 수 있도록 따뜻하게 챙겨 입고 오세요.`;
+      }
+    }
+
     section.dataset.weather = state;
     section.dataset.daylight = daylight;
     section.dataset.weatherStatus = WEATHER[previewState] ? "preview" : "ready";
     date.textContent = todayInKorea();
-    label.textContent = daylight === "night" && content.nightLabel ? content.nightLabel : content.label;
-    message.textContent = daylight === "night" && content.nightMessage ? content.nightMessage : content.message;
+    label.textContent = roundedTemperature === null ? defaultLabel : `${defaultLabel} · ${roundedTemperature}°C`;
+    message.textContent = weatherMessage;
     icon.innerHTML = content.icon;
   }
 
