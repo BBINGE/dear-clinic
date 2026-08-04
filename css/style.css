@@ -1774,7 +1774,9 @@
   color: var(--white);
 }
 
+.column-nap .column-section-label,
 .column-nap h2,
+.column-nap address,
 .column-nap a {
   color: var(--white);
 }
