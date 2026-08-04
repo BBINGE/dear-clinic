@@ -30,6 +30,7 @@ jobs:
           mkdir _site
           rsync -a --exclude='.git' --exclude='.github' --exclude='admin-app' --exclude='_site' --exclude='*.patch' ./ _site/
       - name: 기상청 현재 날씨 저장
+        continue-on-error: true
         env:
           KMA_SERVICE_KEY: ${{ secrets.KMA_SERVICE_KEY }}
         run: node tools/fetch-kma-weather.mjs _site/weather-data.json

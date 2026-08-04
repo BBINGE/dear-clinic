@@ -100,7 +100,7 @@ const encodedServiceKey = serviceKey.includes("%") ? serviceKey : encodeURICompo
 const endpoint = `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${encodedServiceKey}&${query}`;
 let payload;
 let lastError;
-for (let attempt = 1; attempt <= 3; attempt += 1) {
+for (let attempt = 1; attempt <= 6; attempt += 1) {
   try {
     const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
     if (!response.ok) throw new Error(`KMA request failed: ${response.status}`);
@@ -108,7 +108,7 @@ for (let attempt = 1; attempt <= 3; attempt += 1) {
     break;
   } catch (error) {
     lastError = error;
-    if (attempt < 3) await new Promise((resolveDelay) => setTimeout(resolveDelay, attempt * 4000));
+    if (attempt < 6) await new Promise((resolveDelay) => setTimeout(resolveDelay, Math.min(attempt * 4000, 12000)));
   }
 }
 if (!payload) throw lastError;
