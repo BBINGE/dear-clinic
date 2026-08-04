@@ -4188,6 +4188,8 @@ img, video {
 .weather-lens__drops,
 .weather-lens__snow,
 .weather-lens__flash,
+.weather-lens__traffic,
+.weather-lens__bloom,
 .weather-lens__glass {
   position: absolute;
   inset: 0;
@@ -4207,23 +4209,34 @@ img, video {
   animation: weather-lens-scene 14s ease-in-out infinite alternate;
 }
 
-.about[data-weather="sunny"] .weather-lens__scene--sunny,
-.about[data-weather="cloudy"] .weather-lens__scene--cloudy,
-.about[data-weather="strong-wind"] .weather-lens__scene--cloudy,
-.about[data-weather="rain"] .weather-lens__scene--rain,
-.about[data-weather="heavy-rain"] .weather-lens__scene--rain,
-.about[data-weather="storm"] .weather-lens__scene--rain,
+.about[data-daylight="day"][data-weather="sunny"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="cloudy"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="strong-wind"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="rain"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="heavy-rain"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="storm"] .weather-lens__scene--day,
+.about[data-daylight="night"][data-weather="sunny"] .weather-lens__scene--night,
+.about[data-daylight="night"][data-weather="cloudy"] .weather-lens__scene--night,
+.about[data-daylight="night"][data-weather="strong-wind"] .weather-lens__scene--night,
+.about[data-daylight="night"][data-weather="rain"] .weather-lens__scene--rain-night,
+.about[data-daylight="night"][data-weather="heavy-rain"] .weather-lens__scene--rain-night,
+.about[data-daylight="night"][data-weather="storm"] .weather-lens__scene--rain-night,
 .about[data-weather="snow"] .weather-lens__scene--snow,
 .about[data-weather="heavy-snow"] .weather-lens__scene--snow { opacity: 1; }
 
-.about[data-weather="cloudy"] .weather-lens__scene--cloudy,
-.about[data-weather="strong-wind"] .weather-lens__scene--cloudy {
+.about[data-daylight="day"][data-weather="cloudy"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="strong-wind"] .weather-lens__scene--day {
   filter: brightness(0.86) saturate(0.78) contrast(0.94);
 }
 
-.about[data-weather="rain"] .weather-lens__scene--rain,
-.about[data-weather="heavy-rain"] .weather-lens__scene--rain,
-.about[data-weather="storm"] .weather-lens__scene--rain {
+.about[data-daylight="night"][data-weather="cloudy"] .weather-lens__scene--night,
+.about[data-daylight="night"][data-weather="strong-wind"] .weather-lens__scene--night {
+  filter: brightness(0.72) saturate(0.74) contrast(0.96);
+}
+
+.about[data-daylight="day"][data-weather="rain"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="heavy-rain"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="storm"] .weather-lens__scene--day {
   filter: brightness(0.66) saturate(0.68) contrast(1.02) hue-rotate(4deg);
 }
 
@@ -4232,7 +4245,8 @@ img, video {
   filter: brightness(0.9) saturate(0.64) contrast(0.94) hue-rotate(5deg);
 }
 
-.about[data-daylight="night"] .weather-lens__scene {
+.about[data-daylight="night"][data-weather="snow"] .weather-lens__scene--snow,
+.about[data-daylight="night"][data-weather="heavy-snow"] .weather-lens__scene--snow {
   filter: brightness(0.48) saturate(0.72) hue-rotate(8deg);
 }
 
@@ -4300,6 +4314,53 @@ img, video {
 .weather-lens__flash { z-index: 5; background: rgba(225, 241, 244, 0.82); opacity: 0; mix-blend-mode: screen; }
 .about[data-weather="storm"] .weather-lens__flash { animation: weather-lens-flash 6s steps(1, end) infinite; }
 .about[data-weather="strong-wind"] .weather-lens__scene { animation: weather-lens-wind 2.8s ease-in-out infinite alternate; }
+
+.weather-lens__traffic {
+  z-index: 4;
+  opacity: 0;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+
+.weather-lens__traffic::before,
+.weather-lens__traffic::after {
+  content: "";
+  position: absolute;
+  left: -28%;
+  bottom: 10%;
+  width: 24%;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(255, 247, 220, .92), transparent);
+  filter: blur(1.2px) drop-shadow(0 0 8px rgba(255, 242, 198, .72));
+  animation: weather-traffic-light 11s linear infinite;
+}
+
+.weather-lens__traffic::after {
+  bottom: 7%;
+  background: linear-gradient(90deg, transparent, rgba(255, 78, 54, .82), transparent);
+  filter: blur(1.4px) drop-shadow(0 0 8px rgba(255, 72, 50, .6));
+  animation-delay: -5.4s;
+  animation-duration: 14s;
+}
+
+.about[data-daylight="night"] .weather-lens__traffic,
+.about[data-weather="rain"] .weather-lens__traffic,
+.about[data-weather="heavy-rain"] .weather-lens__traffic { opacity: .72; }
+
+.weather-lens__bloom {
+  z-index: 5;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 88% 20%, rgba(255, 207, 120, .42) 0 1.5%, transparent 7%),
+    radial-gradient(circle at 79% 64%, rgba(255, 218, 151, .18) 0 1%, transparent 5%),
+    radial-gradient(circle at 95% 72%, rgba(255, 240, 205, .16) 0 .8%, transparent 4%);
+  mix-blend-mode: screen;
+}
+
+.about[data-daylight="night"] .weather-lens__bloom,
+.about[data-weather="rain"] .weather-lens__bloom,
+.about[data-weather="heavy-rain"] .weather-lens__bloom { opacity: 1; animation: weather-lens-bloom 5.5s ease-in-out infinite; }
 
 .weather-lens__glass {
   z-index: 6;
@@ -4400,6 +4461,8 @@ img, video {
 @keyframes weather-lens-snow-near { from { background-position: 0 -48px; transform: translateX(2%); } to { background-position: -14px 220px; transform: translateX(-5%); } }
 @keyframes weather-lens-flash { 0%, 76%, 80%, 83%, 100% { opacity: 0; } 77%, 81% { opacity: .92; } 78%, 82% { opacity: .18; } }
 @keyframes weather-lens-wind { from { transform: scale(1.08) translateX(-2%); } to { transform: scale(1.1) translateX(2.5%); } }
+@keyframes weather-traffic-light { from { transform: translateX(0) skewX(-16deg); opacity: 0; } 12% { opacity: .85; } 78% { opacity: .72; } to { transform: translateX(610%) skewX(-16deg); opacity: 0; } }
+@keyframes weather-lens-bloom { 0%, 100% { transform: scale(.98); opacity: .72; } 50% { transform: scale(1.04); opacity: 1; } }
 @keyframes weather-emoji-sun { to { transform: rotate(360deg); } }
 @keyframes weather-emoji-clouds { from { transform: translateX(-5px); } to { transform: translateX(9px); } }
 @keyframes weather-emoji-rain { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(4px); } }
@@ -4472,7 +4535,11 @@ img, video {
   .weather-lens__rain,
   .weather-lens__drops,
   .weather-lens__snow,
-  .weather-lens__flash { animation: none !important; }
+  .weather-lens__flash,
+  .weather-lens__traffic,
+  .weather-lens__traffic::before,
+  .weather-lens__traffic::after,
+  .weather-lens__bloom { animation: none !important; }
 }
 
 .about__copy p {
