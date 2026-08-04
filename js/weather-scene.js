@@ -12,7 +12,7 @@
   const WEATHER = {
     sunny: {
       label: "맑음",
-      message: "햇살이 좋은 날이에요. 편안한 마음으로 방문해 주세요.",
+      message: "햇살이 좋은 날이에요. 디어한의원에 오시는 길도 가볍고 산뜻하길 바라요!",
       icon: `
         <svg viewBox="0 0 64 64" role="presentation">
           <g class="weather-icon__sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.4">
@@ -23,7 +23,7 @@
     },
     cloudy: {
       label: "흐림",
-      message: "구름이 많은 날이에요. 천천히 편안하게 오세요.",
+      message: "구름이 많은 날이에요. 디어한의원에 오실 때 혹시 모르니 우산을 꼭 준비해 주세요!",
       icon: `
         <svg viewBox="0 0 64 64" role="presentation">
           <g class="weather-icon__cloud" fill="#e7ece8" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">
@@ -33,7 +33,7 @@
     },
     rain: {
       label: "비",
-      message: "비가 내리고 있어요. 우산을 챙겨 방문해 주세요.",
+      message: "비가 내리고 있어요. 디어한의원에 오실 때 우산 꼭 챙기고, 빗길 조심하세요!",
       icon: `
         <svg viewBox="0 0 64 64" role="presentation">
           <g class="weather-icon__cloud" fill="#e7ece8" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">
@@ -46,7 +46,7 @@
     },
     snow: {
       label: "눈",
-      message: "눈이 내리고 있어요. 미끄러운 길을 조심해 주세요.",
+      message: "눈이 내리고 있어요. 디어한의원에 오시는 길, 미끄러우니 천천히 조심히 오세요!",
       icon: `
         <svg viewBox="0 0 64 64" role="presentation">
           <g class="weather-icon__cloud" fill="#f3f5f2" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">
@@ -59,7 +59,7 @@
     },
     storm: {
       label: "천둥·번개",
-      message: "천둥과 비가 예상돼요. 이동하실 때 날씨를 살펴주세요.",
+      message: "천둥번개가 치고 있어요. 디어한의원에 오시기 전 날씨를 한 번 더 확인해 주세요!",
       icon: `
         <svg viewBox="0 0 64 64" role="presentation">
           <g class="weather-icon__cloud" fill="#dfe7e3" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">

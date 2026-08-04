@@ -168,7 +168,7 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 
 ### 2026-08-04 메인 소개 섹션 날씨 안내 카드
 
-- 메인 `index.html`의 `오늘도 소중한 당신에게` 소개 섹션은 기존 밝은 아이보리 배경을 유지한다. `js/weather-scene.js`는 디어한의원 고정 좌표의 현재 날씨를 화창·흐림·비·눈·천둥 카드 아이콘과 방문 안내 문구로 표시한다.
+- 메인 `index.html`의 `오늘도 소중한 당신에게` 소개 섹션은 기존 밝은 아이보리 배경을 유지한다. `js/weather-scene.js`는 디어한의원 고정 좌표의 현재 날씨를 화창·흐림·비·눈·천둥 아이콘과 친근한 방문 안내 문구로 표시한다. 날씨 안내는 섹션 상단 중앙의 테두리 없는 작은 한 줄형으로 배치하며 모바일에서는 문구만 다음 줄로 흐른다.
 - 날씨 데이터는 기상청 `단기예보 조회서비스`의 초단기예보를 사용한다. GitHub Actions의 `KMA_SERVICE_KEY` 저장소 Secret으로 인증하며, `.github/workflows/deploy-pages.yml`이 매시 17분·47분에 `tools/fetch-kma-weather.mjs`를 실행해 공개 배포물에 키가 빠진 `weather-data.json`만 생성한다. 방문자 위치 권한은 요청하지 않는다.
 - 날씨 데이터 출처는 카드 안에 `날씨 데이터: 기상청`으로 표시한다. Pages 배포 방식은 GitHub Actions이며, `master` push·30분 주기·수동 실행 때 전체 정적 사이트를 다시 배포한다.
 - 기상청 서버 연결이 일시적으로 지연되면 공개 중인 마지막 정상 `weather-data.json`을 보존한 채 사이트를 배포하고 다음 30분 주기에 다시 시도한다.
