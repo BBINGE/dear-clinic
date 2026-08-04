@@ -3065,6 +3065,11 @@ body.services-page {
   word-break: keep-all;
 }
 
+html[lang="ja"] .service-chapter h2 {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
 .service-chapter__intro {
   font-size: 0.98rem;
   line-height: 1.82;
