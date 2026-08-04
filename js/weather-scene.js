@@ -34,7 +34,7 @@
     const timeout = window.setTimeout(() => controller.abort(), 7000);
 
     try {
-      const response = await fetch(`/weather-data.json?t=${Date.now()}`, {
+      const response = await fetch(`weather-data.json?t=${Date.now()}`, {
         signal: controller.signal,
         headers: { Accept: "application/json" },
         cache: "no-store",
