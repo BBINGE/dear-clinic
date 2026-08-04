@@ -186,6 +186,7 @@ if (!prefersReducedMotion && "IntersectionObserver" in window && revealTargets.l
 const noticePopups = document.getElementById("noticePopups");
 
 if (noticePopups) {
+  const weatherPreviewActive = new URLSearchParams(window.location.search).has("weather-preview");
   const popupCards = [...noticePopups.querySelectorAll("[data-popup-id]")];
   const todayKey = new Date().toLocaleDateString("sv-SE");
 
@@ -209,7 +210,11 @@ if (noticePopups) {
     });
   });
 
-  refreshPopupVisibility();
+  if (weatherPreviewActive) {
+    noticePopups.hidden = true;
+  } else {
+    refreshPopupVisibility();
+  }
 }
 
 // 메인 DEAR HEALTH SYSTEM: 진료 체계의 세 축을 탭으로 전환한다.
