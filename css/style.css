@@ -4346,7 +4346,7 @@ img, video {
 .gongjindan-map__caption-domestic,
 .gongjindan-map__caption-world {
   grid-area: 1 / 1;
-  animation: gongjindan-map-copy 14s ease-in-out infinite;
+  animation: gongjindan-map-copy 26s ease-in-out infinite;
 }
 
 .gongjindan-map__heading-world,
@@ -4374,19 +4374,16 @@ img, video {
 }
 
 .gongjindan-map__scene--domestic {
-  animation: gongjindan-map-domestic 14s ease-in-out infinite;
+  animation: gongjindan-map-domestic 26s ease-in-out infinite;
 }
 
 .gongjindan-map__scene--world {
   opacity: 0;
-  animation: gongjindan-map-world 14s ease-in-out infinite;
+  animation: gongjindan-map-world 26s ease-in-out infinite;
 }
 
-.gongjindan-map__world-land path {
-  fill: url(#dear-map-fill);
-  stroke: rgba(60, 96, 90, 0.32);
-  stroke-width: 1.4;
-  filter: url(#dear-map-shadow);
+.gongjindan-map__world-outline {
+  opacity: 0.55;
 }
 
 .gongjindan-map__world-origin circle {
@@ -4420,7 +4417,7 @@ img, video {
   stroke-dasharray: 6 9;
   opacity: 0.7;
   marker-end: url(#dear-route-arrow);
-  animation: gongjindan-route 3.8s linear infinite;
+  animation: gongjindan-route 6.8s linear infinite;
   animation-delay: var(--route-delay);
 }
 
@@ -4447,7 +4444,7 @@ img, video {
 
 .gongjindan-map__destination {
   color: var(--teal-dark);
-  animation: gongjindan-destination 3.8s ease-in-out infinite;
+  animation: gongjindan-destination 6.8s ease-in-out infinite;
   animation-delay: var(--node-delay);
 }
 
