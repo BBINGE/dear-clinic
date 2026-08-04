@@ -4109,6 +4109,8 @@ img, video {
 .about {
   position: relative;
   background: var(--bg-base);
+  padding-top: 0;
+  padding-bottom: clamp(4.5rem, 8vw, 7rem);
 }
 
 .about__inner {
@@ -4131,6 +4133,15 @@ img, video {
   font-weight: 700;
 }
 
+.about__eyebrow {
+  margin: 0 0 1.15rem;
+  color: var(--teal-soft);
+  font-family: var(--font-en);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
 .about__heading {
   display: block;
 }
@@ -4142,7 +4153,7 @@ img, video {
   align-items: flex-end;
   width: auto;
   min-height: clamp(300px, 30vw, 380px);
-  margin: 0 calc(var(--gap) * -1) clamp(7rem, 10vw, 10rem);
+  margin: 0 calc(var(--gap) * -1);
   padding-block: clamp(2.4rem, 5vw, 4.5rem);
   padding-inline: max(clamp(1.5rem, 4vw, 3.4rem), calc((100vw - 1200px) / 2));
   overflow: hidden;
@@ -4151,6 +4162,13 @@ img, video {
   border-radius: 0;
   box-shadow: 0 22px 58px rgba(21, 55, 47, 0.18), inset 0 -1px rgba(255,255,255,.13);
   isolation: isolate;
+}
+
+.about__bridge {
+  width: 1px;
+  height: clamp(2.75rem, 5vw, 4.25rem);
+  margin: 0 auto clamp(3.25rem, 6vw, 5.5rem);
+  background: linear-gradient(to bottom, rgba(50, 145, 125, 0.62), rgba(50, 145, 125, 0.08));
 }
 
 .weather-card::after {
@@ -6046,9 +6064,19 @@ body.director-page {
     max-width: none;
     min-height: 300px;
     margin-inline: calc(var(--gap) * -1);
-    margin-bottom: 6.5rem;
+    margin-bottom: 0;
     padding: 2rem 1.5rem;
     border-radius: 0;
+  }
+
+  .about__bridge {
+    height: 2.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .about__eyebrow {
+    margin-bottom: 0.85rem;
+    font-size: 0.65rem;
   }
 
   .weather-card__icon {
