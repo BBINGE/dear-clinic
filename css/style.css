@@ -4140,9 +4140,9 @@ img, video {
   z-index: 2;
   display: flex;
   align-items: flex-end;
-  width: 100vw;
+  width: auto;
   min-height: clamp(300px, 30vw, 380px);
-  margin: 0 calc(50% - 50vw) clamp(7rem, 10vw, 10rem);
+  margin: 0 calc(var(--gap) * -1) clamp(7rem, 10vw, 10rem);
   padding-block: clamp(2.4rem, 5vw, 4.5rem);
   padding-inline: max(clamp(1.5rem, 4vw, 3.4rem), calc((100vw - 1200px) / 2));
   overflow: hidden;
@@ -5921,10 +5921,10 @@ body.director-page {
   .weather-card {
     display: flex;
     align-items: flex-end;
-    width: 100vw;
+    width: auto;
     max-width: none;
     min-height: 300px;
-    margin-inline: calc(50% - 50vw);
+    margin-inline: calc(var(--gap) * -1);
     margin-bottom: 6.5rem;
     padding: 2rem 1.5rem;
     border-radius: 0;
