@@ -9,6 +9,9 @@
   if (!section || !icon || !date || !label || !message) return;
 
   const WEATHER_REFRESH_INTERVAL = 30 * 60 * 1000;
+  const previewParams = new URLSearchParams(window.location.search);
+  const previewState = previewParams.get("weather-preview");
+  const previewDaylight = previewParams.get("weather-time");
   const WEATHER = {
     sunny: {
       label: "맑음",
@@ -44,6 +47,19 @@
           </g>
         </svg>`,
     },
+    "heavy-rain": {
+      label: "강한 비",
+      message: "비가 강하게 내리고 있어요. 우산을 꼭 챙기시고, 이동하실 때 빗길과 차량을 평소보다 더 주의해 주세요!",
+      icon: `
+        <svg viewBox="0 0 64 64" role="presentation">
+          <g class="weather-icon__cloud" fill="#dfe7e3" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">
+            <path d="M17 38h30a8.5 8.5 0 0 0 .5-17A15 15 0 0 0 19 19a10 10 0 0 0-2 19Z" />
+          </g>
+          <g class="weather-icon__rain" stroke="#4f8496" stroke-linecap="round" stroke-width="3">
+            <path d="M20 45l-3 9M31 45l-3 9M42 45l-3 9M51 44l-3 9" />
+          </g>
+        </svg>`,
+    },
     snow: {
       label: "눈",
       message: "눈이 내리고 있어요. 디어한의원에 오시는 길이 미끄러울 수 있으니, 천천히 조심해서 오세요!",
@@ -55,6 +71,27 @@
           <g class="weather-icon__snow" fill="#8eb5bf">
             <circle cx="22" cy="48" r="2" /><circle cx="34" cy="45" r="2" /><circle cx="45" cy="50" r="2" />
           </g>
+        </svg>`,
+    },
+    "heavy-snow": {
+      label: "많은 눈",
+      message: "눈이 많이 내리고 있어요. 미끄럽지 않은 신발을 챙기시고, 평소보다 여유 있게 출발해 주세요!",
+      icon: `
+        <svg viewBox="0 0 64 64" role="presentation">
+          <g class="weather-icon__cloud" fill="#f3f5f2" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">
+            <path d="M17 37h30a8.5 8.5 0 0 0 .5-17A15 15 0 0 0 19 18a10 10 0 0 0-2 19Z" />
+          </g>
+          <g class="weather-icon__snow" fill="#8eb5bf">
+            <circle cx="18" cy="47" r="2.2" /><circle cx="29" cy="44" r="2.2" /><circle cx="40" cy="49" r="2.2" /><circle cx="50" cy="44" r="2.2" /><circle cx="26" cy="55" r="2.2" /><circle cx="45" cy="56" r="2.2" />
+          </g>
+        </svg>`,
+    },
+    "strong-wind": {
+      label: "강한 바람",
+      message: "바람이 강하게 불고 있어요. 이동하실 때 간판과 낙하물에 주의하시고, 겉옷도 단단히 여며주세요!",
+      icon: `
+        <svg viewBox="0 0 64 64" role="presentation" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.4">
+          <path d="M12 25h29c8 0 8-10 1-10-4 0-6 2-7 5M12 34h37c8 0 8 11 0 11-4 0-6-2-7-5M12 43h20" />
         </svg>`,
     },
     storm: {
@@ -82,10 +119,11 @@
   }
 
   function applyWeather(data) {
-    const state = WEATHER[data?.state] ? data.state : "cloudy";
+    const state = WEATHER[previewState] ? previewState : (WEATHER[data?.state] ? data.state : "cloudy");
     const content = WEATHER[state];
     section.dataset.weather = state;
-    section.dataset.weatherStatus = "ready";
+    section.dataset.daylight = previewDaylight === "night" || (previewDaylight !== "day" && data?.isDay === false) ? "night" : "day";
+    section.dataset.weatherStatus = WEATHER[previewState] ? "preview" : "ready";
     date.textContent = todayInKorea();
     label.textContent = content.label;
     message.textContent = content.message;

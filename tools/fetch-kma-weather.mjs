@@ -79,9 +79,16 @@ function classify(values) {
   const precipitation = Number(values.PTY || 0);
   const lightning = Number(values.LGT || 0);
   const sky = Number(values.SKY || 4);
+  const hourlyRain = Number.parseFloat(values.RN1) || 0;
+  const windSpeed = Number.parseFloat(values.WSD) || 0;
   if (lightning > 0) return "storm";
-  if ([3, 6, 7].includes(precipitation)) return "snow";
-  if ([1, 2, 4, 5].includes(precipitation)) return "rain";
+  if ([3, 6, 7].includes(precipitation)) return hourlyRain >= 5 ? "heavy-snow" : "snow";
+  if ([1, 2, 4, 5].includes(precipitation)) {
+    if (hourlyRain >= 15 || windSpeed >= 14) return "storm";
+    if (hourlyRain >= 10) return "heavy-rain";
+    return "rain";
+  }
+  if (windSpeed >= 14) return "strong-wind";
   return sky === 1 ? "sunny" : "cloudy";
 }
 
@@ -134,6 +141,8 @@ if (!values) throw new Error("KMA response contained no forecast items");
 const weather = {
   state: classify(values),
   isDay: daylightAt(),
+  hourlyRain: Number.parseFloat(values.RN1) || 0,
+  windSpeed: Number.parseFloat(values.WSD) || 0,
   observedAt: selectedKey,
   updatedAt: new Date().toISOString(),
   source: "기상청",

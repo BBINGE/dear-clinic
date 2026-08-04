@@ -25,7 +25,7 @@
 <!-- Pretendard -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
-<link rel="stylesheet" href="css/style.css?v=20260805-1">
+<link rel="stylesheet" href="css/style.css?v=20260805-2">
 
 <!-- JSON-LD: LocalBusiness (NAP) -->
 <script type="application/ld+json">
@@ -144,10 +144,27 @@
 
   <!-- ============ 2. About Us ============ -->
   <section class="about" id="about" data-weather="cloudy" data-weather-status="loading">
-    <aside class="weather-card" aria-label="오늘의 날씨 안내" aria-live="polite">
-      <div class="weather-card__icon" id="weatherCardIcon" aria-hidden="true"></div>
+    <aside class="weather-card" aria-label="오늘의 서초동 날씨 안내" aria-live="polite">
+      <div class="weather-lens__visual" aria-hidden="true">
+        <img class="weather-lens__scene weather-lens__scene--sunny" src="assets/images/weather-lens/weather-lens-sunny.jpg" alt="">
+        <img class="weather-lens__scene weather-lens__scene--cloudy" src="assets/images/weather-lens/weather-lens-cloudy.jpg" alt="">
+        <img class="weather-lens__scene weather-lens__scene--rain" src="assets/images/weather-lens/weather-lens-rain.jpg" alt="">
+        <img class="weather-lens__scene weather-lens__scene--snow" src="assets/images/weather-lens/weather-lens-snow-night.jpg" alt="">
+        <span class="weather-lens__sun-glow"></span>
+        <span class="weather-lens__cloud-veil"></span>
+        <span class="weather-lens__rain"></span>
+        <span class="weather-lens__drops"></span>
+        <span class="weather-lens__snow weather-lens__snow--far"></span>
+        <span class="weather-lens__snow weather-lens__snow--near"></span>
+        <span class="weather-lens__flash"></span>
+        <span class="weather-lens__glass"></span>
+      </div>
       <div class="weather-card__content">
-        <p class="weather-card__meta"><span id="weatherCardDate">2026.08.04</span><span aria-hidden="true">·</span><span id="weatherCardLabel">흐림</span></p>
+        <p class="weather-card__eyebrow">DEAR WEATHER LENS</p>
+        <div class="weather-card__reading">
+          <div class="weather-card__icon" id="weatherCardIcon" aria-hidden="true"></div>
+          <p class="weather-card__meta"><span id="weatherCardDate">2026.08.04</span><span aria-hidden="true">·</span><span id="weatherCardLabel">흐림</span></p>
+        </div>
         <p class="weather-card__message" id="weatherCardMessage">구름이 많은 날이에요. 디어한의원에 오실 때 작은 우산 하나 챙겨두면 든든해요!</p>
         <small class="weather-card__source">서초동 기준 · 기상청</small>
       </div>
@@ -693,7 +710,7 @@
 </nav>
 
 <script src="js/main.js?v=20260729"></script>
-<script src="js/weather-scene.js?v=20260804-4"></script>
+<script src="js/weather-scene.js?v=20260805-5"></script>
 <script src="js/click-tracking.js?v=20260728"></script>
 </body>
 </html>
