@@ -4613,11 +4613,21 @@ img, video {
   padding: 0;
 }
 
+.space--light {
+  padding-top: clamp(4.5rem, 8vw, 8rem);
+  background: var(--white);
+}
+
 .space-film {
   position: relative;
   width: 100%;
   overflow: hidden;
   background: var(--warm-gray);
+}
+
+.space-film:focus-visible {
+  outline: 1px solid rgba(60, 96, 90, 0.42);
+  outline-offset: -1px;
 }
 
 .space-film::after {
@@ -4636,6 +4646,7 @@ img, video {
   width: max-content;
   transform: translateX(-50%);
   animation: space-film-flow 128s linear infinite;
+  animation-play-state: paused;
   will-change: transform;
 }
 
@@ -4651,6 +4662,53 @@ img, video {
   object-fit: cover;
   filter: saturate(0.88) contrast(0.92) brightness(1.04) sepia(0.025);
   animation: space-film-breathe 18s ease-in-out infinite alternate;
+  animation-play-state: paused;
+}
+
+.space-film__hint {
+  position: absolute;
+  z-index: 2;
+  right: clamp(1rem, 2.5vw, 2.5rem);
+  bottom: clamp(1rem, 2.5vw, 2rem);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.75rem;
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(36, 120, 96, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(8px);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  pointer-events: none;
+  transition: color 0.35s ease, background 0.35s ease, transform 0.35s ease;
+}
+
+.space-film__hint svg {
+  width: 36px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .space-film:hover .space-film__track,
+  .space-film:hover .space-film__set img,
+  .space-film:focus-visible .space-film__track,
+  .space-film:focus-visible .space-film__set img {
+    animation-play-state: running;
+  }
+
+  .space-film:hover .space-film__hint,
+  .space-film:focus-visible .space-film__hint {
+    color: rgba(255, 255, 255, 0.96);
+    background: rgba(36, 120, 96, 0.56);
+    transform: translateX(0.25rem);
+  }
 }
 
 @keyframes space-film-flow {
@@ -4680,6 +4738,12 @@ img, video {
   .space-film__set img {
     animation: none;
     transform: scale(1);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .space-film__hint {
+    display: none;
   }
 }
 
