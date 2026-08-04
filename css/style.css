@@ -4182,6 +4182,7 @@ img, video {
 }
 
 .weather-lens__scene,
+.weather-lens__canvas,
 .weather-lens__sun-glow,
 .weather-lens__cloud-veil,
 .weather-lens__rain,
@@ -4200,6 +4201,15 @@ img, video {
   border-radius: inherit;
   pointer-events: none;
 }
+
+.weather-lens__canvas {
+  z-index: 5;
+  display: block;
+}
+
+.about.weather-canvas-ready .weather-lens__rain,
+.about.weather-canvas-ready .weather-lens__drops,
+.about.weather-canvas-ready .weather-lens__snow { display: none; }
 
 .weather-lens__scene {
   z-index: 0;
@@ -4571,6 +4581,7 @@ img, video {
     animation: none !important;
   }
   .weather-lens__scene,
+  .weather-lens__canvas,
   .weather-lens__sun-glow,
   .weather-lens__cloud-veil,
   .weather-lens__rain,
