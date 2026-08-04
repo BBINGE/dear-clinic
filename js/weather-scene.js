@@ -16,6 +16,8 @@
     sunny: {
       label: "맑음",
       message: "햇살이 좋은 날이에요. 디어한의원에 오시는 길도 가볍고 산뜻하길 바라요!",
+      nightLabel: "맑은 밤",
+      nightMessage: "서초동의 밤하늘이 맑아요. 이른 시간에 이동하신다면 주변을 천천히 살펴 오세요!",
       icon: `
         <svg viewBox="0 0 64 64" role="presentation">
           <g class="weather-icon__sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.4">
@@ -121,12 +123,13 @@
   function applyWeather(data) {
     const state = WEATHER[previewState] ? previewState : (WEATHER[data?.state] ? data.state : "cloudy");
     const content = WEATHER[state];
+    const daylight = previewDaylight === "night" || (previewDaylight !== "day" && data?.isDay === false) ? "night" : "day";
     section.dataset.weather = state;
-    section.dataset.daylight = previewDaylight === "night" || (previewDaylight !== "day" && data?.isDay === false) ? "night" : "day";
+    section.dataset.daylight = daylight;
     section.dataset.weatherStatus = WEATHER[previewState] ? "preview" : "ready";
     date.textContent = todayInKorea();
-    label.textContent = content.label;
-    message.textContent = content.message;
+    label.textContent = daylight === "night" && content.nightLabel ? content.nightLabel : content.label;
+    message.textContent = daylight === "night" && content.nightMessage ? content.nightMessage : content.message;
     icon.innerHTML = content.icon;
   }
 
