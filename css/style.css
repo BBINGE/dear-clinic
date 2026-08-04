@@ -2333,7 +2333,7 @@ body.care-page {
 }
 
 .care-viewer__inner {
-  max-width: 1160px;
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(210px, 0.2fr) minmax(440px, 0.46fr) minmax(300px, 0.34fr);
@@ -2758,8 +2758,8 @@ body.services-page {
   max-width: 1160px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
-  gap: clamp(3rem, 6vw, 6rem);
+  grid-template-columns: minmax(600px, 1.2fr) minmax(380px, 0.8fr);
+  gap: clamp(2.5rem, 4vw, 4rem);
   align-items: center;
 }
 
@@ -2769,6 +2769,11 @@ body.services-page {
   font-size: clamp(2.6rem, 4.2vw, 3.75rem);
   line-height: 1.22;
   word-break: keep-all;
+}
+
+.services-hero h1 span {
+  display: block;
+  white-space: nowrap;
 }
 
 .services-hero__body {
@@ -3123,6 +3128,10 @@ body.services-page {
   .services-hero__inner {
     grid-template-columns: 1fr 0.78fr;
     gap: 3rem;
+  }
+
+  .services-hero h1 span {
+    white-space: normal;
   }
 
   .service-chapter__inner,
