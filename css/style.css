@@ -1837,8 +1837,9 @@
 }
 
 .column-article__content > table {
-  display: block;
+  display: table;
   width: 100%;
+  table-layout: fixed;
   margin: clamp(2rem, 4vw, 3rem) 0;
   border-collapse: collapse;
   overflow-x: auto;
