@@ -4336,7 +4336,26 @@ img, video {
   letter-spacing: 0.2em;
 }
 
+.gongjindan-map__heading-world,
+.gongjindan-map__caption-world {
+  opacity: 0;
+}
+
+.gongjindan-map__heading-domestic,
+.gongjindan-map__heading-world,
+.gongjindan-map__caption-domestic,
+.gongjindan-map__caption-world {
+  grid-area: 1 / 1;
+  animation: gongjindan-map-copy 14s ease-in-out infinite;
+}
+
+.gongjindan-map__heading-world,
+.gongjindan-map__caption-world {
+  animation-name: gongjindan-map-copy-world;
+}
+
 .gongjindan-map__heading strong {
+  grid-area: 2 / 1;
   font-family: "Manrope", sans-serif;
   font-size: clamp(1.35rem, 2.3vw, 1.85rem);
   letter-spacing: -0.03em;
@@ -4347,6 +4366,41 @@ img, video {
   inset: 1.3rem 0 0;
   width: 100%;
   height: calc(100% - 1.3rem);
+}
+
+.gongjindan-map__scene {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.gongjindan-map__scene--domestic {
+  animation: gongjindan-map-domestic 14s ease-in-out infinite;
+}
+
+.gongjindan-map__scene--world {
+  opacity: 0;
+  animation: gongjindan-map-world 14s ease-in-out infinite;
+}
+
+.gongjindan-map__world-land path {
+  fill: url(#dear-map-fill);
+  stroke: rgba(60, 96, 90, 0.32);
+  stroke-width: 1.4;
+  filter: url(#dear-map-shadow);
+}
+
+.gongjindan-map__world-origin circle {
+  fill: var(--green-deep);
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.gongjindan-map__world-origin text {
+  fill: var(--teal-dark);
+  font-family: "Manrope", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  text-anchor: middle;
 }
 
 .gongjindan-map__land,
@@ -4427,7 +4481,8 @@ img, video {
   z-index: 2;
   right: clamp(1.5rem, 4vw, 2.5rem);
   bottom: clamp(1.5rem, 4vw, 2.5rem);
-  display: flex;
+  display: grid;
+  grid-template-columns: 2rem auto;
   align-items: center;
   gap: 0.7rem;
   margin: 0;
@@ -4435,6 +4490,12 @@ img, video {
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.06em;
+}
+
+.gongjindan-map__caption b {
+  grid-area: 1 / 2;
+  font: inherit;
+  white-space: nowrap;
 }
 
 .gongjindan-map__caption span {
@@ -4453,6 +4514,30 @@ img, video {
   30%, 58% { opacity: 1; }
 }
 
+@keyframes gongjindan-map-domestic {
+  0%, 44% { opacity: 1; transform: scale(1); }
+  52%, 94% { opacity: 0; transform: scale(0.96); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gongjindan-map-world {
+  0%, 44% { opacity: 0; transform: scale(1.04); }
+  52%, 94% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.04); }
+}
+
+@keyframes gongjindan-map-copy {
+  0%, 44% { opacity: 1; }
+  52%, 94% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes gongjindan-map-copy-world {
+  0%, 44% { opacity: 0; }
+  52%, 94% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .gongjindan-map__routes path,
   .gongjindan-map__destination {
@@ -4465,6 +4550,26 @@ img, video {
 
   .gongjindan-map__parcel {
     display: none;
+  }
+
+  .gongjindan-map__scene,
+  .gongjindan-map__heading-domestic,
+  .gongjindan-map__heading-world,
+  .gongjindan-map__caption-domestic,
+  .gongjindan-map__caption-world {
+    animation: none;
+  }
+
+  .gongjindan-map__scene--domestic,
+  .gongjindan-map__heading-domestic,
+  .gongjindan-map__caption-domestic {
+    opacity: 1;
+  }
+
+  .gongjindan-map__scene--world,
+  .gongjindan-map__heading-world,
+  .gongjindan-map__caption-world {
+    opacity: 0;
   }
 }
 
