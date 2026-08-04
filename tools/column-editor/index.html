@@ -1,82 +1,19 @@
-<!doctype html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>DEAR COLUMN EDITOR</title>
-  <link rel="stylesheet" href="/editor/editor.css">
-</head>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DEAR COLUMN EDITOR</title><link rel="stylesheet" href="/editor/editor.css"></head>
 <body>
-  <header class="topbar">
-    <div><strong>DEAR COLUMN</strong><span>글을 쓰면 오른쪽에 바로 보여요</span></div>
-    <div class="topbar__actions">
-      <button type="button" class="button button--ghost" id="saveButton">임시 저장</button>
-      <button type="button" class="button button--ghost" id="previewButton">미리보기 만들기</button>
-      <button type="button" class="button button--primary" id="publishButton">홈페이지에 발행</button>
-    </div>
-  </header>
-
-  <main class="workspace">
-    <section class="editor-pane" aria-label="칼럼 작성">
-      <div class="editor-scroll">
-        <label class="field field--title"><span>제목</span><textarea id="title" rows="2" placeholder="독자가 어떤 답을 얻는 글인지 적어 주세요"></textarea></label>
-        <label class="field"><span>제목 아래 소개 문장</span><textarea id="summary" rows="3" placeholder="글의 내용을 두 문장 안으로 소개해 주세요"></textarea></label>
-
-        <div class="toolbar" aria-label="본문 꾸미기">
-          <button type="button" data-format="h2">소제목</button>
-          <button type="button" data-format="bold"><b>굵게</b></button>
-          <button type="button" data-format="list">목록</button>
-          <button type="button" data-format="quote">인용</button>
-          <button type="button" data-format="link">링크</button>
-        </div>
-        <label class="field field--body"><span class="sr-only">본문</span><textarea id="body" placeholder="여기서 편하게 글을 시작하세요. 문단 사이에는 한 줄을 비워 주세요."></textarea></label>
-
-        <section class="design-editor">
-          <div class="section-heading">
-            <div><span>화면 구성</span><h2>첫 샘플의 좋은 기능을 필요한 만큼</h2></div>
-            <select id="blockPicker" aria-label="추가할 화면 구성">
-              <option value="">+ 구성 추가</option>
-              <option value="section">큰 소제목과 설명</option>
-              <option value="checklist">확인 항목 표</option>
-              <option value="cards">경우별 번호 카드</option>
-              <option value="keypoint">진한 핵심 문장</option>
-              <option value="image">본문 사진</option>
-            </select>
-          </div>
-          <p class="help">추가한 구성은 위·아래 버튼으로 순서를 바꿀 수 있어요. 목차는 소제목을 읽어 자동으로 만들어집니다.</p>
-          <div id="blocks"></div>
-        </section>
-
-        <details class="settings">
-          <summary>글 설정과 검색 정보</summary>
-          <div class="settings__grid">
-            <label class="field"><span>글 주소용 영문 이름</span><input id="slug" placeholder="sleep-daily-rhythm"></label>
-            <label class="field"><span>분류</span><select id="category"><option value="Focus">집중</option><option value="Calm">마음</option><option value="Restore">채움</option><option value="Relief">불편</option><option value="Shape">변화</option></select></label>
-            <label class="field"><span>글쓴이</span><select id="editorName"><option>김민지</option><option>박성호</option></select></label>
-            <label class="field"><span>게시일</span><input id="publishedAt" type="date"></label>
-            <label class="field field--wide"><span>검색 주제 태그</span><input id="tags" placeholder="피로, 생활 리듬, 수면"></label>
-            <label class="field field--wide"><span>대표 사진</span><input id="coverFile" type="file" accept="image/jpeg,image/png,image/webp"></label>
-            <label class="field field--wide"><span>대표 사진 설명</span><input id="coverAlt" placeholder="사진에 보이는 장면을 짧게 설명해 주세요"></label>
-          </div>
-        </details>
-
-        <section class="simple-list">
-          <div class="section-heading"><div><span>FAQ</span><h2>환자가 자주 묻는 질문</h2></div><button type="button" id="addFaq">+ 질문 추가</button></div>
-          <div id="faqs"></div>
-        </section>
-        <section class="simple-list">
-          <div class="section-heading"><div><span>SOURCES</span><h2>참고한 의학 자료</h2></div><button type="button" id="addSource">+ 자료 추가</button></div>
-          <div id="sources"></div>
-        </section>
-      </div>
-    </section>
-
-    <section class="preview-pane" aria-label="실시간 미리보기">
-      <div class="preview-bar"><span><i></i> LIVE</span><div><button type="button" data-width="desktop" class="is-active">PC</button><button type="button" data-width="mobile">모바일</button></div></div>
-      <div class="preview-stage"><iframe id="preview" title="실시간 칼럼 미리보기"></iframe></div>
-    </section>
-  </main>
-  <div class="toast" id="toast" role="status"></div>
-  <script src="/editor/editor.js"></script>
-</body>
-</html>
+<header class="topbar"><a class="brand">DEAR <span>COLUMN</span></a><p id="saveState">새 글을 시작해 주세요</p><div class="top-actions"><button id="saveButton">저장</button><button id="previewButton">미리보기</button><button class="publish" id="settingsButton">검토하고 공개</button></div></header>
+<nav class="insertbar" aria-label="내용 넣기"><span>넣기</span><button data-insert="image">▧ 사진</button><button data-insert="h2">H 소제목</button><button data-insert="quote">❝ 인용</button><button data-insert="keypoint">◆ 핵심문장</button><button data-insert="ul">☷ 목록</button><button data-insert="table">▦ 표</button><button data-insert="hr">─ 구분선</button></nav>
+<main class="workspace"><section class="writing-area"><div class="paper">
+<textarea id="title" class="title" rows="2" placeholder="제목"></textarea><textarea id="summary" class="summary" rows="2" placeholder="독자가 이 글에서 얻을 답을 두 문장 안으로 소개해 주세요"></textarea>
+<div class="mode-row"><div><button class="mode is-active" data-mode="visual">기본 글쓰기</button><button class="mode" data-mode="html">HTML</button></div><span>목차 · 상담 안내 · FAQ · 병원 정보는 발행할 때 자동으로 붙어요.</span></div>
+<div class="formatbar" aria-label="글자 꾸미기"><select id="blockStyle" title="문단 모양"><option value="p">본문</option><option value="h2">큰 소제목</option><option value="h3">작은 소제목</option><option value="blockquote">인용문</option></select><button data-command="bold"><b>B</b></button><button data-command="italic"><i>I</i></button><button data-command="underline"><u>U</u></button><button data-command="strikeThrough"><s>S</s></button><i></i><button data-command="justifyLeft">≡</button><button data-command="justifyCenter">≣</button><button data-command="justifyRight">≡</button><button data-command="insertUnorderedList">☷</button><button data-command="insertOrderedList">1.</button><button id="linkButton">🔗</button><button id="textColorButton" title="글자색">A</button><button id="backColorButton" title="배경색">▣</button><button data-command="undo">↶</button><button data-command="redo">↷</button></div>
+<div id="palette" class="palette" hidden></div>
+<div id="tablebar" class="tablebar" hidden><strong>표 편집</strong><button data-table="row-after">아래 행 +</button><button data-table="col-after">오른쪽 열 +</button><button data-table="row-delete">행 삭제</button><button data-table="col-delete">열 삭제</button><button data-table="header">제목 셀</button><button data-table="table-delete">표 삭제</button></div>
+<div id="visualEditor" class="visual-editor" contenteditable="true" data-placeholder="여기를 눌러 글을 시작하세요."></div><textarea id="htmlEditor" class="html-editor" spellcheck="false" hidden placeholder="본문에 들어갈 HTML만 붙여 넣어 주세요."></textarea>
+</div></section></main>
+<input id="bodyImageFile" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+<aside id="settingsPanel" class="panel" aria-hidden="true"><header><div><small>PUBLISH</small><h2>글 검토와 발행</h2></div><button id="closeSettings" aria-label="닫기">×</button></header><div class="panel-scroll">
+<label>글 주소용 영문 이름<input id="slug" placeholder="sleep-daily-rhythm"></label><div class="two"><label>분류<select id="category"><option value="Focus">집중</option><option value="Calm">마음</option><option value="Restore">채움</option><option value="Relief">불편</option><option value="Shape">변화</option></select></label><label>글쓴이<select id="editorName"><option>김민지</option><option>박성호</option></select></label></div><label>게시일<input id="publishedAt" type="date"></label><label>검색 주제 태그<input id="tags" placeholder="피로, 생활 리듬, 수면"></label><label>대표 사진<input id="coverFile" type="file" accept="image/jpeg,image/png,image/webp"></label><label>대표 사진 설명<input id="coverAlt" placeholder="사진에 보이는 장면을 설명해 주세요"></label>
+<section><div class="section-head"><h3>자주 묻는 질문</h3><button id="addFaq">+ 추가</button></div><div id="faqs"></div></section><section><div class="section-head"><h3>참고한 의학 자료</h3><button id="addSource">+ 추가</button></div><div id="sources"></div></section>
+</div><footer><button id="panelPreview">홈페이지 모습 확인</button><button class="publish" id="publishButton">홈페이지에 공개</button></footer></aside><div id="scrim" class="scrim" hidden></div>
+<section id="previewModal" class="preview-modal" hidden><header><strong>홈페이지 모습 확인</strong><div><button data-width="desktop" class="is-active">PC</button><button data-width="mobile">모바일</button><button id="closePreview">닫기</button></div></header><div class="preview-stage"><iframe id="preview" title="칼럼 미리보기"></iframe></div></section>
+<div id="toast" class="toast" role="status"></div><script src="/editor/editor.js"></script></body></html>

@@ -78,11 +78,18 @@ function saveDataImage(dataUrl, slug, name) {
   return path.relative(mediaRoot, file).replaceAll(path.sep, "/");
 }
 
-function materialize(payload) {
+function materialize(payload, { requireCover = true } = {}) {
   const content = structuredClone(payload.content || {});
   const slug = safeSlug(content.slug);
   if (payload.coverData) content.coverImage = saveDataImage(payload.coverData, slug, "cover");
-  if (!content.coverImage) throw new Error("대표 사진을 선택해 주세요.");
+  if (requireCover && !content.coverImage) throw new Error("공개 전에 대표 사진을 선택해 주세요.");
+  Object.entries(payload.bodyImages || {}).forEach(([editorId, dataUrl], index) => {
+    const imagePath = saveDataImage(dataUrl, slug, `html-${index + 1}`);
+    const escapedId = editorId.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const marker = new RegExp(`(<img\\b[^>]*data-editor-image=["'])${escapedId}(["'][^>]*>)`, "i");
+    if (!marker.test(content.bodyHtml || "")) return;
+    content.bodyHtml = content.bodyHtml.replace(marker, (whole) => whole.replace(/src=["'][^"']*["']/i, `src="${imagePath}"`));
+  });
   (content.designBlocks || []).forEach((block, index) => {
     if (block.type === "image" && payload.blockImages?.[block.editorId]) {
       block.image = saveDataImage(payload.blockImages[block.editorId], slug, `body-${index + 1}`);
@@ -115,7 +122,7 @@ function send(response, status, value, type = "application/json; charset=utf-8")
 async function api(request, response, pathname) {
   try {
     const payload = await readBody(request);
-    const { content, contentPath } = materialize(payload);
+    const { content, contentPath } = materialize(payload, { requireCover: pathname !== "/api/save" });
     if (pathname === "/api/save") {
       send(response, 200, { ok: true, message: "초안을 이 컴퓨터에 저장했습니다.", content });
       return;

@@ -1,132 +1,39 @@
-const $ = (selector, root = document) => root.querySelector(selector);
-const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-const state = { blocks: [], faqs: [], sources: [], coverData: "", coverPath: "", blockImages: {} };
-const labels = { section: "큰 소제목과 설명", checklist: "확인 항목 표", cards: "경우별 번호 카드", keypoint: "진한 핵심 문장", image: "본문 사진" };
-const today = new Date().toISOString().slice(0, 10);
-$("#publishedAt").value = today;
-
-function esc(value = "") { return String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
-function inline(value = "") { return esc(value).replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>").replace(/\[([^\]]+)\]\((https:\/\/[^)]+)\)/g, '<a href="$2">$1</a>'); }
-function slugify(value) { return value.trim().toLowerCase().replace(/[^a-z0-9가-힣]+/g, "-").replace(/[가-힣]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, ""); }
-function id() { return `b-${Date.now()}-${Math.random().toString(16).slice(2)}`; }
-function toast(message, error = false) { const el = $("#toast"); el.textContent = message; el.className = `toast is-visible${error ? " is-error" : ""}`; clearTimeout(toast.timer); toast.timer = setTimeout(() => el.className = "toast", 3200); }
-function debounce(fn, delay = 180) { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); }; }
-
-function bodyHtml(text) {
-  return text.trim().split(/\n{2,}/).filter(Boolean).map((chunk, index) => {
-    const value = chunk.trim();
-    if (value.startsWith("## ")) return `<section id="body-${index}"><h2>${inline(value.slice(3))}</h2></section>`;
-    if (value.startsWith("### ")) return `<h3>${inline(value.slice(4))}</h3>`;
-    if (value.startsWith("> ")) return `<blockquote>${inline(value.slice(2))}</blockquote>`;
-    if (value.split("\n").every((line) => /^[-*] /.test(line))) return `<ul>${value.split("\n").map((line) => `<li>${inline(line.slice(2))}</li>`).join("")}</ul>`;
-    return `<p>${inline(value).replace(/\n/g, "<br>")}</p>`;
-  }).join("");
-}
-
-function designHtml(block, index) {
-  const heading = esc(block.heading || "여기에 소제목을 적어 주세요");
-  const anchor = `design-${index}`;
-  if (block.type === "section") return `<section id="${anchor}" class="column-designed-section">${block.eyebrow ? `<p class="column-section-label">${esc(block.eyebrow)}</p>` : ""}<h2>${heading}</h2><div class="column-designed-copy">${bodyHtml(block.text || "소제목을 설명하는 내용을 적어 주세요.")}</div></section>`;
-  if (block.type === "checklist") return `<section id="${anchor}" class="column-designed-section"><p class="column-section-label">WHAT WE CHECK</p><h2>${heading}</h2><ul class="column-checklist">${(block.items || []).map((item) => `<li><strong>${esc(item.title || "확인 항목")}</strong><span>${esc(item.text || "확인하는 이유를 적어 주세요.")}</span></li>`).join("")}</ul></section>`;
-  if (block.type === "cards") return `<section id="${anchor}" class="column-designed-section"><p class="column-section-label">POSSIBLE PATHS</p><h2>${heading}</h2><div class="column-cases">${(block.items || []).map((item, i) => `<div><span>${String(i + 1).padStart(2, "0")}</span><h3>${esc(item.title || "경우의 제목")}</h3><p>${esc(item.text || "이 경우에 살펴볼 방향을 적어 주세요.")}</p></div>`).join("")}</div></section>`;
-  if (block.type === "keypoint") return `<aside class="column-keypoint"><p>KEY POINT</p><strong>${esc(block.text || "가장 기억시키고 싶은 문장을 적어 주세요.").replace(/\n/g, "<br>")}</strong></aside>`;
-  if (block.type === "image") return `<figure class="column-article__body-image">${block.preview ? `<img src="${block.preview}" alt="${esc(block.alt)}">` : `<div style="aspect-ratio:4/3;background:#e8e4e2;display:grid;place-items:center;color:#777">사진을 선택해 주세요</div>`}${block.caption ? `<figcaption>${esc(block.caption)}</figcaption>` : ""}</figure>`;
-  return "";
-}
-
-function preview() {
-  const title = $("#title").value || "칼럼 제목을 입력해 주세요";
-  const summary = $("#summary").value || "제목 아래 소개 문장이 이곳에 표시됩니다.";
-  const body = $("#body").value || "왼쪽에서 글을 쓰기 시작하면 이곳에 실제 칼럼 모습으로 바로 나타납니다.";
-  const headings = [...body.matchAll(/^## (.+)$/gm)].map((m, i) => ({ text: m[1], href: `body-${i}` }));
-  state.blocks.forEach((block, i) => { if (block.heading) headings.push({ text: block.heading, href: `design-${i}` }); });
-  if (state.faqs.length) headings.push({ text: "자주 묻는 질문", href: "faq" });
-  const cover = state.coverData || (state.coverPath ? `/draft-media/${state.coverPath}` : "");
-  const html = `<!doctype html><html lang="ko"><head><meta charset="utf-8"><base href="/"><link rel="stylesheet" href="/css/style.css"><style>body{zoom:.78}.nav{position:relative}.column-preview-shell{min-height:100vh}.column-article{padding-top:40px}</style></head><body class="column-article-body"><div class="column-preview-shell"><nav class="nav"><a class="nav__logo">DEAR</a></nav><main class="column-article"><article><header class="column-article__header"><p class="column-meta">${esc($("#category").selectedOptions[0]?.textContent || "마음")}</p><h1>${esc(title)}</h1><p class="column-article__lead">${esc(summary)}</p><div class="column-byline"><span>${esc($("#editorName").value)}${$("#editorName").value === "김민지" ? " 대표원장" : ""}</span><time>${$("#publishedAt").value.replaceAll("-", ".")}</time></div></header>${cover ? `<figure class="column-article__hero"><img src="${cover}" alt=""></figure>` : ""}<div class="column-article__layout"><aside class="column-toc"><p>CONTENTS</p><ol>${headings.map((h) => `<li><a href="#${h.href}">${esc(h.text)}</a></li>`).join("")}</ol></aside><div class="column-article__content">${bodyHtml(body)}${state.blocks.map(designHtml).join("")}<section class="column-consult"><p class="column-section-label">CONSULTATION</p><h2>현재의 상태를<br>함께 살펴보고 싶다면</h2><p>불편함과 생활의 변화를 편하게 이야기해 주세요.<br>진찰을 통해 확인이 필요한 부분과 가능한 방향을 설명해 드립니다.</p><a>네이버 진료 예약 →</a></section>${state.faqs.length ? `<section id="faq" class="column-faq"><p class="column-section-label">FAQ</p><h2>자주 묻는 질문</h2>${state.faqs.map((f) => `<details open><summary>${esc(f.question || "질문을 적어 주세요")}</summary><p>${esc(f.answer || "답변을 적어 주세요")}</p></details>`).join("")}</section>` : ""}<section class="column-sources">${state.sources.length ? `<h2>참고한 의학 정보</h2><ul>${state.sources.map((s) => `<li>${esc(s.title || "자료 이름")}</li>`).join("")}</ul>` : ""}<p>이 글은 일반적인 건강 정보를 제공하기 위한 것으로 개인의 진단이나 치료를 대신하지 않습니다.</p></section><section class="column-nap"><p class="column-section-label">DEAR KOREAN MEDICINE CLINIC</p><h2>디어한의원</h2><address>서울 서초구 사임당로 143 3층 309호, 310호<br>02-3486-1777</address></section></div></div></article></main></div></body></html>`;
-  $("#preview").srcdoc = html;
-  localStorage.setItem("dear-column-editor", JSON.stringify(draft(false)));
-}
-const updatePreview = debounce(preview);
-
-function blockTemplate(block, index) {
-  const controls = `<div class="block-card__head"><strong>${labels[block.type]}</strong><div class="block-card__actions"><button data-action="up" title="위로">↑</button><button data-action="down" title="아래로">↓</button><button data-action="remove" title="삭제">×</button></div></div>`;
-  if (block.type === "section") return `${controls}<div class="block-card__grid"><select data-key="eyebrow"><option value="">작은 분류 문구 없음</option>${["MEDICAL BASIS","WHAT WE CHECK","POSSIBLE PATHS","DEAR NOTE"].map(v=>`<option${block.eyebrow===v?" selected":""}>${v}</option>`).join("")}</select><input data-key="heading" value="${esc(block.heading)}" placeholder="큰 소제목"><textarea class="wide" data-key="text" placeholder="설명 문단">${esc(block.text)}</textarea></div>`;
-  if (["checklist","cards"].includes(block.type)) return `${controls}<input data-key="heading" value="${esc(block.heading)}" placeholder="묶음의 큰 제목"><div class="items">${(block.items || []).map((item, i) => `<div class="item-row"><input data-item="${i}" data-key="title" value="${esc(item.title)}" placeholder="짧은 제목"><textarea data-item="${i}" data-key="text" placeholder="설명">${esc(item.text)}</textarea><button data-remove-item="${i}">×</button></div>`).join("")}</div><button class="add-item" data-add-item>+ 항목 추가</button>`;
-  if (block.type === "keypoint") return `${controls}<textarea data-key="text" placeholder="가장 기억시키고 싶은 문장">${esc(block.text)}</textarea>`;
-  return `${controls}<div class="block-card__grid"><input class="wide" type="file" data-image accept="image/jpeg,image/png,image/webp"><input class="wide" data-key="alt" value="${esc(block.alt)}" placeholder="사진 설명"><input class="wide" data-key="caption" value="${esc(block.caption)}" placeholder="사진 아래 설명 (선택)"></div>`;
-}
-
-function renderBlocks() {
-  $("#blocks").innerHTML = state.blocks.map((block, index) => `<article class="block-card" data-index="${index}">${blockTemplate(block, index)}</article>`).join("");
-}
-function addBlock(type) {
-  const base = { type, editorId: id() };
-  if (type === "section") Object.assign(base, { eyebrow: "MEDICAL BASIS", heading: "", text: "" });
-  if (type === "checklist" || type === "cards") Object.assign(base, { heading: "", items: [{ title: "", text: "" }, { title: "", text: "" }] });
-  if (type === "keypoint") base.text = "";
-  if (type === "image") Object.assign(base, { image: "", alt: "", caption: "", preview: "" });
-  state.blocks.push(base); renderBlocks(); preview();
-}
-
-$("#blocks").addEventListener("input", (event) => {
-  const card = event.target.closest(".block-card"); if (!card) return;
-  const block = state.blocks[Number(card.dataset.index)];
-  if (event.target.dataset.item !== undefined) block.items[Number(event.target.dataset.item)][event.target.dataset.key] = event.target.value;
-  else if (event.target.dataset.key) block[event.target.dataset.key] = event.target.value;
-  updatePreview();
-});
-$("#blocks").addEventListener("change", async (event) => {
-  if (!event.target.matches("[data-image]")) return;
-  const block = state.blocks[Number(event.target.closest(".block-card").dataset.index)];
-  const file = event.target.files[0]; if (!file) return;
-  block.preview = await fileData(file); state.blockImages[block.editorId] = block.preview; preview();
-});
-$("#blocks").addEventListener("click", (event) => {
-  const card = event.target.closest(".block-card"); if (!card) return;
-  const index = Number(card.dataset.index); const action = event.target.dataset.action;
-  if (action === "remove") state.blocks.splice(index, 1);
-  if (action === "up" && index) [state.blocks[index - 1], state.blocks[index]] = [state.blocks[index], state.blocks[index - 1]];
-  if (action === "down" && index < state.blocks.length - 1) [state.blocks[index + 1], state.blocks[index]] = [state.blocks[index], state.blocks[index + 1]];
-  if (event.target.hasAttribute("data-add-item")) state.blocks[index].items.push({ title: "", text: "" });
-  if (event.target.dataset.removeItem !== undefined) state.blocks[index].items.splice(Number(event.target.dataset.removeItem), 1);
-  renderBlocks(); preview();
-});
-
-function renderLists() {
-  $("#faqs").innerHTML = state.faqs.map((f, i) => `<div class="list-row" data-list="faqs" data-index="${i}"><input data-key="question" value="${esc(f.question)}" placeholder="환자가 묻는 말"><textarea data-key="answer" placeholder="쉬운 답변">${esc(f.answer)}</textarea><button>×</button></div>`).join("");
-  $("#sources").innerHTML = state.sources.map((s, i) => `<div class="list-row" data-list="sources" data-index="${i}"><input data-key="title" value="${esc(s.title)}" placeholder="자료 이름"><input data-key="url" value="${esc(s.url)}" placeholder="https://"><button>×</button></div>`).join("");
-}
-["faqs","sources"].forEach((name) => {
-  $(`#${name}`).addEventListener("input", (e) => { const row=e.target.closest(".list-row"); state[name][Number(row.dataset.index)][e.target.dataset.key]=e.target.value; updatePreview(); });
-  $(`#${name}`).addEventListener("click", (e) => { if(e.target.tagName!=="BUTTON")return; state[name].splice(Number(e.target.closest(".list-row").dataset.index),1);renderLists();preview(); });
-});
-$("#addFaq").onclick=()=>{state.faqs.push({question:"",answer:""});renderLists();};
-$("#addSource").onclick=()=>{state.sources.push({title:"",url:""});renderLists();};
-$("#blockPicker").onchange=(e)=>{if(e.target.value)addBlock(e.target.value);e.target.value="";};
-
-function applyFormat(type) {
-  const area=$("#body"), start=area.selectionStart, end=area.selectionEnd, selected=area.value.slice(start,end);
-  const values={h2:`## ${selected||"소제목"}`,bold:`**${selected||"강조할 문장"}**`,list:`- ${selected||"첫 번째 항목"}\n- 두 번째 항목`,quote:`> ${selected||"기억할 문장"}`,link:`[${selected||"링크 이름"}](https://)`};
-  area.setRangeText(values[type],start,end,"end");area.focus();preview();
-}
-$(".toolbar").onclick=(e)=>{const button=e.target.closest("button");if(button)applyFormat(button.dataset.format);};
-
-async function fileData(file) { return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file);}); }
-$("#coverFile").onchange=async(e)=>{const file=e.target.files[0];if(file){state.coverData=await fileData(file);preview();}};
-$("#title").addEventListener("blur",()=>{if(!$("#slug").value)$("#slug").value=slugify($("#title").value)||`column-${today.replaceAll("-","")}`;});
-
-function draft(includeImages=true) {
-  return { content:{title:$("#title").value.trim(),slug:$("#slug").value.trim(),status:"draft",editorName:$("#editorName").value,category:$("#category").value,summary:$("#summary").value.trim(),lead:$("#summary").value.trim(),description:$("#summary").value.trim(),tags:$("#tags").value.split(",").map(v=>v.trim()).filter(Boolean),coverImage:state.coverPath,coverAlt:$("#coverAlt").value.trim(),publishedAt:$("#publishedAt").value,modifiedAt:today,body:$("#body").value.trim(),designBlocks:state.blocks.map(({preview,...b})=>b),faqs:state.faqs,sources:state.sources},...(includeImages?{coverData:state.coverData,blockImages:state.blockImages}:{})};}
-async function action(kind) {
-  const button=$(`#${kind}Button`); if(kind==="publish"&&!confirm("원고 검토를 마친 이 글을 홈페이지에 공개할까요?"))return;
-  $$(".topbar button").forEach(b=>b.disabled=true);
-  try{const response=await fetch(`/api/${kind}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(draft())});const data=await response.json();if(!response.ok)throw new Error(data.message);state.coverPath=data.content?.coverImage||state.coverPath;state.coverData="";toast(data.message);if(data.localUrl)window.open(data.localUrl,"_blank");}
-  catch(error){toast(error.message,true);}finally{$$(".topbar button").forEach(b=>b.disabled=false);}
-}
-$("#saveButton").onclick=()=>action("save");$("#previewButton").onclick=()=>action("preview");$("#publishButton").onclick=()=>action("publish");
-$$("[data-width]").forEach(button=>button.onclick=()=>{$$("[data-width]").forEach(b=>b.classList.remove("is-active"));button.classList.add("is-active");$("#preview").classList.toggle("is-mobile",button.dataset.width==="mobile");});
-$$("textarea,input,select").forEach(el=>el.addEventListener("input",updatePreview));
-
-try{const saved=JSON.parse(localStorage.getItem("dear-column-editor"));if(saved?.content){const c=saved.content;["title","slug","summary","body","coverAlt","publishedAt"].forEach(k=>{if(c[k]&&$(`#${k}`))$(`#${k}`).value=c[k]});$("#category").value=c.category||"Calm";$("#editorName").value=c.editorName||"김민지";$("#tags").value=(c.tags||[]).join(", ");state.blocks=c.designBlocks||[];state.faqs=c.faqs||[];state.sources=c.sources||[];state.coverPath=c.coverImage||"";}}catch{}
-if(!state.blocks.length){addBlock("section");addBlock("checklist");addBlock("cards");addBlock("keypoint");}
-renderBlocks();renderLists();preview();
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const today=new Date().toISOString().slice(0,10), state={faqs:[],sources:[],coverData:"",coverPath:"",bodyImages:{},mode:"visual",selectedCell:null,colorCommand:"foreColor"};
+const allowed=new Set("P BR H2 H3 H4 STRONG B EM I U S BLOCKQUOTE UL OL LI A HR SECTION ASIDE DIV SPAN FIGURE FIGCAPTION IMG TABLE THEAD TBODY TFOOT TR TH TD COLGROUP COL".split(" "));
+$("#publishedAt").value=today;
+function esc(v=""){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function id(){return`img-${Date.now()}-${Math.random().toString(16).slice(2)}`}
+function slugify(v){return v.trim().toLowerCase().replace(/[^a-z0-9가-힣]+/g,"-").replace(/[가-힣]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,"")}
+function toast(m,e=false){const x=$("#toast");x.textContent=m;x.className=`toast is-visible${e?" is-error":""}`;clearTimeout(toast.t);toast.t=setTimeout(()=>x.className="toast",3200)}
+function fileData(f){return new Promise((ok,no)=>{const r=new FileReader;r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(f)})}
+function cleanHtml(source){const doc=new DOMParser().parseFromString(`<div id="root">${source}</div>`,"text/html"),root=doc.querySelector("#root");root.querySelectorAll("script,style,iframe,object,embed,form,input,button,textarea,select,option,link,meta,base,svg,math").forEach(n=>n.remove());[...root.querySelectorAll("*")].forEach(el=>{if(!allowed.has(el.tagName)){el.replaceWith(...el.childNodes);return}[...el.attributes].forEach(a=>{const name=a.name.toLowerCase(),value=a.value.trim();const ok=["href","target","rel","src","alt","title","width","height","colspan","rowspan","scope","class","id","style","data-editor-image"].includes(name);if(!ok||name.startsWith("on")||/javascript\s*:|data\s*:\s*text|expression\s*\(|url\s*\(/i.test(value))el.removeAttribute(a.name)});if(el.tagName==="A"){el.setAttribute("target","_blank");el.setAttribute("rel","noopener")}});return root.innerHTML.trim()}
+function markdownToHtml(text=""){return text.trim().split(/\n{2,}/).filter(Boolean).map(chunk=>{const v=chunk.trim();if(/^#{1,3} /.test(v))return`<h2>${esc(v.replace(/^#{1,3}\s+/,""))}</h2>`;if(v.startsWith("> "))return`<blockquote>${esc(v.slice(2))}</blockquote>`;if(v.split("\n").every(x=>/^[-*] /.test(x)))return`<ul>${v.split("\n").map(x=>`<li>${esc(x.slice(2))}</li>`).join("")}</ul>`;return`<p>${esc(v).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/\n/g,"<br>")}</p>`}).join("")}
+function legacyDesign(blocks=[]){return blocks.map(b=>{if(b.type==="section")return`<section class="column-designed-section">${b.eyebrow?`<p class="column-section-label">${esc(b.eyebrow)}</p>`:""}<h2>${esc(b.heading)}</h2>${markdownToHtml(b.text)}</section>`;if(b.type==="checklist")return`<section class="column-designed-section"><h2>${esc(b.heading)}</h2><ul class="column-checklist">${(b.items||[]).map(x=>`<li><strong>${esc(x.title)}</strong><span>${esc(x.text)}</span></li>`).join("")}</ul></section>`;if(b.type==="cards")return`<section class="column-designed-section"><h2>${esc(b.heading)}</h2><div class="column-cases">${(b.items||[]).map((x,i)=>`<div><span>${String(i+1).padStart(2,"0")}</span><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p></div>`).join("")}</div></section>`;if(b.type==="keypoint")return`<aside class="editor-keypoint">${esc(b.text)}</aside>`;return""}).join("")}
+function sync(to){if(to==="html")$("#htmlEditor").value=cleanHtml($("#visualEditor").innerHTML);else $("#visualEditor").innerHTML=cleanHtml($("#htmlEditor").value);state.mode=to;$("#visualEditor").hidden=to!=="visual";$("#htmlEditor").hidden=to!=="html";$$('.mode').forEach(b=>b.classList.toggle("is-active",b.dataset.mode===to));scheduleSave()}
+$$('.mode').forEach(b=>b.onclick=()=>sync(b.dataset.mode));
+function focusEditor(){if(state.mode==="html")sync("visual");$("#visualEditor").focus()}
+function command(name,value=null){focusEditor();document.execCommand(name,false,value);scheduleSave()}
+$$('[data-command]').forEach(b=>b.onclick=()=>command(b.dataset.command));$("#blockStyle").onchange=e=>command("formatBlock",e.target.value);$("#linkButton").onclick=()=>{const u=prompt("연결할 주소를 https://로 입력해 주세요","https://");if(u&&/^https:\/\//.test(u))command("createLink",u)};
+const colors=["#27302d","#247860","#3c605a","#8b5e4a","#b33b3b","#ffffff","#f2eee9","#e5f1eb","#fff1b8","#dce9f5","#eedff0","#333333","#777777","#b7b7b7","#d9c3a5","#cf8877","#72a58f","#4e7898"];
+function openPalette(button,cmd){state.colorCommand=cmd;const p=$("#palette"),r=button.getBoundingClientRect();p.innerHTML=colors.map(c=>`<button data-color="${c}" style="background:${c}" title="${c}"></button>`).join("")+`<input type="color" value="#247860" aria-label="직접 색 선택">`;p.hidden=false;p.style.left=`${Math.min(r.left,innerWidth-260)}px`;p.style.top=`${r.bottom+6}px`;p.querySelectorAll("button").forEach(x=>x.onclick=()=>{command(cmd,x.dataset.color);p.hidden=true});p.querySelector("input").oninput=e=>command(cmd,e.target.value)}
+$("#textColorButton").onclick=e=>openPalette(e.currentTarget,"foreColor");$("#backColorButton").onclick=e=>openPalette(e.currentTarget,"hiliteColor");document.addEventListener("mousedown",e=>{if(!e.target.closest("#palette,#textColorButton,#backColorButton"))$("#palette").hidden=true});
+function insertHtml(html){focusEditor();document.execCommand("insertHTML",false,html);scheduleSave()}
+$$('[data-insert]').forEach(b=>b.onclick=()=>{const t=b.dataset.insert;if(t==="image")return $("#bodyImageFile").click();if(t==="h2")insertHtml("<h2>소제목을 입력해 주세요</h2><p><br></p>");if(t==="quote")insertHtml("<blockquote>인용하거나 강조할 문장을 입력해 주세요.</blockquote><p><br></p>");if(t==="keypoint")insertHtml('<aside class="editor-keypoint">가장 기억시키고 싶은 문장을 입력해 주세요.</aside><p><br></p>');if(t==="ul")insertHtml("<ul><li>첫 번째 항목</li><li>두 번째 항목</li></ul><p><br></p>");if(t==="hr")insertHtml("<hr><p><br></p>");if(t==="table")insertTable()});
+function insertTable(){insertHtml('<table><thead><tr><th>항목</th><th>내용</th><th>비고</th></tr></thead><tbody><tr><td>내용</td><td>내용</td><td>내용</td></tr><tr><td>내용</td><td>내용</td><td>내용</td></tr></tbody></table><p><br></p>')}
+$("#bodyImageFile").onchange=async e=>{const f=e.target.files[0];if(!f)return;if(f.size>5*1024*1024)return toast("사진은 5MB 이하로 골라 주세요.",true);const data=await fileData(f),key=id();state.bodyImages[key]=data;insertHtml(`<figure><img src="${data}" data-editor-image="${key}" alt="사진 설명을 입력해 주세요"><figcaption>사진 설명</figcaption></figure><p><br></p>`);e.target.value=""};
+$("#visualEditor").addEventListener("click",e=>{const cell=e.target.closest("td,th");$$(".is-selected",$("#visualEditor")).forEach(x=>x.classList.remove("is-selected"));state.selectedCell=cell||null;$("#tablebar").hidden=!cell;if(cell)cell.classList.add("is-selected")});
+$("#tablebar").onclick=e=>{const a=e.target.dataset.table,c=state.selectedCell;if(!a||!c)return;const row=c.parentElement,table=c.closest("table"),idx=[...row.cells].indexOf(c);if(a==="row-after"){const n=row.cloneNode(true);[...n.cells].forEach(x=>x.innerHTML="내용");row.after(n)}if(a==="col-after")table.querySelectorAll("tr").forEach(r=>{const x=(r.cells[idx]||r.lastElementChild).cloneNode();x.innerHTML="내용";(r.cells[idx]||r.lastElementChild).after(x)});if(a==="row-delete")row.remove();if(a==="col-delete")table.querySelectorAll("tr").forEach(r=>r.cells[idx]?.remove());if(a==="header"){const tag=c.tagName==="TH"?"td":"th",n=document.createElement(tag);n.innerHTML=c.innerHTML;[...c.attributes].forEach(x=>n.setAttribute(x.name,x.value));c.replaceWith(n);state.selectedCell=n}if(a==="table-delete"){table.remove();state.selectedCell=null}$("#tablebar").hidden=!state.selectedCell;scheduleSave()};
+function renderLists(){for(const name of ["faqs","sources"]){$("#"+name).innerHTML=state[name].map((v,i)=>name==="faqs"?`<div class="list-row" data-i="${i}"><button>×</button><input data-k="question" value="${esc(v.question)}" placeholder="질문"><textarea data-k="answer" placeholder="답변">${esc(v.answer)}</textarea></div>`:`<div class="list-row" data-i="${i}"><button>×</button><input data-k="title" value="${esc(v.title)}" placeholder="자료 이름"><input data-k="url" value="${esc(v.url)}" placeholder="https://"></div>`).join("");$("#"+name).oninput=e=>{const row=e.target.closest(".list-row");if(row&&e.target.dataset.k)state[name][+row.dataset.i][e.target.dataset.k]=e.target.value,scheduleSave()};$("#"+name).onclick=e=>{if(e.target.tagName==="BUTTON"){state[name].splice(+e.target.closest(".list-row").dataset.i,1);renderLists();scheduleSave()}}}}
+$("#addFaq").onclick=()=>{state.faqs.push({question:"",answer:""});renderLists()};$("#addSource").onclick=()=>{state.sources.push({title:"",url:""});renderLists()};
+function bodyHtml(){return cleanHtml(state.mode==="html"?$("#htmlEditor").value:$("#visualEditor").innerHTML)}
+function draft(images=true){return{content:{title:$("#title").value.trim(),slug:$("#slug").value.trim(),status:"draft",editorName:$("#editorName").value,category:$("#category").value,summary:$("#summary").value.trim(),lead:$("#summary").value.trim(),description:$("#summary").value.trim(),tags:$("#tags").value.split(",").map(x=>x.trim()).filter(Boolean),coverImage:state.coverPath,coverAlt:$("#coverAlt").value.trim(),publishedAt:$("#publishedAt").value,modifiedAt:today,bodyHtml:bodyHtml(),faqs:state.faqs,sources:state.sources},...(images?{coverData:state.coverData,bodyImages:state.bodyImages}:{})}}
+function saveLocal(){localStorage.setItem("dear-column-editor-v2",JSON.stringify(draft(false)));$("#saveState").textContent=`이 브라우저에 자동 저장됨 · ${new Date().toLocaleTimeString("ko-KR",{hour:"2-digit",minute:"2-digit"})}`}
+let saveTimer;function scheduleSave(){clearTimeout(saveTimer);$("#saveState").textContent="저장 중…";saveTimer=setTimeout(saveLocal,450)}
+$("#visualEditor").oninput=scheduleSave;$("#htmlEditor").oninput=scheduleSave;$$('textarea,input,select').forEach(x=>x.addEventListener("input",scheduleSave));$("#coverFile").onchange=async e=>{const f=e.target.files[0];if(f)state.coverData=await fileData(f),scheduleSave()};$("#title").onblur=()=>{if(!$("#slug").value)$("#slug").value=slugify($("#title").value)||`column-${today.replaceAll("-","")}`};
+function settings(open){$("#settingsPanel").classList.toggle("is-open",open);$("#settingsPanel").setAttribute("aria-hidden",String(!open));$("#scrim").hidden=!open}$("#settingsButton").onclick=()=>settings(true);$("#closeSettings").onclick=()=>settings(false);$("#scrim").onclick=()=>settings(false);
+function previewHtml(){const c=draft(false).content,heads=[...new DOMParser().parseFromString(c.bodyHtml,"text/html").querySelectorAll("h2")];const cover=state.coverData||(state.coverPath?`/draft-media/${state.coverPath}`:"");return`<!doctype html><html lang="ko"><head><meta charset="utf-8"><base href="/"><link rel="stylesheet" href="/css/style.css"><style>body{zoom:.82}.nav{position:relative}.column-article{padding-top:40px}.column-article__content table{width:100%;border-collapse:collapse;margin:2rem 0}.column-article__content th,.column-article__content td{padding:12px;border:1px solid #d4d8d5}.editor-keypoint{padding:2rem;background:#284a41;color:white;font-size:1.35rem;font-weight:700}</style></head><body class="column-article-body"><nav class="nav"><a class="nav__logo">DEAR</a></nav><main class="column-article"><article><header class="column-article__header"><p class="column-meta">${esc($("#category").selectedOptions[0]?.textContent||"마음")}</p><h1>${esc(c.title||"칼럼 제목")}</h1><p class="column-article__lead">${esc(c.summary||"제목 아래 소개 문장")}</p><div class="column-byline"><span>${esc(c.editorName)}</span><time>${c.publishedAt.replaceAll("-",".")}</time></div></header>${cover?`<figure class="column-article__hero"><img src="${cover}" alt=""></figure>`:""}<div class="column-article__layout"><aside class="column-toc"><p>CONTENTS</p><ol>${heads.map((h,i)=>`<li><a href="#pv-${i}">${esc(h.textContent)}</a></li>`).join("")}</ol></aside><div class="column-article__content">${c.bodyHtml}<section class="column-consult"><p class="column-section-label">CONSULTATION</p><h2>현재의 상태를<br>함께 살펴보고 싶다면</h2><p>불편함과 생활의 변화를 편하게 이야기해 주세요.</p></section>${state.faqs.length?`<section class="column-faq"><h2>자주 묻는 질문</h2>${state.faqs.map(f=>`<details><summary>${esc(f.question)}</summary><p>${esc(f.answer)}</p></details>`).join("")}</section>`:""}<section class="column-nap"><p class="column-section-label">DEAR KOREAN MEDICINE CLINIC</p><h2>디어한의원</h2><address>서울 서초구 사임당로 143 3층 309호, 310호<br>02-3486-1777</address></section></div></div></article></main></body></html>`}
+function showPreview(){if(state.mode==="html")sync("visual");$("#preview").srcdoc=previewHtml();$("#previewModal").hidden=false}$("#previewButton").onclick=showPreview;$("#panelPreview").onclick=showPreview;$("#closePreview").onclick=()=>$("#previewModal").hidden=true;$$('[data-width]').forEach(b=>b.onclick=()=>{$$('[data-width]').forEach(x=>x.classList.remove("is-active"));b.classList.add("is-active");$("#preview").classList.toggle("is-mobile",b.dataset.width==="mobile")});
+async function action(kind){if(kind==="publish"&&!confirm("검토를 마친 이 글을 홈페이지에 공개할까요?"))return;$$('button').forEach(b=>b.disabled=true);try{const res=await fetch(`/api/${kind}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(draft())}),data=await res.json();if(!res.ok)throw Error(data.message);state.coverPath=data.content?.coverImage||state.coverPath;state.coverData="";if(data.content?.bodyHtml){$("#visualEditor").innerHTML=cleanHtml(data.content.bodyHtml);$("#htmlEditor").value=data.content.bodyHtml;state.bodyImages={}}toast(data.message);if(data.localUrl){$("#preview").src=data.localUrl;$("#previewModal").hidden=false}saveLocal()}catch(e){toast(e.message,true)}finally{$$('button').forEach(b=>b.disabled=false)}}
+$("#saveButton").onclick=()=>action("save");$("#publishButton").onclick=()=>action("publish");
+try{const saved=JSON.parse(localStorage.getItem("dear-column-editor-v2")||localStorage.getItem("dear-column-editor"));if(saved?.content){const c=saved.content;for(const k of ["title","slug","summary","coverAlt","publishedAt"])if(c[k]&&$("#"+k))$("#"+k).value=c[k];$("#category").value=c.category||"Calm";$("#editorName").value=c.editorName||"김민지";$("#tags").value=(c.tags||[]).join(", ");$("#visualEditor").innerHTML=cleanHtml(c.bodyHtml||markdownToHtml(c.body||"")+legacyDesign(c.designBlocks));$$("img[data-editor-image]",$("#visualEditor")).forEach(img=>{if(img.src.startsWith("data:image/"))state.bodyImages[img.dataset.editorImage]=img.src});state.faqs=c.faqs||[];state.sources=c.sources||[];state.coverPath=c.coverImage||""}}catch{}renderLists();saveLocal();

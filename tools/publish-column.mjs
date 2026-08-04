@@ -62,6 +62,64 @@ function inlineMarkdown(value = "") {
   return output.replace(/\r?\n/g, "<br>");
 }
 
+const HTML_BODY_TAGS = new Set([
+  "p", "br", "h2", "h3", "h4", "strong", "b", "em", "i", "u", "s", "blockquote",
+  "ul", "ol", "li", "a", "hr", "section", "aside", "div", "span", "figure", "figcaption",
+  "img", "table", "thead", "tbody", "tfoot", "tr", "th", "td", "colgroup", "col",
+]);
+
+function validateHtmlBody(value) {
+  assertString(value, "HTML 본문", 20, 100000);
+  const forbidden = /<(script|style|iframe|object|embed|form|input|button|textarea|select|option|link|meta|base|svg|math)\b|\son[a-z]+\s*=|javascript\s*:|data\s*:\s*text|expression\s*\(|url\s*\(/i;
+  if (forbidden.test(value)) throw new Error("HTML 본문에 스크립트나 실행 가능한 코드는 넣을 수 없습니다.");
+  for (const match of value.matchAll(/<\/?([a-z][a-z0-9-]*)\b[^>]*>/gi)) {
+    if (!HTML_BODY_TAGS.has(match[1].toLowerCase())) {
+      throw new Error(`HTML 본문에서 사용할 수 없는 태그입니다: <${match[1]}>`);
+    }
+  }
+  return value.trim();
+}
+
+function stripHtml(value = "") {
+  return String(value).replace(/<br\s*\/?\s*>/gi, " ").replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&").replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">").replace(/&quot;/gi, '"').replace(/&#39;/gi, "'")
+    .replace(/\s+/g, " ").trim();
+}
+
+function renderHtmlBody(content, mediaRoot, siteRoot, assetSlug = content.slug) {
+  let html = validateHtmlBody(content.bodyHtml);
+  const toc = [];
+  const usedIds = new Set();
+  let headingIndex = 0;
+  let imageIndex = 0;
+  html = html.replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi, (whole, attributes, inner) => {
+    headingIndex += 1;
+    const title = stripHtml(inner);
+    let id = attributes.match(/\bid\s*=\s*["']([^"']+)["']/i)?.[1];
+    id = String(id || title).trim().toLowerCase()
+      .replace(/[^\p{L}\p{N}-]+/gu, "-").replace(/-+/g, "-").replace(/^-|-$/g, "")
+      || `section-${headingIndex}`;
+    let unique = id;
+    let suffix = 2;
+    while (usedIds.has(unique)) unique = `${id}-${suffix++}`;
+    usedIds.add(unique);
+    toc.push({ id: unique, title });
+    const cleanAttributes = attributes.replace(/\s+id\s*=\s*(["'])[^"']*\1/i, "");
+    return `<h2${cleanAttributes} id="${unique}">${inner}</h2>`;
+  });
+  html = html.replace(/<img\b([^>]*)>/gi, (whole, attributes) => {
+    const src = attributes.match(/\bsrc\s*=\s*["']([^"']+)["']/i)?.[1];
+    if (!src) throw new Error("본문 사진의 src가 비어 있습니다.");
+    if (/^https?:\/\//i.test(src) || /^data:/i.test(src)) throw new Error("본문 사진은 에디터에서 직접 업로드해 주세요.");
+    imageIndex += 1;
+    const copiedPath = copyMedia(mediaRoot, siteRoot, assetSlug, normalizeMediaReference(src), `body-html-${imageIndex}`);
+    const rest = attributes.replace(/\s+src\s*=\s*(["'])[^"']*\1/i, "").replace(/\s+data-editor-image\s*=\s*(["'])[^"']*\1/i, "");
+    return `<img src="../${copiedPath}"${rest} loading="lazy">`;
+  });
+  return { html, toc };
+}
+
 function assertString(value, label, min = 1, max = 10000) {
   if (typeof value !== "string" || value.trim().length < min || value.trim().length > max) {
     throw new Error(`${label}은(는) ${min}~${max}자로 입력해 주세요.`);
@@ -124,12 +182,15 @@ function validateContent(content, { requireReady = true } = {}) {
   if (content.modifiedAt && content.modifiedAt < content.publishedAt) {
     throw new Error("최종 수정일은 최초 게시일보다 빠를 수 없습니다.");
   }
+  const hasHtmlBody = typeof content.bodyHtml === "string" && content.bodyHtml.trim().length > 0;
   const hasRichBody = typeof content.body === "string" && content.body.trim().length > 0;
   const hasBlocks = Array.isArray(content.blocks) && content.blocks.length > 0;
-  if (!hasRichBody && !hasBlocks) {
+  if (!hasHtmlBody && !hasRichBody && !hasBlocks) {
     throw new Error("본문을 입력해 주세요.");
   }
-  if (hasRichBody) {
+  if (hasHtmlBody) {
+    validateHtmlBody(content.bodyHtml);
+  } else if (hasRichBody) {
     assertString(content.body, "본문", 20, 50000);
   } else {
     const allowedBlocks = new Set(["paragraph", "heading", "list", "quote", "image"]);
@@ -152,6 +213,7 @@ function validateContent(content, { requireReady = true } = {}) {
     lead: content.lead,
     tags: content.tags,
     body: content.body,
+    bodyHtml: content.bodyHtml,
     blocks: content.blocks,
     designBlocks: content.designBlocks,
     faqs: content.faqs,
@@ -764,9 +826,11 @@ function main() {
 
   const assetSlug = isPreview ? `preview-${content.slug}` : content.slug;
   const coverPath = copyMedia(mediaRoot, siteRoot, assetSlug, content.coverImage, "cover");
-  const { html: basicBody, toc: basicToc } = content.body
-    ? renderRichBody(content, mediaRoot, siteRoot, assetSlug)
-    : renderBlocks(content, mediaRoot, siteRoot, assetSlug);
+  const { html: basicBody, toc: basicToc } = content.bodyHtml
+    ? renderHtmlBody(content, mediaRoot, siteRoot, assetSlug)
+    : content.body
+      ? renderRichBody(content, mediaRoot, siteRoot, assetSlug)
+      : renderBlocks(content, mediaRoot, siteRoot, assetSlug);
   const design = renderDesignBlocks(content, mediaRoot, siteRoot, assetSlug);
   const body = [basicBody, design.html].filter(Boolean).join("\n");
   const toc = [...basicToc, ...design.toc];

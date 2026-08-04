@@ -65,6 +65,28 @@ try {
   assert.match(hostileArticle, /&lt;script&gt;alert/);
   assert.match(hostileArticle, /&lt;img src=x onerror=/);
 
+  const htmlDraft = {
+    ...draft,
+    slug: "html-editor-roundtrip-check",
+    body: "",
+    designBlocks: [],
+    bodyHtml: '<h2>HTML 모드 소제목</h2><p style="color:#247860">기본 모드에서 다시 확인할 본문입니다.</p><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>생활</td><td>리듬</td></tr></tbody></table>',
+  };
+  const htmlPath = path.join(testRoot, "html-editor.json");
+  fs.writeFileSync(htmlPath, JSON.stringify(htmlDraft), "utf8");
+  const htmlPreview = publish(htmlPath, "preview");
+  assert.equal(htmlPreview.status, 0, htmlPreview.stderr);
+  const htmlArticle = fs.readFileSync(path.join(testRoot, "preview", "html-editor-roundtrip-check.html"), "utf8");
+  assert.match(htmlArticle, /href="#html-모드-소제목"/);
+  assert.match(htmlArticle, /<table><thead>/);
+  assert.match(htmlArticle, /style="color:#247860"/);
+
+  const unsafeHtmlPath = path.join(testRoot, "unsafe-html.json");
+  fs.writeFileSync(unsafeHtmlPath, JSON.stringify({ ...htmlDraft, slug: "unsafe-html-check", bodyHtml: '<h2>안전 확인 제목</h2><script>alert(1)</script><p>본문입니다.</p>' }), "utf8");
+  const unsafeHtml = publish(unsafeHtmlPath, "preview");
+  assert.notEqual(unsafeHtml.status, 0);
+  assert.match(unsafeHtml.stderr, /실행 가능한 코드/);
+
   const first = publish();
   assert.equal(first.status, 0, first.stderr);
   const second = publish();
