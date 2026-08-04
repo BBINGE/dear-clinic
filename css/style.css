@@ -3489,12 +3489,14 @@ body.philosophy-page {
 }
 
 .philosophy-chapter__motif {
-  width: 96px;
-  height: 56px;
+  width: 108px;
+  height: 68px;
   margin: 1.5rem 0 1rem;
   fill: none;
   stroke: var(--teal-pattern);
   stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
   opacity: 0.65;
 }
 
