@@ -31,7 +31,9 @@ jobs:
           rsync -a --exclude='.git' --exclude='.github' --exclude='admin-app' --exclude='_site' --exclude='*.patch' ./ _site/
       - name: 마지막 정상 날씨 보존
         continue-on-error: true
-        run: curl --fail --silent --show-error --max-time 10 https://bbinge.github.io/dear-clinic/weather-data.json -o _site/weather-data.json
+        run: |
+          curl --fail --silent --show-error --max-time 10 https://bbinge.github.io/dear-clinic/weather-data.json -o /tmp/weather-data.json
+          node -e "const fs=require('fs');const data=JSON.parse(fs.readFileSync('/tmp/weather-data.json','utf8'));if(!data.observedAt)process.exit(1);fs.copyFileSync('/tmp/weather-data.json','_site/weather-data.json')"
       - name: 기상청 현재 날씨 저장
         continue-on-error: true
         env:
