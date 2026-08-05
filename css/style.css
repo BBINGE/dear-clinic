@@ -4387,53 +4387,18 @@ img, video {
 
 .weather-lens__cloud-veil {
   z-index: 1;
-  overflow: hidden;
   background:
-    linear-gradient(180deg, rgba(77, 96, 104, 0.62) 0%, rgba(114, 132, 138, 0.28) 34%, transparent 67%),
-    linear-gradient(110deg, rgba(67, 87, 94, 0.2), transparent 58%);
+    linear-gradient(180deg, rgba(66, 82, 90, 0.44) 0%, rgba(91, 107, 114, 0.2) 32%, transparent 62%),
+    linear-gradient(105deg, rgba(57, 76, 84, 0.18), transparent 58%);
   opacity: 0;
 }
 
 .weather-lens__cloud-veil::before,
 .weather-lens__cloud-veil::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
-  border-radius: 50%;
-  transform: translate3d(0, 0, 0);
-  will-change: transform;
-}
-
-.weather-lens__cloud-veil::before {
-  top: -24%;
-  right: -8%;
-  width: 76%;
-  height: 67%;
-  background:
-    radial-gradient(ellipse at 16% 74%, rgba(55, 70, 77, .78) 0 15%, transparent 36%),
-    radial-gradient(ellipse at 39% 58%, rgba(73, 88, 96, .84) 0 19%, transparent 42%),
-    radial-gradient(ellipse at 64% 68%, rgba(48, 64, 72, .8) 0 21%, transparent 44%),
-    radial-gradient(ellipse at 88% 55%, rgba(82, 97, 103, .72) 0 17%, transparent 40%);
-  filter: blur(13px);
-}
-
-.weather-lens__cloud-veil::after {
-  top: 7%;
-  right: 5%;
-  width: 52%;
-  height: 42%;
-  background:
-    radial-gradient(ellipse at 20% 52%, rgba(103, 118, 124, .56) 0 17%, transparent 39%),
-    radial-gradient(ellipse at 50% 42%, rgba(67, 83, 91, .68) 0 22%, transparent 46%),
-    radial-gradient(ellipse at 82% 58%, rgba(87, 102, 109, .62) 0 19%, transparent 42%);
-  filter: blur(9px);
+  content: none;
 }
 .about[data-weather="cloudy"] .weather-lens__cloud-veil,
 .about[data-weather="strong-wind"] .weather-lens__cloud-veil { opacity: 1; }
-.about[data-weather="cloudy"] .weather-lens__cloud-veil::before { animation: weather-lens-cloud-bank-far 19s ease-in-out infinite alternate; }
-.about[data-weather="cloudy"] .weather-lens__cloud-veil::after { animation: weather-lens-cloud-bank-near 13s ease-in-out infinite alternate; }
-.about[data-weather="strong-wind"] .weather-lens__cloud-veil::before { animation: weather-lens-cloud-bank-far 8s ease-in-out infinite alternate; }
-.about[data-weather="strong-wind"] .weather-lens__cloud-veil::after { animation: weather-lens-cloud-bank-near 5.5s ease-in-out infinite alternate; }
 
 .weather-lens__rain {
   z-index: 2;
