@@ -45,6 +45,19 @@
       overflow-wrap: break-word;
     }
 
+    .column-article-body > .nav,
+    .column-article-body > .nav.is-scrolled {
+      background: rgba(255, 255, 255, 0.98);
+      border-bottom: 1px solid rgba(36, 120, 96, 0.1);
+      box-shadow: 0 6px 20px rgba(23, 79, 66, 0.07);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .dear-fd [id] {
+      scroll-margin-top: 132px;
+    }
+
     .dear-fd *,
     .dear-fd *::before,
     .dear-fd *::after {
@@ -79,10 +92,10 @@
     .dear-fd__hero {
       position: relative;
       isolation: isolate;
-      min-height: 680px;
+      min-height: 560px;
       display: grid;
       align-items: center;
-      padding: 112px 0 96px;
+      padding: 92px 0 72px;
       overflow: hidden;
       background:
         linear-gradient(115deg, rgba(248, 248, 246, 0.98) 12%, rgba(248, 248, 246, 0.87) 54%, rgba(232, 228, 226, 0.72) 100%);
@@ -139,7 +152,7 @@
     .dear-fd__hero h1 {
       max-width: 760px;
       margin-bottom: 28px;
-      font-size: clamp(2.45rem, 5.5vw, 4.65rem);
+      font-size: clamp(2.3rem, 4.6vw, 3.9rem);
       line-height: 1.12;
     }
 
@@ -236,7 +249,7 @@
       display: block;
       width: 100%;
       height: auto;
-      max-height: 700px;
+      max-height: 520px;
       object-fit: cover;
       object-position: center 58%;
     }
@@ -782,10 +795,53 @@
       text-underline-offset: 3px;
     }
 
+    .dear-fd .column-nap {
+      margin-top: 64px;
+      padding: clamp(2.2rem, 6vw, 4rem);
+      border-radius: 20px;
+      background: var(--dear-green-deep);
+      color: #fff;
+    }
+
+    .dear-fd .column-nap .column-section-label,
+    .dear-fd .column-nap h2,
+    .dear-fd .column-nap address,
+    .dear-fd .column-nap a {
+      color: #fff;
+    }
+
+    .dear-fd .column-nap h2 {
+      margin-bottom: 16px;
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
+    }
+
+    .dear-fd .column-nap address {
+      font-style: normal;
+      line-height: 1.85;
+    }
+
+    .dear-fd .column-nap > div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .dear-fd .column-nap > div a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 10px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 999px;
+      text-decoration: none;
+    }
+
     @media (max-width: 900px) {
       .dear-fd__hero {
-        min-height: 610px;
-        padding: 92px 0 78px;
+        min-height: 520px;
+        padding: 80px 0 60px;
       }
 
       .dear-fd__intro,
@@ -821,8 +877,8 @@
       }
 
       .dear-fd__photo img {
-        height: 270px;
-        min-height: 270px;
+        height: 190px;
+        min-height: 190px;
         object-position: 61% center;
       }
 
@@ -840,11 +896,22 @@
 
       .dear-fd__hero {
         min-height: auto;
-        padding: 78px 0 68px;
+        padding: 62px 0 44px;
       }
 
       .dear-fd__hero h1 {
-        font-size: clamp(2.25rem, 12vw, 3.2rem);
+        margin-bottom: 20px;
+        font-size: clamp(2rem, 9.6vw, 2.55rem);
+        line-height: 1.12;
+      }
+
+      .dear-fd__eyebrow {
+        margin-bottom: 18px;
+      }
+
+      .dear-fd__lead {
+        margin-bottom: 26px;
+        font-size: 0.98rem;
       }
 
       .dear-fd__section {
@@ -914,6 +981,16 @@
       .dear-fd__faq-answer {
         padding: 0 8px 26px 50px;
       }
+
+      .dear-fd .column-nap {
+        margin-top: 46px;
+        padding: 2rem 1.35rem;
+        border-radius: 16px;
+      }
+
+      .dear-fd .column-nap > div a {
+        flex: 1 1 130px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -963,7 +1040,7 @@
             "name": "내시경이 정상이어도 기능성 소화불량일 수 있나요?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "그럴 수 있습니다. 기능성 소화불량은 구조적 이상이 확인되지 않더라도 위의 수용과 배출, 감각 조절 과정의 문제로 증상이 나타날 수 있습니다. 다만 검사 결과 하나만으로 진단하지 않으며 증상과 기간, 약물, 동반 질환을 함께 확인해야 합니다."
+              "text": "그럴 수 있습니다. 기능성 소화불량은 내시경 등의 평가에서 증상을 설명할 구조적 질환이 확인되지 않으면서 식후 포만감, 조기 포만감, 명치 통증, 명치 화끈거림 가운데 하나 이상이 일정 기간 반복될 때 진단을 고려합니다. 검사 하나만으로 확정하지 않고 증상의 빈도와 기간, 복용 약물, 동반 질환을 함께 확인합니다."
             }
           },
           {
@@ -1189,7 +1266,7 @@
             <article class="dear-fd__care-item">
               <div>
                 <h3>다른 질환의 가능성을 먼저 검토합니다</h3>
-                <p>내시경과 헬리코박터 검사 이력, 체중 변화, 복용 약물과 경고 증상을 확인합니다.</p>
+                <p>내시경 결과와 헬리코박터 파일로리 검사 결과, 제균 치료 여부와 제균 확인 이력, 체중 변화, 복용 약물과 경고 증상을 확인합니다.</p>
               </div>
             </article>
             <article class="dear-fd__care-item">
@@ -1220,7 +1297,7 @@
             <li>중심 증상과 식후 불편의 지속 시간</li>
             <li>한 끼 섭취량과 최근 체중 변화</li>
             <li>역류, 구역, 팽만 및 배변 증상</li>
-            <li>내시경과 헬리코박터 검사 이력</li>
+            <li>내시경 결과와 헬리코박터 파일로리 검사·제균 치료 이력</li>
             <li>기존 위장약의 종류와 치료 반응</li>
             <li>소화기 증상에 영향을 줄 수 있는 복용 약물</li>
             <li>수면, 긴장 상황, 월경주기에 따른 변화</li>
@@ -1271,9 +1348,10 @@
             <div class="dear-fd__faq-answer">
               <p>
                 그럴 수 있습니다. 내시경은 궤양이나 종양, 점막 손상과 같은 구조적 이상을 확인하는 데 중요한 검사입니다.
-                기능성 소화불량은 이러한 검사에서 증상을 설명할 원인이 발견되지 않더라도 위의 수용과 배출,
-                감각 조절 과정의 문제로 나타날 수 있습니다. 다만 검사 결과 하나만으로 진단하지 않으며
-                증상의 종류와 기간, 약물, 동반 질환을 함께 확인해야 합니다.
+                기능성 소화불량은 내시경 등의 평가에서 증상을 설명할 구조적 질환이 확인되지 않으면서
+                식후 포만감, 조기 포만감, 명치 통증, 명치 화끈거림 가운데 하나 이상이 일정 기간 반복될 때
+                진단을 고려합니다. 검사 하나만으로 확정하지 않고 증상의 빈도와 기간, 복용 약물,
+                동반 질환을 함께 확인합니다.
               </p>
             </div>
           </details>
