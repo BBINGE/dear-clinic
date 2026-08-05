@@ -64,6 +64,19 @@ function forecastBase(now = new Date()) {
   };
 }
 
+function observationBases(now = new Date()) {
+  const bases = [];
+  const pad = (value) => String(value).padStart(2, "0");
+  for (let hoursAgo = 0; hoursAgo < 3; hoursAgo += 1) {
+    const parts = kstParts(new Date(now.getTime() - hoursAgo * 60 * 60 * 1000));
+    bases.push({
+      date: `${parts.year}${pad(parts.month)}${pad(parts.day)}`,
+      time: `${pad(parts.hour)}00`,
+    });
+  }
+  return bases;
+}
+
 function daylightAt(date = new Date()) {
   const parts = kstParts(date);
   const dayStart = Date.UTC(parts.year, parts.month - 1, parts.day);
@@ -92,39 +105,44 @@ function classify(values) {
   return sky === 1 ? "sunny" : "cloudy";
 }
 
-const { nx, ny } = toGrid(CLINIC.latitude, CLINIC.longitude);
-const base = forecastBase();
-const query = new URLSearchParams({
-  pageNo: "1",
-  numOfRows: "1000",
-  dataType: "JSON",
-  base_date: base.date,
-  base_time: base.time,
-  nx: String(nx),
-  ny: String(ny),
-});
 const encodedServiceKey = serviceKey.includes("%") ? serviceKey : encodeURIComponent(serviceKey);
-const endpoint = `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${encodedServiceKey}&${query}`;
-let payload;
-let lastError;
-for (let attempt = 1; attempt <= 6; attempt += 1) {
-  try {
-    const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-    if (!response.ok) throw new Error(`KMA request failed: ${response.status}`);
-    payload = await response.json();
-    break;
-  } catch (error) {
-    lastError = error;
-    if (attempt < 6) await new Promise((resolveDelay) => setTimeout(resolveDelay, Math.min(attempt * 4000, 12000)));
+
+async function fetchKma(endpointName, base, nx, ny) {
+  const query = new URLSearchParams({
+    pageNo: "1",
+    numOfRows: "1000",
+    dataType: "JSON",
+    base_date: base.date,
+    base_time: base.time,
+    nx: String(nx),
+    ny: String(ny),
+  });
+  const endpoint = `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/${endpointName}?serviceKey=${encodedServiceKey}&${query}`;
+  let lastError;
+  for (let attempt = 1; attempt <= 6; attempt += 1) {
+    try {
+      const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
+      if (!response.ok) throw new Error(`KMA request failed: ${response.status}`);
+      const payload = await response.json();
+      const resultCode = payload?.response?.header?.resultCode;
+      if (resultCode !== "00") {
+        const responseError = new Error(`KMA response failed: ${resultCode || "unknown"} ${payload?.response?.header?.resultMsg || ""}`);
+        responseError.retryable = false;
+        throw responseError;
+      }
+      return payload?.response?.body?.items?.item || [];
+    } catch (error) {
+      lastError = error;
+      if (error.retryable === false) break;
+      if (attempt < 6) await new Promise((resolveDelay) => setTimeout(resolveDelay, Math.min(attempt * 4000, 12000)));
+    }
   }
-}
-if (!payload) throw lastError;
-const resultCode = payload?.response?.header?.resultCode;
-if (resultCode !== "00") {
-  throw new Error(`KMA response failed: ${resultCode || "unknown"} ${payload?.response?.header?.resultMsg || ""}`);
+  throw lastError;
 }
 
-const items = payload?.response?.body?.items?.item || [];
+const { nx, ny } = toGrid(CLINIC.latitude, CLINIC.longitude);
+const base = forecastBase();
+const items = await fetchKma("getUltraSrtFcst", base, nx, ny);
 const grouped = new Map();
 for (const item of items) {
   const key = `${item.fcstDate}${item.fcstTime}`;
@@ -138,15 +156,33 @@ const selectedKey = [...grouped.keys()].sort().find((key) => key >= currentKey.s
 const values = grouped.get(selectedKey);
 if (!values) throw new Error("KMA response contained no forecast items");
 
+let observationValues;
+let observationKey;
+for (const observationBase of observationBases()) {
+  try {
+    const observationItems = await fetchKma("getUltraSrtNcst", observationBase, nx, ny);
+    if (!observationItems.length) continue;
+    observationValues = Object.fromEntries(observationItems.map((item) => [item.category, item.obsrValue]));
+    if (!Number.isFinite(Number.parseFloat(observationValues.T1H))) continue;
+    observationKey = `${observationBase.date}${observationBase.time}`;
+    break;
+  } catch (error) {
+    console.warn(`KMA observation unavailable for ${observationBase.date}${observationBase.time}: ${error.message}`);
+  }
+}
+
+const currentValues = observationValues ? { ...values, ...observationValues } : values;
+
 const weather = {
-  state: classify(values),
+  state: classify(currentValues),
   isDay: daylightAt(),
-  temperature: Number.parseFloat(values.T1H),
-  hourlyRain: Number.parseFloat(values.RN1) || 0,
-  windSpeed: Number.parseFloat(values.WSD) || 0,
-  observedAt: selectedKey,
+  temperature: Number.parseFloat(currentValues.T1H),
+  hourlyRain: Number.parseFloat(currentValues.RN1) || 0,
+  windSpeed: Number.parseFloat(currentValues.WSD) || 0,
+  observedAt: observationKey || selectedKey,
+  forecastAt: selectedKey,
   updatedAt: new Date().toISOString(),
-  source: "기상청",
+  source: observationValues ? "기상청 초단기실황" : "기상청 초단기예보",
 };
 await mkdir(dirname(outputPath), { recursive: true });
 await writeFile(outputPath, `${JSON.stringify(weather, null, 2)}\n`, "utf8");
