@@ -4603,6 +4603,16 @@ img, video {
   word-break: keep-all;
 }
 
+.weather-card__message span {
+  display: block;
+}
+
+@media (min-width: 769px) {
+  .weather-card__message span {
+    white-space: nowrap;
+  }
+}
+
 .weather-card__source {
   flex: 0 0 auto;
   color: rgba(255, 255, 255, 0.66);
