@@ -1,0 +1,1351 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#F8F8F6">
+  <title>서초동 디어한의원, 기능성 소화불량 진료합니다</title>
+  <meta name="description" content="식후 포만감, 조기 포만감, 명치 통증과 화끈거림이 반복된다면 증상이 발생하는 시점과 양상부터 구분해야 합니다. 서초동 디어한의원의 기능성 소화불량 진료 안내입니다.">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="서초동 디어한의원, 기능성 소화불량 진료합니다">
+  <meta property="og:description" content="검사 결과만으로 설명되지 않았던 소화불량의 구조를 다시 살펴봅니다.">
+  <meta property="og:image" content="https://bbinge.github.io/dear-clinic/assets/images/columns/seocho-functional-dyspepsia/meal.jpg">
+  <meta property="og:url" content="https://bbinge.github.io/dear-clinic/columns/seocho-functional-dyspepsia.html">
+  <link rel="canonical" href="https://bbinge.github.io/dear-clinic/columns/seocho-functional-dyspepsia.html">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="../css/style.css?v=20260805-14">
+
+  <style>
+    /*
+      DEAR functional dyspepsia page
+      All selectors are scoped under .dear-fd to minimize collisions
+      when this page is inserted into the existing DEAR website.
+    */
+    .dear-fd {
+      --dear-green: #247860;
+      --dear-green-deep: #174f42;
+      --dear-teal: #006c78;
+      --dear-slate: #3c605a;
+      --dear-text: #555550;
+      --dear-ink: #24302d;
+      --dear-muted: #777b76;
+      --dear-bg: #f8f8f6;
+      --dear-paper: #ffffff;
+      --dear-warm: #e8e4e2;
+      --dear-line: rgba(36, 120, 96, 0.16);
+      --dear-shadow: 0 24px 70px rgba(34, 62, 54, 0.09);
+      background: var(--dear-bg);
+      color: var(--dear-text);
+      font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.78;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    .dear-fd *,
+    .dear-fd *::before,
+    .dear-fd *::after {
+      box-sizing: border-box;
+    }
+
+    .dear-fd h1,
+    .dear-fd h2,
+    .dear-fd h3,
+    .dear-fd p,
+    .dear-fd ul {
+      margin-top: 0;
+    }
+
+    .dear-fd h1,
+    .dear-fd h2,
+    .dear-fd h3 {
+      color: var(--dear-ink);
+      font-weight: 650;
+      letter-spacing: -0.035em;
+    }
+
+    .dear-fd a {
+      color: inherit;
+    }
+
+    .dear-fd__container {
+      width: min(1120px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .dear-fd__hero {
+      position: relative;
+      isolation: isolate;
+      min-height: 680px;
+      display: grid;
+      align-items: center;
+      padding: 112px 0 96px;
+      overflow: hidden;
+      background:
+        linear-gradient(115deg, rgba(248, 248, 246, 0.98) 12%, rgba(248, 248, 246, 0.87) 54%, rgba(232, 228, 226, 0.72) 100%);
+    }
+
+    .dear-fd__hero::before,
+    .dear-fd__hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(2px);
+    }
+
+    .dear-fd__hero::before {
+      width: 520px;
+      height: 520px;
+      top: -145px;
+      right: -95px;
+      background: radial-gradient(circle at 40% 40%, rgba(0, 108, 120, 0.16), rgba(36, 120, 96, 0.03) 68%, transparent 70%);
+    }
+
+    .dear-fd__hero::after {
+      width: 300px;
+      height: 300px;
+      right: 19%;
+      bottom: -160px;
+      border: 1px solid rgba(36, 120, 96, 0.18);
+    }
+
+    .dear-fd__hero-copy {
+      max-width: 800px;
+    }
+
+    .dear-fd__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      color: var(--dear-green);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .dear-fd__eyebrow::before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    .dear-fd__hero h1 {
+      max-width: 760px;
+      margin-bottom: 28px;
+      font-size: clamp(2.45rem, 5.5vw, 4.65rem);
+      line-height: 1.12;
+    }
+
+    .dear-fd__hero h1 span {
+      display: block;
+      margin-top: 12px;
+      color: var(--dear-green);
+      font-weight: 520;
+    }
+
+    .dear-fd__lead {
+      max-width: 650px;
+      margin-bottom: 38px;
+      color: #5f645f;
+      font-size: clamp(1.05rem, 2vw, 1.24rem);
+      line-height: 1.8;
+    }
+
+    .dear-fd__hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+
+    .dear-fd__hero-tags li {
+      padding: 8px 14px;
+      border: 1px solid rgba(36, 120, 96, 0.22);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.58);
+      color: var(--dear-slate);
+      font-size: 0.84rem;
+    }
+
+    .dear-fd__byline {
+      margin: 24px 0 0;
+      color: var(--dear-muted);
+      font-size: 0.82rem;
+    }
+
+    .dear-fd__toc {
+      position: sticky;
+      z-index: 8;
+      top: 70px;
+      border-block: 1px solid rgba(36, 120, 96, 0.13);
+      background: rgba(248, 248, 246, 0.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .dear-fd__toc ol {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      padding: 15px 0;
+      margin: 0;
+      overflow-x: auto;
+      list-style: none;
+      scrollbar-width: none;
+    }
+
+    .dear-fd__toc ol::-webkit-scrollbar {
+      display: none;
+    }
+
+    .dear-fd__toc a {
+      display: block;
+      color: var(--dear-slate);
+      font-size: 0.78rem;
+      font-weight: 650;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .dear-fd__section {
+      padding: 112px 0;
+    }
+
+    .dear-fd__section--paper {
+      background: var(--dear-paper);
+    }
+
+    .dear-fd__section--soft {
+      background: linear-gradient(180deg, #f1f3ef 0%, var(--dear-bg) 100%);
+    }
+
+    .dear-fd__photo {
+      margin: 0;
+      background: #ece9e5;
+    }
+
+    .dear-fd__photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 700px;
+      object-fit: cover;
+      object-position: center 58%;
+    }
+
+    .dear-fd__photo figcaption {
+      width: min(1120px, calc(100% - 48px));
+      margin-inline: auto;
+      padding: 16px 0 18px;
+      color: var(--dear-muted);
+      font-size: 0.78rem;
+    }
+
+    .dear-fd__intro {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+      gap: 72px;
+      align-items: start;
+    }
+
+    .dear-fd__local-note {
+      position: sticky;
+      top: 110px;
+      padding: 30px;
+      border-left: 2px solid var(--dear-green);
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    .dear-fd__local-note strong {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--dear-green-deep);
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+    }
+
+    .dear-fd__local-note p {
+      margin-bottom: 0;
+      color: var(--dear-muted);
+      font-size: 0.94rem;
+      line-height: 1.72;
+    }
+
+    .dear-fd__prose p {
+      margin-bottom: 24px;
+    }
+
+    .dear-fd__prose p:last-child {
+      margin-bottom: 0;
+    }
+
+    .dear-fd__prose > p:first-child {
+      color: var(--dear-ink);
+      font-size: 1.12rem;
+    }
+
+    .dear-fd__section-head {
+      max-width: 760px;
+      margin-bottom: 56px;
+    }
+
+    .dear-fd__kicker {
+      display: block;
+      margin-bottom: 16px;
+      color: var(--dear-green);
+      font-size: 0.76rem;
+      font-weight: 750;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .dear-fd__section-head h2 {
+      margin-bottom: 20px;
+      font-size: clamp(2rem, 4vw, 3.35rem);
+      line-height: 1.22;
+    }
+
+    .dear-fd__section-head p {
+      max-width: 690px;
+      margin-bottom: 0;
+      color: var(--dear-muted);
+      font-size: 1.04rem;
+    }
+
+    .dear-fd__definition {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      padding: 0;
+      margin: 42px 0 0;
+      list-style: none;
+    }
+
+    .dear-fd__definition li {
+      min-height: 168px;
+      padding: 26px;
+      border: 1px solid var(--dear-line);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .dear-fd__definition span {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--dear-green);
+      font-size: 0.76rem;
+      font-weight: 750;
+      letter-spacing: 0.08em;
+    }
+
+    .dear-fd__definition strong {
+      display: block;
+      color: var(--dear-ink);
+      font-size: 1.02rem;
+      font-weight: 600;
+      line-height: 1.52;
+    }
+
+    .dear-fd__mechanism {
+      margin-top: 68px;
+      padding: 56px;
+      border-radius: 28px;
+      background: var(--dear-green-deep);
+      color: rgba(255, 255, 255, 0.77);
+      box-shadow: var(--dear-shadow);
+    }
+
+    .dear-fd__mechanism h3 {
+      margin-bottom: 32px;
+      color: #fff;
+      font-size: clamp(1.45rem, 3vw, 2rem);
+    }
+
+    .dear-fd__mechanism-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 48px;
+    }
+
+    .dear-fd__mechanism-item {
+      padding: 26px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .dear-fd__mechanism-item strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 620;
+    }
+
+    .dear-fd__mechanism-item p {
+      margin-bottom: 0;
+      font-size: 0.93rem;
+      line-height: 1.72;
+    }
+
+    .dear-fd__types {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .dear-fd__type-card {
+      position: relative;
+      min-height: 430px;
+      padding: 46px;
+      border: 1px solid rgba(36, 120, 96, 0.14);
+      border-radius: 24px;
+      overflow: hidden;
+      background: #fff;
+      box-shadow: 0 18px 48px rgba(36, 52, 47, 0.06);
+    }
+
+    .dear-fd__type-card::after {
+      content: attr(data-index);
+      position: absolute;
+      right: 28px;
+      bottom: -20px;
+      color: rgba(36, 120, 96, 0.055);
+      font-size: 9rem;
+      font-weight: 750;
+      line-height: 1;
+    }
+
+    .dear-fd__type-card small {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--dear-green);
+      font-size: 0.75rem;
+      font-weight: 750;
+      letter-spacing: 0.12em;
+    }
+
+    .dear-fd__type-card h3 {
+      margin-bottom: 18px;
+      font-size: 1.55rem;
+    }
+
+    .dear-fd__type-card p {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 28px;
+    }
+
+    .dear-fd__type-points {
+      position: relative;
+      z-index: 1;
+      padding: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+
+    .dear-fd__type-points li {
+      display: flex;
+      gap: 11px;
+      padding: 10px 0;
+      border-top: 1px solid rgba(36, 120, 96, 0.11);
+      color: #606862;
+      font-size: 0.92rem;
+    }
+
+    .dear-fd__type-points li::before {
+      content: "";
+      flex: 0 0 5px;
+      width: 5px;
+      height: 5px;
+      margin-top: 11px;
+      border-radius: 50%;
+      background: var(--dear-green);
+    }
+
+    .dear-fd__overlap {
+      max-width: 820px;
+      margin: 34px auto 0;
+      text-align: center;
+      color: var(--dear-muted);
+      font-size: 0.94rem;
+    }
+
+    .dear-fd__care-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+      gap: 70px;
+      align-items: start;
+    }
+
+    .dear-fd__care-copy {
+      position: sticky;
+      top: 110px;
+    }
+
+    .dear-fd__care-copy h2 {
+      margin-bottom: 22px;
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.24;
+    }
+
+    .dear-fd__care-copy p {
+      margin-bottom: 0;
+      color: var(--dear-muted);
+    }
+
+    .dear-fd__care-list {
+      counter-reset: care-step;
+    }
+
+    .dear-fd__care-item {
+      counter-increment: care-step;
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 22px;
+      padding: 34px 0;
+      border-top: 1px solid rgba(36, 120, 96, 0.16);
+    }
+
+    .dear-fd__care-item:last-child {
+      border-bottom: 1px solid rgba(36, 120, 96, 0.16);
+    }
+
+    .dear-fd__care-item::before {
+      content: "0" counter(care-step);
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(36, 120, 96, 0.28);
+      border-radius: 50%;
+      color: var(--dear-green);
+      font-size: 0.74rem;
+      font-weight: 750;
+      letter-spacing: 0.06em;
+    }
+
+    .dear-fd__care-item h3 {
+      margin-bottom: 10px;
+      font-size: 1.16rem;
+    }
+
+    .dear-fd__care-item p {
+      margin-bottom: 0;
+      color: var(--dear-muted);
+      font-size: 0.94rem;
+    }
+
+    .dear-fd__check-panel {
+      margin-top: 60px;
+      padding: 40px;
+      border: 1px solid rgba(36, 120, 96, 0.14);
+      border-radius: 22px;
+      background: var(--dear-paper);
+    }
+
+    .dear-fd__check-panel h3 {
+      margin-bottom: 24px;
+      font-size: 1.2rem;
+    }
+
+    .dear-fd__check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 13px 26px;
+      padding: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+
+    .dear-fd__check-grid li {
+      position: relative;
+      padding-left: 20px;
+      color: #606560;
+      font-size: 0.91rem;
+    }
+
+    .dear-fd__check-grid li::before {
+      content: "";
+      position: absolute;
+      top: 0.78em;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--dear-green);
+    }
+
+    .dear-fd__tracking {
+      margin-top: 30px;
+      padding: 28px 30px;
+      border-radius: 16px;
+      background: rgba(36, 120, 96, 0.075);
+      color: var(--dear-slate);
+      font-size: 0.93rem;
+    }
+
+    .dear-fd__tracking strong {
+      color: var(--dear-green-deep);
+    }
+
+    .dear-fd__alert {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 38px;
+      align-items: center;
+      margin-top: 34px;
+      padding: 38px 42px;
+      border: 1px solid #dfd2cc;
+      border-radius: 20px;
+      background: #f5efec;
+    }
+
+    .dear-fd__alert-label {
+      color: #845c4d;
+      font-size: 0.76rem;
+      font-weight: 750;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .dear-fd__alert p {
+      margin-bottom: 0;
+      color: #6e5d56;
+      font-size: 0.92rem;
+    }
+
+    .dear-fd__cta {
+      padding: 100px 0;
+      background:
+        radial-gradient(circle at 86% 18%, rgba(90, 150, 162, 0.26), transparent 32%),
+        linear-gradient(130deg, #164d41 0%, #247860 58%, #1e6b69 100%);
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .dear-fd__cta-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 60px;
+      align-items: end;
+    }
+
+    .dear-fd__cta .dear-fd__kicker,
+    .dear-fd__cta h2 {
+      color: #fff;
+    }
+
+    .dear-fd__cta h2 {
+      max-width: 680px;
+      margin-bottom: 22px;
+      font-size: clamp(2rem, 4.3vw, 3.55rem);
+      line-height: 1.22;
+    }
+
+    .dear-fd__cta p {
+      max-width: 700px;
+      margin-bottom: 0;
+    }
+
+    .dear-fd__button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      min-width: 248px;
+      min-height: 58px;
+      padding: 16px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--dear-green-deep) !important;
+      font-size: 0.94rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .dear-fd__button::after {
+      content: "→";
+      font-size: 1.15rem;
+    }
+
+    .dear-fd__button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(9, 43, 35, 0.22);
+    }
+
+    .dear-fd__button:focus-visible,
+    .dear-fd__faq summary:focus-visible {
+      outline: 3px solid #9ecdc2;
+      outline-offset: 4px;
+    }
+
+    .dear-fd__faq-list {
+      border-top: 1px solid rgba(36, 120, 96, 0.2);
+    }
+
+    .dear-fd__faq {
+      border-bottom: 1px solid rgba(36, 120, 96, 0.2);
+    }
+
+    .dear-fd__faq summary {
+      position: relative;
+      display: grid;
+      grid-template-columns: 46px 1fr 32px;
+      gap: 18px;
+      align-items: center;
+      padding: 28px 0;
+      color: var(--dear-ink);
+      font-weight: 620;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .dear-fd__faq summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .dear-fd__faq summary::before {
+      content: "Q";
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(36, 120, 96, 0.09);
+      color: var(--dear-green);
+      font-size: 0.77rem;
+      font-weight: 800;
+    }
+
+    .dear-fd__faq summary::after {
+      content: "+";
+      color: var(--dear-green);
+      font-size: 1.45rem;
+      font-weight: 350;
+      text-align: center;
+      transition: transform 180ms ease;
+    }
+
+    .dear-fd__faq[open] summary::after {
+      transform: rotate(45deg);
+    }
+
+    .dear-fd__faq-answer {
+      max-width: 900px;
+      padding: 0 50px 30px 64px;
+      color: var(--dear-muted);
+      font-size: 0.95rem;
+    }
+
+    .dear-fd__faq-answer p {
+      margin-bottom: 0;
+    }
+
+    .dear-fd__medical-note {
+      margin-top: 44px;
+      color: #8a8d88;
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+
+    .dear-fd__sources {
+      padding: 44px 0 0;
+      border-top: 1px solid rgba(36, 120, 96, 0.16);
+    }
+
+    .dear-fd__sources h2 {
+      margin-bottom: 18px;
+      font-size: 1.25rem;
+    }
+
+    .dear-fd__sources ol {
+      padding-left: 1.35rem;
+      margin-bottom: 0;
+      color: var(--dear-muted);
+      font-size: 0.84rem;
+    }
+
+    .dear-fd__sources li + li {
+      margin-top: 10px;
+    }
+
+    .dear-fd__sources a {
+      color: var(--dear-slate);
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 900px) {
+      .dear-fd__hero {
+        min-height: 610px;
+        padding: 92px 0 78px;
+      }
+
+      .dear-fd__intro,
+      .dear-fd__care-layout {
+        grid-template-columns: 1fr;
+        gap: 42px;
+      }
+
+      .dear-fd__local-note,
+      .dear-fd__care-copy {
+        position: static;
+      }
+
+      .dear-fd__definition {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .dear-fd__cta-inner {
+        grid-template-columns: 1fr;
+        gap: 38px;
+        align-items: start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .dear-fd {
+        font-size: 16px;
+        line-height: 1.72;
+      }
+
+      .dear-fd__container {
+        width: min(100% - 34px, 1120px);
+      }
+
+      .dear-fd__photo img {
+        height: 270px;
+        min-height: 270px;
+        object-position: 61% center;
+      }
+
+      .dear-fd__toc {
+        top: 62px;
+      }
+
+      .dear-fd__toc ol {
+        gap: 20px;
+      }
+
+      .dear-fd__photo figcaption {
+        width: min(100% - 34px, 1120px);
+      }
+
+      .dear-fd__hero {
+        min-height: auto;
+        padding: 78px 0 68px;
+      }
+
+      .dear-fd__hero h1 {
+        font-size: clamp(2.25rem, 12vw, 3.2rem);
+      }
+
+      .dear-fd__section {
+        padding: 82px 0;
+      }
+
+      .dear-fd__section-head {
+        margin-bottom: 38px;
+      }
+
+      .dear-fd__definition,
+      .dear-fd__mechanism-grid,
+      .dear-fd__types,
+      .dear-fd__check-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dear-fd__definition li {
+        min-height: 0;
+      }
+
+      .dear-fd__mechanism {
+        margin-top: 46px;
+        padding: 34px 26px;
+        border-radius: 20px;
+      }
+
+      .dear-fd__type-card {
+        min-height: 0;
+        padding: 34px 28px;
+      }
+
+      .dear-fd__care-item {
+        grid-template-columns: 42px 1fr;
+        gap: 15px;
+      }
+
+      .dear-fd__care-item::before {
+        width: 38px;
+        height: 38px;
+      }
+
+      .dear-fd__check-panel {
+        padding: 30px 24px;
+      }
+
+      .dear-fd__alert {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 28px 26px;
+      }
+
+      .dear-fd__cta {
+        padding: 80px 0;
+      }
+
+      .dear-fd__button {
+        width: 100%;
+      }
+
+      .dear-fd__faq summary {
+        grid-template-columns: 38px 1fr 24px;
+        gap: 12px;
+        padding: 24px 0;
+      }
+
+      .dear-fd__faq-answer {
+        padding: 0 8px 26px 50px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .dear-fd__button,
+      .dear-fd__faq summary::after {
+        transition: none;
+      }
+    }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        "name": "서초동 디어한의원, 기능성 소화불량 진료합니다",
+        "description": "서초동 디어한의원의 기능성 소화불량 진료 안내",
+        "url": "https://bbinge.github.io/dear-clinic/columns/seocho-functional-dyspepsia.html",
+        "image": "https://bbinge.github.io/dear-clinic/assets/images/columns/seocho-functional-dyspepsia/meal.jpg",
+        "datePublished": "2026-08-05",
+        "dateModified": "2026-08-05",
+        "author": { "@type": "Person", "name": "김민지" },
+        "publisher": {
+          "@type": "MedicalClinic",
+          "name": "디어한의원",
+          "telephone": "02-3486-1777",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "사임당로 143 3층 309호, 310호",
+            "addressLocality": "서초구",
+            "addressRegion": "서울",
+            "addressCountry": "KR"
+          }
+        },
+        "about": {
+          "@type": "MedicalCondition",
+          "name": "기능성 소화불량"
+        },
+        "inLanguage": "ko-KR"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "내시경이 정상이어도 기능성 소화불량일 수 있나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "그럴 수 있습니다. 기능성 소화불량은 구조적 이상이 확인되지 않더라도 위의 수용과 배출, 감각 조절 과정의 문제로 증상이 나타날 수 있습니다. 다만 검사 결과 하나만으로 진단하지 않으며 증상과 기간, 약물, 동반 질환을 함께 확인해야 합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "기능성 소화불량과 역류성 식도염은 어떻게 구분하나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "기능성 소화불량은 식후 포만감, 조기 포만감, 명치 통증과 화끈거림이 중심이며 위식도역류질환은 가슴 쓰림과 신물 역류가 대표적입니다. 두 질환은 함께 나타날 수 있어 증상의 위치와 발생 시점, 식사 및 자세와의 관계를 확인합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "위산분비억제제를 먹어도 낫지 않았던 이유는 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "소화불량의 중심 기전이 위산이 아닐 수 있습니다. 식후 위 적응성 이완 저하, 위 배출 지연, 내장 과민성이 중심이라면 산 분비를 줄이는 것만으로 충분한 반응을 얻기 어려울 수 있습니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "기존에 복용하던 위장약과 한약을 함께 복용할 수 있나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "약의 종류와 환자의 상태에 따라 판단해야 합니다. 진료 시 복용 중인 약을 확인하고 병용 가능성과 복용 간격을 검토합니다. 기존 약을 환자 판단으로 먼저 중단할 필요는 없습니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "어느 정도 치료해야 변화를 판단할 수 있나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "증상의 지속 기간과 유형, 식사량, 기존 치료 반응에 따라 달라 일률적인 기간을 제시하기 어렵습니다. 식후 불편의 지속 시간, 한 끼 섭취량, 통증의 발생 횟수처럼 확인 가능한 지표의 변화를 바탕으로 치료를 조정합니다."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body class="column-article-body" style="margin:0">
+  <nav class="nav" id="top">
+    <a href="../index.html" class="nav__logo">DEAR</a>
+    <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="../about.html" class="nav__link" data-ready="true">About DEAR</a></li>
+      <li><a href="../columns.html" class="nav__link is-active" data-ready="true">Columns</a></li>
+      <li><a href="../care.html" class="nav__link" data-ready="true">Care</a></li>
+      <li><a href="../services.html" class="nav__link" data-ready="true">DEAR SERVICES</a></li>
+      <li><a href="../be-deer.html?v=20260728-3" class="nav__link" data-ready="true">BE DEER</a></li>
+      <li><a href="#clinic-info" class="nav__link" data-ready="true">Contact</a></li>
+    </ul>
+  </nav>
+  <main class="dear-fd">
+    <header class="dear-fd__hero">
+      <div class="dear-fd__container">
+        <div class="dear-fd__hero-copy">
+          <span class="dear-fd__eyebrow">Internal Medicine · Functional Dyspepsia</span>
+          <h1>
+            기능성 소화불량
+            <span>먹는 일이 하루의 부담으로 남지 않도록</span>
+          </h1>
+          <p class="dear-fd__lead">
+            검사 결과만으로 설명되지 않았던 식후 포만감과 조기 포만감,
+            명치 통증의 구조를 다시 살펴봅니다.
+          </p>
+          <ul class="dear-fd__hero-tags" aria-label="주요 진료 증상">
+            <li>식후 포만감</li>
+            <li>조기 포만감</li>
+            <li>명치 통증</li>
+            <li>명치 화끈거림</li>
+          </ul>
+          <p class="dear-fd__byline">김민지 대표원장 · <time datetime="2026-08-05">2026.08.05</time></p>
+        </div>
+      </div>
+    </header>
+
+    <nav class="dear-fd__toc" aria-label="칼럼 목차">
+      <div class="dear-fd__container">
+        <ol>
+          <li><a href="#fd-intro-title">서초동의 8월과 소화불량</a></li>
+          <li><a href="#fd-definition-title">기능성 소화불량이란</a></li>
+          <li><a href="#fd-types-title">두 가지 증상 유형</a></li>
+          <li><a href="#fd-care-title">디어한의원의 진료 기준</a></li>
+          <li><a href="#fd-faq-title">자주 묻는 질문</a></li>
+          <li><a href="#clinic-info">진료 안내</a></li>
+        </ol>
+      </div>
+    </nav>
+
+    <section class="dear-fd__section dear-fd__section--paper" aria-labelledby="fd-intro-title">
+      <div class="dear-fd__container dear-fd__intro">
+        <aside class="dear-fd__local-note">
+          <strong>SEOCHO · AUGUST</strong>
+          <p>
+            높은 기온과 강한 냉방을 오가는 계절. 불규칙한 식사 간격과 빠른 식사,
+            카페인과 늦은 저녁이 반복되면 이미 예민해진 위장관에서 증상이 더 자주 드러날 수 있습니다.
+          </p>
+        </aside>
+
+        <div class="dear-fd__prose">
+          <p id="fd-intro-title">안녕하세요. 서초동 디어한의원입니다.</p>
+          <p>
+            8월의 서초동은 실외의 높은 기온과 강한 냉방을 오가는 날이 이어집니다.
+            교대역과 강남대로 일대에서 근무하는 분들은 아침을 거른 채 출근하고,
+            점심을 짧게 마친 뒤 커피로 오후를 버티다가 늦은 저녁에 식사량이 몰리기도 합니다.
+          </p>
+          <p>
+            이 시기 소화불량이 심해졌다고 해서 찬 음식이나 냉방만을 원인으로 지목할 수는 없습니다.
+            다만 불규칙한 식사 간격과 빠른 식사 속도, 카페인, 늦은 저녁 식사가 반복되면
+            이미 예민해진 위장관에서 식후 포만감이나 명치 통증이 더 자주 나타날 수 있습니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <figure class="dear-fd__photo">
+      <img src="../assets/images/columns/seocho-functional-dyspepsia/meal.jpg" alt="식사 중인 사람과 밥, 국, 반찬이 놓인 식탁" width="1672" height="941">
+      <figcaption>식후 불편은 먹은 양뿐 아니라 증상이 시작되는 시점과 지속 시간도 함께 살펴야 합니다. · 디어한의원 제공</figcaption>
+    </figure>
+
+    <section class="dear-fd__section dear-fd__section--soft" aria-labelledby="fd-definition-title">
+      <div class="dear-fd__container">
+        <div class="dear-fd__section-head">
+          <span class="dear-fd__kicker">Beyond the normal result</span>
+          <h2 id="fd-definition-title">검사에서 이상이 없다는 말로는 증상을 설명할 수 없습니다</h2>
+          <p>
+            기능성 소화불량은 구조적 질환이 확인되지 않으면서 다음과 같은 상복부 증상이 반복되는 상태입니다.
+            ‘기능성’은 증상이 가볍거나 심리적인 문제에 불과하다는 뜻이 아닙니다.
+          </p>
+        </div>
+
+        <ul class="dear-fd__definition">
+          <li><span>01</span><strong>식사를 마친 뒤 오래 지속되는 불쾌한 포만감</strong></li>
+          <li><span>02</span><strong>평소보다 적게 먹고도 더 먹기 어려운 조기 포만감</strong></li>
+          <li><span>03</span><strong>명치 부위에 반복되는 통증</strong></li>
+          <li><span>04</span><strong>명치가 쓰리거나 화끈거리는 감각</strong></li>
+        </ul>
+
+        <div class="dear-fd__mechanism">
+          <h3>같은 소화불량을 서로 다른 기전이 만들 수 있습니다</h3>
+          <div class="dear-fd__mechanism-grid">
+            <div class="dear-fd__mechanism-item">
+              <strong>위 적응성 이완</strong>
+              <p>음식이 들어올 때 위가 충분한 부피를 확보하지 못하면 적은 양에도 빠르게 배가 찰 수 있습니다.</p>
+            </div>
+            <div class="dear-fd__mechanism-item">
+              <strong>위 배출의 지연</strong>
+              <p>음식이 십이지장으로 이동하는 시간이 지연되면 식후 답답함과 메스꺼움이 나타날 수 있습니다.</p>
+            </div>
+            <div class="dear-fd__mechanism-item">
+              <strong>내장 과민성</strong>
+              <p>위 배출 속도가 정상이어도 위가 늘어나는 자극을 과도하게 감지하면 통증과 팽만감이 발생할 수 있습니다.</p>
+            </div>
+            <div class="dear-fd__mechanism-item">
+              <strong>뇌·장 상호작용</strong>
+              <p>수면과 긴장 상태는 위장관 운동과 감각을 조절하는 신경계에 영향을 주어 증상의 강도를 바꿀 수 있습니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dear-fd__section dear-fd__section--paper" aria-labelledby="fd-types-title">
+      <div class="dear-fd__container">
+        <div class="dear-fd__section-head">
+          <span class="dear-fd__kicker">Two symptom patterns</span>
+          <h2 id="fd-types-title">식후 불편과 명치 통증은 구분해서 살펴야 합니다</h2>
+          <p>증상이 나타나는 시점과 중심 증상에 따라 확인해야 할 기전과 치료의 우선순위가 달라집니다.</p>
+        </div>
+
+        <div class="dear-fd__types">
+          <article class="dear-fd__type-card" data-index="1">
+            <small>PDS · MEAL-RELATED</small>
+            <h3>식후불편감증후군</h3>
+            <p>
+              식사를 마친 뒤 속이 가득 찬 느낌이 오래 지속되거나,
+              몇 숟갈만 먹어도 배가 차 식사를 이어가기 어려운 유형입니다.
+            </p>
+            <ul class="dear-fd__type-points">
+              <li>식후 포만감과 조기 포만감이 중심</li>
+              <li>복부 팽만, 트림, 메스꺼움이 동반될 수 있음</li>
+              <li>위의 적응성 이완과 배출 기능을 함께 검토</li>
+            </ul>
+          </article>
+
+          <article class="dear-fd__type-card" data-index="2">
+            <small>EPS · PAIN-RELATED</small>
+            <h3>명치통증증후군</h3>
+            <p>
+              명치 부위의 통증이나 화끈거림이 중심입니다.
+              공복에 불편하거나 식사 후 통증이 심해지는 양상이 모두 가능합니다.
+            </p>
+            <ul class="dear-fd__type-points">
+              <li>명치 통증과 화끈거림이 중심</li>
+              <li>식사와 무관하거나 식후에 악화될 수 있음</li>
+              <li>위산, 십이지장 자극, 내장 과민성 등을 검토</li>
+            </ul>
+          </article>
+        </div>
+
+        <p class="dear-fd__overlap">
+          두 유형은 중복될 수 있으며, 위식도역류질환이나 과민성장증후군이 함께 나타나는 경우도 있습니다.
+          병명을 하나 더 붙이기보다 증상이 언제 시작되고 어떻게 연결되는지 확인하는 일이 먼저입니다.
+        </p>
+      </div>
+    </section>
+
+    <section class="dear-fd__section dear-fd__section--soft" aria-labelledby="fd-care-title">
+      <div class="dear-fd__container">
+        <div class="dear-fd__care-layout">
+          <div class="dear-fd__care-copy">
+            <span class="dear-fd__kicker">Dear's clinical approach</span>
+            <h2 id="fd-care-title">디어한의원은 증상의 구조부터 다시 분류합니다</h2>
+            <p>
+              오래된 소화불량을 모두 ‘위장이 약한 체질’로 묶으면 치료의 초점이 흐려집니다.
+              처방에 앞서 증상의 발생 조건과 기존 치료 반응부터 구체적으로 확인합니다.
+            </p>
+          </div>
+
+          <div class="dear-fd__care-list">
+            <article class="dear-fd__care-item">
+              <div>
+                <h3>다른 질환의 가능성을 먼저 검토합니다</h3>
+                <p>내시경과 헬리코박터 검사 이력, 체중 변화, 복용 약물과 경고 증상을 확인합니다.</p>
+              </div>
+            </article>
+            <article class="dear-fd__care-item">
+              <div>
+                <h3>증상의 표현형을 구분합니다</h3>
+                <p>식후 포만감과 조기 포만감, 명치 통증 가운데 무엇이 중심인지, 식사와 어떤 관계를 갖는지 분류합니다.</p>
+              </div>
+            </article>
+            <article class="dear-fd__care-item">
+              <div>
+                <h3>치료의 우선순위를 정합니다</h3>
+                <p>확인된 증상 유형과 전신 상태에 따라 한약과 침 치료를 선택하며, 기존 약물은 임의로 중단하지 않습니다.</p>
+              </div>
+            </article>
+            <article class="dear-fd__care-item">
+              <div>
+                <h3>측정할 수 있는 변화를 추적합니다</h3>
+                <p>한 끼 섭취량, 식후 불편의 지속 시간, 주당 통증 횟수와 강도, 동반 증상과 체중 변화를 기록합니다.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="dear-fd__check-panel">
+          <h3>진료에서 구체적으로 확인하는 항목</h3>
+          <ul class="dear-fd__check-grid">
+            <li>불편이 시작된 시점과 주당 발생 횟수</li>
+            <li>중심 증상과 식후 불편의 지속 시간</li>
+            <li>한 끼 섭취량과 최근 체중 변화</li>
+            <li>역류, 구역, 팽만 및 배변 증상</li>
+            <li>내시경과 헬리코박터 검사 이력</li>
+            <li>기존 위장약의 종류와 치료 반응</li>
+            <li>소화기 증상에 영향을 줄 수 있는 복용 약물</li>
+            <li>수면, 긴장 상황, 월경주기에 따른 변화</li>
+          </ul>
+          <p class="dear-fd__tracking">
+            <strong>치료의 기준:</strong> ‘소화가 잘된다’는 추상적인 느낌보다
+            식사 이후의 불편이 실제 생활을 방해하는 정도가 줄었는지를 확인합니다.
+          </p>
+        </div>
+
+        <aside class="dear-fd__alert" aria-label="검사가 우선될 수 있는 증상">
+          <span class="dear-fd__alert-label">Red flags</span>
+          <p>
+            이유 없는 체중 감소, 삼킴 곤란, 반복적인 구토, 흑색변이나 위장관 출혈이 의심되는 증상,
+            빈혈 또는 점차 심해지는 통증이 있다면 기능성 소화불량으로 전제하지 않습니다.
+            필요한 검사를 통해 다른 질환의 가능성을 먼저 확인한 뒤 진료 방향을 결정합니다.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="dear-fd__cta" aria-labelledby="fd-cta-title">
+      <div class="dear-fd__container dear-fd__cta-inner">
+        <div>
+          <span class="dear-fd__kicker">The next step</span>
+          <h2 id="fd-cta-title">‘이상이 없다’는 검사 결과 이후에도 진료는 이어져야 합니다</h2>
+          <p>
+            반복되는 소화불량에 맞춰 식사를 계속 줄이고 있다면,
+            참을 수 있는 음식의 목록보다 증상이 반복되는 구조를 먼저 확인해 보시기 바랍니다.
+          </p>
+        </div>
+        <a class="dear-fd__button" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener" aria-label="서초동 디어한의원 기능성 소화불량 진료 예약하기">
+          진료 예약하기
+        </a>
+      </div>
+    </section>
+
+    <section class="dear-fd__section dear-fd__section--paper" aria-labelledby="fd-faq-title">
+      <div class="dear-fd__container">
+        <div class="dear-fd__section-head">
+          <span class="dear-fd__kicker">Frequently asked questions</span>
+          <h2 id="fd-faq-title">기능성 소화불량 FAQ</h2>
+        </div>
+
+        <div class="dear-fd__faq-list">
+          <details class="dear-fd__faq" open>
+            <summary>내시경이 정상이어도 기능성 소화불량일 수 있나요?</summary>
+            <div class="dear-fd__faq-answer">
+              <p>
+                그럴 수 있습니다. 내시경은 궤양이나 종양, 점막 손상과 같은 구조적 이상을 확인하는 데 중요한 검사입니다.
+                기능성 소화불량은 이러한 검사에서 증상을 설명할 원인이 발견되지 않더라도 위의 수용과 배출,
+                감각 조절 과정의 문제로 나타날 수 있습니다. 다만 검사 결과 하나만으로 진단하지 않으며
+                증상의 종류와 기간, 약물, 동반 질환을 함께 확인해야 합니다.
+              </p>
+            </div>
+          </details>
+
+          <details class="dear-fd__faq">
+            <summary>기능성 소화불량과 역류성 식도염은 어떻게 구분하나요?</summary>
+            <div class="dear-fd__faq-answer">
+              <p>
+                기능성 소화불량은 식후 포만감, 조기 포만감, 명치 통증과 화끈거림이 중심입니다.
+                위식도역류질환은 가슴 쓰림과 신물 역류가 대표적입니다. 두 질환은 함께 나타날 수 있으므로
+                가장 불편한 증상의 위치와 발생 시점, 식사 및 자세와의 관계를 확인합니다.
+              </p>
+            </div>
+          </details>
+
+          <details class="dear-fd__faq">
+            <summary>위산분비억제제를 먹어도 낫지 않았던 이유는 무엇인가요?</summary>
+            <div class="dear-fd__faq-answer">
+              <p>
+                소화불량의 중심 기전이 위산이 아닐 수 있기 때문입니다. 식후 위 적응성 이완의 저하,
+                위 배출 지연, 내장 과민성이 중심인 경우에는 산 분비를 줄이는 것만으로 충분한 반응을 얻기 어렵습니다.
+                복용 기간이 적절했는지, 어떤 증상에는 반응했고 무엇이 남았는지도 함께 검토해야 합니다.
+              </p>
+            </div>
+          </details>
+
+          <details class="dear-fd__faq">
+            <summary>기존에 복용하던 위장약과 한약을 함께 복용할 수 있나요?</summary>
+            <div class="dear-fd__faq-answer">
+              <p>
+                약의 종류와 환자의 상태에 따라 판단해야 합니다. 진료 시 처방전이나 복용 중인 약의 이름을 확인하고
+                병용 가능성과 복용 간격을 검토합니다. 기존 약을 환자 판단으로 먼저 중단할 필요는 없습니다.
+              </p>
+            </div>
+          </details>
+
+          <details class="dear-fd__faq">
+            <summary>어느 정도 치료해야 변화를 판단할 수 있나요?</summary>
+            <div class="dear-fd__faq-answer">
+              <p>
+                증상의 지속 기간과 유형, 식사량, 기존 치료 반응에 따라 달라 일률적인 기간을 제시하기는 어렵습니다.
+                초기에는 식후 불편의 지속 시간과 한 끼 섭취량, 통증의 주간 발생 횟수처럼 확인할 수 있는 지표를 정하고,
+                그 변화를 바탕으로 치료를 유지하거나 조정합니다.
+              </p>
+            </div>
+          </details>
+        </div>
+
+        <p class="dear-fd__medical-note">
+          본 페이지는 일반적인 의학 정보 제공을 위한 내용이며, 개인의 상태에 대한 진단이나 치료 결과를 보장하지 않습니다.
+          실제 진료 계획은 증상과 검사 이력, 복용 약물 및 진찰 결과에 따라 달라질 수 있습니다.
+        </p>
+
+        <section class="dear-fd__sources" aria-labelledby="fd-sources-title">
+          <h2 id="fd-sources-title">참고한 의학 정보</h2>
+          <ol>
+            <li><a href="https://theromefoundation.org/rome-iv/rome-iv-criteria/" target="_blank" rel="noopener">Rome Foundation. Rome IV Criteria: Functional Dyspepsia.</a></li>
+            <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8831363/" target="_blank" rel="noopener">Miwa H, et al. Evidence-based clinical practice guidelines for functional dyspepsia 2021.</a></li>
+            <li><a href="https://pubmed.ncbi.nlm.nih.gov/28631728/" target="_blank" rel="noopener">Moayyedi PM, et al. ACG and CAG Clinical Guideline: Management of Dyspepsia.</a></li>
+          </ol>
+        </section>
+
+        <section class="column-nap" aria-labelledby="clinic-info">
+          <p class="column-section-label">DEAR KOREAN MEDICINE CLINIC</p>
+          <h2 id="clinic-info">디어한의원</h2>
+          <address>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address>
+          <div><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">네이버 예약</a><a href="https://map.naver.com/p/search/%EB%94%94%EC%96%B4%ED%95%9C%EC%9D%98%EC%9B%90" target="_blank" rel="noopener">위치 보기</a></div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer class="footer" id="contact"><div class="footer__inner"><div class="footer__top"><div class="footer__brand"><img class="footer__logo-img" src="../assets/images/logo-full-white.png" alt="디어한의원 로고" width="84" height="140" loading="lazy"><p class="footer__slogan">ALWAYS &quot;DEAR&quot; YOU</p></div></div><div class="footer__nap-row"><address class="footer__nap">디어한의원 · 대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address><div class="footer__legal-links"><a href="../privacy.html">개인정보처리방침</a><a href="#" data-ready="false">비급여항목 안내</a><a href="../patient-rights.html">환자의 권리와 의무</a></div></div><p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p></div></footer>
+  <script src="../js/main.js?v=20260805-1"></script>
+</body>
+</html>
