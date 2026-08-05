@@ -126,24 +126,24 @@
     const content = WEATHER[state];
     const daylight = previewDaylight === "night" || (previewDaylight !== "day" && data?.isDay === false) ? "night" : "day";
     const temperature = Number.isFinite(previewTemperature) ? previewTemperature : Number.parseFloat(data?.temperature);
-    const roundedTemperature = Number.isFinite(temperature) ? Math.round(temperature) : null;
     const defaultLabel = daylight === "night" && content.nightLabel ? content.nightLabel : content.label;
     let displayLabel = defaultLabel;
     let weatherMessage = daylight === "night" && content.nightMessage ? content.nightMessage : content.message;
+    const displayTemperature = Number.isFinite(temperature) ? temperature.toFixed(1) : null;
 
-    if (!["rain", "heavy-rain", "snow", "heavy-snow", "storm", "strong-wind"].includes(state) && roundedTemperature !== null) {
-      if (daylight === "night" && roundedTemperature >= 28) {
+    if (!["rain", "heavy-rain", "snow", "heavy-snow", "storm", "strong-wind"].includes(state) && Number.isFinite(temperature)) {
+      if (daylight === "night" && temperature >= 28) {
         displayLabel = "더운 밤";
-        weatherMessage = [`밤에도 서초동의 기온이 ${roundedTemperature}°C로 높아요.`, "천천히 오세요. 디어한의원의 시원한 바람이 기다리고 있어요."];
-      } else if (daylight === "day" && roundedTemperature >= 33) {
+        weatherMessage = [`밤에도 서초동의 기온이 ${displayTemperature}°C로 높아요.`, "천천히 오세요. 디어한의원의 시원한 바람이 기다리고 있어요."];
+      } else if (daylight === "day" && temperature >= 33) {
         displayLabel = "매우 더움";
-        weatherMessage = [`오늘 서초동은 ${roundedTemperature}°C, 한낮의 열기가 아주 강해요.`, "물 한 잔 챙겨 천천히 오세요. 디어한의원에 도착하시면 더위부터 식혀가세요."];
-      } else if (daylight === "day" && roundedTemperature >= 30) {
-        weatherMessage = [`오늘 서초동은 ${roundedTemperature}°C로 더운 날이에요.`, "물을 챙겨 오시면 디어한의원의 시원한 실내가 기다리고 있어요."];
-      } else if (roundedTemperature <= -10) {
-        weatherMessage = [`오늘 서초동은 ${roundedTemperature}°C로 무척 추워요.`, "따뜻하게 입고 천천히 오시면 디어의 포근한 실내에서 몸을 녹여가세요."];
-      } else if (roundedTemperature <= 0) {
-        weatherMessage = [`오늘 서초동은 ${roundedTemperature}°C로 추운 날이에요.`, "옷깃을 단단히 여미고 오시면 디어에서 따뜻하게 맞이할게요."];
+        weatherMessage = [`오늘 서초동은 ${displayTemperature}°C, 한낮의 열기가 아주 강해요.`, "물 한 잔 챙겨 천천히 오세요. 디어한의원에 도착하시면 더위부터 식혀가세요."];
+      } else if (daylight === "day" && temperature >= 30) {
+        weatherMessage = [`오늘 서초동은 ${displayTemperature}°C로 더운 날이에요.`, "물을 챙겨 오시면 디어한의원의 시원한 실내가 기다리고 있어요."];
+      } else if (temperature <= -10) {
+        weatherMessage = [`오늘 서초동은 ${displayTemperature}°C로 무척 추워요.`, "따뜻하게 입고 천천히 오시면 디어의 포근한 실내에서 몸을 녹여가세요."];
+      } else if (temperature <= 0) {
+        weatherMessage = [`오늘 서초동은 ${displayTemperature}°C로 추운 날이에요.`, "옷깃을 단단히 여미고 오시면 디어에서 따뜻하게 맞이할게요."];
       }
     }
 
@@ -151,7 +151,7 @@
     section.dataset.daylight = daylight;
     section.dataset.weatherStatus = WEATHER[previewState] ? "preview" : "ready";
     date.textContent = todayInKorea();
-    label.textContent = roundedTemperature === null ? displayLabel : `${displayLabel} · ${roundedTemperature}°C`;
+    label.textContent = displayTemperature === null ? displayLabel : `${displayLabel} · ${displayTemperature}°C`;
     const messageLines = Array.isArray(weatherMessage) ? weatherMessage : [weatherMessage];
     message.replaceChildren(...messageLines.map((line) => {
       const span = document.createElement("span");
