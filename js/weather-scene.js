@@ -6,9 +6,12 @@
   const date = document.getElementById("weatherCardDate");
   const label = document.getElementById("weatherCardLabel");
   const message = document.getElementById("weatherCardMessage");
+  const source = document.getElementById("weatherCardSource");
   if (!section || !icon || !date || !label || !message) return;
 
-  const WEATHER_REFRESH_INTERVAL = 30 * 60 * 1000;
+  const WEATHER_REFRESH_INTERVAL = 10 * 60 * 1000;
+  const MAX_KMA_AGE = 2 * 60 * 60 * 1000;
+  const OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast?latitude=37.4918829&longitude=127.0252346&current=temperature_2m,is_day,precipitation,weather_code,cloud_cover,wind_speed_10m&temperature_unit=celsius&wind_speed_unit=ms&timezone=Asia%2FSeoul";
   const previewParams = new URLSearchParams(window.location.search);
   const previewState = previewParams.get("weather-preview");
   const previewDaylight = previewParams.get("weather-time");
@@ -121,6 +124,49 @@
     return `${values.year}.${values.month}.${values.day}`;
   }
 
+  function compactKoreaTime(value) {
+    const match = String(value || "").match(/^(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})$/);
+    if (!match) return null;
+    const [, year, month, day, hour, minute] = match;
+    return new Date(`${year}-${month}-${day}T${hour}:${minute}:00+09:00`);
+  }
+
+  function classifyOpenMeteo(current) {
+    const code = Number(current.weather_code);
+    const precipitation = Number(current.precipitation) || 0;
+    const windSpeed = Number(current.wind_speed_10m) || 0;
+    if ([95, 96, 99].includes(code)) return "storm";
+    if (windSpeed >= 14) return "strong-wind";
+    if ([71, 73, 75, 77, 85, 86].includes(code)) {
+      return [75, 77, 86].includes(code) ? "heavy-snow" : "snow";
+    }
+    if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+      return [55, 57, 65, 67, 82].includes(code) || precipitation >= 5 ? "heavy-rain" : "rain";
+    }
+    return code <= 1 ? "sunny" : "cloudy";
+  }
+
+  function normalizeOpenMeteo(payload) {
+    const current = payload?.current;
+    if (!current || !Number.isFinite(Number(current.temperature_2m))) {
+      throw new Error("Open-Meteo response contained no current temperature");
+    }
+    return {
+      state: classifyOpenMeteo(current),
+      isDay: Number(current.is_day) === 1,
+      temperature: Number(current.temperature_2m),
+      hourlyRain: Number(current.precipitation) || 0,
+      windSpeed: Number(current.wind_speed_10m) || 0,
+      observedAt: String(current.time || "").replace(/\D/g, ""),
+      source: "Open-Meteo 현재 날씨",
+    };
+  }
+
+  function isRecentKmaData(data) {
+    const observed = compactKoreaTime(data?.observedAt);
+    return observed && Date.now() - observed.getTime() <= MAX_KMA_AGE;
+  }
+
   function applyWeather(data) {
     const state = WEATHER[previewState] ? previewState : (WEATHER[data?.state] ? data.state : "cloudy");
     const content = WEATHER[state];
@@ -152,6 +198,7 @@
     section.dataset.weatherStatus = WEATHER[previewState] ? "preview" : "ready";
     date.textContent = todayInKorea();
     label.textContent = displayTemperature === null ? displayLabel : `${displayLabel} · ${displayTemperature}°C`;
+    if (source) source.textContent = `서초동 기준 · ${data?.source || "현재 날씨"}`;
     const messageLines = Array.isArray(weatherMessage) ? weatherMessage : [weatherMessage];
     message.replaceChildren(...messageLines.map((line) => {
       const span = document.createElement("span");
@@ -165,21 +212,33 @@
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 7000);
     try {
-      const response = await fetch(`weather-data.json?t=${Date.now()}`, {
+      const liveResponse = await fetch(`${OPEN_METEO_URL}&cache_bust=${Date.now()}`, {
         signal: controller.signal,
         headers: { Accept: "application/json" },
         cache: "no-store",
       });
-      if (!response.ok) throw new Error(`Weather request failed: ${response.status}`);
-      applyWeather(await response.json());
+      if (!liveResponse.ok) throw new Error(`Live weather request failed: ${liveResponse.status}`);
+      applyWeather(normalizeOpenMeteo(await liveResponse.json()));
     } catch {
-      section.dataset.weatherStatus = "fallback";
+      try {
+        const fallbackResponse = await fetch(`weather-data.json?t=${Date.now()}`, {
+          headers: { Accept: "application/json" },
+          cache: "no-store",
+        });
+        if (!fallbackResponse.ok) throw new Error(`KMA weather request failed: ${fallbackResponse.status}`);
+        const fallbackData = await fallbackResponse.json();
+        if (!isRecentKmaData(fallbackData)) throw new Error("KMA weather data is stale");
+        applyWeather(fallbackData);
+      } catch {
+        section.dataset.weatherStatus = "fallback";
+        if (source) source.textContent = "서초동 기준 · 날씨 갱신 중";
+      }
     } finally {
       window.clearTimeout(timeout);
     }
   }
 
-  applyWeather({ state: "cloudy" });
+  applyWeather({ state: "cloudy", source: "날씨 갱신 중" });
   refreshWeather();
   window.setInterval(refreshWeather, WEATHER_REFRESH_INTERVAL);
 })();
