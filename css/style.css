@@ -1274,6 +1274,10 @@
   transition: transform 450ms ease;
 }
 
+.column-featured__image img.column-featured__toon {
+  object-position: center 26%;
+}
+
 .column-featured:hover img,
 .column-card:hover img {
   transform: scale(1.015);
