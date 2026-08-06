@@ -726,9 +726,9 @@ ${end}`;
   if (existingPattern.test(source)) {
     source = source.replace(existingPattern, card);
   } else {
-    const marker = "        <!-- COLUMN_CARDS_END -->";
+    const marker = "        <!-- COLUMN_CARDS_START -->";
     if (!source.includes(marker)) throw new Error("columns.html에서 카드 삽입 위치를 찾지 못했습니다.");
-    source = source.replace(marker, `${card}\n${marker}`);
+    source = source.replace(marker, `${marker}\n${card}`);
   }
   fs.writeFileSync(filePath, source, "utf8");
 }
