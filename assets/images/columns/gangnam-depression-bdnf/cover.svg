@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">BDNF와 신경가소성 개념도</title>
+  <desc id="desc">BDNF가 TrkB 수용체와 만나 신경세포와 시냅스의 변화로 이어지는 과정을 나타낸 선형 도식</desc>
+  <rect width="1200" height="675" fill="#ffffff"/>
+  <path d="M80 84H1120" stroke="#d9ddda"/>
+  <text x="80" y="60" fill="#247860" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4">CLINICAL JOURNAL · 2026</text>
+  <text x="80" y="175" fill="#282b29" font-family="Arial, sans-serif" font-size="72" font-weight="700">BDNF</text>
+  <text x="80" y="225" fill="#3c605a" font-family="Arial, sans-serif" font-size="28">NEUROPLASTICITY &amp; DEPRESSION</text>
+  <g transform="translate(95 330)" fill="none" stroke="#247860" stroke-width="5" stroke-linecap="round">
+    <path d="M0 65C70 0 130 0 200 65S330 130 400 65"/>
+    <path d="M0 65C70 130 130 130 200 65S330 0 400 65" opacity=".5"/>
+    <circle cx="200" cy="65" r="28" fill="#fff"/>
+  </g>
+  <path d="M535 395H670" stroke="#247860" stroke-width="4"/>
+  <path d="m670 395-20-14v28Z" fill="#247860"/>
+  <g transform="translate(740 310)" fill="none" stroke="#3c605a" stroke-width="5">
+    <path d="M55 0v75m-45-35 45 35 45-35M55 75v130"/>
+    <path d="M55 135c70-40 145-40 220 0M55 170c70 40 145 40 220 0" opacity=".65"/>
+  </g>
+  <text x="80" y="610" fill="#686b67" font-family="Arial, sans-serif" font-size="22">BDNF → TrkB → synaptic plasticity</text>
+</svg>
