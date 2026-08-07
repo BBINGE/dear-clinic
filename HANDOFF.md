@@ -2,6 +2,11 @@
 
 최종 갱신: 2026-08-07
 
+## 2026-08-07 소아성장 Figure 01 근거 표현 정정
+
+- `columns/gangnam-child-growth.html`의 Figure 01에서 두 peak 관찰값 사이를 임의 곡선으로 연결하던 표현을 제거했다.
+- 강화 종단 코호트에서 확인된 여아 10세·7.07 cm/yr, 남아 12세·8.62 cm/yr만 카드형 비교 도식으로 표시하며, 전체 연령별 곡선을 재현한 그래프가 아니라는 한계를 본문에 명시했다.
+
 대상: Claude, Codex 및 이후 유지보수 담당자
 
 공개 저장소: https://github.com/BBINGE/dear-clinic
