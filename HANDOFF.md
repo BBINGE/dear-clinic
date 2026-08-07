@@ -19,6 +19,7 @@
 - Google Search Console에는 `dearhani.com` 도메인 속성을 DNS TXT로 소유권 인증했고 `https://dearhani.com/sitemap.xml`을 제출했다. 제출 직후 상태는 `성공`, 발견된 페이지는 43개였다. Cloudflare의 Google 소유권 인증 TXT 레코드는 삭제하지 않는다.
 - 칼럼 RSS는 `https://dearhani.com/rss.xml`이며 현재 공개 칼럼을 최신순으로 제공한다. 칼럼 발행기에서 새 글 발행·삭제 시 RSS 항목도 함께 갱신한다. Google Search Console 제출 직후 유형 `RSS`, 상태 `성공`, 발견된 페이지 7개로 확인했다.
 - 네이버 서치어드바이저의 `dearhani.com` 소유권 확인용 `naver-site-verification` 메타태그는 한국어 메인 `index.html`의 `<head>`에 유지한다.
+- 네이버 서치어드바이저에서 `https://dearhani.com` 소유권 확인을 완료했고 `sitemap.xml`과 `https://dearhani.com/rss.xml`을 모두 제출했다.
 
 이 파일은 집·회사 PC와 Claude·Codex 사이에서 공유하는 현재 상태 문서다. 이제 Git에 커밋한다. 정적인 커밋 번호를 최신 상태로 믿지 말고 작업 시작 때 반드시 `git fetch`, `git status`, `git log`로 확인한다.
 
