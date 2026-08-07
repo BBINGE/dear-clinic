@@ -1,127 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/</loc>
+    <loc>https://dearhani.com/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/en/</loc>
+    <loc>https://dearhani.com/en/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/ja/</loc>
+    <loc>https://dearhani.com/ja/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/zh-cn/</loc>
+    <loc>https://dearhani.com/zh-cn/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  <url><loc>https://bbinge.github.io/dear-clinic/en/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/en/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/en/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/en/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/en/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/en/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/en/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/ja/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/ja/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/ja/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/ja/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/ja/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/ja/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/ja/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://bbinge.github.io/dear-clinic/zh-cn/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/en/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/en/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/ja/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/ja/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <!-- COLUMN_SITEMAP:seocho-diet-herbal-medicine:START -->
-  <url><loc>https://bbinge.github.io/dear-clinic/columns/seocho-diet-herbal-medicine.html</loc><lastmod>2026-07-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/columns/seocho-diet-herbal-medicine.html</loc><lastmod>2026-07-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:seocho-diet-herbal-medicine:END -->
   <!-- COLUMN_SITEMAP:dear-column-20260729-1907:START -->
-  <url><loc>https://bbinge.github.io/dear-clinic/columns/dear-column-20260729-1907.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/columns/dear-column-20260729-1907.html</loc><lastmod>2026-07-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:dear-column-20260729-1907:END -->
   <!-- COLUMN_SITEMAP:seocho-functional-dyspepsia:START -->
-  <url><loc>https://bbinge.github.io/dear-clinic/columns/seocho-functional-dyspepsia.html</loc><lastmod>2026-08-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/columns/seocho-functional-dyspepsia.html</loc><lastmod>2026-08-05</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:seocho-functional-dyspepsia:END -->
   <!-- COLUMN_SITEMAP:gangnam-obesity-fatty-liver:START -->
-  <url><loc>https://bbinge.github.io/dear-clinic/columns/gangnam-obesity-fatty-liver.html</loc><lastmod>2026-08-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/columns/gangnam-obesity-fatty-liver.html</loc><lastmod>2026-08-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:gangnam-obesity-fatty-liver:END -->
   <!-- COLUMN_SITEMAP:gangnam-depression-bdnf:START -->
-  <url><loc>https://bbinge.github.io/dear-clinic/columns/gangnam-depression-bdnf.html</loc><lastmod>2026-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/columns/gangnam-depression-bdnf.html</loc><lastmod>2026-08-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:gangnam-depression-bdnf:END -->
   <!-- COLUMN_SITEMAP_END -->
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/about.html</loc>
+    <loc>https://dearhani.com/about.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/director.html</loc>
+    <loc>https://dearhani.com/director.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/career.html</loc>
+    <loc>https://dearhani.com/career.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/philosophy.html</loc>
+    <loc>https://dearhani.com/philosophy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/services.html</loc>
+    <loc>https://dearhani.com/services.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/be-deer.html</loc>
+    <loc>https://dearhani.com/be-deer.html</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/be-deer-cases.html</loc>
+    <loc>https://dearhani.com/be-deer-cases.html</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/care.html</loc>
+    <loc>https://dearhani.com/care.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/columns.html</loc>
+    <loc>https://dearhani.com/columns.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/columns/seocho-diet-clinic.html</loc>
+    <loc>https://dearhani.com/columns/seocho-diet-clinic.html</loc>
     <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/privacy.html</loc>
+    <loc>https://dearhani.com/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/patient-rights.html</loc>
+    <loc>https://dearhani.com/patient-rights.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://bbinge.github.io/dear-clinic/non-covered.html</loc>
+    <loc>https://dearhani.com/non-covered.html</loc>
     <lastmod>2026-08-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>

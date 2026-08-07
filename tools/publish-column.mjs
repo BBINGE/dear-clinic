@@ -3,7 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
-const BASE_URL = "https://bbinge.github.io/dear-clinic";
+const BASE_URL = "https://dearhani.com";
 const PUBLISHER_MARKER = "<!-- GENERATED_BY_DEAR_COLUMN_PUBLISHER -->";
 const CATEGORY_MAP = {
   Focus: { label: "집중", display: "FOCUS" },

@@ -72,8 +72,8 @@ function Generate {
     $faqHtml = "<section id=`"faq`" class=`"column-faq`"><p class=`"column-section-label`">FAQ</p><h2>자주 묻는 질문</h2>$($details -join '')</section>"
   }
   $graph = @(
-    @{'@type'='Article';headline=$title.Text;description=$summary.Text;image="https://bbinge.github.io/dear-clinic/assets/images/columns/$imgName";datePublished=$iso;dateModified=$iso;author=@{'@type'='Person';name='김민지'};publisher=@{'@type'='MedicalClinic';name='디어한의원';telephone='02-3486-1777';address=@{'@type'='PostalAddress';streetAddress='사임당로 143 3층 309호, 310호';addressLocality='서초구';addressRegion='서울';addressCountry='KR'}}},
-    @{'@type'='BreadcrumbList';itemListElement=@(@{'@type'='ListItem';position=1;name='홈';item='https://bbinge.github.io/dear-clinic/'},@{'@type'='ListItem';position=2;name='Columns';item='https://bbinge.github.io/dear-clinic/columns.html'},@{'@type'='ListItem';position=3;name=$title.Text})}
+    @{'@type'='Article';headline=$title.Text;description=$summary.Text;image="https://dearhani.com/assets/images/columns/$imgName";datePublished=$iso;dateModified=$iso;author=@{'@type'='Person';name='김민지'};publisher=@{'@type'='MedicalClinic';name='디어한의원';telephone='02-3486-1777';address=@{'@type'='PostalAddress';streetAddress='사임당로 143 3층 309호, 310호';addressLocality='서초구';addressRegion='서울';addressCountry='KR'}}},
+    @{'@type'='BreadcrumbList';itemListElement=@(@{'@type'='ListItem';position=1;name='홈';item='https://dearhani.com/'},@{'@type'='ListItem';position=2;name='Columns';item='https://dearhani.com/columns.html'},@{'@type'='ListItem';position=3;name=$title.Text})}
   )
   if ($faqs.Count) { $graph += @{'@type'='FAQPage';mainEntity=$faqSchema} }
   $schema = @{'@context'='https://schema.org';'@graph'=$graph} | ConvertTo-Json -Depth 12 -Compress
@@ -83,7 +83,7 @@ function Generate {
   $html = @"
 <!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"><title>$t</title><meta name="description" content="$s">
-<link rel="canonical" href="https://bbinge.github.io/dear-clinic/columns/$id.html"><meta property="og:type" content="article"><meta property="og:title" content="$t"><meta property="og:description" content="$s"><meta property="og:image" content="https://bbinge.github.io/dear-clinic/assets/images/columns/$imgName">
+<link rel="canonical" href="https://dearhani.com/columns/$id.html"><meta property="og:type" content="article"><meta property="og:title" content="$t"><meta property="og:description" content="$s"><meta property="og:image" content="https://dearhani.com/assets/images/columns/$imgName">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"><link rel="stylesheet" href="../css/style.css"><script type="application/ld+json">$schema</script></head>
 <body class="column-article-body"><nav class="nav" id="top"><a href="../index.html" class="nav__logo">DEAR</a><button class="nav__toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button><ul class="nav__menu" id="navMenu"><li><a href="../about.html" class="nav__link">About DEAR</a></li><li><a href="../columns.html" class="nav__link is-active">Columns</a></li><li><a href="../care.html" class="nav__link">Care</a></li><li><a href="../services.html" class="nav__link">DEAR SERVICES</a></li><li><a href="#contact" class="nav__link">Contact</a></li></ul></nav>
 <main class="column-article"><article><header class="column-article__header"><nav class="column-breadcrumb"><a href="../index.html">홈</a><span>›</span><a href="../columns.html">Columns</a><span>›</span><span>$(Enc $category.SelectedItem)</span></nav><p class="column-meta">$($cat.en) · $(Enc $category.SelectedItem)</p><h1>$t</h1><p class="column-article__lead">$s</p><div class="column-byline"><span>김민지 대표원장</span><time datetime="$iso">$display</time></div></header>
@@ -107,7 +107,7 @@ function Generate {
   $mapPath = Join-Path $root 'sitemap.xml'
   $map = [IO.File]::ReadAllText($mapPath,[Text.Encoding]::UTF8)
   if (!$map.Contains("/columns/$id.html")) {
-    $entry = "  <url><loc>https://bbinge.github.io/dear-clinic/columns/$id.html</loc><lastmod>$iso</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`r`n  <!-- COLUMN_SITEMAP_END -->"
+    $entry = "  <url><loc>https://dearhani.com/columns/$id.html</loc><lastmod>$iso</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>`r`n  <!-- COLUMN_SITEMAP_END -->"
     WriteUtf8 $mapPath $map.Replace('  <!-- COLUMN_SITEMAP_END -->',$entry)
   }
   $slug.Text = $id

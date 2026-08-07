@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /preview/
 
-Sitemap: https://bbinge.github.io/dear-clinic/sitemap.xml
+Sitemap: https://dearhani.com/sitemap.xml

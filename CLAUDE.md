@@ -8,7 +8,7 @@ Claude와 다른 AI 도구는 이 파일을 읽은 뒤 반드시 `HANDOFF.md`도
 - 기획·카피 총괄은 박성호, 의료 자문·운영은 김민지 대표원장이다.
 - 두 운영자는 개발자가 아니므로 코드 단순성, 안전한 발행, 쉬운 유지보수가 화려한 기술보다 중요하다.
 - 공개 홈페이지: `https://github.com/BBINGE/dear-clinic`
-- 배포: `https://bbinge.github.io/dear-clinic/`
+- 배포: `https://dearhani.com/`
 - 비공개 칼럼 콘텐츠: `BBINGE/dear-clinic-content`
 - 기술: 정적 HTML + CSS + Vanilla JavaScript. 프레임워크를 임의로 도입하지 않는다.
 

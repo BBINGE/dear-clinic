@@ -83,7 +83,7 @@ jobs:
             echo
             echo "GitHub Pages 반영에 약 1분이 걸릴 수 있습니다."
             echo
-            echo "미리보기: https://bbinge.github.io/dear-clinic/preview/$SLUG.html"
+            echo "미리보기: https://dearhani.com/preview/$SLUG.html"
             echo
             echo "이 주소는 칼럼 목록과 사이트맵에 포함되지 않으며 검색엔진 노출을 차단합니다."
           } >> "$GITHUB_STEP_SUMMARY"

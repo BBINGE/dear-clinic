@@ -79,7 +79,7 @@ jobs:
           {
             echo "## 발행 완료"
             echo
-            echo "게시물: https://bbinge.github.io/dear-clinic/columns/$SLUG.html"
+            echo "게시물: https://dearhani.com/columns/$SLUG.html"
             echo
             echo "Google Search Console과 네이버 서치어드바이저에는 위 주소를 한 번씩 등록해 주세요."
           } >> "$GITHUB_STEP_SUMMARY"
