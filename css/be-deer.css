@@ -792,9 +792,9 @@ img { display: block; width: 100%; }
   gap: 8px;
   margin: 18px 0 0;
 }
-.case-record__metrics > div { min-width: 0; padding: 16px 14px 18px; background: rgba(255,255,255,.86); border-top: 1px solid rgba(90,150,162,.52); }
+.case-record__metrics > div { display: flex; flex-direction: column; min-width: 0; min-height: 142px; padding: 16px 14px 18px; background: rgba(255,255,255,.86); border-top: 1px solid rgba(90,150,162,.52); }
 .case-record__metrics dt { color: #4c5752; font-size: 11px; font-weight: 650; }
-.case-record__metrics dd { display: block; margin: 10px 0 0; color: var(--green); }
+.case-record__metrics dd { display: flex; flex: 1; flex-direction: column; align-items: flex-start; margin: 10px 0 0; color: var(--green); }
 .case-metric__route { display: inline-flex; align-items: baseline; gap: 4px; min-width: 0; white-space: nowrap; }
 .case-metric__route b { font-family: var(--font-en); font-size: clamp(18px, 1.45vw, 24px); font-weight: 700; letter-spacing: -.04em; }
 .case-metric__route i { color: #87aaa0; font-family: var(--font-en); font-size: 12px; font-style: normal; font-weight: 400; }
@@ -812,7 +812,7 @@ img { display: block; width: 100%; }
   letter-spacing: -.035em;
   white-space: nowrap;
 }
-.case-metric__route + .case-metric__delta { margin-top: 10px; }
+.case-record__metrics .case-metric__delta { margin-top: auto; }
 .case-metric__delta svg { position: absolute; inset: -7px -8px -6px; width: calc(100% + 16px); height: calc(100% + 13px); overflow: visible; pointer-events: none; transform: rotate(-2deg); }
 .case-metric__delta svg path { fill: none; stroke: #db302f; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .84; vector-effect: non-scaling-stroke; }
 .case-metric__delta svg path + path { stroke-width: 1; opacity: .34; }
@@ -1111,12 +1111,12 @@ img { display: block; width: 100%; }
   .case-record__pair { gap: 8px; }
   .case-record figcaption { font-size: 11px; }
   .case-record__metrics { gap: 5px; margin-top: 12px; }
-  .case-record__metrics > div { padding: 13px 8px 15px; }
-  .case-record__metrics dd { display: block; margin-top: 8px; }
+  .case-record__metrics > div { min-height: 128px; padding: 13px 8px 15px; }
+  .case-record__metrics dd { margin-top: 8px; }
   .case-metric__route { gap: 2px; }
   .case-metric__route b { font-size: 16px; }
   .case-metric__route i { font-size: 10px; }
-  .case-metric__delta { margin-top: 9px; font-size: 14px; }
+  .case-metric__delta { font-size: 14px; }
   .case-record__actions { margin-top: 15px; }
   .case-detail { padding: 126px 20px 84px; }
   .case-detail__number { margin-top: 42px; }
