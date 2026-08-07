@@ -16,6 +16,7 @@
 - GitHub Pages의 custom domain을 `dearhani.com`으로 저장하고 DNS 확인 성공 후 `Enforce HTTPS`를 활성화했다.
 - `https://dearhani.com/` 실접속과 `http://www.dearhani.com/`에서 `https://dearhani.com/`으로의 자동 이동을 확인했다.
 - 사이트의 canonical, Open Graph, JSON-LD, sitemap, robots, 404 루트 경로와 칼럼 발행기 기본 URL은 커밋 `8024394`에서 새 도메인으로 전환했다.
+- Google Search Console에는 `dearhani.com` 도메인 속성을 DNS TXT로 소유권 인증했고 `https://dearhani.com/sitemap.xml`을 제출했다. 제출 직후 상태는 `성공`, 발견된 페이지는 43개였다. Cloudflare의 Google 소유권 인증 TXT 레코드는 삭제하지 않는다.
 
 이 파일은 집·회사 PC와 Claude·Codex 사이에서 공유하는 현재 상태 문서다. 이제 Git에 커밋한다. 정적인 커밋 번호를 최신 상태로 믿지 말고 작업 시작 때 반드시 `git fetch`, `git status`, `git log`로 확인한다.
 
