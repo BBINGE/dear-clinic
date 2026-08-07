@@ -752,6 +752,22 @@ ${end}`;
   fs.writeFileSync(filePath, source, "utf8");
 }
 
+function updateRss(siteRoot, content) {
+  const filePath = path.join(siteRoot, "rss.xml");
+  let source = fs.readFileSync(filePath, "utf8");
+  const xml = (value) => escapeHtml(String(value)).replaceAll("&#39;", "&apos;");
+  const start = `    <!-- COLUMN_RSS:${content.slug}:START -->`;
+  const end = `    <!-- COLUMN_RSS:${content.slug}:END -->`;
+  const url = `${BASE_URL}/columns/${content.slug}.html`;
+  const pubDate = new Date(`${content.publishedAt}T00:00:00+09:00`).toUTCString();
+  const entry = `${start}\n    <item><title>${xml(content.title)}</title><link>${url}</link><guid isPermaLink="true">${url}</guid><pubDate>${pubDate}</pubDate><description>${xml(content.description)}</description></item>\n${end}`;
+  const existingPattern = new RegExp(`${start.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${end.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`);
+  source = existingPattern.test(source)
+    ? source.replace(existingPattern, entry)
+    : source.replace("  </channel>", `${entry}\n  </channel>`);
+  fs.writeFileSync(filePath, source, "utf8");
+}
+
 function removeGeneratedColumn(siteRoot, slug) {
   const articlePath = path.join(siteRoot, "columns", `${slug}.html`);
   if (fs.existsSync(articlePath)) {
@@ -777,6 +793,14 @@ function removeGeneratedColumn(siteRoot, slug) {
   const mapPattern = new RegExp(`${mapStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${mapEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);
   sitemap = sitemap.replace(mapPattern, "");
   fs.writeFileSync(sitemapPath, sitemap, "utf8");
+
+  const rssPath = path.join(siteRoot, "rss.xml");
+  let rss = fs.readFileSync(rssPath, "utf8");
+  const rssStart = `    <!-- COLUMN_RSS:${slug}:START -->`;
+  const rssEnd = `    <!-- COLUMN_RSS:${slug}:END -->`;
+  const rssPattern = new RegExp(`${rssStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${rssEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);
+  rss = rss.replace(rssPattern, "");
+  fs.writeFileSync(rssPath, rss, "utf8");
 
   const assetsPath = path.join(siteRoot, "assets", "images", "columns", slug);
   if (fs.existsSync(assetsPath)) fs.rmSync(assetsPath, { recursive: true, force: true });
@@ -809,7 +833,7 @@ function main() {
       status: "removed",
       slug: content.slug,
       url: `${BASE_URL}/columns/${content.slug}.html`,
-      files: ["columns.html", "sitemap.xml", `columns/${content.slug}.html`, `assets/images/columns/${content.slug}`],
+      files: ["columns.html", "sitemap.xml", "rss.xml", `columns/${content.slug}.html`, `assets/images/columns/${content.slug}`],
     }, null, 2)}\n`);
     return;
   }
@@ -843,6 +867,7 @@ function main() {
   if (!isPreview) {
     updateColumnsIndex(siteRoot, content, coverPath);
     updateSitemap(siteRoot, content);
+    updateRss(siteRoot, content);
   }
 
   const result = {
@@ -851,7 +876,7 @@ function main() {
     url: `${BASE_URL}/${isPreview ? "preview" : "columns"}/${content.slug}.html`,
     files: [
       path.relative(siteRoot, articlePath).replaceAll(path.sep, "/"),
-      ...(!isPreview ? ["columns.html", "sitemap.xml"] : []),
+      ...(!isPreview ? ["columns.html", "sitemap.xml", "rss.xml"] : []),
       coverPath,
     ],
   };

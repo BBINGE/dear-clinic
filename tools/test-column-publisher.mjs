@@ -25,6 +25,7 @@ try {
   fs.mkdirSync(path.join(testRoot, "columns"), { recursive: true });
   fs.copyFileSync(path.join(siteRoot, "columns.html"), path.join(testRoot, "columns.html"));
   fs.copyFileSync(path.join(siteRoot, "sitemap.xml"), path.join(testRoot, "sitemap.xml"));
+  fs.copyFileSync(path.join(siteRoot, "rss.xml"), path.join(testRoot, "rss.xml"));
 
   const draft = JSON.parse(fs.readFileSync(contentPath, "utf8"));
   draft.status = "draft";
@@ -96,6 +97,7 @@ try {
   const article = fs.readFileSync(articlePath, "utf8");
   const index = fs.readFileSync(path.join(testRoot, "columns.html"), "utf8");
   const sitemap = fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8");
+  const rss = fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8");
 
   assert.match(article, /GENERATED_BY_DEAR_COLUMN_PUBLISHER/);
   assert.match(article, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/publisher-test-column\.html"/);
@@ -126,6 +128,7 @@ try {
   assert.equal(JSON.parse(schemaText)["@context"], "https://schema.org");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
+  assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
     true,
@@ -145,6 +148,7 @@ try {
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
+  assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 
   const blockedDraft = spawnSync(process.execPath, [
     path.join(toolsDir, "publish-column.mjs"),
