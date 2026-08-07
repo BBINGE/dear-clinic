@@ -20,53 +20,79 @@
 <meta property="og:title" content="디어한의원 | ALWAYS &quot;DEAR&quot; YOU">
 <meta property="og:description" content="서울 서초동 디어한의원. 다이어트 한약, 공진단, 통증 및 내과적 진료.">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:image" content="assets/images/waiting-room-1.jpg">
+<meta property="og:url" content="https://bbinge.github.io/dear-clinic/">
+<meta property="og:image" content="https://bbinge.github.io/dear-clinic/assets/images/waiting-room-1.jpg">
+<meta property="og:image:alt" content="서울 서초동 디어한의원 진료 공간">
 
 <!-- Pretendard -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
-<link rel="stylesheet" href="css/style.css?v=20260805-15">
+<link rel="stylesheet" href="css/style.css?v=20260807-1">
 
-<!-- JSON-LD: LocalBusiness (NAP) -->
+<!-- JSON-LD: Website, MedicalClinic, Director -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "MedicalClinic",
-  "name": "디어한의원",
-  "alternateName": "DEAR",
-  "telephone": "02-3486-1777",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "사임당로 143 3층 309호, 310호",
-    "addressLocality": "서초구",
-    "addressRegion": "서울특별시",
-    "addressCountry": "KR"
-  },
-  "medicalSpecialty": ["다이어트 한약", "공진단", "통증 및 내과적 진료"],
-  "openingHoursSpecification": [
+  "@graph": [
     {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Friday"],
-      "opens": "10:00",
-      "closes": "13:00"
+      "@type": "WebSite",
+      "@id": "https://bbinge.github.io/dear-clinic/#website",
+      "url": "https://bbinge.github.io/dear-clinic/",
+      "name": "디어한의원",
+      "inLanguage": "ko-KR",
+      "publisher": { "@id": "https://bbinge.github.io/dear-clinic/#clinic" }
     },
     {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Friday"],
-      "opens": "14:00",
-      "closes": "20:00"
+      "@type": "MedicalClinic",
+      "@id": "https://bbinge.github.io/dear-clinic/#clinic",
+      "name": "디어한의원",
+      "alternateName": ["DEAR", "DEAR Korean Medicine Clinic"],
+      "url": "https://bbinge.github.io/dear-clinic/",
+      "logo": "https://bbinge.github.io/dear-clinic/assets/images/dear-favicon.png",
+      "image": "https://bbinge.github.io/dear-clinic/assets/images/waiting-room-1.jpg",
+      "telephone": "+82-2-3486-1777",
+      "founder": { "@id": "https://bbinge.github.io/dear-clinic/director.html#kim-minji" },
+      "employee": { "@id": "https://bbinge.github.io/dear-clinic/director.html#kim-minji" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "사임당로 143 3층 309호, 310호",
+        "addressLocality": "서초구",
+        "addressRegion": "서울특별시",
+        "addressCountry": "KR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 37.4918829,
+        "longitude": 127.0252346
+      },
+      "areaServed": ["서초동", "강남역", "교대역", "서울 서초구"],
+      "knowsAbout": ["다이어트 한약", "비만 진료", "공진단", "통증 진료", "소화기 증상", "여성 건강"],
+      "sameAs": [
+        "https://www.instagram.com/dearhani__/",
+        "https://blog.naver.com/blanchard2552",
+        "https://map.naver.com/p/search/%EB%94%94%EC%96%B4%ED%95%9C%EC%9D%98%EC%9B%90"
+      ],
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "target": "https://m.booking.naver.com/booking/13/bizes/729883"
+      },
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Friday"], "opens": "10:00", "closes": "13:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Friday"], "opens": "14:00", "closes": "20:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Thursday", "opens": "14:00", "closes": "20:00" },
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": "Saturday", "opens": "10:00", "closes": "15:00" }
+      ]
     },
     {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Thursday",
-      "opens": "14:00",
-      "closes": "20:00"
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": "Saturday",
-      "opens": "10:00",
-      "closes": "15:00"
+      "@type": "Person",
+      "@id": "https://bbinge.github.io/dear-clinic/director.html#kim-minji",
+      "name": "김민지",
+      "honorificSuffix": "한의사",
+      "jobTitle": "디어한의원 대표원장",
+      "url": "https://bbinge.github.io/dear-clinic/director.html",
+      "image": "https://bbinge.github.io/dear-clinic/assets/images/director.jpg",
+      "worksFor": { "@id": "https://bbinge.github.io/dear-clinic/#clinic" },
+      "knowsAbout": ["한방비만", "다이어트 한약", "통증 진료", "한방부인과", "소화기 증상", "운동 처방"]
     }
   ]
 }
