@@ -10,6 +10,13 @@
 
 기준 브랜치: `master`
 
+## 2026-08-07 공식 도메인 연결
+
+- Cloudflare에서 `dearhani.com` 루트에 GitHub Pages A 레코드 4개(`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`)와 `www` CNAME(`bbinge.github.io`)을 모두 `DNS only`로 연결했다.
+- GitHub Pages의 custom domain을 `dearhani.com`으로 저장하고 DNS 확인 성공 후 `Enforce HTTPS`를 활성화했다.
+- `https://dearhani.com/` 실접속과 `http://www.dearhani.com/`에서 `https://dearhani.com/`으로의 자동 이동을 확인했다.
+- 사이트의 canonical, Open Graph, JSON-LD, sitemap, robots, 404 루트 경로와 칼럼 발행기 기본 URL은 커밋 `8024394`에서 새 도메인으로 전환했다.
+
 이 파일은 집·회사 PC와 Claude·Codex 사이에서 공유하는 현재 상태 문서다. 이제 Git에 커밋한다. 정적인 커밋 번호를 최신 상태로 믿지 말고 작업 시작 때 반드시 `git fetch`, `git status`, `git log`로 확인한다.
 
 ## 2026-08-07 세션 마감 인수인계
