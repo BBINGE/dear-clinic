@@ -1243,7 +1243,7 @@
 }
 
 .columns-index {
-  padding: 0 var(--gap) clamp(7rem, 12vw, 11rem);
+  padding: clamp(4rem, 7vw, 7rem) var(--gap) clamp(7rem, 12vw, 11rem);
 }
 
 .column-featured {
@@ -2229,7 +2229,7 @@
 .column-featured h2 { margin:1.15rem 0;font-size:clamp(1.6rem,2.2vw,2rem); }
 .column-featured time,.column-card time { margin-top:1rem; }
 .column-read { margin-top:1.75rem; }
-.columns-toolbar { margin:clamp(3rem,5vw,4.5rem) 0 2rem;padding-bottom:1.15rem; }
+.columns-toolbar { margin:clamp(4.5rem,7vw,6.5rem) 0 2rem;padding-bottom:1.15rem; }
 .columns-grid { gap:clamp(2.5rem,4vw,3.75rem) clamp(1.25rem,2.5vw,2rem); }
 .column-card__image { margin-bottom:1.1rem;border-radius:12px; }
 .column-card h2 { margin:.65rem 0;font-size:clamp(1.2rem,1.7vw,1.48rem); }
