@@ -567,6 +567,8 @@ img { display: block; width: 100%; }
   -webkit-box-decoration-break: clone;
 }
 .case-archive-bridge {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
@@ -576,6 +578,23 @@ img { display: block; width: 100%; }
   border-top: 1px solid rgba(36,120,96,.34);
   border-bottom: 1px solid rgba(36,120,96,.34);
   background: #fff;
+  overflow: hidden;
+}
+.case-archive-bridge::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: url("../assets/images/be-deer/case-archive-people-wall.webp") center / cover no-repeat;
+  opacity: .3;
+  filter: saturate(.62) contrast(.9);
+}
+.case-archive-bridge::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,.94) 0%, rgba(255,255,255,.86) 48%, rgba(255,255,255,.76) 100%);
 }
 .case-archive-bridge__copy h2 {
   margin: 22px 0 24px;
@@ -1096,6 +1115,8 @@ img { display: block; width: 100%; }
 
 @media (max-width: 640px) {
   .case-archive-bridge { width: calc(100% + 40px); margin-left: -20px; padding: 44px 20px; }
+  .case-archive-bridge::before { opacity: .22; background-position: 54% center; }
+  .case-archive-bridge::after { background: linear-gradient(180deg, rgba(255,255,255,.93), rgba(255,255,255,.79)); }
   .case-archive-bridge__copy h2 { font-size: 38px; }
   .case-archive-bridge__copy > p:not(.eyebrow) br { display: none; }
   .case-archive-bridge__index strong { font-size: 96px; }
