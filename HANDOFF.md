@@ -1,6 +1,13 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
-최종 갱신: 2026-08-07
+최종 갱신: 2026-08-09
+
+## 2026-08-09 살이 안 빠지는 6가지 이유 칼럼
+
+- `columns/seocho-diet-6-reasons.html`에 김민지 대표원장 명의의 비만·다이어트 저널형 칼럼을 추가했다. 사용자가 제공한 원고의 6가지 흐름(단기 체중 정체, 감량 후 식욕 적응과 요요, 음식 단서와 craving, 체수분과 부종, 지속 가능한 계획, 체중 너머의 건강)을 유지한다.
+- 근거는 월경주기 체중·세포외수분, Sumithran 감량 후 호르몬 적응, Polidori의 추정 식욕 피드백, Boswell 음식 단서 메타분석, DIETFITS, Magkos 5% 감량 연구, 대한비만학회 2024 진료지침으로 구성했다. 숫자는 연구집단 결과와 개인 적용의 차이를 바로 옆 `READ THIS CAREFULLY` 카드에서 설명한다.
+- 동일한 30대 여성 주인공이 이어지는 6장의 생성형 에디토리얼 툰을 `assets/images/columns/seocho-diet-6-reasons/`에 WebP로 저장했다. 이미지 자체는 무문자이며 대사·캡션·전체 맥락은 HTML DOM과 alt/transcript로 제공한다. 원본 밈 영상·인물·브랜드 UI는 사용하지 않았다.
+- Article·MedicalWebPage·FAQPage·BreadcrumbList·MedicalClinic 구조화 데이터, canonical, OG, 인용 링크를 넣고 Columns 오늘의 글·SHAPE 주제 허브·카드 목록·대표원장 저자 페이지·sitemap·RSS에 연결했다.
 
 ## 2026-08-07 소아성장 Figure 01 근거 표현 정정
 
