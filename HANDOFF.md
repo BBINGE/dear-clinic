@@ -1,6 +1,14 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
-최종 갱신: 2026-08-09
+최종 갱신: 2026-08-10
+
+## 2026-08-10 다국어 SEO·언어 전환 정비
+
+- `js/main.js`의 공통 언어 선택기는 번역판이 있는 `index·about·director·career·philosophy·care·services·columns`만 같은 페이지의 언어판으로 연결한다. 번역판이 없는 BE DEER, 법률 안내, 한국어 개별 칼럼에서는 존재하지 않는 URL을 만들지 않고 영어·일본어·중국어 홈으로 이동한다. 이 변경으로 15개 한국어 전용 페이지에서 생성되던 45개 404 언어 링크를 제거했다.
+- 한국어 `about·director·career·philosophy·care·services·columns`에 `ko·en·ja·zh-Hans·x-default` 반환 `hreflang`을 추가해 외국어 페이지와 동일한 양방향 언어 클러스터를 완성했다. 각 언어 페이지의 자기 canonical과 기존 sitemap URL 구조는 유지한다.
+- 영어·일본어·중국어 `career.html`에 언어별 H1을 추가했다. 경력 프로필의 상단 여백과 좌측 정렬을 함께 보정해 고정 내비게이션과 제목이 겹치지 않도록 했으며, 관련 4개 경력 페이지의 CSS 버전을 `20260810-2`로 갱신했다.
+- 중국어 메인 description·OG description의 오역 `饮食中药·宫筋丹`을 `减重韩药·拱辰丹` 중심의 정확한 진료 설명으로 교정했다. 영어·일본어·중국어 메인의 `MedicalClinic` JSON-LD는 한국어 메인과 같은 `https://dearhani.com/#clinic` ID, 공식 URL, 국제 전화번호, 로고·공간 이미지, 좌표, 공식 채널, 예약 액션을 사용하며 진료 분야만 각 언어로 제공한다.
+- 영어·일본어·중국어 Columns의 description·OG description에 김민지 대표원장의 저자성, 연구·진료 기준, 성장·체중과 대사·마음 회복·소화기 증상의 임상 저널 범위를 반영하고 언어별 `CollectionPage` JSON-LD를 추가했다. 한국어 Philosophy에는 누락됐던 절대경로 OG URL·이미지와 `MedicalWebPage` JSON-LD를 보완했다.
 
 ## 2026-08-09 Columns 임상 저널 인트로 개편
 

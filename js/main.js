@@ -84,7 +84,7 @@ const navToggle = document.getElementById("navToggle");
 const navMenu = document.getElementById("navMenu");
 
 // 전 페이지 공통 언어 선택기.
-// 한국어 상세 페이지에서는 현재 페이지와 관계없이 각 언어의 대표 페이지로 이동한다.
+// 번역판이 있는 공통 페이지는 같은 페이지로, 번역판이 없는 페이지는 각 언어 홈으로 이동한다.
 if (nav && navMenu && !document.body.classList.contains("error-page")) {
   const pageLanguage = document.documentElement.lang || "ko";
   const isLocalizedPage = ["en", "ja", "zh-CN"].includes(pageLanguage);
@@ -97,12 +97,25 @@ if (nav && navMenu && !document.body.classList.contains("error-page")) {
     ja: "日本語",
     "zh-CN": "中文",
   };
-  const languageLinks = {
-    ko: isLocalizedPage ? `../${currentPage}` : currentPage,
-    en: isLocalizedPage ? `../en/${currentPage}` : `en/${currentPage}`,
-    ja: isLocalizedPage ? `../ja/${currentPage}` : `ja/${currentPage}`,
-    "zh-CN": isLocalizedPage ? `../zh-cn/${currentPage}` : `zh-cn/${currentPage}`,
-  };
+  const localizedPages = new Set([
+    "index.html", "about.html", "director.html", "career.html",
+    "philosophy.html", "care.html", "services.html", "columns.html",
+  ]);
+  const hasLocalizedEquivalent = localizedPages.has(currentPage);
+  const pagePath = currentPage === "index.html" ? "" : currentPage;
+  const languageLinks = hasLocalizedEquivalent
+    ? {
+        ko: `/${pagePath}`,
+        en: `/en/${pagePath}`,
+        ja: `/ja/${pagePath}`,
+        "zh-CN": `/zh-cn/${pagePath}`,
+      }
+    : {
+        ko: isLocalizedPage ? "/" : window.location.pathname,
+        en: "/en/",
+        ja: "/ja/",
+        "zh-CN": "/zh-cn/",
+      };
   const languageItem = document.createElement("li");
   languageItem.className = "nav__language";
   languageItem.setAttribute("aria-label", "Language");

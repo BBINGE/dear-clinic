@@ -24,9 +24,13 @@
 {
   "@context": "https://schema.org",
   "@type": "MedicalClinic",
+  "@id": "https://dearhani.com/#clinic",
   "name": "디어한의원",
-  "alternateName": "DEAR",
-  "telephone": "02-3486-1777",
+  "alternateName": ["DEAR", "DEAR Korean Medicine Clinic"],
+  "url": "https://dearhani.com/",
+  "logo": "https://dearhani.com/assets/images/dear-favicon.png",
+  "image": "https://dearhani.com/assets/images/waiting-room-1.jpg",
+  "telephone": "+82-2-3486-1777",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "사임당로 143 3층 309호, 310호",
@@ -34,7 +38,10 @@
     "addressRegion": "서울특별시",
     "addressCountry": "KR"
   },
-  "medicalSpecialty": ["다이어트 한약", "공진단", "통증 및 내과적 진료"],
+  "geo": { "@type": "GeoCoordinates", "latitude": 37.4918829, "longitude": 127.0252346 },
+  "medicalSpecialty": ["Weight management", "Gongjindan", "Pain care", "Digestive health", "Women's health"],
+  "sameAs": ["https://www.instagram.com/dearhani__/", "https://blog.naver.com/blanchard2552", "https://map.naver.com/p/search/%EB%94%94%EC%96%B4%ED%95%9C%EC%9D%98%EC%9B%90"],
+  "potentialAction": { "@type": "ReserveAction", "target": "https://m.booking.naver.com/booking/13/bizes/729883" },
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
