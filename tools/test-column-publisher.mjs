@@ -102,6 +102,8 @@ try {
   assert.match(article, /GENERATED_BY_DEAR_COLUMN_PUBLISHER/);
   assert.match(article, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/publisher-test-column\.html"/);
   assert.match(article, /"@type":"FAQPage"/);
+  assert.match(article, /"author":\{"@id":"https:\/\/dearhani\.com\/director\.html#kim-minji"\}/);
+  assert.match(article, /class="column-author-link" href="\.\.\/director\.html" rel="author">김민지 대표원장<\/a>/);
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
   assert.match(article, /href="#제목-3도-칼럼-소제목으로-표시됩니다"/);
   assert.doesNotMatch(article, /의료진/);

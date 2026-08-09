@@ -611,9 +611,10 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
       image: imageUrl,
       datePublished: content.publishedAt,
       dateModified: modifiedAt,
-      author: { "@type": "Person", name: "김민지" },
+      author: { "@id": `${BASE_URL}/director.html#kim-minji` },
       publisher: {
         "@type": "MedicalClinic",
+        "@id": `${BASE_URL}/#clinic`,
         name: "디어한의원",
         telephone: "02-3486-1777",
         address: {
@@ -684,7 +685,7 @@ ${previewNotice}
     <p class="column-meta">${category.display} · ${category.label}</p>
     <h1>${textWithBreaks(content.title)}</h1>
     <p class="column-article__lead">${textWithBreaks(content.lead)}</p>
-    <div class="column-byline"><span>김민지 대표원장</span><time datetime="${content.publishedAt}">${publishedDisplay}</time></div>
+    <div class="column-byline"><a class="column-author-link" href="../director.html" rel="author">김민지 대표원장</a><time datetime="${content.publishedAt}">${publishedDisplay}</time></div>
     ${tagsHtml}
   </header>
   <figure class="column-article__hero"><img src="../${coverPath}" alt="${escapeHtml(content.coverAlt)}"></figure>
