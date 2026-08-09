@@ -2290,6 +2290,205 @@
   .column-keypoint,.column-article__content .column-consult,.column-article__content .column-nap { padding:2rem 1.4rem; }
 }
 
+/* Integrated clinical journal introduction */
+.columns-hero {
+  display: block;
+  min-height: 0;
+  padding: clamp(8.5rem, 12vw, 11rem) var(--gap) 0;
+  background: #f7f8f5;
+}
+
+.columns-hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(290px, 0.55fr);
+  column-gap: clamp(3rem, 8vw, 8rem);
+  row-gap: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.columns-hero__copy h1 {
+  max-width: 920px;
+  margin: 1.35rem 0 0;
+  color: #243d36;
+  font-size: clamp(2.65rem, 5.1vw, 5.15rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.058em;
+  word-break: keep-all;
+}
+
+.columns-hero__note {
+  align-self: end;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(36, 120, 96, 0.32);
+}
+
+.columns-hero__note p {
+  margin: 0;
+  font-size: clamp(0.96rem, 1.2vw, 1.05rem);
+  line-height: 1.82;
+  word-break: keep-all;
+}
+
+.columns-hero__note p + p {
+  margin-top: 0.85rem;
+}
+
+.columns-hero__note a {
+  color: var(--green-deep);
+  font-weight: 700;
+  text-decoration-color: rgba(36, 120, 96, 0.35);
+  text-underline-offset: 4px;
+}
+
+.columns-journal-nav {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(160px, 0.42fr) minmax(0, 1.58fr);
+  align-items: stretch;
+  border-top: 1px solid rgba(36, 120, 96, 0.2);
+}
+
+.columns-journal-nav > p {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 1.6rem 2rem 1.6rem 0;
+  color: var(--green-deep);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.columns-journal-nav .columns-filters {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+}
+
+.columns-journal-nav .columns-filters button {
+  display: grid;
+  align-content: center;
+  min-height: 82px;
+  padding: 1.15rem clamp(0.8rem, 1.8vw, 1.5rem);
+  border: 0;
+  border-left: 1px solid rgba(36, 120, 96, 0.16);
+  background: transparent;
+  color: rgba(85, 85, 80, 0.74);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.columns-journal-nav .columns-filters button span {
+  margin-bottom: 0.38rem;
+  color: var(--teal-pattern);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.columns-journal-nav .columns-filters button:hover,
+.columns-journal-nav .columns-filters button:focus-visible,
+.columns-journal-nav .columns-filters button.is-active {
+  background: var(--green-deep);
+  color: #fff;
+}
+
+.columns-journal-nav .columns-filters button.is-active span,
+.columns-journal-nav .columns-filters button:hover span,
+.columns-journal-nav .columns-filters button:focus-visible span {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.columns-toolbar {
+  align-items: end;
+}
+
+.columns-toolbar__label {
+  margin: 0;
+  color: var(--teal-pattern);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+}
+
+@media (max-width: 900px) {
+  .columns-hero__inner {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+  }
+
+  .columns-hero__note {
+    max-width: 620px;
+  }
+
+  .columns-journal-nav {
+    grid-column: 1;
+    grid-template-columns: 1fr;
+  }
+
+  .columns-journal-nav > p {
+    padding: 1.25rem 0;
+  }
+
+  .columns-journal-nav .columns-filters button:first-child {
+    border-left: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .columns-hero {
+    min-height: 0;
+    padding: 7.25rem 20px 0;
+  }
+
+  .columns-hero__copy h1 {
+    margin-top: 1rem;
+    font-size: clamp(2.05rem, 10vw, 2.8rem);
+    line-height: 1.15;
+  }
+
+  .columns-hero__copy h1 br {
+    display: block;
+  }
+
+  .columns-hero__inner {
+    row-gap: 2rem;
+  }
+
+  .columns-hero__note {
+    padding-top: 1.15rem;
+  }
+
+  .columns-journal-nav .columns-filters {
+    grid-auto-columns: minmax(118px, 1fr);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    overflow-x: auto;
+    border-left: 1px solid rgba(36, 120, 96, 0.16);
+    scrollbar-width: none;
+  }
+
+  .columns-journal-nav .columns-filters button {
+    min-height: 68px;
+    border-top: 1px solid rgba(36, 120, 96, 0.16);
+  }
+
+  .columns-journal-nav .columns-filters button:first-child {
+    border-left: 0;
+  }
+
+  .columns-journal-nav .columns-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .columns-toolbar {
+    align-items: stretch;
+    gap: 1.25rem;
+  }
+}
+
 /* Legal information pages */
 .legal-page-body {
   background: var(--bg-base);

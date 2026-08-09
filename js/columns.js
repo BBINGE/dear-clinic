@@ -19,7 +19,11 @@
       if (!card.hidden) visible += 1;
     });
     empty.hidden = visible !== 0;
-    filters.forEach((button) => button.classList.toggle('is-active', button.dataset.columnCategory === category));
+    filters.forEach((button) => {
+      const active = button.dataset.columnCategory === category;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
     const next = new URLSearchParams();
     if (query) next.set('q', search.value.trim());
     if (category !== 'all') next.set('category', category);
