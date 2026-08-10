@@ -78,7 +78,7 @@
     ja: { label: "海外予約", aria: "海外患者さまの診療日程と電話予約", query: "ja" },
     zh: { label: "国际预约", aria: "国际患者门诊时间和电话预约", query: "zh" },
   }[language];
-  const icon = '<svg class="quickmenu__international-icon" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="8.25" stroke="currentColor" stroke-width="1.45"/><path d="M4.75 13h16.5M13 4.75c2.15 2.25 3.25 5 3.25 8.25S15.15 19 13 21.25M13 4.75C10.85 7 9.75 9.75 9.75 13s1.1 6 3.25 8.25" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/><circle cx="21.1" cy="20.8" r="5.15" fill="currentColor"/><path d="m18.65 20.8 1.55 1.55 3.25-3.45" stroke="#fff" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const icon = '<svg class="quickmenu__international-icon" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="4.5" y="6.5" width="21" height="19" rx="4" stroke="currentColor" stroke-width="1.55"/><path d="M4.75 11.5h20.5M10 4.5v4M20 4.5v4" stroke="currentColor" stroke-width="1.55" stroke-linecap="round"/><circle cx="15" cy="18" r="4.25" fill="currentColor"/><path d="M15 15.6v2.65l1.85 1.15" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   let link = quickmenu.querySelector(".quickmenu__btn--international");
   if (!link) {
