@@ -6333,6 +6333,18 @@ img, video {
   flex-shrink: 0;
 }
 
+.quickmenu__btn--international .quickmenu__international-icon {
+  width: 31px;
+  height: 31px;
+  padding: 2px;
+  filter: drop-shadow(0 3px 7px rgba(18, 48, 42, 0.2));
+  transition: transform 0.2s ease;
+}
+
+.quickmenu__btn--international:hover .quickmenu__international-icon {
+  transform: translateY(-1px);
+}
+
 .quickmenu__label {
   font-size: 13px;
   font-weight: 600;

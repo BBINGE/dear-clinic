@@ -62,6 +62,39 @@
   });
 })();
 
+// 전 페이지 공통 외국인 예약 퀵메뉴.
+// 각 HTML에 중복된 퀵메뉴가 있어도 이곳에서 링크·아이콘·언어를 한 번에 맞춘다.
+(function initializeInternationalAppointmentQuickmenu() {
+  "use strict";
+
+  const quickmenu = document.querySelector(".quickmenu");
+  if (!quickmenu) return;
+
+  const pageLanguage = document.documentElement.lang || "ko";
+  const language = pageLanguage === "ja" ? "ja" : pageLanguage.startsWith("zh") ? "zh" : pageLanguage === "en" ? "en" : "ko";
+  const copy = {
+    ko: { label: "외국인예약", aria: "외국인 진료 일정 및 전화 예약", query: "en" },
+    en: { label: "International", aria: "International patient schedule and phone appointment", query: "en" },
+    ja: { label: "海外予約", aria: "海外患者さまの診療日程と電話予約", query: "ja" },
+    zh: { label: "国际预约", aria: "国际患者门诊时间和电话预约", query: "zh" },
+  }[language];
+  const icon = '<svg class="quickmenu__international-icon" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="8.25" stroke="currentColor" stroke-width="1.45"/><path d="M4.75 13h16.5M13 4.75c2.15 2.25 3.25 5 3.25 8.25S15.15 19 13 21.25M13 4.75C10.85 7 9.75 9.75 9.75 13s1.1 6 3.25 8.25" stroke="currentColor" stroke-width="1.35" stroke-linecap="round"/><circle cx="21.1" cy="20.8" r="5.15" fill="currentColor"/><path d="m18.65 20.8 1.55 1.55 3.25-3.45" stroke="#fff" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  let link = quickmenu.querySelector(".quickmenu__btn--international");
+  if (!link) {
+    link = document.createElement("a");
+    link.className = "quickmenu__btn quickmenu__btn--international";
+    const reference = quickmenu.querySelector('a[href*="blog.naver.com"]') || quickmenu.querySelector(".quickmenu__btn--top");
+    quickmenu.insertBefore(link, reference || null);
+  }
+
+  link.href = `/international-appointment.html?lang=${copy.query}`;
+  link.setAttribute("aria-label", copy.aria);
+  link.dataset.trackAction = "international_appointment";
+  link.dataset.trackLocation = "quickmenu";
+  link.innerHTML = `${icon}<span class="quickmenu__label">${copy.label}</span>`;
+})();
+
 // 스크롤 시 네비게이션 배경 전환 (히어로를 벗어나면 밝은 배경 + 어두운 텍스트)
 // 히어로가 없는 서브 페이지에서는 처음부터 밝은 배경 상태로 고정한다.
 const nav = document.querySelector(".nav");
