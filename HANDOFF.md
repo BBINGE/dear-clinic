@@ -2,6 +2,12 @@
 
 최종 갱신: 2026-08-10
 
+## 2026-08-10 네이버 검색결과 주요 콘텐츠 캐러셀 후보 보강
+
+- 한국어 메인 `index.html`의 기존 `WebSite`·`MedicalClinic`·`Person` JSON-LD 그래프에 `ItemList`를 추가했다. 화면의 확정 카피나 배치는 변경하지 않았다.
+- 목록은 `BE DEER`와 `BE DEER 체성분 기록`을 1·2순위로 두고 `DEAR CARE`, `DEAR SERVICES`, `디어 임상 저널`, `디어의 진료 원칙`까지 6개 공개 페이지로 구성했다. 각 항목은 서로 다른 실제 대표 이미지, 이름, 설명, 절대 URL을 가진다.
+- 이 마크업은 네이버가 캐러셀 또는 확장 검색결과를 구성할 때 참고할 후보 정보이며 실제 노출 여부와 형식은 네이버가 결정한다.
+
 ## 2026-08-10 산후 한약·다이어트 한약 임상 칼럼
 
 - `columns/seocho-postpartum-diet-herbal-medicine.html`에 김민지 대표원장 명의의 산후 체중 임상 칼럼을 추가했다. 본문은 툰 없이 HTML/CSS 연구 Figure 7개로 구성하고, 목록·검색 공유용 대표 이미지만 기존 디어 작화에 맞춘 엄마·아기 사슴 툰 `assets/images/columns/seocho-postpartum-diet-herbal-medicine/cover-deer.webp`를 사용한다.
