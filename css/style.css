@@ -4920,6 +4920,7 @@ img, video {
     linear-gradient(0deg, rgba(4, 12, 10, 0.34), transparent 62%);
 }
 
+.about[data-weather="mostly-cloudy"] .weather-card::after,
 .about[data-weather="cloudy"] .weather-card::after {
   background:
     linear-gradient(90deg, rgba(14, 31, 33, 0.64) 0%, rgba(18, 37, 40, 0.45) 43%, rgba(35, 54, 58, 0.12) 72%, rgba(27, 43, 47, 0.2) 100%),
@@ -4976,12 +4977,14 @@ img, video {
 }
 
 .about[data-daylight="day"][data-weather="sunny"] .weather-lens__scene--day,
+.about[data-daylight="day"][data-weather="mostly-cloudy"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="cloudy"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="strong-wind"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="rain"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="heavy-rain"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="storm"] .weather-lens__scene--day,
 .about[data-daylight="night"][data-weather="sunny"] .weather-lens__scene--night,
+.about[data-daylight="night"][data-weather="mostly-cloudy"] .weather-lens__scene--night,
 .about[data-daylight="night"][data-weather="cloudy"] .weather-lens__scene--night,
 .about[data-daylight="night"][data-weather="strong-wind"] .weather-lens__scene--night,
 .about[data-daylight="night"][data-weather="rain"] .weather-lens__scene--rain-night,
@@ -4990,11 +4993,13 @@ img, video {
 .about[data-weather="snow"] .weather-lens__scene--snow,
 .about[data-weather="heavy-snow"] .weather-lens__scene--snow { opacity: 1 !important; }
 
+.about[data-daylight="day"][data-weather="mostly-cloudy"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="cloudy"] .weather-lens__scene--day,
 .about[data-daylight="day"][data-weather="strong-wind"] .weather-lens__scene--day {
   filter: brightness(0.91) saturate(0.62) contrast(0.96) hue-rotate(5deg);
 }
 
+.about[data-daylight="night"][data-weather="mostly-cloudy"] .weather-lens__scene--night,
 .about[data-daylight="night"][data-weather="cloudy"] .weather-lens__scene--night,
 .about[data-daylight="night"][data-weather="strong-wind"] .weather-lens__scene--night {
   filter: brightness(0.72) saturate(0.74) contrast(0.96);
@@ -5038,6 +5043,7 @@ img, video {
 .weather-lens__cloud-veil::after {
   content: none;
 }
+.about[data-weather="mostly-cloudy"] .weather-lens__cloud-veil,
 .about[data-weather="cloudy"] .weather-lens__cloud-veil,
 .about[data-weather="strong-wind"] .weather-lens__cloud-veil { opacity: 1; }
 
@@ -5148,6 +5154,7 @@ img, video {
 }
 
 .about[data-daylight="day"][data-weather="sunny"] .weather-lens__shade,
+.about[data-daylight="day"][data-weather="mostly-cloudy"] .weather-lens__shade,
 .about[data-daylight="day"][data-weather="cloudy"] .weather-lens__shade,
 .about[data-daylight="day"][data-weather="strong-wind"] .weather-lens__shade {
   animation: weather-lens-shade 8.5s linear infinite;
@@ -5213,6 +5220,8 @@ img, video {
 
 .about[data-weather="sunny"] .weather-card__icon::before { content: "☀️"; animation: weather-emoji-sun 6s linear infinite; }
 .about[data-daylight="night"][data-weather="sunny"] .weather-card__icon::before { content: "🌙"; animation: weather-emoji-moon 4.8s ease-in-out infinite; }
+.about[data-weather="mostly-cloudy"] .weather-card__icon::before,
+.about[data-weather="mostly-cloudy"] .weather-card__icon::after,
 .about[data-weather="cloudy"] .weather-card__icon::before,
 .about[data-weather="cloudy"] .weather-card__icon::after {
   display: block;
@@ -5223,11 +5232,13 @@ img, video {
   filter: drop-shadow(0 5px 9px rgba(0,0,0,.28));
   content: "☁️";
 }
+.about[data-weather="mostly-cloudy"] .weather-card__icon::before,
 .about[data-weather="cloudy"] .weather-card__icon::before {
   inset: 12px auto auto 2px;
   font-size: 1.85rem;
   animation: weather-emoji-cloud-left 5.8s ease-in-out infinite;
 }
+.about[data-weather="mostly-cloudy"] .weather-card__icon::after,
 .about[data-weather="cloudy"] .weather-card__icon::after {
   z-index: 1;
   top: 1px;

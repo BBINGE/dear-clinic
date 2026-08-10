@@ -1,4 +1,5 @@
 import { mkdir, writeFile } from "node:fs/promises";
+import { get as httpsGet } from "node:https";
 import { dirname, resolve } from "node:path";
 
 const serviceKey = process.env.KMA_SERVICE_KEY?.trim();
@@ -102,10 +103,39 @@ function classify(values) {
     return "rain";
   }
   if (windSpeed >= 14) return "strong-wind";
-  return sky === 1 ? "sunny" : "cloudy";
+  if (sky === 1) return "sunny";
+  if (sky === 3) return "mostly-cloudy";
+  return "cloudy";
 }
 
 const encodedServiceKey = serviceKey.includes("%") ? serviceKey : encodeURIComponent(serviceKey);
+
+function fetchJsonOverIpv4(url) {
+  return new Promise((resolveRequest, rejectRequest) => {
+    const request = httpsGet(url, {
+      family: 4,
+      headers: { Accept: "application/json" },
+      timeout: 30000,
+    }, (response) => {
+      const chunks = [];
+      response.on("data", (chunk) => chunks.push(chunk));
+      response.on("end", () => {
+        const body = Buffer.concat(chunks).toString("utf8");
+        if (!response.statusCode || response.statusCode < 200 || response.statusCode >= 300) {
+          rejectRequest(new Error(`KMA request failed: ${response.statusCode || "unknown"}`));
+          return;
+        }
+        try {
+          resolveRequest(JSON.parse(body));
+        } catch {
+          rejectRequest(new Error("KMA response was not valid JSON"));
+        }
+      });
+    });
+    request.on("timeout", () => request.destroy(new Error("KMA IPv4 connection timed out after 30 seconds")));
+    request.on("error", rejectRequest);
+  });
+}
 
 async function fetchKma(endpointName, base, nx, ny) {
   const query = new URLSearchParams({
@@ -121,9 +151,7 @@ async function fetchKma(endpointName, base, nx, ny) {
   let lastError;
   for (let attempt = 1; attempt <= 6; attempt += 1) {
     try {
-      const response = await fetch(endpoint, { headers: { Accept: "application/json" } });
-      if (!response.ok) throw new Error(`KMA request failed: ${response.status}`);
-      const payload = await response.json();
+      const payload = await fetchJsonOverIpv4(endpoint);
       const resultCode = payload?.response?.header?.resultCode;
       if (resultCode !== "00") {
         const responseError = new Error(`KMA response failed: ${resultCode || "unknown"} ${payload?.response?.header?.resultMsg || ""}`);

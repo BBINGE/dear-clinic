@@ -30,9 +30,19 @@
           </g>
         </svg>`,
     },
+    "mostly-cloudy": {
+      label: "구름 많음",
+      message: ["서초동 하늘에 구름이 많이 지나고 있어요.", "비 소식이 없다면 평소처럼 편안히 오셔도 좋아요."],
+      icon: `
+        <svg viewBox="0 0 64 64" role="presentation">
+          <g class="weather-icon__cloud" fill="#edf1ee" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">
+            <path d="M17 45h30a9 9 0 0 0 .6-18A15.5 15.5 0 0 0 18.2 24 10.5 10.5 0 0 0 17 45Z" />
+          </g>
+        </svg>`,
+    },
     cloudy: {
       label: "흐림",
-      message: ["서초동에 구름이 많이 머물러 있어요.", "디어한의원에 오실 때 작은 우산 하나 챙겨보세요."],
+      message: ["서초동 하늘이 흐리지만 지금 확인된 비는 없어요.", "디어한의원에 오시는 길은 평소처럼 천천히 살펴주세요."],
       icon: `
         <svg viewBox="0 0 64 64" role="presentation">
           <g class="weather-icon__cloud" fill="#e7ece8" stroke="currentColor" stroke-linejoin="round" stroke-width="2.2">
@@ -143,7 +153,9 @@
     if ([51, 53, 55, 56, 57, 61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
       return [55, 57, 65, 67, 82].includes(code) || precipitation >= 5 ? "heavy-rain" : "rain";
     }
-    return code <= 1 ? "sunny" : "cloudy";
+    if (code <= 1) return "sunny";
+    if (code === 2) return "mostly-cloudy";
+    return "cloudy";
   }
 
   function normalizeOpenMeteo(payload) {
@@ -198,7 +210,11 @@
     section.dataset.weatherStatus = WEATHER[previewState] ? "preview" : "ready";
     date.textContent = todayInKorea();
     label.textContent = displayTemperature === null ? displayLabel : `${displayLabel} · ${displayTemperature}°C`;
-    if (source) source.textContent = `서초동 기준 · ${data?.source || "현재 날씨"}`;
+    const observed = compactKoreaTime(data?.observedAt);
+    const observedLabel = observed
+      ? new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit", hour12: false }).format(observed)
+      : null;
+    if (source) source.textContent = `서초동 기준 · ${data?.source || "현재 날씨"}${observedLabel ? ` · ${observedLabel} 기준` : ""}`;
     const messageLines = Array.isArray(weatherMessage) ? weatherMessage : [weatherMessage];
     message.replaceChildren(...messageLines.map((line) => {
       const span = document.createElement("span");
@@ -209,32 +225,32 @@
   }
 
   async function refreshWeather() {
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 7000);
     try {
-      const liveResponse = await fetch(`${OPEN_METEO_URL}&cache_bust=${Date.now()}`, {
-        signal: controller.signal,
+      const kmaResponse = await fetch(`weather-data.json?t=${Date.now()}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
       });
-      if (!liveResponse.ok) throw new Error(`Live weather request failed: ${liveResponse.status}`);
-      applyWeather(normalizeOpenMeteo(await liveResponse.json()));
+      if (!kmaResponse.ok) throw new Error(`KMA weather request failed: ${kmaResponse.status}`);
+      const kmaData = await kmaResponse.json();
+      if (!isRecentKmaData(kmaData)) throw new Error("KMA weather data is stale");
+      applyWeather(kmaData);
     } catch {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 7000);
       try {
-        const fallbackResponse = await fetch(`weather-data.json?t=${Date.now()}`, {
+        const liveResponse = await fetch(`${OPEN_METEO_URL}&cache_bust=${Date.now()}`, {
+          signal: controller.signal,
           headers: { Accept: "application/json" },
           cache: "no-store",
         });
-        if (!fallbackResponse.ok) throw new Error(`KMA weather request failed: ${fallbackResponse.status}`);
-        const fallbackData = await fallbackResponse.json();
-        if (!isRecentKmaData(fallbackData)) throw new Error("KMA weather data is stale");
-        applyWeather(fallbackData);
+        if (!liveResponse.ok) throw new Error(`Live weather request failed: ${liveResponse.status}`);
+        applyWeather(normalizeOpenMeteo(await liveResponse.json()));
       } catch {
         section.dataset.weatherStatus = "fallback";
         if (source) source.textContent = "서초동 기준 · 날씨 갱신 중";
+      } finally {
+        window.clearTimeout(timeout);
       }
-    } finally {
-      window.clearTimeout(timeout);
     }
   }
 
