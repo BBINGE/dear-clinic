@@ -7052,7 +7052,7 @@ body.director-page {
   }
 
   .quickmenu__btn--top {
-    margin-top: 0;
+    display: none;
   }
 
   .quickmenu__btn--top::before {
