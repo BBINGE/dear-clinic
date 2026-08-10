@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>International Patient Appointments | DEAR Korean Medicine Clinic Seoul</title>
+  <meta name="description" content="Call DEAR Korean Medicine Clinic in Seocho-dong, Seoul to make an appointment. View monthly clinic hours in English, Japanese, and Chinese.">
+  <link rel="canonical" href="https://dearhani.com/international-appointment.html">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="assets/images/dear-favicon.png" type="image/png">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="css/international-appointment.css?v=20260810">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="International Patient Appointments | DEAR">
+  <meta property="og:description" content="Check DEAR's monthly clinic schedule and call the clinic director to make an appointment.">
+  <meta property="og:url" content="https://dearhani.com/international-appointment.html">
+  <meta property="og:image" content="https://dearhani.com/assets/images/waiting-room-1.jpg">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"MedicalClinic","@id":"https://dearhani.com/#clinic","name":"DEAR Korean Medicine Clinic","url":"https://dearhani.com/international-appointment.html","telephone":"+82-2-3486-1777","address":{"@type":"PostalAddress","streetAddress":"3F, Rooms 309–310, 143 Saimdang-ro","addressLocality":"Seocho-gu","addressRegion":"Seoul","addressCountry":"KR"}}
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="en/" aria-label="DEAR home"><img src="assets/images/dear-favicon.png" alt=""> <span>DEAR</span></a>
+    <nav class="languages" aria-label="Language">
+      <button type="button" data-lang="en" class="is-active">EN</button>
+      <button type="button" data-lang="ja">日本語</button>
+      <button type="button" data-lang="zh">中文</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro">
+      <p class="eyebrow">INTERNATIONAL PATIENTS</p>
+      <div data-copy="en"><h1>Call us to make an appointment.</h1><p>Minji Kim, the clinic director, assists international patients by phone. Please check the clinic schedule below and call during clinic hours.</p></div>
+      <div data-copy="ja" hidden><h1>お電話でご予約ください。</h1><p>海外からの患者さまには、院長のキム・ミンジが電話でご案内します。下記の診療日程をご確認のうえ、診療時間内にお電話ください。</p></div>
+      <div data-copy="zh" hidden><h1>请通过电话预约。</h1><p>国际患者可由院长金敏智通过电话协助预约。请查看下方门诊日历，并在门诊时间内来电。</p></div>
+      <a class="call-primary" href="tel:+82234861777" data-track-action="phone" data-track-location="international_appointment_hero"><span id="heroCallText">Call +82 2-3486-1777</span><small id="heroCallNote">Direct phone appointment · KST (UTC+9)</small></a>
+    </section>
+
+    <section class="schedule" aria-labelledby="schedule-title">
+      <div class="schedule-head">
+        <div><p class="eyebrow" id="scheduleEyebrow">CLINIC SCHEDULE</p><h2 id="schedule-title">Monthly calendar</h2></div>
+        <div class="month-nav"><button id="prevMonth" aria-label="Previous month">←</button><strong id="monthLabel"></strong><button id="nextMonth" aria-label="Next month">→</button></div>
+      </div>
+      <div class="calendar" id="calendar" aria-live="polite"></div>
+      <div class="legend"><span><i class="open-dot"></i><b id="legendOpen">Open</b></span><span><i class="closed-dot"></i><b id="legendClosed">Closed</b></span><span><i class="holiday-dot"></i><b id="legendHoliday">Holiday · normal hours</b></span></div>
+      <div class="hours-summary" id="hoursSummary">
+      </div>
+      <p class="notice" id="noticeText"></p>
+    </section>
+
+    <section class="final-cta">
+      <div data-copy="en"><p class="eyebrow">READY TO CALL?</p><h2>We will help you choose an available time.</h2><p>No email form is used. Please call the clinic directly.</p></div>
+      <div data-copy="ja" hidden><p class="eyebrow">ご予約について</p><h2>空いている時間をお電話でご案内します。</h2><p>メールフォームは使用していません。診療所へ直接お電話ください。</p></div>
+      <div data-copy="zh" hidden><p class="eyebrow">预约咨询</p><h2>我们会通过电话协助您选择可预约时间。</h2><p>本页面不使用电子邮件表单，请直接致电诊所。</p></div>
+      <a class="call-secondary" id="footerCallText" href="tel:+82234861777" data-track-action="phone" data-track-location="international_appointment_footer">Call DEAR now</a>
+      <p class="address">3F, Rooms 309–310, 143 Saimdang-ro, Seocho-gu, Seoul</p>
+    </section>
+  </main>
+  <script src="js/international-appointment.js?v=20260810"></script>
+</body>
+</html>

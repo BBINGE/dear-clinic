@@ -119,6 +119,12 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://dearhani.com/international-appointment.html</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dearhani.com/patient-rights.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
