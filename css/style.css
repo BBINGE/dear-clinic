@@ -2290,6 +2290,52 @@
   .column-keypoint,.column-article__content .column-consult,.column-article__content .column-nap { padding:2rem 1.4rem; }
 }
 
+/* 2026-08-11 diet clinical column: match the restrained journal scale. */
+.diet-clinical-column .column-article__header h1 {
+  font-size: clamp(1.75rem, 2.35vw, 2.3rem);
+  line-height: 1.24;
+  letter-spacing: -0.035em;
+}
+
+.diet-clinical-column .column-article__content h2 {
+  font-size: clamp(1.25rem, 1.7vw, 1.55rem);
+  line-height: 1.42;
+  letter-spacing: -0.025em;
+}
+
+.diet-clinical-column .column-article__content .column-related,
+.diet-clinical-column .column-article__content .column-nap {
+  box-sizing: border-box;
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.diet-clinical-column .column-article__content .column-related {
+  margin-bottom: 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.diet-clinical-column .column-related h2 {
+  margin-bottom: 1.25rem;
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+}
+
+.diet-clinical-column .column-article__content .column-nap {
+  margin-top: clamp(2.4rem, 4vw, 3.5rem);
+}
+
+@media (max-width:680px) {
+  .diet-clinical-column .column-article__header h1 {
+    font-size: 1.65rem;
+  }
+
+  .diet-clinical-column .column-article__content h2,
+  .diet-clinical-column .column-related h2 {
+    font-size: 1.3rem;
+  }
+}
+
 /* Integrated clinical journal introduction */
 .columns-hero {
   display: block;
