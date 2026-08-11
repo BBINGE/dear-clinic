@@ -2450,6 +2450,454 @@
   }
 }
 
+/* 2026-08-11 evidence-led diet herbal medicine column. */
+.herbal-evidence-column .column-article__header h1 {
+  font-size: clamp(1.85rem, 2.6vw, 2.55rem);
+  line-height: 1.24;
+  letter-spacing: -0.04em;
+}
+
+.herbal-evidence-column .column-article__content h2 {
+  font-size: clamp(1.25rem, 1.75vw, 1.55rem);
+  line-height: 1.42;
+  letter-spacing: -0.025em;
+}
+
+.herbal-evidence-column .column-article__content h3 {
+  word-break: keep-all;
+}
+
+.herbal-evidence-column .column-article__hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.herbal-evidence-column .column-article__hero figcaption {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: min(420px, calc(100% - 2rem));
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.92);
+  color: #44504c;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.herbal-evidence-column .column-article__hero {
+  position: relative;
+}
+
+.herbal-evidence-column .column-article__content .column-related,
+.herbal-evidence-column .column-article__content .column-nap {
+  box-sizing: border-box;
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.herbal-evidence-column .column-article__content .column-related {
+  margin-bottom: 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.herbal-evidence-column .column-related h2 {
+  margin-bottom: 1.25rem;
+  font-size: clamp(1.25rem, 1.7vw, 1.5rem);
+}
+
+.herbal-evidence-column .column-article__content .column-nap {
+  margin-top: clamp(2.4rem, 4vw, 3.5rem);
+}
+
+.herbal-abstract {
+  display: grid;
+  gap: 0.8rem;
+  margin: 0 0 clamp(3rem, 5vw, 4.5rem);
+  padding: clamp(1.6rem, 3.5vw, 2.5rem);
+  border-top: 3px solid var(--green-deep);
+  border-bottom: 1px solid rgba(36,120,96,0.22);
+  background: #f5f8f6;
+}
+
+.herbal-abstract p {
+  margin: 0 !important;
+  color: var(--teal-pattern);
+  font-size: 0.68rem !important;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.herbal-abstract strong {
+  color: #294f47;
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.herbal-abstract span {
+  color: #56615d;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+
+.assessment-layers {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 1.6rem;
+  border-top: 1px solid rgba(36,120,96,0.22);
+  border-left: 1px solid rgba(36,120,96,0.22);
+}
+
+.assessment-layers > div {
+  min-width: 0;
+  padding: 1.25rem 1rem;
+  border-right: 1px solid rgba(36,120,96,0.22);
+  border-bottom: 1px solid rgba(36,120,96,0.22);
+  background: #fff;
+}
+
+.assessment-layers span,
+.clinical-matrix article > span {
+  color: var(--green-deep);
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.assessment-layers h3 {
+  margin: 0.75rem 0 0.45rem;
+  color: #2d3733;
+  font-size: 0.95rem;
+}
+
+.assessment-layers p {
+  margin: 0 !important;
+  color: #68716d;
+  font-size: 0.75rem !important;
+  line-height: 1.65 !important;
+}
+
+.evidence-note {
+  margin-top: 1.2rem !important;
+  padding: 1rem 1.15rem;
+  border-left: 2px solid var(--green-deep);
+  background: #f7f8f6;
+  color: #59615e;
+  font-size: 0.84rem !important;
+  line-height: 1.7 !important;
+}
+
+.evidence-note b {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--green-deep);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+
+.trajectory-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1.6rem;
+  background: rgba(36,120,96,0.22);
+}
+
+.trajectory-strip > div {
+  min-width: 0;
+  padding: 1.25rem 1rem;
+  background: #f7f9f7;
+}
+
+.trajectory-strip small,
+.evidence-translation small,
+.safety-dashboard section > span {
+  display: block;
+  color: var(--teal-pattern);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.trajectory-strip strong {
+  display: block;
+  margin: 0.7rem 0 0.35rem;
+  color: #2d3733;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+
+.trajectory-strip span {
+  color: #68716d;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.red-flag-line,
+.urgent-note {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid rgba(36,120,96,0.2);
+  background: #fff;
+}
+
+.red-flag-line b,
+.urgent-note b {
+  color: var(--green-deep);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.red-flag-line span,
+.urgent-note span {
+  color: #5c6561;
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+.adaptation-loop {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 1.7rem 0;
+}
+
+.adaptation-loop > div {
+  min-width: 0;
+  min-height: 104px;
+  padding: 1rem;
+  border: 1px solid rgba(36,120,96,0.22);
+  background: #f7f9f7;
+}
+
+.adaptation-loop div span {
+  display: block;
+  color: var(--green-deep);
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.adaptation-loop strong {
+  display: block;
+  margin-top: 0.65rem;
+  color: #35413d;
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.adaptation-loop i {
+  color: var(--green-deep);
+  font-style: normal;
+}
+
+.clinical-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1.6rem;
+  background: rgba(36,120,96,0.22);
+}
+
+.clinical-matrix article {
+  min-width: 0;
+  padding: 1.35rem;
+  background: #fff;
+}
+
+.clinical-matrix h3 {
+  margin: 0.65rem 0 0.5rem;
+  color: #30403a;
+  font-size: 0.95rem;
+}
+
+.clinical-matrix p {
+  margin: 0 !important;
+  color: #646c68;
+  font-size: 0.8rem !important;
+  line-height: 1.7 !important;
+}
+
+.evidence-translation {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1.6rem;
+  background: rgba(36,120,96,0.22);
+}
+
+.evidence-translation > div {
+  min-width: 0;
+  padding: 1.35rem;
+  background: #f7f9f7;
+}
+
+.evidence-translation strong {
+  display: block;
+  min-height: 3.8em;
+  margin: 0.75rem 0;
+  color: #30403a;
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.evidence-translation p {
+  margin: 0 !important;
+  color: #67706c;
+  font-size: 0.76rem !important;
+  line-height: 1.65 !important;
+}
+
+.safety-dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1.6rem;
+  background: rgba(36,120,96,0.22);
+}
+
+.safety-dashboard section {
+  min-width: 0;
+  margin: 0 !important;
+  padding: 1.4rem;
+  background: #fff;
+}
+
+.safety-dashboard section:last-child {
+  background: #f3f7f5;
+}
+
+.safety-dashboard h3 {
+  margin: 0.7rem 0 0.9rem;
+  color: #30403a;
+  font-size: 1rem;
+}
+
+.safety-dashboard ul {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.safety-dashboard li {
+  padding: 0.55rem 0;
+  border-top: 1px solid rgba(36,120,96,0.14);
+  color: #5f6864;
+  font-size: 0.75rem !important;
+  line-height: 1.55 !important;
+}
+
+.urgent-note {
+  border-color: rgba(60,96,90,0.32);
+  background: #3c605a;
+}
+
+.urgent-note b,
+.urgent-note span {
+  color: #fff;
+}
+
+.followup-table {
+  margin: 1.6rem 0;
+  border-top: 2px solid var(--green-deep);
+}
+
+.followup-table > div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  border-bottom: 1px solid rgba(36,120,96,0.18);
+}
+
+.followup-table b,
+.followup-table span {
+  padding: 0.9rem 1rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.followup-table b {
+  background: #f3f7f5;
+  color: var(--green-deep);
+}
+
+.followup-table span {
+  color: #59625e;
+}
+
+.herbal-evidence-column .column-sources ol {
+  padding-left: 1.25rem;
+}
+
+.herbal-evidence-column .column-sources li {
+  margin: 0.65rem 0;
+  color: #5d6561;
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+@media (max-width:760px) {
+  .assessment-layers,
+  .trajectory-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .adaptation-loop {
+    grid-template-columns: 1fr;
+  }
+
+  .adaptation-loop i {
+    transform: rotate(90deg);
+    text-align: center;
+  }
+
+  .evidence-translation,
+  .safety-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .evidence-translation strong {
+    min-height: 0;
+  }
+}
+
+@media (max-width:680px) {
+  .herbal-evidence-column .column-article__header h1 {
+    font-size: 1.7rem;
+  }
+
+  .herbal-evidence-column .column-article__content h2,
+  .herbal-evidence-column .column-related h2 {
+    font-size: 1.3rem;
+  }
+
+  .herbal-evidence-column .column-article__hero figcaption {
+    display: none;
+  }
+
+  .clinical-matrix,
+  .red-flag-line,
+  .urgent-note {
+    grid-template-columns: 1fr;
+  }
+
+  .followup-table > div {
+    grid-template-columns: 86px 1fr;
+  }
+
+  .followup-table b,
+  .followup-table span {
+    padding: 0.8rem 0.7rem;
+  }
+}
+
 /* Integrated clinical journal introduction */
 .columns-hero {
   display: block;
