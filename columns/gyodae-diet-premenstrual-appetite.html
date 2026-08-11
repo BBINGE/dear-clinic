@@ -32,8 +32,18 @@
     .cycle-opening p:first-child{margin-top:0}
     .cycle-toon{width:min(1120px,calc(100vw - 40px));margin:3rem 50% 4rem;transform:translateX(-50%)}
     .cycle-toon__cuts{display:grid;gap:8px}
-    .cycle-toon figure{margin:0;border:1px solid rgba(36,120,96,.18);background:#faf8f2}
+    .cycle-toon figure{position:relative;overflow:hidden;margin:0;border:1px solid rgba(36,120,96,.18);background:#faf8f2}
     .cycle-toon img{display:block;width:100%;height:auto}
+    .toon-copy{position:absolute;z-index:1;color:#171916;font-family:Pretendard,"Noto Sans KR",sans-serif;font-weight:600;line-height:1.25;white-space:nowrap}
+    .toon-copy--caption{top:4.2%;left:50%;min-width:52%;padding:.4em 1.5em;transform:translateX(-50%);background:#f8f4ec;box-shadow:0 0 22px 20px #f8f4ec;font-size:clamp(11px,2.15vw,31px);font-weight:500;text-align:center}
+    .toon-copy--note{padding:.18em .5em;background:#f8f4ec;box-shadow:0 0 12px 10px #f8f4ec;font-size:clamp(8px,1.45vw,21px)}
+    .toon-copy--bubble{padding:.25em .65em;background:#f8f4ec;box-shadow:0 0 14px 12px #f8f4ec;font-size:clamp(8px,1.55vw,22px)}
+    .toon-05 .toon-note-weight{top:25%;left:63%}.toon-05 .toon-note-huh{top:55%;left:44%}.toon-05 .toon-note-really{top:73%;left:67%}
+    .toon-06 .toon-appetite{top:26%;left:19%}.toon-06 .toon-bloat{top:55%;left:21%}.toon-06 .toon-aha{top:41%;left:42%}
+    .toon-06 .toon-chart-title{top:22%;left:58%;width:19%;font-size:clamp(7px,1.15vw,17px);text-align:center}
+    .toon-06 .toon-chart-one,.toon-06 .toon-chart-two{left:58%;width:24%;font-size:clamp(6px,.9vw,13px)}.toon-06 .toon-chart-one{top:44%}.toon-06 .toon-chart-two{top:50%}
+    .toon-06 .toon-axis{top:38%;padding:.05em .18em;font-size:clamp(5px,.72vw,10px)}.toon-06 .toon-axis-1{left:59%}.toon-06 .toon-axis-2{left:65%}.toon-06 .toon-axis-3{left:71%}.toon-06 .toon-axis-4{left:77%}
+    .toon-06 .toon-sleep{top:25%;left:84%}.toon-06 .toon-condition{top:55%;left:83%}
     .cycle-toon>p{margin:1rem auto 0;max-width:820px;color:#6b6d68;font-size:.76rem;line-height:1.7;text-align:center}
     .cycle-figure{width:min(960px,calc(100vw - 40px));margin:3rem 50%;padding:clamp(1.5rem,4vw,3rem);transform:translateX(-50%);border-top:2px solid #273c36;border-bottom:1px solid #d9dfdb;background:#fff}
     .cycle-figure figcaption{display:flex;justify-content:space-between;gap:1.5rem;margin-bottom:2rem}
@@ -99,12 +109,12 @@
 
       <div class="cycle-toon" aria-label="생리 전 식욕과 체중 변화를 그린 웹툰 6컷">
         <div class="cycle-toon__cuts">
-          <figure><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-01.webp" alt="저녁 식사를 마치고 오늘은 잘 먹고 끝냈다고 생각하는 사슴" width="1800" height="693"></figure>
-          <figure><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-02.webp" alt="배가 고프지 않은데도 음식이 생각나는 사슴" width="1800" height="693" loading="lazy"></figure>
-          <figure><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-03.webp" alt="냉장고 안의 간식이 자꾸 생각나는 사슴" width="1800" height="693" loading="lazy"></figure>
-          <figure><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-04.webp" alt="한 입만 먹으려다 여러 간식을 꺼낸 사슴" width="1800" height="693" loading="lazy"></figure>
-          <figure><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-05.webp" alt="다음 날 체중계의 0.8kg 증가를 보고 놀란 사슴" width="1800" height="691" loading="lazy"></figure>
-          <figure><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-06.webp" alt="식욕과 붓기, 수면과 컨디션의 주기적 변화를 진료실에서 설명하는 연출 장면" width="1800" height="693" loading="lazy"></figure>
+          <figure class="toon-01"><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-01.webp" alt="저녁 식사를 마친 사슴" width="1800" height="693"><span class="toon-copy toon-copy--caption">오늘은 잘 먹고 끝냈다.</span></figure>
+          <figure class="toon-02"><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-02.webp" alt="배가 고프지 않은데도 음식이 생각나는 사슴" width="1800" height="693" loading="lazy"><span class="toon-copy toon-copy--caption">배가 고픈 건 아닌데…</span></figure>
+          <figure class="toon-03"><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-03.webp" alt="냉장고 안의 간식이 자꾸 생각나는 사슴" width="1800" height="693" loading="lazy"><span class="toon-copy toon-copy--caption">자꾸 뭐가 생각난다.</span></figure>
+          <figure class="toon-04"><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-04.webp" alt="여러 간식을 꺼내 먹는 사슴" width="1800" height="693" loading="lazy"><span class="toon-copy toon-copy--caption">한 입만 하려던 게…</span></figure>
+          <figure class="toon-05"><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-05.webp" alt="다음 날 체중계의 0.8kg 증가를 보고 놀란 사슴" width="1800" height="691" loading="lazy"><span class="toon-copy toon-copy--caption">어제 하루인데?</span><span class="toon-copy toon-copy--note toon-note-weight">+0.8kg?</span><span class="toon-copy toon-copy--note toon-note-huh">엥?</span><span class="toon-copy toon-copy--note toon-note-really">진짜…?</span></figure>
+          <figure class="toon-06"><img src="../assets/images/columns/gyodae-diet-premenstrual-appetite/toon-06.webp" alt="월경주기에 따른 몸의 변화를 진료실에서 설명하는 연출 장면" width="1800" height="693" loading="lazy"><span class="toon-copy toon-copy--caption">그 며칠의 몸은, 평소와 조금 다르게 움직입니다.</span><span class="toon-copy toon-copy--bubble toon-appetite">식욕</span><span class="toon-copy toon-copy--bubble toon-bloat">붓기</span><span class="toon-copy toon-copy--note toon-aha">아하!</span><span class="toon-copy toon-copy--note toon-chart-title">여성의 주기적 변화</span><span class="toon-copy toon-copy--note toon-axis toon-axis-1">저</span><span class="toon-copy toon-copy--note toon-axis toon-axis-2">중</span><span class="toon-copy toon-copy--note toon-axis toon-axis-3">고</span><span class="toon-copy toon-copy--note toon-axis toon-axis-4">저</span><span class="toon-copy toon-copy--note toon-chart-one">✓ 몸은 매일 다르게 반응해요</span><span class="toon-copy toon-copy--note toon-chart-two">✓ 나를 이해하면, 더 편안해져요</span><span class="toon-copy toon-copy--bubble toon-sleep">수면</span><span class="toon-copy toon-copy--bubble toon-condition">컨디션</span></figure>
         </div>
         <p>위 웹툰은 이해를 돕기 위해 구성한 상황입니다. 특정 환자의 진료기록이나 치료 결과를 재현한 자료가 아닙니다.</p>
       </div>
