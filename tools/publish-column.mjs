@@ -668,7 +668,7 @@ ${previewMeta}  <title>${escapeHtml(content.title)}</title>
   <meta property="og:image" content="${imageUrl}">
   <meta property="og:url" content="${articleUrl}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260811-7">
+  <link rel="stylesheet" href="../css/style.css?v=20260811-8">
   <script type="application/ld+json">${schema}</script>
 </head>
 <body class="column-article-body${preview ? " is-preview" : ""}">
