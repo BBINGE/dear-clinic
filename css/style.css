@@ -7840,8 +7840,7 @@ body.director-page {
 .depression-spectrum figcaption span,
 .depression-care-map > section > p,
 .evidence-boundary > span,
-.depression-followup span,
-.depression-risk__grid section > span {
+.depression-followup span {
   display: block;
   margin: 0 0 0.7rem;
   color: var(--teal-dark);
@@ -7958,26 +7957,6 @@ body.director-page {
 .depression-differential h3 { margin: 0.5rem 0; color: var(--green-deep); font-size: 0.96rem; }
 .depression-differential p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.65; }
 
-.depression-risk {
-  margin: 5rem 0;
-  padding: clamp(1.6rem, 4vw, 2.8rem);
-  border-radius: 18px;
-  background: #3e625b;
-  color: #fff;
-}
-
-.depression-risk h2 { color: #fff !important; }
-.depression-risk > p { color: rgba(255,255,255,.76); }
-.depression-risk__grid { display: grid; grid-template-columns: 1.45fr .75fr; gap: 1.5rem; margin-top: 2rem; }
-.depression-risk__grid section { padding: 1.5rem; border: 1px solid rgba(255,255,255,.22); border-radius: 12px; }
-.depression-risk__grid section > span { color: #f0aa95; }
-.depression-risk__grid h3 { margin-bottom: 1rem; font-size: 1rem; }
-.depression-risk__grid ul { display: grid; gap: 0.65rem; padding-left: 1rem; color: rgba(255,255,255,.78); font-size: 0.8rem; line-height: 1.6; }
-.depression-risk__grid aside { align-self: stretch; padding: 1.5rem; border-radius: 12px; background: #f4eee9; color: var(--text-primary); }
-.depression-risk__grid aside strong { color: #9b4c3b; }
-.depression-risk__grid aside p { margin-top: 0.9rem; font-size: 0.82rem; line-height: 1.7; }
-.depression-risk__grid aside a { color: #8f3e2e; font-weight: 700; text-decoration: underline; }
-
 .depression-care-map {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -8037,7 +8016,6 @@ body.director-page {
   .depression-timeline { grid-template-columns: 1fr; gap: 0.65rem; }
   .depression-timeline i { padding: 0; transform: rotate(90deg); justify-self: center; }
   .depression-differential,
-  .depression-risk__grid,
   .depression-care-map { grid-template-columns: 1fr; }
   .depression-care-map h3 { min-height: 0; }
 }
