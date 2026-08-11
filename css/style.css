@@ -2325,6 +2325,103 @@
   margin-top: clamp(2.4rem, 4vw, 3.5rem);
 }
 
+.diet-clinical-column .clinical-priority {
+  overflow: hidden;
+  margin: clamp(2.5rem, 4vw, 3.5rem) 0;
+  border: 1px solid rgba(36, 120, 96, 0.24);
+  border-top: 3px solid var(--green-deep);
+  border-radius: 14px;
+  background: #f7f9f7;
+  color: var(--text-secondary);
+}
+
+.diet-clinical-column .clinical-priority header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.5rem;
+  border-bottom: 1px solid rgba(36, 120, 96, 0.16);
+}
+
+.diet-clinical-column .clinical-priority header p,
+.diet-clinical-column .clinical-priority header span {
+  margin: 0;
+  color: var(--teal-pattern);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.diet-clinical-column .clinical-priority header span {
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(36, 120, 96, 0.09);
+  letter-spacing: 0;
+}
+
+.diet-clinical-column .clinical-priority h3 {
+  margin: 0;
+  padding: clamp(1.5rem, 3vw, 2rem) 1.5rem 1.25rem;
+  color: #294f47;
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.025em;
+}
+
+.diet-clinical-column .clinical-priority ul {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0 1.5rem;
+  padding: 0;
+  border-top: 1px solid rgba(36, 120, 96, 0.18);
+  border-left: 1px solid rgba(36, 120, 96, 0.18);
+  list-style: none;
+}
+
+.diet-clinical-column .clinical-priority li {
+  min-width: 0;
+  padding: 1rem 0.8rem;
+  border-right: 1px solid rgba(36, 120, 96, 0.18);
+  border-bottom: 1px solid rgba(36, 120, 96, 0.18);
+  background: #fff;
+}
+
+.diet-clinical-column .clinical-priority li b {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: var(--green-deep);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+}
+
+.diet-clinical-column .clinical-priority li span {
+  display: block;
+  color: #333a37;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+.diet-clinical-column .clinical-priority__decision {
+  margin: 0;
+  padding: 1.25rem 1.5rem 1.4rem;
+  color: #4d5753;
+  font-size: 0.88rem !important;
+  line-height: 1.7 !important;
+}
+
+.diet-clinical-column .clinical-priority__decision span {
+  display: inline-block;
+  margin-right: 0.7rem;
+  color: var(--green-deep);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
 @media (max-width:680px) {
   .diet-clinical-column .column-article__header h1 {
     font-size: 1.65rem;
@@ -2333,6 +2430,23 @@
   .diet-clinical-column .column-article__content h2,
   .diet-clinical-column .column-related h2 {
     font-size: 1.3rem;
+  }
+
+  .diet-clinical-column .clinical-priority header,
+  .diet-clinical-column .clinical-priority h3,
+  .diet-clinical-column .clinical-priority__decision {
+    padding-right: 1.15rem;
+    padding-left: 1.15rem;
+  }
+
+  .diet-clinical-column .clinical-priority ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-right: 1.15rem;
+    margin-left: 1.15rem;
+  }
+
+  .diet-clinical-column .clinical-priority li:last-child {
+    grid-column: 1 / -1;
   }
 }
 
