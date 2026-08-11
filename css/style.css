@@ -7791,6 +7791,257 @@ body.director-page {
   font-size: 0.9rem;
 }
 
+/* Depression clinical column — assessment, safety and matched-care visuals */
+.depression-clinical-column .column-article__header h1 {
+  max-width: 780px;
+  font-size: clamp(2rem, 3.15vw, 2.45rem);
+  line-height: 1.28;
+  letter-spacing: -0.045em;
+}
+
+.depression-clinical-column .column-article__lead {
+  max-width: 760px;
+}
+
+.depression-clinical-column .column-article__content h2,
+.depression-clinical-column .column-related h2 {
+  font-size: clamp(1.3rem, 2vw, 1.58rem);
+  line-height: 1.45;
+  letter-spacing: -0.035em;
+}
+
+.depression-clinical-column .column-article__hero img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.depression-clinical-column .column-article__hero figcaption {
+  margin-top: 0.75rem;
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.depression-clinical-column .column-article__content .column-related,
+.depression-clinical-column .column-article__content .column-nap {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.depression-abstract {
+  margin: 0 0 4.5rem;
+  padding: 2rem;
+  border-top: 3px solid var(--teal-dark);
+  background: #f2f5f3;
+}
+
+.depression-abstract p,
+.depression-spectrum figcaption span,
+.depression-care-map > section > p,
+.evidence-boundary > span,
+.depression-followup span,
+.depression-risk__grid section > span {
+  display: block;
+  margin: 0 0 0.7rem;
+  color: var(--teal-dark);
+  font-family: var(--font-en);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+.depression-abstract strong {
+  display: block;
+  color: var(--green-deep);
+  font-size: 1.2rem;
+  line-height: 1.7;
+}
+
+.depression-abstract span {
+  display: block;
+  margin-top: 0.85rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.depression-spectrum {
+  margin: 3.25rem 0 5rem;
+  padding: 1.6rem;
+  border: 1px solid rgba(34, 105, 93, 0.22);
+  border-radius: 16px;
+  background: #fff;
+}
+
+.depression-spectrum figcaption strong {
+  display: block;
+  color: var(--green-deep);
+  font-size: 1.08rem;
+}
+
+.depression-spectrum > div {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 1.4rem;
+  border-block: 1px solid rgba(34, 105, 93, 0.16);
+}
+
+.depression-spectrum section {
+  min-width: 0;
+  padding: 1.3rem 1rem;
+}
+
+.depression-spectrum section + section {
+  border-left: 1px solid rgba(34, 105, 93, 0.16);
+}
+
+.depression-spectrum b {
+  color: #d0816d;
+  font-size: 0.68rem;
+}
+
+.depression-spectrum h3,
+.depression-followup strong {
+  margin: 0.45rem 0 0.35rem;
+  color: var(--green-deep);
+  font-size: 0.92rem;
+}
+
+.depression-spectrum section p,
+.depression-spectrum small {
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  line-height: 1.6;
+}
+
+.depression-spectrum small {
+  display: block;
+  margin-top: 1rem;
+}
+
+.depression-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr) auto);
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  margin: 3rem 0 5rem;
+  padding: 1.6rem;
+  border-radius: 16px;
+  background: var(--green-deep);
+  color: #fff;
+}
+
+.depression-timeline div { min-width: 0; }
+.depression-timeline span { color: #a9d1c4; font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; }
+.depression-timeline strong { display: block; margin: 0.45rem 0; font-size: 0.88rem; }
+.depression-timeline p { color: rgba(255,255,255,.68); font-size: 0.69rem; line-height: 1.55; }
+.depression-timeline i { padding: 0 0.45rem; color: #d89a87; font-style: normal; }
+
+.depression-differential {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 2rem 0;
+  overflow: hidden;
+  border: 1px solid rgba(34, 105, 93, 0.18);
+  border-radius: 16px;
+  background: rgba(34, 105, 93, 0.18);
+}
+
+.depression-differential article {
+  padding: 1.45rem;
+  background: #fff;
+}
+
+.depression-differential span { color: #d0816d; font-size: 0.68rem; font-weight: 700; }
+.depression-differential h3 { margin: 0.5rem 0; color: var(--green-deep); font-size: 0.96rem; }
+.depression-differential p { color: var(--text-secondary); font-size: 0.8rem; line-height: 1.65; }
+
+.depression-risk {
+  margin: 5rem 0;
+  padding: clamp(1.6rem, 4vw, 2.8rem);
+  border-radius: 18px;
+  background: #3e625b;
+  color: #fff;
+}
+
+.depression-risk h2 { color: #fff !important; }
+.depression-risk > p { color: rgba(255,255,255,.76); }
+.depression-risk__grid { display: grid; grid-template-columns: 1.45fr .75fr; gap: 1.5rem; margin-top: 2rem; }
+.depression-risk__grid section { padding: 1.5rem; border: 1px solid rgba(255,255,255,.22); border-radius: 12px; }
+.depression-risk__grid section > span { color: #f0aa95; }
+.depression-risk__grid h3 { margin-bottom: 1rem; font-size: 1rem; }
+.depression-risk__grid ul { display: grid; gap: 0.65rem; padding-left: 1rem; color: rgba(255,255,255,.78); font-size: 0.8rem; line-height: 1.6; }
+.depression-risk__grid aside { align-self: stretch; padding: 1.5rem; border-radius: 12px; background: #f4eee9; color: var(--text-primary); }
+.depression-risk__grid aside strong { color: #9b4c3b; }
+.depression-risk__grid aside p { margin-top: 0.9rem; font-size: 0.82rem; line-height: 1.7; }
+.depression-risk__grid aside a { color: #8f3e2e; font-weight: 700; text-decoration: underline; }
+
+.depression-care-map {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 2rem 0 4.5rem;
+}
+
+.depression-care-map section {
+  padding: 1.5rem;
+  border-top: 3px solid #6d9a8f;
+  background: #f3f5f3;
+}
+
+.depression-care-map h3 { min-height: 3.2em; color: var(--green-deep); font-size: 0.94rem; line-height: 1.55; }
+.depression-care-map ul { display: grid; gap: 0.65rem; margin-top: 1.2rem; padding-left: 1rem; color: var(--text-secondary); font-size: 0.76rem; line-height: 1.6; }
+
+.evidence-boundary {
+  margin: 2rem 0 4.5rem;
+  padding: 1.7rem;
+  border-left: 4px solid #d0816d;
+  background: #f7f3ef;
+}
+
+.evidence-boundary strong { display: block; color: var(--green-deep); line-height: 1.7; }
+.evidence-boundary p { margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.82rem; }
+
+.depression-followup {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 2rem 0;
+  border-block: 1px solid rgba(34,105,93,.2);
+}
+
+.depression-followup > div { padding: 1.4rem 1rem; }
+.depression-followup > div + div { border-left: 1px solid rgba(34,105,93,.16); }
+.depression-followup span { margin-bottom: 0.35rem; font-size: 0.6rem; }
+.depression-followup strong { display: block; }
+.depression-followup p { color: var(--text-secondary); font-size: 0.72rem; line-height: 1.55; }
+
+.depression-clinical-column .column-sources ol { margin-top: 1rem; padding-left: 1.2rem; }
+.depression-clinical-column .column-sources li { margin-bottom: 0.55rem; font-size: 0.75rem; line-height: 1.55; }
+
+@media (max-width: 760px) {
+  .depression-clinical-column .column-article__header h1 { font-size: 1.7rem; }
+  .depression-clinical-column .column-article__content h2,
+  .depression-clinical-column .column-related h2 { font-size: 1.3rem; }
+  .depression-abstract { margin-bottom: 3.5rem; padding: 1.4rem; }
+  .depression-abstract strong { font-size: 1.05rem; }
+  .depression-spectrum > div,
+  .depression-followup { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .depression-spectrum section:nth-child(3),
+  .depression-spectrum section:nth-child(4),
+  .depression-followup > div:nth-child(3),
+  .depression-followup > div:nth-child(4) { border-top: 1px solid rgba(34,105,93,.16); }
+  .depression-spectrum section:nth-child(3),
+  .depression-followup > div:nth-child(3) { border-left: 0; }
+  .depression-timeline { grid-template-columns: 1fr; gap: 0.65rem; }
+  .depression-timeline i { padding: 0; transform: rotate(90deg); justify-self: center; }
+  .depression-differential,
+  .depression-risk__grid,
+  .depression-care-map { grid-template-columns: 1fr; }
+  .depression-care-map h3 { min-height: 0; }
+}
+
 @media (max-width: 600px) {
   .error-page__main {
     padding-top: 8rem;
