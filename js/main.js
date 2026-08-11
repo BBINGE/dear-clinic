@@ -460,3 +460,100 @@ if (columnTocLinks.length) {
     window.addEventListener("resize", requestColumnTocUpdate);
   }
 }
+
+// Column reading companion: estimate the article length and count only active,
+// visible reading time after the reader begins to scroll.
+const columnArticleBody = document.querySelector(".column-article-body");
+
+if (columnArticleBody) {
+  const articleRoot = document.querySelector(".column-article__content, .dear-journal__article, article");
+  const tocRoot = document.querySelector(".column-toc, .dear-journal__toc, nav[aria-label*='목차'], aside[aria-label*='목차']");
+  const forecastHost = document.querySelector(".column-article__header, .dear-journal__hero-grid > div:first-child, .dear-fd__hero-copy, main header");
+
+  if (articleRoot && forecastHost) {
+    const readableNodes = [...articleRoot.querySelectorAll("h2, h3, p, li, figcaption")]
+      .filter((node) => !node.closest(".column-related, .column-nap, .column-consult, .dear-journal__clinic, footer"));
+    const readableCharacters = readableNodes
+      .map((node) => node.textContent.replace(/\s+/g, "").length)
+      .reduce((total, length) => total + length, 0);
+    const estimatedSeconds = Math.max(45, Math.round(readableCharacters / 8.2 / 5) * 5);
+
+    const formatDuration = (seconds) => {
+      const minutes = Math.floor(seconds / 60);
+      const remainder = seconds % 60;
+      if (!minutes) return `${remainder}초`;
+      return remainder ? `${minutes}분 ${remainder}초` : `${minutes}분`;
+    };
+
+    const forecast = document.createElement("aside");
+    forecast.className = "column-reading-forecast";
+    forecast.setAttribute("aria-label", "예상 완독 시간");
+    forecast.innerHTML = `
+      <span class="column-reading-forecast__eye" aria-hidden="true"><i></i></span>
+      <span><small>ESTIMATED READING</small><strong>이 글의 예상 완독 시간은 ${formatDuration(estimatedSeconds)}입니다.</strong><em>본문 분량을 일반적인 읽기 흐름으로 계산했어요.</em></span>
+    `;
+    forecastHost.append(forecast);
+
+    const clockMarkup = `
+      <small>YOUR READING TIME</small>
+      <strong data-reading-time>00:00</strong>
+      <p data-reading-message>스크롤을 내리면<br>독서 시간이 시작됩니다.</p>
+      <span>— 디어한의원</span>
+    `;
+
+    let desktopClock = null;
+    if (tocRoot) {
+      desktopClock = document.createElement("div");
+      desktopClock.className = "column-reading-clock";
+      desktopClock.innerHTML = clockMarkup;
+      tocRoot.append(desktopClock);
+    }
+
+    const mobileClock = document.createElement("div");
+    mobileClock.className = "column-reading-dock";
+    mobileClock.setAttribute("aria-label", "현재 독서 시간");
+    mobileClock.innerHTML = `<span>READING</span><strong data-reading-time>00:00</strong><p data-reading-message>스크롤하면 시작됩니다</p>`;
+    document.body.append(mobileClock);
+
+    const clocks = [desktopClock, mobileClock].filter(Boolean);
+    let readingSeconds = 0;
+    let readingStarted = false;
+
+    const updateReadingClocks = () => {
+      const clockValue = `${String(Math.floor(readingSeconds / 60)).padStart(2, "0")}:${String(readingSeconds % 60).padStart(2, "0")}`;
+      const duration = formatDuration(readingSeconds);
+      clocks.forEach((clock) => {
+        const time = clock.querySelector("[data-reading-time]");
+        const message = clock.querySelector("[data-reading-message]");
+        if (time) time.textContent = clockValue;
+        if (!message) return;
+        if (!readingStarted) {
+          message.innerHTML = clock === mobileClock ? "스크롤하면 시작됩니다" : "스크롤을 내리면<br>독서 시간이 시작됩니다.";
+        } else if (readingSeconds >= estimatedSeconds) {
+          message.innerHTML = clock === mobileClock
+            ? "한 편을 함께해 주셔서 감사합니다"
+            : "한 편을 끝까지 함께해 주셔서<br>감사합니다.";
+        } else {
+          message.innerHTML = clock === mobileClock
+            ? `지금 ${duration} 동안 읽고 계십니다`
+            : `지금 ${duration} 동안<br>이 글을 읽고 계십니다. 감사합니다.`;
+        }
+      });
+    };
+
+    const beginReading = () => {
+      if (readingStarted || window.scrollY < 80) return;
+      readingStarted = true;
+      columnArticleBody.classList.add("is-reading");
+      updateReadingClocks();
+    };
+
+    updateReadingClocks();
+    window.addEventListener("scroll", beginReading, { passive: true });
+    window.setInterval(() => {
+      if (!readingStarted || document.hidden || !document.hasFocus()) return;
+      readingSeconds += 1;
+      updateReadingClocks();
+    }, 1000);
+  }
+}

@@ -2290,6 +2290,364 @@
   .column-keypoint,.column-article__content .column-consult,.column-article__content .column-nap { padding:2rem 1.4rem; }
 }
 
+/* Editorial columns index: magazine hierarchy with a calm social-feed rhythm. */
+.columns-page-body .columns-index {
+  background:
+    linear-gradient(rgba(36, 120, 96, 0.065) 1px, transparent 1px) 0 0 / 100% 72px,
+    #fbfcf9;
+}
+
+.columns-page-body .column-featured {
+  position: relative;
+  grid-template-columns: minmax(0, 1.42fr) minmax(320px, 0.58fr);
+  border: 1px solid rgba(36, 120, 96, 0.16);
+  border-radius: 4px;
+  background: #f1f3ed;
+  box-shadow: 0 24px 70px rgba(35, 61, 54, 0.07);
+}
+
+.columns-page-body .column-featured::before {
+  position: absolute;
+  z-index: 2;
+  top: 22px;
+  left: 22px;
+  padding: 0.56rem 0.72rem;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--green-deep);
+  content: "COVER STORY  ·  01";
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  backdrop-filter: blur(10px);
+}
+
+.columns-page-body .column-featured__content {
+  border-left: 1px solid rgba(36, 120, 96, 0.14);
+}
+
+.columns-page-body .columns-toolbar {
+  position: relative;
+  margin-top: clamp(5rem, 9vw, 8rem);
+  border-top: 1px solid rgba(36, 120, 96, 0.22);
+  border-bottom: 0;
+  padding-top: 1.1rem;
+}
+
+.columns-page-body .columns-toolbar__label::after {
+  margin-left: 0.7rem;
+  color: rgba(85, 85, 80, 0.5);
+  content: "A CURATED FEED FROM DEAR";
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.columns-page-body .columns-grid {
+  counter-reset: journal-card;
+  gap: clamp(1.35rem, 2.5vw, 2rem);
+}
+
+.columns-page-body .column-card {
+  counter-increment: journal-card;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid rgba(36, 120, 96, 0.16);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.93);
+  box-shadow: 0 12px 35px rgba(35, 61, 54, 0.035);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.columns-page-body .column-card::before {
+  display: flex;
+  align-items: center;
+  min-height: 47px;
+  padding: 0 1.05rem;
+  border-bottom: 1px solid rgba(36, 120, 96, 0.12);
+  color: var(--green-deep);
+  content: "DEAR JOURNAL  ·  " counter(journal-card, decimal-leading-zero);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.columns-page-body .column-card::after {
+  margin-top: auto;
+  padding: 1rem 1.05rem;
+  border-top: 1px solid rgba(36, 120, 96, 0.1);
+  color: var(--green-deep);
+  content: "READ COLUMN  ↗";
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.columns-page-body .column-card:hover,
+.columns-page-body .column-card:focus-visible {
+  border-color: rgba(36, 120, 96, 0.45);
+  box-shadow: 0 22px 50px rgba(35, 61, 54, 0.09);
+  transform: translateY(-3px);
+}
+
+.columns-page-body .column-card__image {
+  order: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.columns-page-body .column-card > .column-meta,
+.columns-page-body .column-card > h2,
+.columns-page-body .column-card > p:not(.column-meta),
+.columns-page-body .column-card > time {
+  margin-right: 1.05rem;
+  margin-left: 1.05rem;
+}
+
+.columns-page-body .column-card > .column-meta {
+  margin-top: 1.15rem;
+}
+
+.columns-page-body .column-card > h2 {
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: clamp(1.18rem, 1.65vw, 1.45rem);
+}
+
+.columns-page-body .column-card > p:not(.column-meta) {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: rgba(85, 85, 80, 0.84);
+  font-size: 0.94rem;
+}
+
+.columns-page-body .column-card > time {
+  margin-top: 1rem;
+  margin-bottom: 1.15rem;
+}
+
+/* Reading forecast and active-time clock. They enhance, but never replace, article text. */
+.column-reading-forecast {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.95rem;
+  max-width: 620px;
+  margin-top: 1.65rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(36, 120, 96, 0.19);
+  border-radius: 12px;
+  background: rgba(247, 248, 245, 0.86);
+  color: var(--green-deep);
+}
+
+.column-reading-forecast__eye {
+  display: grid;
+  position: relative;
+  width: 48px;
+  height: 34px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(36, 120, 96, 0.35);
+  border-radius: 50% / 62%;
+  background: #fff;
+}
+
+.column-reading-forecast__eye::before {
+  width: 12px;
+  height: 12px;
+  border: 5px solid rgba(36, 120, 96, 0.18);
+  border-radius: 50%;
+  background: var(--green-deep);
+  content: "";
+}
+
+.column-reading-forecast__eye i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(232, 112, 83, 0.72);
+  animation: reading-eye-scan 2.8s ease-in-out infinite;
+}
+
+@keyframes reading-eye-scan {
+  0%, 100% { transform: translateX(-16px); opacity: 0.35; }
+  50% { transform: translateX(16px); opacity: 1; }
+}
+
+.column-reading-forecast > span:last-child {
+  display: grid;
+  gap: 0.16rem;
+}
+
+.column-reading-forecast small,
+.column-reading-clock small {
+  color: var(--teal-pattern);
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.column-reading-forecast strong {
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.column-reading-forecast em {
+  color: rgba(85, 85, 80, 0.66);
+  font-size: 0.74rem;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.column-reading-clock {
+  margin-top: 1.4rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(36, 120, 96, 0.18);
+}
+
+.column-reading-clock > strong {
+  display: block;
+  margin: 0.5rem 0 0.65rem;
+  color: var(--green-deep);
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.column-reading-clock p {
+  margin: 0;
+  color: rgba(85, 85, 80, 0.82);
+  font-size: 0.76rem;
+  line-height: 1.65;
+}
+
+.column-reading-clock > span {
+  display: block;
+  margin-top: 0.55rem;
+  color: rgba(36, 120, 96, 0.7);
+  font-size: 0.7rem;
+}
+
+.column-reading-dock {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .columns-page-body .column-featured {
+    grid-template-columns: 1fr;
+  }
+
+  .columns-page-body .column-featured__content {
+    border-top: 1px solid rgba(36, 120, 96, 0.14);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .columns-page-body .columns-index {
+    background: #fbfcf9;
+  }
+
+  .columns-page-body .column-featured::before {
+    top: 14px;
+    left: 14px;
+  }
+
+  .columns-page-body .column-featured__content {
+    padding: 1.7rem 1.25rem 2rem;
+  }
+
+  .columns-page-body .column-featured h2 {
+    margin: 0.9rem 0;
+    font-size: clamp(1.7rem, 8vw, 2.25rem);
+  }
+
+  .columns-page-body .columns-toolbar__label::after {
+    display: block;
+    margin: 0.35rem 0 0;
+  }
+
+  .column-reading-forecast {
+    grid-template-columns: 40px minmax(0, 1fr);
+    margin-top: 1.25rem;
+    padding: 0.78rem 0.82rem;
+  }
+
+  .column-reading-forecast__eye {
+    width: 40px;
+    height: 29px;
+  }
+
+  .column-reading-forecast em {
+    display: none;
+  }
+
+  .column-reading-clock {
+    display: none;
+  }
+
+  .column-reading-dock {
+    display: grid;
+    position: fixed;
+    z-index: 80;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.72rem 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    background: rgba(35, 61, 54, 0.94);
+    color: #fff;
+    opacity: 0;
+    box-shadow: 0 14px 34px rgba(20, 42, 36, 0.22);
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 220ms ease, transform 220ms ease;
+    backdrop-filter: blur(14px);
+  }
+
+  .column-article-body.is-reading .column-reading-dock {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .column-reading-dock > span {
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.56rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  .column-reading-dock > strong {
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .column-reading-dock > p {
+    overflow: hidden;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.68rem;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .column-reading-forecast__eye i {
+    animation: none;
+  }
+}
+
 /* 2026-08-11 diet clinical column: match the restrained journal scale. */
 .diet-clinical-column .column-article__header h1 {
   font-size: clamp(1.75rem, 2.35vw, 2.3rem);
