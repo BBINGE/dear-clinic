@@ -93,6 +93,7 @@ function renderHtmlBody(content, mediaRoot, siteRoot, assetSlug = content.slug) 
   const usedIds = new Set();
   let headingIndex = 0;
   let imageIndex = 0;
+  let attachmentIndex = 0;
   html = html.replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/gi, (whole, attributes, inner) => {
     headingIndex += 1;
     const title = stripHtml(inner);
@@ -116,6 +117,14 @@ function renderHtmlBody(content, mediaRoot, siteRoot, assetSlug = content.slug) 
     const copiedPath = copyMedia(mediaRoot, siteRoot, assetSlug, normalizeMediaReference(src), `body-html-${imageIndex}`);
     const rest = attributes.replace(/\s+src\s*=\s*(["'])[^"']*\1/i, "").replace(/\s+data-editor-image\s*=\s*(["'])[^"']*\1/i, "");
     return `<img src="../${copiedPath}"${rest} loading="lazy">`;
+  });
+  html = html.replace(/<a\b([^>]*)>/gi, (whole, attributes) => {
+    const href = attributes.match(/\bhref\s*=\s*["']([^"']+)["']/i)?.[1];
+    if (!href || !/^\/?media\//i.test(href)) return whole;
+    attachmentIndex += 1;
+    const copiedPath = copyAttachment(mediaRoot, siteRoot, assetSlug, href, attachmentIndex);
+    const rest = attributes.replace(/\s+href\s*=\s*(["'])[^"']*\1/i, "");
+    return `<a href="../${copiedPath}"${rest}>`;
   });
   return { html, toc };
 }
@@ -253,6 +262,21 @@ function copyMedia(mediaRoot, siteRoot, slug, relativePath, suffix = "") {
   const outputName = `${safeName}${extension === ".jpeg" ? ".jpg" : extension}`;
   fs.copyFileSync(resolved, path.join(outputDir, outputName));
   return `assets/images/columns/${slug}/${outputName}`;
+}
+
+function copyAttachment(mediaRoot, siteRoot, slug, relativePath, index) {
+  const root = path.resolve(mediaRoot);
+  const resolved = path.resolve(root, normalizeMediaReference(relativePath));
+  if (resolved !== root && !resolved.startsWith(`${root}${path.sep}`)) throw new Error(`허용되지 않은 첨부파일 경로입니다: ${relativePath}`);
+  if (!fs.existsSync(resolved) || !fs.statSync(resolved).isFile()) throw new Error(`첨부파일을 찾을 수 없습니다: ${relativePath}`);
+  const extension = path.extname(resolved).toLowerCase();
+  if (![".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".hwp", ".hwpx", ".txt", ".zip"].includes(extension)) throw new Error(`허용되지 않은 첨부파일 형식입니다: ${relativePath}`);
+  if (fs.statSync(resolved).size > 10 * 1024 * 1024) throw new Error(`첨부파일이 10MB를 초과합니다: ${relativePath}`);
+  const outputDir = path.join(siteRoot, "assets", "files", "columns", slug);
+  fs.mkdirSync(outputDir, { recursive: true });
+  const outputName = `${String(index).padStart(2, "0")}-${safeId(path.basename(resolved, extension), "file")}${extension}`;
+  fs.copyFileSync(resolved, path.join(outputDir, outputName));
+  return `assets/files/columns/${slug}/${outputName}`;
 }
 
 function renderBlocks(content, mediaRoot, siteRoot, assetSlug = content.slug) {
