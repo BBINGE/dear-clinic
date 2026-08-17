@@ -7372,8 +7372,9 @@ img, video {
 
 .quickmenu__btn--international .quickmenu__label {
   max-width: 100%;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.05;
+  letter-spacing: -0.08em;
   text-align: center;
   white-space: normal;
 }
@@ -8097,7 +8098,25 @@ body.director-page {
   }
 
   .quickmenu__btn--international .quickmenu__label {
-    font-size: 10px;
+    font-size: 0;
+    letter-spacing: 0;
+  }
+
+  .quickmenu__btn--international {
+    gap: 2px;
+  }
+
+  .quickmenu__btn--international .quickmenu__international-icon {
+    width: 26px;
+    height: 26px;
+    padding: 1px;
+  }
+
+  .quickmenu__btn--international .quickmenu__label::after {
+    content: "Intl.\A Booking";
+    font-size: 14px;
+    line-height: 1.05;
+    white-space: pre-line;
   }
 
   .quickmenu__btn--top {
