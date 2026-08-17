@@ -73,7 +73,7 @@
   const pageLanguage = document.documentElement.lang || "ko";
   const language = pageLanguage === "ja" ? "ja" : pageLanguage.startsWith("zh") ? "zh" : pageLanguage === "en" ? "en" : "ko";
   const copy = {
-    ko: { label: "외국인예약", aria: "외국인 진료 일정 및 전화 예약", query: "en" },
+    ko: { label: "International Booking", aria: "International appointment schedule and phone booking", query: "en" },
     en: { label: "International", aria: "International patient schedule and phone appointment", query: "en" },
     ja: { label: "海外予約", aria: "海外患者さまの診療日程と電話予約", query: "ja" },
     zh: { label: "国际预约", aria: "国际患者门诊时间和电话预约", query: "zh" },

@@ -7370,6 +7370,14 @@ img, video {
   transform: translateY(-1px);
 }
 
+.quickmenu__btn--international .quickmenu__label {
+  max-width: 100%;
+  font-size: 11px;
+  line-height: 1.05;
+  text-align: center;
+  white-space: normal;
+}
+
 .quickmenu__label {
   font-size: 13px;
   font-weight: 600;
@@ -8086,6 +8094,10 @@ body.director-page {
 
   .quickmenu__label {
     font-size: 11.5px;
+  }
+
+  .quickmenu__btn--international .quickmenu__label {
+    font-size: 10px;
   }
 
   .quickmenu__btn--top {
