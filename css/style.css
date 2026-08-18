@@ -1520,9 +1520,64 @@
   line-height: 1.35;
 }
 
+.column-depression-functional-recovery .column-article__content .column-related {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 4.5rem 0 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.column-depression-functional-recovery .column-related h2 {
+  margin-bottom: 1.35rem;
+  font-size: clamp(1.35rem, 2vw, 1.65rem);
+}
+
+.column-depression-functional-recovery .column-related__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.column-depression-functional-recovery .column-related__grid a {
+  min-height: 112px;
+  padding: 1.15rem 1.25rem;
+  gap: 0.5rem;
+}
+
+.column-depression-functional-recovery .column-related__grid a:first-child {
+  grid-column: 1 / -1;
+  min-height: 104px;
+  border-right: 0;
+  border-bottom: 1px solid rgba(36, 120, 96, 0.2);
+}
+
+.column-depression-functional-recovery .column-related__grid strong {
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
 @media (max-width: 760px) {
   .column-depression-functional-recovery .column-article__content h2 {
     font-size: 1.25rem;
+  }
+
+  .column-depression-functional-recovery .column-article__content .column-related {
+    margin-top: 3.5rem;
+    padding: 1.35rem;
+  }
+
+  .column-depression-functional-recovery .column-related h2 {
+    margin-bottom: 1.1rem;
+    font-size: 1.25rem;
+  }
+
+  .column-depression-functional-recovery .column-related__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .column-depression-functional-recovery .column-related__grid a,
+  .column-depression-functional-recovery .column-related__grid a:first-child {
+    grid-column: auto;
+    min-height: 0;
+    padding: 1rem 0.75rem;
   }
 }
 
