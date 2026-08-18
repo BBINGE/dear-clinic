@@ -1515,6 +1515,12 @@
   margin-inline: auto;
 }
 
+.column-depression-functional-recovery .column-article__header h1 {
+  font-size: clamp(1.85rem, 2.5vw, 2.25rem);
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+}
+
 .column-depression-functional-recovery .column-article__content h2 {
   font-size: clamp(1.45rem, 2.2vw, 1.95rem);
   line-height: 1.35;
@@ -1555,6 +1561,11 @@
 }
 
 @media (max-width: 760px) {
+  .column-depression-functional-recovery .column-article__header h1 {
+    font-size: clamp(1.65rem, 7.6vw, 2rem);
+    white-space: normal;
+  }
+
   .column-depression-functional-recovery .column-article__content h2 {
     font-size: 1.25rem;
   }

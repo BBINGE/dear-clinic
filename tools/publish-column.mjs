@@ -726,7 +726,7 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="twitter:description" content="${escapeHtml(content.description)}">
   <meta name="twitter:image" content="${imageUrl}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260818-2">
+  <link rel="stylesheet" href="../css/style.css?v=20260818-3">
   <script type="application/ld+json">${schema}</script>
 </head>
 <body class="column-article-body column-${content.slug}${preview ? " is-preview" : ""}">
