@@ -2397,7 +2397,7 @@
   padding: 0.56rem 0.72rem;
   background: rgba(255, 255, 255, 0.92);
   color: var(--green-deep);
-  content: "COVER STORY  ·  01";
+  content: "COVER STORY  ·  " attr(data-journal-number);
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.15em;
@@ -2450,7 +2450,7 @@
   padding: 0 1.05rem;
   border-bottom: 1px solid rgba(36, 120, 96, 0.12);
   color: var(--green-deep);
-  content: "DEAR JOURNAL  ·  " counter(journal-card, decimal-leading-zero);
+  content: "DEAR JOURNAL  ·  " attr(data-journal-number);
   font-size: 0.64rem;
   font-weight: 800;
   letter-spacing: 0.13em;

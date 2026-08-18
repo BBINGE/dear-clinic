@@ -16,6 +16,14 @@
 - 기존 퀵메뉴 폭과 높이는 바꾸지 않고 해당 레이블을 14px 두 줄 중앙 정렬로 표시한다. 긴 `International`을 좁은 폭에 맞추기 위해 사용했던 압축 자간은 제거해 다른 버튼과 같은 밀도로 읽히게 했다.
 - 메인과 공통 스크립트로 버튼을 생성하는 서브 페이지를 1440px·768px·390px에서 확인했으며, 버튼 내부 넘침과 페이지 가로 스크롤이 없다.
 
+## 2026-08-18 칼럼 최신 글·누적 번호·정식 발행 연결
+
+- 같은 날 공동 작업자가 발행한 `columns/depression-functional-recovery.html`의 원장 작성 본문과 FAQ 문구는 변경하지 않고, 칼럼 목록·검색 노출·향후 발행 자동화만 보완했다.
+- `columns.html`의 상단 `오늘의 글`은 더 이상 특정 칼럼에 고정되지 않는다. `tools/publish-column.mjs`가 모든 카드의 게시일을 비교해 가장 최신 칼럼을 대표 글로 갱신하고, 카드·CollectionPage ItemList·RSS도 최신순으로 다시 정렬한다.
+- 저널 번호는 화면 순서용 CSS 카운터가 아니라 실제 누적 발행 번호다. 가장 오래된 글이 `01`, 새 글은 전체 칼럼 수에 해당하는 번호를 가지며, 최신순 카드 배치에서는 `11, 10, 09 ... 01`로 보인다. 상단 Cover Story도 최신 글의 동일 번호를 표시한다.
+- 새 우울증 칼럼을 Columns 목록, CollectionPage JSON-LD, `sitemap.xml`, `rss.xml`에 연결했다. 칼럼 문서에는 게시·수정일 Article 메타, Twitter 카드 메타, 대표 이미지 크기를 추가했고 전용 반응형 스타일을 공개 저장소에 합쳤다.
+- 검증: `node tools/test-column-publisher.mjs`, `node tools/publish-column.mjs --refresh-index`, `git diff --check`, RSS·sitemap XML 파싱, 390/768/1024/1440px Columns와 칼럼 화면 확인. 네 화면 모두 가로 넘침이 없고 FAQ DOM 6개와 FAQPage JSON-LD 6개가 일치했다.
+
 ## 2026-08-12 홈페이지 공동 작업·복구 기준
 
 - 삥이와 부끄님이 공개 홈페이지를 함께 개선할 수 있도록 `COLLABORATOR_BRIEF.md`를 추가했다. 새 PC와 Claude·Codex는 `AGENTS.md`의 지시에 따라 `CLAUDE.md`, `HANDOFF.md`, 공동 작업 브리프를 모두 읽고 시작한다.

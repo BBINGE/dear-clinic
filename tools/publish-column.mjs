@@ -22,6 +22,10 @@ function parseArgs(argv) {
     }
     const value = argv[index + 1];
     if (!value || value.startsWith("--")) {
+      if (key === "--refresh-index") {
+        args[key.slice(2)] = true;
+        continue;
+      }
       throw new Error(`${key} 뒤에 값이 필요합니다.`);
     }
     args[key.slice(2)] = value;
@@ -721,10 +725,14 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta property="og:image:height" content="1086">
   <meta property="og:image:alt" content="${escapeHtml(content.coverAlt)}">
   <meta property="og:url" content="${articleUrl}">
+  <meta property="article:published_time" content="${content.publishedAt}">
+  <meta property="article:modified_time" content="${content.modifiedAt || content.publishedAt}">
+  <meta property="article:author" content="김민지 대표원장">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(content.title)}">
   <meta name="twitter:description" content="${escapeHtml(content.description)}">
   <meta name="twitter:image" content="${imageUrl}">
+  <meta name="twitter:image:alt" content="${escapeHtml(content.coverAlt)}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link rel="stylesheet" href="../css/style.css?v=20260818-3">
   <script type="application/ld+json">${schema}</script>
@@ -790,7 +798,86 @@ ${end}`;
     if (!source.includes(marker)) throw new Error("columns.html에서 카드 삽입 위치를 찾지 못했습니다.");
     source = source.replace(marker, `${marker}\n${card}`);
   }
-  fs.writeFileSync(filePath, source, "utf8");
+  fs.writeFileSync(filePath, refreshColumnsPresentation(source), "utf8");
+}
+
+function parseColumnCard(block) {
+  const anchor = block.match(/<a\b([^>]*\bclass="[^"]*\bcolumn-card\b[^"]*"[^>]*)>([\s\S]*?)<\/a>/i);
+  const time = anchor?.[2].match(/<time\b[^>]*datetime="([^"]+)"[^>]*>([\s\S]*?)<\/time>/i);
+  const image = anchor?.[2].match(/<img\b([^>]*)>/i);
+  const title = anchor?.[2].match(/<h2>([\s\S]*?)<\/h2>/i)?.[1]?.trim();
+  const paragraphs = [...(anchor?.[2].matchAll(/<p(?:\s+[^>]*)?>([\s\S]*?)<\/p>/gi) || [])];
+  const href = anchor?.[1].match(/\bhref="([^"]+)"/i)?.[1];
+  const slug = anchor?.[1].match(/\bdata-column-slug="([^"]+)"/i)?.[1] || href?.match(/columns\/([^/]+)\.html$/)?.[1];
+  if (!anchor || !time || !image || !title || !href || !slug || paragraphs.length < 2) {
+    throw new Error(`columns.html에서 칼럼 카드 정보를 읽지 못했습니다: ${slug || href || "알 수 없는 카드"}`);
+  }
+  const imageSrc = image[1].match(/\bsrc="([^"]+)"/i)?.[1];
+  const imageAlt = image[1].match(/\balt="([^"]*)"/i)?.[1] || "";
+  const meta = paragraphs[0][1].trim();
+  const summary = paragraphs[1][1].trim();
+  return { block, anchorAttributes: anchor[1], body: anchor[2], date: time[1], displayDate: time[2], href, imageSrc, imageAlt, meta, slug, summary, title };
+}
+
+function refreshCollectionSchema(source, cards) {
+  const scriptPattern = /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;
+  return source.replace(scriptPattern, (whole, json) => {
+    let schema;
+    try { schema = JSON.parse(json); } catch { return whole; }
+    if (schema?.["@type"] !== "CollectionPage") return whole;
+    schema.mainEntity = {
+      "@type": "ItemList",
+      numberOfItems: cards.length,
+      itemListElement: cards.map((card, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        url: `${BASE_URL}/${card.href}`,
+      })),
+    };
+    return `<script type="application/ld+json">\n  ${JSON.stringify(schema, null, 2).replaceAll("\n", "\n  ")}\n  </script>`;
+  });
+}
+
+function refreshColumnsPresentation(source) {
+  const cardsStart = "        <!-- COLUMN_CARDS_START -->";
+  const cardsEnd = "        <!-- COLUMN_CARDS_END -->";
+  const regionPattern = new RegExp(`${cardsStart}[\\s\\S]*?${cardsEnd}`);
+  const region = source.match(regionPattern)?.[0];
+  if (!region) throw new Error("columns.html에서 카드 목록 범위를 찾지 못했습니다.");
+  const blockPattern = /        <!-- COLUMN_CARD:([^:]+):START -->[\s\S]*?        <!-- COLUMN_CARD:\1:END -->/g;
+  const cards = [...region.matchAll(blockPattern)].map((match, originalIndex) => ({ ...parseColumnCard(match[0]), originalIndex }));
+  if (!cards.length) throw new Error("columns.html에서 칼럼 카드를 찾지 못했습니다.");
+  cards.sort((a, b) => b.date.localeCompare(a.date) || a.originalIndex - b.originalIndex);
+  const total = cards.length;
+  cards.forEach((card, index) => {
+    const number = String(total - index).padStart(2, "0");
+    card.number = number;
+    const attributes = card.anchorAttributes.replace(/\s+data-journal-number="[^"]*"/i, "");
+    card.block = card.block.replace(card.anchorAttributes, `${attributes} data-journal-number="${number}"`);
+  });
+  source = source.replace(regionPattern, `${cardsStart}\n${cards.map((card) => card.block).join("\n")}\n${cardsEnd}`);
+
+  const latest = cards[0];
+  const featuredStart = "      <!-- COLUMN_FEATURED_START -->";
+  const featuredEnd = "      <!-- COLUMN_FEATURED_END -->";
+  const featuredPattern = new RegExp(`${featuredStart}[\\s\\S]*?${featuredEnd}`);
+  const featured = `${featuredStart}
+      <a class="column-featured js-reveal" href="${latest.href}" data-journal-number="${latest.number}">
+        <div class="column-featured__image">
+          <img src="${latest.imageSrc}" alt="${latest.imageAlt}">
+        </div>
+        <div class="column-featured__content">
+          <p class="column-meta">오늘의 글 · ${latest.meta}</p>
+          <h2 id="featured-heading">${latest.title}</h2>
+          <p>${latest.summary}</p>
+          <time datetime="${latest.date}">${latest.displayDate}</time>
+          <span class="column-read">칼럼 읽기 <span aria-hidden="true">→</span></span>
+        </div>
+      </a>
+${featuredEnd}`;
+  if (!featuredPattern.test(source)) throw new Error("columns.html에서 오늘의 글 범위를 찾지 못했습니다.");
+  source = source.replace(featuredPattern, featured);
+  return refreshCollectionSchema(source, cards);
 }
 
 function updateSitemap(siteRoot, content) {
@@ -825,7 +912,24 @@ function updateRss(siteRoot, content) {
   source = existingPattern.test(source)
     ? source.replace(existingPattern, entry)
     : source.replace("  </channel>", `${entry}\n  </channel>`);
-  fs.writeFileSync(filePath, source, "utf8");
+  fs.writeFileSync(filePath, refreshRss(source), "utf8");
+}
+
+function refreshRss(source) {
+  const items = [...source.matchAll(/(?:\s*<!-- COLUMN_RSS:[^:]+:START -->)?\s*(<item>[\s\S]*?<\/item>)(?:\s*<!-- COLUMN_RSS:[^:]+:END -->)?/g)]
+    .map((match, originalIndex) => {
+      const dateText = match[1].match(/<pubDate>([\s\S]*?)<\/pubDate>/)?.[1];
+      const timestamp = Date.parse(dateText || "");
+      return { block: match[0].trim(), originalIndex, timestamp: Number.isNaN(timestamp) ? 0 : timestamp };
+    })
+    .sort((a, b) => b.timestamp - a.timestamp || a.originalIndex - b.originalIndex);
+  if (!items.length) throw new Error("rss.xml에서 칼럼 항목을 찾지 못했습니다.");
+  const newestDate = new Date(items[0].timestamp).toUTCString();
+  source = source.replace(/<lastBuildDate>[\s\S]*?<\/lastBuildDate>/, `<lastBuildDate>${newestDate}</lastBuildDate>`);
+  const firstItem = source.search(/(?:\s*<!-- COLUMN_RSS:[^:]+:START -->)?\s*<item>/);
+  const channelEnd = source.indexOf("  </channel>");
+  if (firstItem < 0 || channelEnd < firstItem) throw new Error("rss.xml에서 항목 정렬 범위를 찾지 못했습니다.");
+  return `${source.slice(0, firstItem)}\n    ${items.map((item) => item.block).join("\n    ")}\n${source.slice(channelEnd)}`;
 }
 
 function removeGeneratedColumn(siteRoot, slug) {
@@ -844,7 +948,7 @@ function removeGeneratedColumn(siteRoot, slug) {
   const cardEnd = `        <!-- COLUMN_CARD:${slug}:END -->`;
   const cardPattern = new RegExp(`${cardStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${cardEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);
   index = index.replace(cardPattern, "");
-  fs.writeFileSync(indexPath, index, "utf8");
+  fs.writeFileSync(indexPath, refreshColumnsPresentation(index), "utf8");
 
   const sitemapPath = path.join(siteRoot, "sitemap.xml");
   let sitemap = fs.readFileSync(sitemapPath, "utf8");
@@ -869,12 +973,20 @@ function removeGeneratedColumn(siteRoot, slug) {
 
 function main() {
   const args = parseArgs(process.argv.slice(2));
-  if (!args.content) {
-    throw new Error("--content에 칼럼 JSON 파일 경로를 지정해 주세요.");
-  }
   const scriptDir = path.dirname(fileURLToPath(import.meta.url));
   const defaultSiteRoot = path.resolve(scriptDir, "..");
   const siteRoot = path.resolve(args["site-root"] || defaultSiteRoot);
+  if (args["refresh-index"]) {
+    const indexPath = path.join(siteRoot, "columns.html");
+    const rssPath = path.join(siteRoot, "rss.xml");
+    fs.writeFileSync(indexPath, refreshColumnsPresentation(fs.readFileSync(indexPath, "utf8")), "utf8");
+    fs.writeFileSync(rssPath, refreshRss(fs.readFileSync(rssPath, "utf8")), "utf8");
+    process.stdout.write("칼럼 목록·번호·오늘의 글·RSS 정렬 갱신 완료\n");
+    return;
+  }
+  if (!args.content) {
+    throw new Error("--content에 칼럼 JSON 파일 경로를 지정해 주세요.");
+  }
   const mediaRoot = path.resolve(args["media-root"] || path.dirname(path.resolve(args.content)));
   const contentPath = path.resolve(args.content);
   const rawContent = JSON.parse(fs.readFileSync(contentPath, "utf8"));
