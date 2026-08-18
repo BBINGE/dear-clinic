@@ -1509,6 +1509,23 @@
   border-radius: 18px;
 }
 
+.column-depression-functional-recovery .column-article__hero {
+  aspect-ratio: 4 / 3;
+  width: min(100%, 960px);
+  margin-inline: auto;
+}
+
+.column-depression-functional-recovery .column-article__content h2 {
+  font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+  line-height: 1.35;
+}
+
+@media (max-width: 760px) {
+  .column-depression-functional-recovery .column-article__content h2 {
+    font-size: 1.25rem;
+  }
+}
+
 .column-article__layout {
   display: grid;
   grid-template-columns: 220px minmax(0, 760px);

@@ -63,8 +63,8 @@ function inlineMarkdown(value = "") {
 }
 
 const HTML_BODY_TAGS = new Set([
-  "p", "br", "h2", "h3", "h4", "strong", "b", "em", "i", "u", "s", "blockquote",
-  "ul", "ol", "li", "a", "hr", "section", "aside", "div", "span", "figure", "figcaption",
+  "p", "br", "h2", "h3", "h4", "strong", "b", "em", "i", "u", "s", "small", "blockquote",
+  "ul", "ol", "li", "a", "hr", "section", "article", "aside", "div", "span", "figure", "figcaption",
   "img", "table", "thead", "tbody", "tfoot", "tr", "th", "td", "colgroup", "col",
 ]);
 
@@ -626,16 +626,40 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
     : content.publishedAt;
   const articleUrl = `${BASE_URL}/columns/${content.slug}.html`;
   const imageUrl = `${BASE_URL}/${coverPath}`;
+  const sourceUrls = (content.sources || []).map((item) => item.url).filter(Boolean);
   const graph = [
     {
+      "@type": "MedicalWebPage",
+      "@id": `${articleUrl}#webpage`,
+      url: articleUrl,
+      name: content.title,
+      description: content.description,
+      inLanguage: "ko-KR",
+      datePublished: content.publishedAt,
+      dateModified: modifiedAt,
+      lastReviewed: modifiedAt,
+      reviewedBy: { "@id": `${BASE_URL}/director.html#kim-minji` },
+      about: [
+        { "@type": "MedicalCondition", name: "우울증" },
+        { "@type": "MedicalCondition", name: "불면증" },
+      ],
+      mainEntity: { "@id": `${articleUrl}#article` },
+    },
+    {
       "@type": "Article",
+      "@id": `${articleUrl}#article`,
+      url: articleUrl,
       headline: content.title,
       description: content.description,
+      inLanguage: "ko-KR",
       keywords: content.tags,
       image: imageUrl,
       datePublished: content.publishedAt,
       dateModified: modifiedAt,
       author: { "@id": `${BASE_URL}/director.html#kim-minji` },
+      reviewedBy: { "@id": `${BASE_URL}/director.html#kim-minji` },
+      mainEntityOfPage: { "@id": `${articleUrl}#webpage` },
+      ...(sourceUrls.length ? { citation: sourceUrls } : {}),
       publisher: {
         "@type": "MedicalClinic",
         "@id": `${BASE_URL}/#clinic`,
@@ -669,6 +693,9 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
   const tagsHtml = content.tags.length
     ? `<ul class="column-tags" aria-label="검색 주제">${content.tags.map((tag) => `<li>#${escapeHtml(tag)}</li>`).join("")}</ul>`
     : "";
+  const relatedHtml = Array.isArray(content.relatedLinks) && content.relatedLinks.length
+    ? `<section class="column-related" aria-labelledby="related-columns-title"><p>CONTINUE READING</p><h2 id="related-columns-title">함께 읽으면 좋은 글</h2><div class="column-related__grid">${content.relatedLinks.map((item) => `<a href="${escapeHtml(item.href)}"><small>${escapeHtml(item.label)}</small><strong>${escapeHtml(item.title)}</strong></a>`).join("")}</div></section>`
+    : "";
   const previewMeta = preview
     ? '  <meta name="robots" content="noindex,nofollow,noarchive">\n  <meta name="googlebot" content="noindex,nofollow,noarchive">\n'
     : "";
@@ -683,19 +710,26 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#F8F8F6">
-${previewMeta}  <title>${escapeHtml(content.title)}</title>
+${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="description" content="${escapeHtml(content.description)}">
   <link rel="canonical" href="${articleUrl}">
   <meta property="og:type" content="article">
   <meta property="og:title" content="${escapeHtml(content.title)}">
   <meta property="og:description" content="${escapeHtml(content.description)}">
   <meta property="og:image" content="${imageUrl}">
+  <meta property="og:image:width" content="1448">
+  <meta property="og:image:height" content="1086">
+  <meta property="og:image:alt" content="${escapeHtml(content.coverAlt)}">
   <meta property="og:url" content="${articleUrl}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(content.title)}">
+  <meta name="twitter:description" content="${escapeHtml(content.description)}">
+  <meta name="twitter:image" content="${imageUrl}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260811-8">
+  <link rel="stylesheet" href="../css/style.css?v=20260818-1">
   <script type="application/ld+json">${schema}</script>
 </head>
-<body class="column-article-body${preview ? " is-preview" : ""}">
+<body class="column-article-body column-${content.slug}${preview ? " is-preview" : ""}">
 ${PUBLISHER_MARKER}
 ${previewNotice}
 <nav class="nav" id="top">
@@ -717,6 +751,7 @@ ${previewNotice}
     ${tocHtml}
     <div class="column-article__content">
       ${body}
+      ${relatedHtml}
       <section class="column-consult"><p class="column-section-label">CONSULTATION</p><h2>현재의 상태를<br>함께 살펴보고 싶다면</h2><p>불편함과 생활의 변화를 편하게 이야기해 주세요.<br>진찰을 통해 확인이 필요한 부분과 가능한 방향을 설명해 드립니다.</p><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">네이버 진료 예약 <span aria-hidden="true">→</span></a></section>
       ${faq.html}
       ${sources}
