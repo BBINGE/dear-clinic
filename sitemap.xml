@@ -142,4 +142,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
+  <!-- COLUMN_SITEMAP:child-growth-herbal-medicine:START -->
+  <url>
+    <loc>https://dearhani.com/columns/child-growth-herbal-medicine.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- COLUMN_SITEMAP:child-growth-herbal-medicine:END -->
 </urlset>
