@@ -2213,12 +2213,29 @@
 .diet-herbal-price-column .column-article__hero {
   width: min(100%, 900px);
   margin-inline: auto;
-  aspect-ratio: 1;
+  overflow: visible;
+  aspect-ratio: auto;
   background: #fff;
 }
 
 .diet-herbal-price-column .column-article__hero img {
+  display: block;
+  width: 100%;
+  height: auto;
   object-fit: contain;
+  border-radius: 14px;
+}
+
+.diet-herbal-price-column #forms table {
+  margin-bottom: clamp(4rem, 7vw, 6rem);
+}
+
+.diet-herbal-price-column #forms table + p {
+  margin-top: 0;
+}
+
+.diet-herbal-price-column #forms h3 {
+  margin-top: clamp(3.5rem, 6vw, 5rem);
 }
 
 .diet-herbal-price-column .column-article__content section > .editor-keypoint {
