@@ -142,6 +142,14 @@
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
+  <!-- COLUMN_SITEMAP:diet-herbal-medicine-price:START -->
+  <url>
+    <loc>https://dearhani.com/columns/diet-herbal-medicine-price.html</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- COLUMN_SITEMAP:diet-herbal-medicine-price:END -->
   <!-- COLUMN_SITEMAP:student-herbal-medicine:START -->
   <url>
     <loc>https://dearhani.com/columns/student-herbal-medicine.html</loc>

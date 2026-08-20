@@ -1278,6 +1278,17 @@
   object-position: center 26%;
 }
 
+.column-card__image img.column-card__contain,
+.column-featured__image img.column-featured__contain {
+  object-fit: contain;
+  background: #fff;
+}
+
+.column-featured[href="columns/diet-herbal-medicine-price.html"] .column-featured__image img {
+  object-fit: contain;
+  background: #fff;
+}
+
 .column-featured:hover img,
 .column-card:hover img {
   transform: scale(1.015);
