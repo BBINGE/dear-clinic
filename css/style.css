@@ -7458,6 +7458,25 @@ img, video {
   flex-shrink: 0;
 }
 
+.dear-diet-journal__logo {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.footer__sns .footer__diet-journal {
+  min-width: 168px;
+  border-color: rgba(255, 91, 83, 0.62);
+  background: rgba(255, 91, 83, 0.08);
+}
+
+.footer__sns .footer__diet-journal:hover {
+  border-color: #ff5b53;
+  background: rgba(255, 91, 83, 0.16);
+}
+
 .footer__sns a:hover {
   background: rgba(255, 255, 255, 0.12);
   border-color: var(--warm-gray);
@@ -7579,6 +7598,27 @@ img, video {
 
 .quickmenu__btn:hover {
   background: var(--teal-soft);
+}
+
+.quickmenu__btn--diet-journal {
+  position: relative;
+}
+
+.quickmenu__btn--diet-journal .dear-diet-journal__logo {
+  width: 28px;
+  height: 28px;
+  box-shadow: 0 4px 10px rgba(12, 30, 25, 0.22);
+  transition: transform 0.2s ease;
+}
+
+.quickmenu__btn--diet-journal:hover .dear-diet-journal__logo {
+  transform: translateY(-1px) rotate(-4deg);
+}
+
+.quickmenu__btn--diet-journal .quickmenu__label {
+  max-width: 74px;
+  text-align: center;
+  white-space: normal;
 }
 
 .quickmenu__btn--top {
@@ -8295,6 +8335,32 @@ body.director-page {
     width: 26px;
     height: 26px;
     padding: 1px;
+  }
+
+  .quickmenu__btn--diet-journal {
+    position: absolute;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: calc(100% + 9px);
+    width: auto;
+    height: 44px;
+    padding: 0 15px 0 9px;
+    flex-direction: row;
+    gap: 8px;
+    border: 1px solid rgba(255, 91, 83, 0.48);
+    border-radius: 999px;
+    background: var(--teal-dark);
+    box-shadow: 0 8px 24px rgba(20, 40, 34, 0.23);
+  }
+
+  .quickmenu__btn--diet-journal .dear-diet-journal__logo {
+    width: 29px;
+    height: 29px;
+  }
+
+  .quickmenu__btn--diet-journal .quickmenu__label {
+    max-width: none;
+    font-size: 11px;
+    white-space: nowrap;
   }
 
   .quickmenu__btn--top {

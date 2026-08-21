@@ -28,6 +28,7 @@
     { match: "m.booking.naver.com", action: "naver_booking" },
     { match: "talk.naver.com", action: "naver_talk" },
     { match: "blog.naver.com", action: "naver_blog" },
+    { match: "dearmydiet.tistory.com", action: "diet_journal" },
     { match: "instagram.com", action: "instagram" },
     { match: "be-deer.html", action: "be_deer" },
   ];
@@ -93,6 +94,53 @@
   link.dataset.trackAction = "international_appointment";
   link.dataset.trackLocation = "quickmenu";
   link.innerHTML = `${icon}<span class="quickmenu__label">${copy.label}</span>`;
+})();
+
+// 전 페이지 공통 디어 다이어트 저널 CTA.
+// 퀵메뉴와 푸터 채널 영역에 같은 공식 콘텐츠 링크를 언어별로 추가한다.
+(function initializeDietJournalLinks() {
+  "use strict";
+
+  const pageLanguage = document.documentElement.lang || "ko";
+  const language = pageLanguage === "ja" ? "ja" : pageLanguage.startsWith("zh") ? "zh" : pageLanguage === "en" ? "en" : "ko";
+  const copy = {
+    ko: { label: "다이어트 저널", aria: "디어한의원 다이어트 저널" },
+    en: { label: "Diet Journal", aria: "DEAR Diet Journal" },
+    ja: { label: "ダイエット誌", aria: "ディア韓医院ダイエットジャーナル" },
+    zh: { label: "减重专刊", aria: "DEAR韩医院减重专刊" },
+  }[language];
+  const href = "https://dearmydiet.tistory.com/";
+  const logo = '<img class="dear-diet-journal__logo" src="/assets/images/tistory-diet-journal.png" alt="" aria-hidden="true">';
+
+  const quickmenu = document.querySelector(".quickmenu");
+  if (quickmenu && !quickmenu.querySelector(".quickmenu__btn--diet-journal")) {
+    const link = document.createElement("a");
+    link.className = "quickmenu__btn quickmenu__btn--diet-journal";
+    link.href = href;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.setAttribute("aria-label", copy.aria);
+    link.dataset.trackAction = "diet_journal";
+    link.dataset.trackLocation = "quickmenu";
+    link.innerHTML = `${logo}<span class="quickmenu__label">${copy.label}</span>`;
+    const reference = quickmenu.querySelector(".quickmenu__btn--top");
+    quickmenu.insertBefore(link, reference || null);
+  }
+
+  const footerChannels = document.querySelector(".footer__sns");
+  if (footerChannels && !footerChannels.querySelector(".footer__diet-journal")) {
+    const link = document.createElement("a");
+    link.className = "footer__diet-journal";
+    link.href = href;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.setAttribute("aria-label", copy.label);
+    link.title = copy.aria;
+    link.dataset.trackAction = "diet_journal";
+    link.dataset.trackLocation = "footer";
+    link.innerHTML = logo;
+    footerChannels.appendChild(link);
+  }
 })();
 
 // 스크롤 시 네비게이션 배경 전환 (히어로를 벗어나면 밝은 배경 + 어두운 텍스트)
