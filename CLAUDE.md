@@ -56,7 +56,7 @@ Claude와 다른 AI 도구는 이 파일을 읽은 뒤 반드시 `HANDOFF.md`도
 - 전화: 02-3486-1777
 - 네이버 예약: https://m.booking.naver.com/booking/13/bizes/729883
 - 네이버 톡톡: https://talk.naver.com/ct/w5zr5u
-- 네이버 블로그: https://blog.naver.com/blanchard2552
+- 네이버 블로그: https://blog.naver.com/thisisdear
 - 인스타그램: https://www.instagram.com/dearhani__/
 
 진료시간:
