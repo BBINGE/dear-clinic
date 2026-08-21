@@ -110,7 +110,7 @@
     zh: { label: "减重专刊", aria: "DEAR韩医院减重专刊" },
   }[language];
   const href = "https://dearmydiet.tistory.com/";
-  const logo = '<img class="dear-diet-journal__logo" src="/assets/images/tistory-diet-journal.png" alt="" aria-hidden="true">';
+  const logo = '<svg class="dear-diet-journal__logo" viewBox="0 0 100 100" aria-hidden="true"><circle cx="15" cy="16" r="13"/><circle cx="50" cy="16" r="13"/><circle cx="85" cy="16" r="13"/><circle cx="50" cy="50" r="13"/><circle cx="50" cy="84" r="13"/></svg>';
 
   const quickmenu = document.querySelector(".quickmenu");
   if (quickmenu && !quickmenu.querySelector(".quickmenu__btn--diet-journal")) {
