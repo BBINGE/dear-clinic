@@ -2428,6 +2428,12 @@
 .columns-toolbar { margin:clamp(4.5rem,7vw,6.5rem) 0 2rem;padding-bottom:1.15rem; }
 .columns-grid { gap:clamp(2.5rem,4vw,3.75rem) clamp(1.25rem,2.5vw,2rem); }
 .column-card__image { margin-bottom:1.1rem;border-radius:12px; }
+.column-card__image.column-card__comic-frame img,
+.column-featured__image.column-featured__comic-frame img {
+  box-sizing: border-box;
+  border: 2px solid #292929;
+  border-radius: 8px;
+}
 .column-card h2 { margin:.65rem 0;font-size:clamp(1.2rem,1.7vw,1.48rem); }
 
 .column-article { padding:clamp(6.5rem,8vw,7.5rem) var(--gap) clamp(5.5rem,8vw,8rem); }
