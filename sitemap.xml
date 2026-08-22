@@ -41,6 +41,9 @@
   <url><loc>https://dearhani.com/zh-cn/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://dearhani.com/zh-cn/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://dearhani.com/zh-cn/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <!-- COLUMN_SITEMAP:gongjindan:START -->
+  <url><loc>https://dearhani.com/columns/gongjindan.html</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <!-- COLUMN_SITEMAP:gongjindan:END -->
   <!-- COLUMN_SITEMAP:seocho-diet-herbal-medicine:START -->
   <url><loc>https://dearhani.com/columns/seocho-diet-herbal-medicine.html</loc><lastmod>2026-08-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:seocho-diet-herbal-medicine:END -->
