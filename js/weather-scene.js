@@ -179,6 +179,26 @@
     return observed && Date.now() - observed.getTime() <= MAX_KMA_AGE;
   }
 
+  function isPrecipitationState(state) {
+    return ["rain", "heavy-rain", "snow", "heavy-snow", "storm"].includes(state);
+  }
+
+  async function fetchOpenMeteo() {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 7000);
+    try {
+      const liveResponse = await fetch(`${OPEN_METEO_URL}&cache_bust=${Date.now()}`, {
+        signal: controller.signal,
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+      });
+      if (!liveResponse.ok) throw new Error(`Live weather request failed: ${liveResponse.status}`);
+      return normalizeOpenMeteo(await liveResponse.json());
+    } finally {
+      window.clearTimeout(timeout);
+    }
+  }
+
   function applyWeather(data) {
     const state = WEATHER[previewState] ? previewState : (WEATHER[data?.state] ? data.state : "cloudy");
     const content = WEATHER[state];
@@ -233,23 +253,22 @@
       if (!kmaResponse.ok) throw new Error(`KMA weather request failed: ${kmaResponse.status}`);
       const kmaData = await kmaResponse.json();
       if (!isRecentKmaData(kmaData)) throw new Error("KMA weather data is stale");
+      try {
+        const liveData = await fetchOpenMeteo();
+        if (!isPrecipitationState(kmaData.state) && isPrecipitationState(liveData.state) && liveData.hourlyRain > 0) {
+          applyWeather(liveData);
+          return;
+        }
+      } catch {
+        // 기상청 최신값은 유지하고 좌표 기반 보조 관측 실패만 무시한다.
+      }
       applyWeather(kmaData);
     } catch {
-      const controller = new AbortController();
-      const timeout = window.setTimeout(() => controller.abort(), 7000);
       try {
-        const liveResponse = await fetch(`${OPEN_METEO_URL}&cache_bust=${Date.now()}`, {
-          signal: controller.signal,
-          headers: { Accept: "application/json" },
-          cache: "no-store",
-        });
-        if (!liveResponse.ok) throw new Error(`Live weather request failed: ${liveResponse.status}`);
-        applyWeather(normalizeOpenMeteo(await liveResponse.json()));
+        applyWeather(await fetchOpenMeteo());
       } catch {
         section.dataset.weatherStatus = "fallback";
         if (source) source.textContent = "서초동 기준 · 날씨 갱신 중";
-      } finally {
-        window.clearTimeout(timeout);
       }
     }
   }
