@@ -2,6 +2,14 @@
 
 최종 갱신: 2026-08-24
 
+## 2026-08-24 전 메뉴 메가 내비게이션
+
+- 한국어 상단의 `About DEAR`, `Columns`, `Care`, `DEAR SERVICES`, `Contact` 모두에 공통 메가 메뉴를 추가했다.
+- PC는 hover·키보드 focus·화살표 click으로 같은 규격의 전체 폭 패널이 열리고, 모바일 햄버거에서는 각 메뉴 오른쪽 화살표로 아코디언을 연다.
+- Columns 하위 메뉴는 다섯 필터 URL, Care 하위 메뉴는 `?care=Focus|Calm|Restore|Relief|Shape`로 연결하며 Care는 해당 패널을 첫 화면부터 활성화한다.
+- Services의 미완성 상세페이지는 현재 각 `services.html` 앵커로 연결하고 BE DEER만 기존 상세페이지로 연결한다.
+- 전 공개 HTML의 CSS·공통 JS 캐시 버전을 `20260824-7`·`20260824-4`로 올렸다.
+
 ## 2026-08-24 BE DEER 서비스 CTA·Columns H1 보강
 
 - Services 01의 제목과 소개를 BE DEER의 통합 진단 관점 카피로 교체했다.

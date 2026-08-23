@@ -219,12 +219,116 @@ if (nav && navMenu && !document.body.classList.contains("error-page")) {
   navMenu.appendChild(languageItem);
 }
 
+// 한국어 상단 메뉴: 모든 주요 항목에 같은 규칙의 메가 메뉴를 제공한다.
+const navSubmenuDefinitions = {
+  "About DEAR": {
+    label: "디어를 소개합니다",
+    links: [
+      ["DEAR 소개", "/about.html", "디어한의원의 공간과 기준"],
+      ["진료 철학", "/philosophy.html", "함께 묻고 함께 답하는 진료"],
+      ["김민지 대표원장", "/director.html", "의료진과 진료 방향"],
+      ["경력과 이력", "/career.html", "학력·경력·연구 활동"],
+    ],
+  },
+  Columns: {
+    label: "디어 건강 칼럼",
+    links: [
+      ["전체 칼럼", "/columns.html", "모든 임상 칼럼"],
+      ["Focus", "/columns.html?category=Focus", "인지·집중"],
+      ["Calm", "/columns.html?category=Calm", "긴장·수면"],
+      ["Restore", "/columns.html?category=Restore", "피로·회복"],
+      ["Relief", "/columns.html?category=Relief", "통증·불편"],
+      ["Shape", "/columns.html?category=Shape", "체중·리듬"],
+    ],
+  },
+  Care: {
+    label: "현재의 상태부터 살핍니다",
+    links: [
+      ["Focus", "/care.html?care=Focus", "인지 기능과 집중 저하"],
+      ["Calm", "/care.html?care=Calm", "긴장 반응과 수면 불균형"],
+      ["Restore", "/care.html?care=Restore", "피로와 회복력 저하"],
+      ["Relief", "/care.html?care=Relief", "통증과 신체 불편"],
+      ["Shape", "/care.html?care=Shape", "체중과 생활 리듬"],
+    ],
+  },
+  "DEAR SERVICES": {
+    label: "디어의 진료와 처방",
+    links: [
+      ["BE DEER", "/be-deer.html", "체중과 생활 리듬"],
+      ["DEAR GONGJINDAN", "/services.html#dear-gongjindan", "기력과 회복"],
+      ["HERBAL DECOCTION", "/services.html#herbal-decoction", "체질 맞춤 한약"],
+      ["DEER BALANCE", "/services.html#deer-balance", "수면과 마음"],
+      ["서비스 전체 보기", "/services.html", "DEAR SERVICES"],
+    ],
+  },
+  Contact: {
+    label: "디어한의원과 연결됩니다",
+    links: [
+      ["전화 문의", "tel:02-3486-1777", "02-3486-1777"],
+      ["네이버 예약", "https://m.booking.naver.com/booking/13/bizes/729883", "진료 예약"],
+      ["네이버 톡톡", "https://talk.naver.com/ct/w5zr5u", "상담 문의"],
+      ["국제진료 예약", "/international-appointment.html", "International Booking"],
+      ["오시는 길", "/index.html#info", "서울 서초구 사임당로 143"],
+    ],
+  },
+};
+
+const navSubmenuItems = [];
+
+if (nav && navMenu && (document.documentElement.lang || "ko").toLowerCase().startsWith("ko")) {
+  [...navMenu.children].forEach((item) => {
+    const link = item.querySelector(":scope > .nav__link");
+    if (!link) return;
+    const definition = navSubmenuDefinitions[link.textContent.trim()];
+    if (!definition) return;
+
+    const toggle = document.createElement("button");
+    const submenu = document.createElement("div");
+    const submenuId = `nav-submenu-${navSubmenuItems.length + 1}`;
+    item.classList.add("nav-has-submenu");
+    toggle.className = "nav-submenu-toggle";
+    toggle.type = "button";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", submenuId);
+    toggle.setAttribute("aria-label", `${link.textContent.trim()} 하위 메뉴 열기`);
+    toggle.innerHTML = '<span aria-hidden="true"></span>';
+    submenu.className = "nav-submenu";
+    submenu.id = submenuId;
+    submenu.innerHTML = `<div class="nav-submenu__inner"><p>${definition.label}</p><div class="nav-submenu__links">${definition.links
+      .map(([title, href, description]) => `<a href="${href}"><strong>${title}</strong><span>${description}</span><b aria-hidden="true">→</b></a>`)
+      .join("")}</div></div>`;
+    item.append(toggle, submenu);
+    navSubmenuItems.push({ item, toggle, submenu });
+  });
+}
+
+function closeAllNavSubmenus(exceptItem = null) {
+  navSubmenuItems.forEach(({ item, toggle }) => {
+    if (item === exceptItem) return;
+    item.classList.remove("is-submenu-open");
+    toggle.setAttribute("aria-expanded", "false");
+  });
+}
+
+navSubmenuItems.forEach(({ item, toggle, submenu }) => {
+  toggle.addEventListener("click", () => {
+    const willOpen = !item.classList.contains("is-submenu-open");
+    closeAllNavSubmenus(item);
+    item.classList.toggle("is-submenu-open", willOpen);
+    toggle.setAttribute("aria-expanded", String(willOpen));
+  });
+  submenu.addEventListener("click", (event) => {
+    if (event.target.closest("a")) setMobileMenuState(false);
+  });
+});
+
 function setMobileMenuState(isOpen) {
   navMenu?.classList.toggle("is-open", isOpen);
   navToggle?.classList.toggle("is-open", isOpen);
   navToggle?.setAttribute("aria-expanded", String(isOpen));
   navToggle?.setAttribute("aria-label", isOpen ? "메뉴 닫기" : "메뉴 열기");
   document.body.classList.toggle("nav-open", isOpen);
+  if (!isOpen) closeAllNavSubmenus();
 }
 
 navToggle?.addEventListener("click", () => {
@@ -232,9 +336,12 @@ navToggle?.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && navMenu?.classList.contains("is-open")) {
-    setMobileMenuState(false);
-    navToggle?.focus();
+  if (event.key === "Escape") {
+    closeAllNavSubmenus();
+    if (navMenu?.classList.contains("is-open")) {
+      setMobileMenuState(false);
+      navToggle?.focus();
+    }
   }
 });
 
@@ -396,6 +503,22 @@ const carePanels = [...document.querySelectorAll("[data-care-panel]")];
 if (careTabs.length === 5 && carePanels.length === 5) {
   let activeCareIndex = 0;
   let careTransitionToken = 0;
+  const requestedCare = new URLSearchParams(window.location.search).get("care");
+  const requestedCareIndex = ["Focus", "Calm", "Restore", "Relief", "Shape"].indexOf(requestedCare);
+
+  if (requestedCareIndex > 0) {
+    activeCareIndex = requestedCareIndex;
+    careTabs.forEach((tab, index) => {
+      const isActive = index === requestedCareIndex;
+      tab.classList.toggle("is-active", isActive);
+      tab.setAttribute("aria-selected", String(isActive));
+      tab.tabIndex = isActive ? 0 : -1;
+    });
+    carePanels.forEach((panel, index) => {
+      panel.hidden = index !== requestedCareIndex;
+      panel.classList.toggle("is-active", index === requestedCareIndex);
+    });
+  }
 
   const activateCare = (nextIndex, moveFocus = false) => {
     if (nextIndex < 0 || nextIndex >= careTabs.length) return;
