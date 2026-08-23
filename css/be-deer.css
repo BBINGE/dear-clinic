@@ -1149,9 +1149,9 @@ img { display: block; width: 100%; }
   }
   .hero__visual {
     min-height: 0;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
   }
-  .hero__visual img { object-position: center 42%; }
+  .hero__visual img { object-fit: contain; object-position: center; }
   .hero__word { bottom: 24px; font-size: 22vw; }
   .manifesto { padding-top: 76px; padding-bottom: 64px; }
   .observe,
