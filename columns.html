@@ -123,7 +123,7 @@
   }
   </script>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="css/style.css?v=20260824-3">
+  <link rel="stylesheet" href="css/style.css?v=20260824-4">
 </head>
 <body class="columns-page-body">
 <nav class="nav" id="top">
@@ -141,16 +141,15 @@
 <main>
   <header class="columns-hero">
     <div class="columns-hero__inner">
-      <div class="columns-hero__copy">
+      <div class="columns-search-stage">
         <p class="columns-kicker">DEAR CLINICAL JOURNAL</p>
-        <h1>증상 하나보다,<br>그 증상이 만들어진 흐름을 읽습니다.</h1>
-      </div>
-      <div class="columns-hero__note">
-        <p>성장·체중·마음·소화는 하나의 숫자나 검사만으로 충분히 설명되지 않습니다.</p>
-        <p><a href="director.html" rel="author">김민지 대표원장</a>이 연구와 진료 기준을 바탕으로 몸과 생활이 이어지는 지점을 씁니다.</p>
+        <label class="columns-search columns-search--floating">
+          <span class="sr-only">칼럼 검색</span>
+          <span class="columns-search__icon" aria-hidden="true"></span>
+          <input type="search" id="columnSearch" placeholder="무엇이든 검색해보세요" autocomplete="off">
+        </label>
       </div>
       <div class="columns-journal-nav">
-        <p>관심 있는 주제부터</p>
         <div class="columns-filters" role="group" aria-label="칼럼 주제 선택">
           <button type="button" class="is-active" data-column-category="all" aria-pressed="true"><span>00</span> 전체</button>
           <button type="button" data-column-category="Focus" aria-pressed="false"><span>01</span> Focus · 인지·집중</button>
@@ -182,10 +181,6 @@
 
       <div class="columns-toolbar js-reveal">
         <p class="columns-toolbar__label">LATEST JOURNAL</p>
-        <label class="columns-search">
-          <span class="sr-only">칼럼 검색</span>
-          <input type="search" id="columnSearch" placeholder="증상이나 생활의 변화를 검색해 보세요" autocomplete="off">
-        </label>
       </div>
 
       <div class="columns-grid" id="columnsGrid">
