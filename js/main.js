@@ -223,6 +223,8 @@ if (nav && navMenu && !document.body.classList.contains("error-page")) {
 const navSubmenuDefinitions = {
   "About DEAR": {
     label: "디어를 소개합니다",
+    image: "/assets/images/director.jpg",
+    imagePosition: "72% 28%",
     links: [
       ["DEAR 소개", "/about.html", "디어한의원의 공간과 기준"],
       ["진료 철학", "/philosophy.html", "함께 묻고 함께 답하는 진료"],
@@ -232,6 +234,8 @@ const navSubmenuDefinitions = {
   },
   Columns: {
     label: "디어 건강 칼럼",
+    image: "/assets/images/columns/autumn-dry-skin-exosome-booster/cover.png",
+    imagePosition: "50% 42%",
     links: [
       ["전체 칼럼", "/columns.html", "모든 임상 칼럼"],
       ["Focus", "/columns.html?category=Focus", "인지·집중"],
@@ -243,6 +247,8 @@ const navSubmenuDefinitions = {
   },
   Care: {
     label: "현재의 상태부터 살핍니다",
+    image: "/assets/images/care-main-space.jpg",
+    imagePosition: "50% 48%",
     links: [
       ["Focus", "/care.html?care=Focus", "인지 기능과 집중 저하"],
       ["Calm", "/care.html?care=Calm", "긴장 반응과 수면 불균형"],
@@ -253,6 +259,8 @@ const navSubmenuDefinitions = {
   },
   "DEAR SERVICES": {
     label: "디어의 진료와 처방",
+    image: "/assets/images/services-01-be-deer.jpg",
+    imagePosition: "50% 46%",
     links: [
       ["BE DEER", "/be-deer.html", "체중과 생활 리듬"],
       ["DEAR GONGJINDAN", "/services.html#dear-gongjindan", "기력과 회복"],
@@ -263,6 +271,8 @@ const navSubmenuDefinitions = {
   },
   Contact: {
     label: "디어한의원과 연결됩니다",
+    image: "/assets/images/treatment-room.jpg",
+    imagePosition: "50% 52%",
     links: [
       ["전화 문의", "tel:02-3486-1777", "02-3486-1777"],
       ["네이버 예약", "https://m.booking.naver.com/booking/13/bizes/729883", "진료 예약"],
@@ -294,7 +304,7 @@ if (nav && navMenu && (document.documentElement.lang || "ko").toLowerCase().star
     toggle.innerHTML = '<span aria-hidden="true"></span>';
     submenu.className = "nav-submenu";
     submenu.id = submenuId;
-    submenu.innerHTML = `<div class="nav-submenu__inner"><p>${definition.label}</p><div class="nav-submenu__links">${definition.links
+    submenu.innerHTML = `<div class="nav-submenu__inner"><p class="nav-submenu__visual" style="--nav-submenu-image:url('${definition.image}');--nav-submenu-position:${definition.imagePosition}"><span>${definition.label}</span></p><div class="nav-submenu__links">${definition.links
       .map(([title, href, description]) => `<a href="${href}"><strong>${title}</strong><span>${description}</span><b aria-hidden="true">→</b></a>`)
       .join("")}</div></div>`;
     item.append(toggle, submenu);

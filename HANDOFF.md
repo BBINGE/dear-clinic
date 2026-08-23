@@ -9,6 +9,7 @@
 - Columns 하위 메뉴는 다섯 필터 URL, Care 하위 메뉴는 `?care=Focus|Calm|Restore|Relief|Shape`로 연결하며 Care는 해당 패널을 첫 화면부터 활성화한다.
 - Services의 미완성 상세페이지는 현재 각 `services.html` 앵커로 연결하고 BE DEER만 기존 상세페이지로 연결한다.
 - 전 공개 HTML의 CSS·공통 JS 캐시 버전을 `20260824-7`·`20260824-4`로 올렸다.
+- 각 메가 메뉴의 왼쪽 소개 블록에는 해당 영역의 대표 이미지를 낮은 대비로 배치하고 글자를 약 11pt로 키웠다. About 인물 사진은 얼굴이 보이도록 배경 초점을 별도로 지정한다.
 
 ## 2026-08-24 BE DEER 서비스 CTA·Columns H1 보강
 
