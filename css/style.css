@@ -8904,6 +8904,8 @@ body.director-page {
 .columns-page-body .columns-hero__inner { display:block; }
 .columns-search-stage { display:grid;justify-items:center;padding:clamp(1.6rem,4vw,3rem) 0 clamp(2.6rem,5vw,4.25rem);text-align:center; }
 .columns-search-stage .columns-kicker { margin:0 0 1.4rem; }
+.columns-search-title { display:grid;gap:.45rem;margin:0 0 1.4rem;color:var(--green-deep);font-size:clamp(1.05rem,1.8vw,1.35rem);font-weight:600;line-height:1.35;letter-spacing:-.02em; }
+.columns-search-title span { color:var(--teal-pattern);font-family:var(--font-en);font-size:.72rem;font-weight:600;letter-spacing:.2em; }
 .columns-search--floating { display:grid;position:relative;width:min(680px,88vw);animation:columns-search-float 4.8s ease-in-out infinite;filter:drop-shadow(0 18px 24px rgba(37,70,61,.08)); }
 .columns-search--floating > .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0; }
 .columns-search--floating .columns-search__icon { position:absolute;z-index:1;top:50%;left:clamp(1.15rem,2.4vw,1.75rem);width:18px;height:18px;border:2px solid rgba(36,61,54,.48);border-radius:50%;pointer-events:none;transform:translateY(-58%); }
@@ -8933,3 +8935,12 @@ body.director-page {
   .columns-page-body .columns-journal-nav .columns-filters button:first-child { min-width:118px; }
 }
 @media (prefers-reduced-motion:reduce) { .columns-search--floating,.columns-search-prompts button { animation:none; } }
+
+/* BE DEER case-study CTA */
+.service-chapter__detail-link--cases { background:linear-gradient(118deg,#174f43 0%,#247860 48%,#45a47e 100%);box-shadow:0 18px 38px rgba(24,85,69,.2); }
+.service-chapter__detail-link--cases::after { position:absolute;z-index:-1;inset:-45%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 62%);content:"";animation:be-deer-cta-glow 3.4s ease-in-out infinite; }
+.service-chapter__detail-link--cases b { position:relative;box-shadow:0 0 0 0 rgba(255,255,255,.38);animation:be-deer-cta-pulse 2.2s ease-out infinite; }
+.service-chapter__detail-link--cases:hover,.service-chapter__detail-link--cases:focus-visible { background:linear-gradient(118deg,#123f36 0%,#1e7059 45%,#4aaf85 100%); }
+@keyframes be-deer-cta-glow { 0%,100% { transform:translate(-12%,-6%) scale(.92);opacity:.38; } 50% { transform:translate(15%,8%) scale(1.08);opacity:.8; } }
+@keyframes be-deer-cta-pulse { 0% { box-shadow:0 0 0 0 rgba(255,255,255,.42); } 65%,100% { box-shadow:0 0 0 12px rgba(255,255,255,0); } }
+@media (prefers-reduced-motion:reduce) { .service-chapter__detail-link--cases::after,.service-chapter__detail-link--cases b { animation:none; } }
