@@ -129,6 +129,7 @@ try {
   assert.ok(schemaText, "구조화 데이터를 찾지 못했습니다.");
   assert.equal(JSON.parse(schemaText)["@context"], "https://schema.org");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
+  assert.match(index, /data-column-slug="publisher-test-column"[^>]*data-category="Calm"[^>]*data-search="[^"]*수면[^"]*생활 리듬/);
   assert.match(index, /class="column-featured js-reveal" href="columns\/gongjindan\.html" data-journal-number="18"/);
   assert.match(index, /data-column-slug="publisher-test-column"[\s\S]*?data-journal-number="03"/);
   const collectionSchemaText = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]

@@ -2,6 +2,14 @@
 
 최종 갱신: 2026-08-24
 
+## 2026-08-24 Columns 무검색어 방지 SERP
+
+- Columns 검색은 검색어가 카드의 `data-search`에 직접 포함되지 않아도 환자가 입력한 증상·생활 상황·목적을 동의어와 Care 의미군으로 확장해 관련성 순으로 결과를 구성한다.
+- 목 답답함·신물, 야식·식욕, 기운 없음·어지러움처럼 일상 문장으로 입력해도 가까운 칼럼을 먼저 보여 주고, 해당 Care와 DEAR SERVICES·BE DEER 동선을 함께 제안한다. 검색 결과는 진단이나 치료 추천이 아니라 사이트 안의 관련 정보를 찾는 탐색 결과로 안내한다.
+- 직접 일치 결과가 부족해도 최소 6편을 제시한다. 의미군을 찾았으면 같은 주제의 칼럼으로 채우고, 전혀 해석할 수 없는 문장은 Focus·Calm·Restore·Relief·Shape가 골고루 포함된 시작점을 제공한다. 따라서 검색 중 `결과 없음` 화면을 환자에게 노출하지 않는다.
+- 새 칼럼은 기존 CMS의 `검색 주제 태그`와 제목·요약·분류가 발행기의 `data-search`에 합쳐져 자동으로 SERP 색인에 들어간다. `node tools/test-columns-serp.mjs`는 대표 질문과 무관 문장의 최소 결과를, `node tools/test-column-publisher.mjs`는 새 카드의 분류·검색 태그 생성을 확인한다.
+- 사용자가 제공한 2026-08-24 화면에서 네이버 서치어드바이저는 메인 문서의 성공적인 색인과 Meta 정상 상태, Google Search Console은 `https://dearhani.com/`의 등록·페이지 색인 생성·HTTPS 정상 상태를 표시했다.
+
 ## 2026-08-24 메가 메뉴 hover 이동 안정화
 
 - PC 상단 메뉴는 링크에서 펼쳐진 메가 메뉴로 마우스를 내릴 때 즉시 닫히지 않도록 명시적인 열림 상태와 360ms 닫힘 여유 시간을 사용한다.
@@ -544,20 +552,11 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 ## 8. SEO·검색 상태
 
 - `robots.txt`, `sitemap.xml`, canonical, 기본 meta/OG, JSON-LD가 있다.
-- Google Search Console 속성 및 sitemap 제출이 완료됐다.
-- 홈페이지는 Google 색인 등록 상태를 확인했다.
+- 공식 독립 도메인은 `https://dearhani.com/`이며 canonical, Open Graph, hreflang, sitemap, robots와 구조화 데이터가 이 도메인을 기준으로 연결되어 있다.
+- Google Search Console의 `dearhani.com` 속성 및 sitemap 제출이 완료됐다. 2026-08-24 메인 URL 검사에서 `URL이 Google에 등록되어 있음`, 페이지 색인 생성 완료, HTTPS 정상으로 확인했다.
+- 네이버 서치어드바이저의 `dearhani.com` 소유권 확인과 sitemap·RSS 제출이 완료됐다. 2026-08-24 메인 색인 상태 확인에서 문서가 성공적으로 색인되었고 색인·Meta 항목이 정상으로 표시됐다.
 - 새 칼럼 발행 후 사용자가 Google Search Console URL 검사에서 색인 생성을 요청한다.
-- 네이버 서치어드바이저는 GitHub Pages 주소 등록에 제약이 있었다. 독립 도메인 연결 후 재등록하는 방향이다.
-- 독립 도메인은 아직 연결하지 않았다.
-
-도메인 연결 시 함께 바꿀 대상:
-
-1. canonical과 Open Graph URL
-2. hreflang
-3. `sitemap.xml`
-4. `robots.txt`
-5. Search Console 속성
-6. 네이버 서치어드바이저 등록
+- 새 칼럼이나 메타 정보가 바뀐 페이지는 네이버에서도 수집 요청 후 최신 상태를 다시 확인한다.
 
 ## 9. 현재 남은 주요 작업
 
