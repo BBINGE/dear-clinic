@@ -20,6 +20,10 @@
 }
 
 /* ============ 메인: BE DEER CTA ============ */
+.nav__menu .nav__link[href*="be-deer.html"] {
+  display: none;
+}
+
 .home-be-deer {
   position: relative;
   overflow: hidden;
@@ -4750,6 +4754,88 @@ body.services-page {
   grid-area: media;
 }
 
+.service-chapter__detail-link {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  margin-top: 1rem;
+  padding: 1.15rem 1.25rem 1.15rem 1.4rem;
+  border: 1px solid rgba(36, 120, 96, 0.18);
+  border-radius: 2px;
+  background: var(--green-deep);
+  box-shadow: 0 12px 28px rgba(36, 120, 96, 0.16);
+  color: var(--bg-base);
+  text-decoration: none;
+  transition: transform 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+}
+
+.service-chapter__detail-link::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 20%, rgba(255, 255, 255, 0.13) 48%, transparent 76%);
+  transform: translateX(-110%);
+  transition: transform 520ms ease;
+}
+
+.service-chapter__detail-link span {
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.service-chapter__detail-link small {
+  display: block;
+  margin-bottom: 0.28rem;
+  font-family: var(--font-en);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}
+
+.service-chapter__detail-link b {
+  flex: 0 0 auto;
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 1px solid rgba(248, 248, 246, 0.45);
+  border-radius: 50%;
+  font-size: 1.15rem;
+  font-weight: 400;
+  transition: transform 220ms ease, background-color 220ms ease, color 220ms ease;
+}
+
+.service-chapter__detail-link:hover,
+.service-chapter__detail-link:focus-visible {
+  transform: translateY(-3px);
+  background: var(--teal-dark);
+  box-shadow: 0 18px 34px rgba(36, 120, 96, 0.23);
+}
+
+.service-chapter__detail-link:hover::before,
+.service-chapter__detail-link:focus-visible::before {
+  transform: translateX(110%);
+}
+
+.service-chapter__detail-link:hover b,
+.service-chapter__detail-link:focus-visible b {
+  transform: translateX(3px);
+  background: var(--bg-base);
+  color: var(--green-deep);
+}
+
+.service-chapter__detail-link:focus-visible {
+  outline: 2px solid var(--teal-pattern);
+  outline-offset: 4px;
+}
+
 .service-chapter__body {
   grid-area: body;
   align-self: start;
@@ -5062,7 +5148,10 @@ html[lang="ja"] .service-chapter h2 {
 
 @media (prefers-reduced-motion: reduce) {
   .services-page .js-reveal,
-  .services-index b {
+  .services-index b,
+  .service-chapter__detail-link,
+  .service-chapter__detail-link::before,
+  .service-chapter__detail-link b {
     transition: none !important;
     transform: none !important;
   }

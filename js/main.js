@@ -63,6 +63,16 @@
   });
 })();
 
+// BE DEER는 상단 독립 메뉴가 아니라 DEAR SERVICES 안에서 안내한다.
+// 과거 수동 제작 칼럼에 남은 메뉴 항목도 공통 스크립트에서 정리한다.
+(function removeLegacyBeDeerNavigationItem() {
+  "use strict";
+
+  document.querySelectorAll('.nav__menu .nav__link[href*="be-deer.html"]').forEach((link) => {
+    link.closest("li")?.remove();
+  });
+})();
+
 // 전 페이지 공통 외국인 예약 퀵메뉴.
 // 각 HTML에 중복된 퀵메뉴가 있어도 이곳에서 링크·아이콘·언어를 한 번에 맞춘다.
 (function initializeInternationalAppointmentQuickmenu() {
