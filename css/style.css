@@ -2560,6 +2560,10 @@
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
+.columns-page-body .column-card[hidden] {
+  display: none;
+}
+
 .columns-page-body .column-card::before {
   display: flex;
   align-items: center;
@@ -4257,6 +4261,32 @@ body.care-page {
   color: var(--text-secondary);
   line-height: 1.85;
   word-break: keep-all;
+}
+
+.care-panel__columns-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 1.45rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(36, 120, 96, 0.5);
+  color: var(--green-deep);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.care-panel__columns-link span {
+  transition: transform 180ms ease;
+}
+
+.care-panel__columns-link:hover span,
+.care-panel__columns-link:focus-visible span {
+  transform: translateX(4px);
+}
+
+.care-panel__columns-link:focus-visible {
+  outline: 2px solid var(--teal-pattern);
+  outline-offset: 4px;
 }
 
 .care-cta {

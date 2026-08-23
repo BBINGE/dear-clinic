@@ -83,15 +83,15 @@ content:
           placeholder: 글의 주제를 선택하세요
           values:
             - name: Focus
-              label: 집중
+              label: Focus · 인지·집중
             - name: Calm
-              label: 마음
+              label: Calm · 긴장·수면
             - name: Restore
-              label: 채움
+              label: Restore · 피로·회복
             - name: Relief
-              label: 불편
+              label: Relief · 통증·불편
             - name: Shape
-              label: 변화
+              label: Shape · 체중·리듬
 
       - name: summary
         label: 목록에 보일 한 줄 소개

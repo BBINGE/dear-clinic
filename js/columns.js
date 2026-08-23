@@ -7,6 +7,8 @@
 
   const params = new URLSearchParams(location.search);
   let category = params.get('category') || 'all';
+  const categories = new Set(['all', ...filters.map((button) => button.dataset.columnCategory)]);
+  if (!categories.has(category)) category = 'all';
   search.value = params.get('q') || '';
 
   const update = () => {

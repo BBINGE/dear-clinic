@@ -129,16 +129,16 @@ try {
   assert.ok(schemaText, "구조화 데이터를 찾지 못했습니다.");
   assert.equal(JSON.parse(schemaText)["@context"], "https://schema.org");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
-  assert.match(index, /class="column-featured js-reveal" href="columns\/autumn-dry-skin-exosome-booster\.html" data-journal-number="17"/);
+  assert.match(index, /class="column-featured js-reveal" href="columns\/gongjindan\.html" data-journal-number="18"/);
   assert.match(index, /data-column-slug="publisher-test-column"[\s\S]*?data-journal-number="03"/);
   const collectionSchemaText = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((match) => JSON.parse(match[1]))
     .find((entry) => entry["@type"] === "CollectionPage");
-  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 17);
-  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/autumn-dry-skin-exosome-booster.html");
+  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 18);
+  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/gongjindan.html");
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
-  assert.match(rss, /<lastBuildDate>Fri, 21 Aug 2026 03:00:00 GMT<\/lastBuildDate>[\s\S]*?<item><title>가을철 환절기 피부 속건조, 어떤 스킨부스터가 좋을까요\?<\/title>/);
+  assert.match(rss, /<lastBuildDate>Sat, 22 Aug 2026 00:00:00 GMT<\/lastBuildDate>[\s\S]*?<item><title>디어한의원 공진단은 어떻게 만들어질까요\?<\/title>/);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
     true,
@@ -157,7 +157,7 @@ try {
   assert.equal(fs.existsSync(articlePath), false);
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
-  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/autumn-dry-skin-exosome-booster\.html" data-journal-number="16"/);
+  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/gongjindan\.html" data-journal-number="17"/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 

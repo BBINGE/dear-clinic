@@ -6,11 +6,11 @@ import { fileURLToPath } from "node:url";
 const BASE_URL = "https://dearhani.com";
 const PUBLISHER_MARKER = "<!-- GENERATED_BY_DEAR_COLUMN_PUBLISHER -->";
 const CATEGORY_MAP = {
-  Focus: { label: "집중", display: "FOCUS" },
-  Calm: { label: "마음", display: "CALM" },
-  Restore: { label: "채움", display: "RESTORE" },
-  Relief: { label: "불편", display: "RELIEF" },
-  Shape: { label: "변화", display: "SHAPE" },
+  Focus: { label: "인지·집중", display: "FOCUS" },
+  Calm: { label: "긴장·수면", display: "CALM" },
+  Restore: { label: "피로·회복", display: "RESTORE" },
+  Relief: { label: "통증·불편", display: "RELIEF" },
+  Shape: { label: "체중·리듬", display: "SHAPE" },
 };
 
 function parseArgs(argv) {
