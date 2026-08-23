@@ -1113,6 +1113,10 @@ img { display: block; width: 100%; }
 }
 
 @media (max-width: 640px) {
+  .hero {
+    height: auto;
+  }
+
   .case-archive-bridge { width: calc(100% + 40px); margin-left: -20px; padding: 44px 20px; }
   .case-archive-bridge::before { opacity: .22; background-position: 54% center; }
   .case-archive-bridge::after { background: linear-gradient(180deg, rgba(255,255,255,.93), rgba(255,255,255,.79)); }
