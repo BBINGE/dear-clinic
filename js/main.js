@@ -320,19 +320,46 @@ function closeAllNavSubmenus(exceptItem = null) {
   });
 }
 
+let desktopSubmenuCloseTimer = 0;
+const isDesktopNavigation = () => window.matchMedia("(min-width: 769px)").matches;
+const cancelDesktopSubmenuClose = () => {
+  window.clearTimeout(desktopSubmenuCloseTimer);
+  desktopSubmenuCloseTimer = 0;
+};
+
 navSubmenuItems.forEach(({ item, toggle, submenu }) => {
+  item.addEventListener("pointerenter", () => {
+    if (!isDesktopNavigation()) return;
+    cancelDesktopSubmenuClose();
+    closeAllNavSubmenus(item);
+    item.classList.add("is-submenu-open");
+    toggle.setAttribute("aria-expanded", "true");
+  });
+  item.addEventListener("pointerleave", () => {
+    if (!isDesktopNavigation()) return;
+    cancelDesktopSubmenuClose();
+    desktopSubmenuCloseTimer = window.setTimeout(() => {
+      item.classList.remove("is-submenu-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }, 360);
+  });
+  submenu.addEventListener("pointerenter", cancelDesktopSubmenuClose);
   toggle.addEventListener("click", () => {
+    cancelDesktopSubmenuClose();
     const willOpen = !item.classList.contains("is-submenu-open");
     closeAllNavSubmenus(item);
     item.classList.toggle("is-submenu-open", willOpen);
     toggle.setAttribute("aria-expanded", String(willOpen));
   });
   submenu.addEventListener("click", (event) => {
-    if (event.target.closest("a")) setMobileMenuState(false);
+    if (!event.target.closest("a")) return;
+    cancelDesktopSubmenuClose();
+    if (!isDesktopNavigation()) setMobileMenuState(false);
   });
 });
 
 function setMobileMenuState(isOpen) {
+  cancelDesktopSubmenuClose();
   navMenu?.classList.toggle("is-open", isOpen);
   navToggle?.classList.toggle("is-open", isOpen);
   navToggle?.setAttribute("aria-expanded", String(isOpen));
