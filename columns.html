@@ -123,7 +123,7 @@
   }
   </script>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="css/style.css?v=20260824-8">
+  <link rel="stylesheet" href="css/style.css?v=20260824-9">
 </head>
 <body class="columns-page-body">
 <nav class="nav" id="top">
@@ -169,6 +169,23 @@
 
   <section class="columns-index" aria-labelledby="featured-heading">
     <div class="columns-index__inner">
+      <section class="columns-discovery" id="columnsSearchResults" aria-live="polite" hidden>
+        <header class="columns-discovery__header">
+          <p>DEAR CONTENT DISCOVERY</p>
+          <h2>디어한의원에는 이런 정보들이 있어요!</h2>
+          <p id="columnsSearchSummary"></p>
+        </header>
+        <div class="columns-discovery__topics" id="columnsSearchTopics" aria-label="추천 주제"></div>
+        <section class="columns-discovery__section" id="columnsSearchArticlesSection">
+          <div class="columns-discovery__section-heading"><p>RELATED JOURNAL</p><h3>관련 칼럼</h3></div>
+          <div class="columns-discovery__grid" id="columnsSearchArticles"></div>
+        </section>
+        <section class="columns-discovery__section" id="columnsSearchRoutesSection">
+          <div class="columns-discovery__section-heading"><p>KEEP EXPLORING</p><h3>디어에서 이어보기</h3></div>
+          <div class="columns-discovery__routes" id="columnsSearchRoutes"></div>
+        </section>
+        <button class="columns-discovery__reset" id="columnsSearchReset" type="button">전체 칼럼으로 돌아가기 <span aria-hidden="true">↺</span></button>
+      </section>
       <!-- COLUMN_FEATURED_START -->
       <a class="column-featured js-reveal" href="columns/autumn-dry-skin-exosome-booster.html" data-journal-number="16">
         <div class="column-featured__image column-featured__comic-frame">
@@ -358,6 +375,6 @@
   </div>
 </footer>
 <script src="js/main.js?v=20260824-5"></script>
-<script src="js/columns.js?v=20260824-2"></script>
+<script src="js/columns.js?v=20260824-3"></script>
 </body>
 </html>
