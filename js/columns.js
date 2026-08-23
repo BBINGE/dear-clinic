@@ -2,6 +2,7 @@
   const search = document.querySelector('#columnSearch');
   const cards = [...document.querySelectorAll('.column-card')];
   const filters = [...document.querySelectorAll('[data-column-category]')];
+  const suggestedSearches = [...document.querySelectorAll('[data-column-search-query]')];
   const empty = document.querySelector('#columnsEmpty');
   if (!search || !cards.length) return;
 
@@ -37,5 +38,12 @@
     update();
   }));
   search.addEventListener('input', update);
+  suggestedSearches.forEach((button) => button.addEventListener('click', () => {
+    category = 'all';
+    search.value = button.dataset.columnSearchQuery;
+    update();
+    search.focus({ preventScroll: true });
+    document.querySelector('.columns-index')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }));
   update();
 })();
