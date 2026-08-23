@@ -837,17 +837,9 @@
   font-size: 0.72rem;
 }
 
-.notice-popup__today {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  cursor: pointer;
-}
-
-.notice-popup__today input {
-  width: 14px;
-  height: 14px;
-  accent-color: var(--green-deep);
+.notice-popup__dismiss-note {
+  color: #777b77;
+  line-height: 1.35;
 }
 
 .notice-popup__controls button {

@@ -430,13 +430,33 @@ if (!prefersReducedMotion && "IntersectionObserver" in window && revealTargets.l
 // 공진단 사진 프레임의 자동 슬라이드쇼는 순수 CSS 키프레임(style.css의 gj-slideshow-2/3)으로 동작한다.
 // JS 실행 여부·타이밍에 영향받지 않도록 의도적으로 JS 의존 없이 구현했다.
 
-// 메인 안내 팝업: 각 안내를 닫거나 오늘 하루 동안 숨길 수 있다.
+// 메인 안내 팝업: 한 번 닫은 안내는 브라우저의 사이트 데이터를 지우기 전까지 다시 표시하지 않는다.
 const noticePopups = document.getElementById("noticePopups");
 
 if (noticePopups) {
   const weatherPreviewActive = new URLSearchParams(window.location.search).has("weather-preview");
   const popupCards = [...noticePopups.querySelectorAll("[data-popup-id]")];
-  const todayKey = new Date().toLocaleDateString("sv-SE");
+
+  const readPopupDismissal = (storageKey, legacyKey) => {
+    try {
+      const permanentlyDismissed = localStorage.getItem(storageKey) === "dismissed";
+      const legacyDismissal = Boolean(localStorage.getItem(legacyKey));
+      if (!permanentlyDismissed && legacyDismissal) {
+        localStorage.setItem(storageKey, "dismissed");
+      }
+      return permanentlyDismissed || legacyDismissal;
+    } catch {
+      return false;
+    }
+  };
+
+  const savePopupDismissal = (storageKey) => {
+    try {
+      localStorage.setItem(storageKey, "dismissed");
+    } catch {
+      // 저장소 사용이 차단된 환경에서는 현재 화면에서만 닫는다.
+    }
+  };
 
   const refreshPopupVisibility = () => {
     const visibleCards = popupCards.filter((card) => !card.hidden);
@@ -446,13 +466,12 @@ if (noticePopups) {
 
   popupCards.forEach((card) => {
     const popupId = card.dataset.popupId;
-    const storageKey = `dear-popup-${popupId}`;
-    card.hidden = localStorage.getItem(storageKey) === todayKey;
+    const storageKey = `dear-popup-dismissed-${popupId}`;
+    const legacyKey = `dear-popup-${popupId}`;
+    card.hidden = readPopupDismissal(storageKey, legacyKey);
 
     card.querySelector("[data-popup-close]")?.addEventListener("click", () => {
-      if (card.querySelector("[data-popup-today]")?.checked) {
-        localStorage.setItem(storageKey, todayKey);
-      }
+      savePopupDismissal(storageKey);
       card.hidden = true;
       refreshPopupVisibility();
     });
