@@ -768,7 +768,7 @@ ${previewNotice}
   </div>
 </article></main>
 <footer class="footer" id="contact"><div class="footer__inner"><div class="footer__top"><div class="footer__brand"><img class="footer__logo-img" src="../assets/images/logo-full-white.png" alt="디어한의원 로고" width="84" height="140" loading="lazy"><p class="footer__slogan">ALWAYS "DEAR" YOU</p></div></div><div class="footer__nap-row"><address class="footer__nap">디어한의원 · 대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address><div class="footer__legal-links"><a href="../privacy.html">개인정보처리방침</a><a href="../non-covered.html">비급여항목 안내</a><a href="../patient-rights.html">환자의 권리와 의무</a></div></div><p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p></div></footer>
-<script src="../js/main.js?v=20260811-2"></script>
+<script src="../js/main.js?v=20260824-9"></script>
 </body>
 </html>
 `;
@@ -798,7 +798,9 @@ ${end}`;
     if (!source.includes(marker)) throw new Error("columns.html에서 카드 삽입 위치를 찾지 못했습니다.");
     source = source.replace(marker, `${marker}\n${card}`);
   }
-  fs.writeFileSync(filePath, refreshColumnsPresentation(source), "utf8");
+  const refreshed = refreshColumnsPresentation(source);
+  fs.writeFileSync(filePath, refreshed, "utf8");
+  syncLatestColumnMenuData(siteRoot, refreshed);
 }
 
 function parseColumnCard(block) {
@@ -817,6 +819,37 @@ function parseColumnCard(block) {
   const meta = paragraphs[0][1].trim();
   const summary = paragraphs[1][1].trim();
   return { block, anchorAttributes: anchor[1], body: anchor[2], date: time[1], displayDate: time[2], href, imageSrc, imageAlt, meta, slug, summary, title };
+}
+
+function readColumnCards(source) {
+  const cardsStart = "        <!-- COLUMN_CARDS_START -->";
+  const cardsEnd = "        <!-- COLUMN_CARDS_END -->";
+  const regionPattern = new RegExp(`${cardsStart}[\\s\\S]*?${cardsEnd}`);
+  const region = source.match(regionPattern)?.[0];
+  if (!region) throw new Error("columns.html에서 카드 목록 범위를 찾지 못했습니다.");
+  const blockPattern = /        <!-- COLUMN_CARD:([^:]+):START -->[\s\S]*?        <!-- COLUMN_CARD:\1:END -->/g;
+  const cards = [...region.matchAll(blockPattern)].map((match, originalIndex) => ({ ...parseColumnCard(match[0]), originalIndex }));
+  if (!cards.length) throw new Error("columns.html에서 칼럼 카드를 찾지 못했습니다.");
+  return { cards, cardsStart, cardsEnd, regionPattern };
+}
+
+function syncLatestColumnMenuData(siteRoot, source) {
+  const { cards } = readColumnCards(source);
+  cards.sort((a, b) => b.date.localeCompare(a.date) || a.originalIndex - b.originalIndex);
+  const latest = cards[0];
+  const image = `/${latest.imageSrc.replace(/^\.?\//, "")}`;
+  if (!image.startsWith("/assets/images/columns/")) {
+    throw new Error(`최신 칼럼 대표 이미지가 칼럼 이미지 경로가 아닙니다: ${latest.imageSrc}`);
+  }
+  const dataPath = path.join(siteRoot, "assets", "data", "latest-column.json");
+  fs.mkdirSync(path.dirname(dataPath), { recursive: true });
+  fs.writeFileSync(dataPath, `${JSON.stringify({
+    slug: latest.slug,
+    href: `/${latest.href}`,
+    image,
+    imagePosition: "50% 30%",
+    alt: latest.imageAlt,
+  }, null, 2)}\n`, "utf8");
 }
 
 function refreshCollectionSchema(source, cards) {
@@ -839,14 +872,7 @@ function refreshCollectionSchema(source, cards) {
 }
 
 function refreshColumnsPresentation(source) {
-  const cardsStart = "        <!-- COLUMN_CARDS_START -->";
-  const cardsEnd = "        <!-- COLUMN_CARDS_END -->";
-  const regionPattern = new RegExp(`${cardsStart}[\\s\\S]*?${cardsEnd}`);
-  const region = source.match(regionPattern)?.[0];
-  if (!region) throw new Error("columns.html에서 카드 목록 범위를 찾지 못했습니다.");
-  const blockPattern = /        <!-- COLUMN_CARD:([^:]+):START -->[\s\S]*?        <!-- COLUMN_CARD:\1:END -->/g;
-  const cards = [...region.matchAll(blockPattern)].map((match, originalIndex) => ({ ...parseColumnCard(match[0]), originalIndex }));
-  if (!cards.length) throw new Error("columns.html에서 칼럼 카드를 찾지 못했습니다.");
+  const { cards, cardsStart, cardsEnd, regionPattern } = readColumnCards(source);
   cards.sort((a, b) => b.date.localeCompare(a.date) || a.originalIndex - b.originalIndex);
   const total = cards.length;
   cards.forEach((card, index) => {
@@ -948,7 +974,9 @@ function removeGeneratedColumn(siteRoot, slug) {
   const cardEnd = `        <!-- COLUMN_CARD:${slug}:END -->`;
   const cardPattern = new RegExp(`${cardStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${cardEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);
   index = index.replace(cardPattern, "");
-  fs.writeFileSync(indexPath, refreshColumnsPresentation(index), "utf8");
+  const refreshedIndex = refreshColumnsPresentation(index);
+  fs.writeFileSync(indexPath, refreshedIndex, "utf8");
+  syncLatestColumnMenuData(siteRoot, refreshedIndex);
 
   const sitemapPath = path.join(siteRoot, "sitemap.xml");
   let sitemap = fs.readFileSync(sitemapPath, "utf8");
@@ -979,7 +1007,9 @@ function main() {
   if (args["refresh-index"]) {
     const indexPath = path.join(siteRoot, "columns.html");
     const rssPath = path.join(siteRoot, "rss.xml");
-    fs.writeFileSync(indexPath, refreshColumnsPresentation(fs.readFileSync(indexPath, "utf8")), "utf8");
+    const refreshedIndex = refreshColumnsPresentation(fs.readFileSync(indexPath, "utf8"));
+    fs.writeFileSync(indexPath, refreshedIndex, "utf8");
+    syncLatestColumnMenuData(siteRoot, refreshedIndex);
     fs.writeFileSync(rssPath, refreshRss(fs.readFileSync(rssPath, "utf8")), "utf8");
     process.stdout.write("칼럼 목록·번호·오늘의 글·RSS 정렬 갱신 완료\n");
     return;
@@ -1005,7 +1035,7 @@ function main() {
       status: "removed",
       slug: content.slug,
       url: `${BASE_URL}/columns/${content.slug}.html`,
-      files: ["columns.html", "sitemap.xml", "rss.xml", `columns/${content.slug}.html`, `assets/images/columns/${content.slug}`],
+      files: ["columns.html", "sitemap.xml", "rss.xml", "assets/data/latest-column.json", `columns/${content.slug}.html`, `assets/images/columns/${content.slug}`],
     }, null, 2)}\n`);
     return;
   }
@@ -1048,7 +1078,7 @@ function main() {
     url: `${BASE_URL}/${isPreview ? "preview" : "columns"}/${content.slug}.html`,
     files: [
       path.relative(siteRoot, articlePath).replaceAll(path.sep, "/"),
-      ...(!isPreview ? ["columns.html", "sitemap.xml", "rss.xml"] : []),
+      ...(!isPreview ? ["columns.html", "sitemap.xml", "rss.xml", "assets/data/latest-column.json"] : []),
       coverPath,
     ],
   };

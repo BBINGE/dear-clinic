@@ -234,8 +234,9 @@ const navSubmenuDefinitions = {
   },
   Columns: {
     label: "디어 건강 칼럼",
-    image: "/assets/images/columns/autumn-dry-skin-exosome-booster/cover.png",
-    imagePosition: "50% 42%",
+    image: "/assets/images/columns/gongjindan-handmade/thumbnail-deer-gongjindan-v2.png",
+    imagePosition: "50% 30%",
+    latestColumnData: "/assets/data/latest-column.json",
     links: [
       ["전체 칼럼", "/columns.html", "모든 임상 칼럼"],
       ["Focus", "/columns.html?category=Focus", "인지·집중"],
@@ -309,6 +310,23 @@ if (nav && navMenu && (document.documentElement.lang || "ko").toLowerCase().star
       .join("")}</div></div>`;
     item.append(toggle, submenu);
     navSubmenuItems.push({ item, toggle, submenu });
+
+    if (definition.latestColumnData) {
+      const visual = submenu.querySelector(".nav-submenu__visual");
+      fetch(definition.latestColumnData, { cache: "no-store" })
+        .then((response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return response.json();
+        })
+        .then((latest) => {
+          if (!latest?.image || !latest.image.startsWith("/assets/images/columns/")) return;
+          visual?.style.setProperty("--nav-submenu-image", `url('${latest.image}')`);
+          visual?.style.setProperty("--nav-submenu-position", latest.imagePosition || "50% 30%");
+        })
+        .catch(() => {
+          // 네트워크 오류 시에도 배포 시점의 최신 대표 이미지를 그대로 보여 준다.
+        });
+    }
   });
 }
 

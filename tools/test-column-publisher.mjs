@@ -41,6 +41,7 @@ try {
   assert.match(previewArticle, /#생활 리듬/);
   assert.equal(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), indexBeforePreview);
   assert.equal(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), sitemapBeforePreview);
+  assert.equal(fs.existsSync(path.join(testRoot, "assets", "data", "latest-column.json")), false);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "preview-publisher-test-column", "cover.webp")),
     true,
@@ -152,6 +153,11 @@ try {
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "design-5.webp")),
     true,
   );
+  const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
+  assert.equal(latestColumnMenu.slug, "gongjindan");
+  assert.equal(latestColumnMenu.href, "/columns/gongjindan.html");
+  assert.equal(latestColumnMenu.image, "/assets/images/columns/gongjindan-handmade/thumbnail-deer-gongjindan-v2.png");
+  assert.equal(latestColumnMenu.imagePosition, "50% 30%");
 
   const removed = publish(contentPath, "remove");
   assert.equal(removed.status, 0, removed.stderr);
@@ -159,6 +165,7 @@ try {
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
   assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/gongjindan\.html" data-journal-number="17"/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "gongjindan");
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 
