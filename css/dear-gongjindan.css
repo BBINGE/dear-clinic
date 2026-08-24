@@ -128,7 +128,7 @@
 .gjd-film__frame {
   visibility: hidden;
   position: absolute;
-  inset: 0;
+  inset: clamp(5.5rem, 8vw, 8rem) clamp(2rem, 5vw, 5rem) clamp(7.5rem, 10vw, 10rem);
   margin: 0;
   opacity: 0;
   transform: scale(1.035);
@@ -144,13 +144,14 @@
 .gjd-film__frame img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
+  filter: drop-shadow(0 24px 42px rgba(24, 57, 48, 0.14));
 }
 
 .gjd-film__frame:nth-child(1) img,
 .gjd-film__frame:nth-child(2) img {
-  object-position: center 43%;
+  object-position: center;
 }
 
 .gjd-film__shade {
@@ -296,14 +297,20 @@
 }
 
 .gjd-manifesto h2 {
-  max-width: 840px;
+  max-width: 640px;
   margin: 1.6rem 0 0;
   color: #23473e;
-  font-size: clamp(2.7rem, 5vw, 5.8rem);
+  font-size: clamp(2.05rem, 2.55vw, 3.1rem);
   font-weight: 500;
-  line-height: 1.15;
-  letter-spacing: -0.065em;
+  line-height: 1.27;
+  letter-spacing: -0.045em;
   word-break: keep-all;
+}
+
+.gjd-manifesto h2 span,
+.gjd-manifesto h2 em {
+  display: block;
+  white-space: nowrap;
 }
 
 .gjd-manifesto__statement {
@@ -357,16 +364,68 @@
 }
 
 .gjd-orbit__line {
+  --orbit-duration: 34s;
+  --orbit-delay: -5s;
   position: absolute;
   inset: 0;
   border: 1px solid rgba(36, 120, 96, 0.26);
   border-radius: 50%;
+  animation: gjd-orbit-spin var(--orbit-duration) linear var(--orbit-delay) infinite;
 }
 
 .gjd-orbit__line--two {
-  inset: 7%;
+  --orbit-duration: 28s;
+  --orbit-delay: -17s;
+  inset: 6%;
   border-style: dashed;
-  animation: gjd-orbit-spin 24s linear infinite;
+}
+
+.gjd-orbit__line--three {
+  --orbit-duration: 22s;
+  --orbit-delay: -9s;
+  inset: 12%;
+  border-color: rgba(90, 150, 162, 0.3);
+}
+
+.gjd-orbit__line--four {
+  --orbit-duration: 17s;
+  --orbit-delay: -13s;
+  inset: 18%;
+  border-style: dashed;
+  border-color: rgba(36, 120, 96, 0.2);
+}
+
+.gjd-orbit__line::after {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-deep);
+  box-shadow: 0 0 0 6px rgba(36, 120, 96, 0.08);
+  content: "";
+  transform: translateX(-50%);
+}
+
+.gjd-orbit__line i {
+  position: absolute;
+  top: -0.8rem;
+  left: 50%;
+  min-width: 3.5rem;
+  padding: 0.38rem 0.55rem;
+  border: 1px solid rgba(36, 120, 96, 0.16);
+  border-radius: 999px;
+  background: rgba(248, 248, 246, 0.94);
+  box-shadow: 0 8px 20px rgba(35, 70, 62, 0.08);
+  color: var(--green-deep);
+  font-size: 0.66rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  transform: translateX(-50%);
+  animation: gjd-orbit-counter var(--orbit-duration) linear var(--orbit-delay) infinite;
 }
 
 .gjd-orbit b {
@@ -383,6 +442,10 @@
 
 @keyframes gjd-orbit-spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes gjd-orbit-counter {
+  to { transform: translateX(-50%) rotate(-360deg); }
 }
 
 .gjd-process {
@@ -1026,6 +1089,10 @@
     order: -1;
   }
 
+  .gjd-film__frame {
+    inset: 5.5rem 2rem 8.5rem;
+  }
+
   .gjd-chapters {
     top: 64px;
     padding: 0;
@@ -1167,6 +1234,10 @@
     min-height: calc(100svh - 80px);
   }
 
+  .gjd-film__frame {
+    inset: 4.8rem 1.4rem 9.5rem;
+  }
+
   .gjd-film__meta {
     right: 18px;
     bottom: 5.5rem;
@@ -1211,7 +1282,7 @@
   }
 
   .gjd-manifesto h2 {
-    font-size: clamp(2.35rem, 11vw, 3.15rem);
+    font-size: clamp(1.9rem, 7.6vw, 2.75rem);
   }
 
   .gjd-manifesto__statement {
@@ -1338,9 +1409,14 @@
   .gjd-process__visual img,
   .gjd-gallery__item img,
   .gjd-reveal,
-  .gjd-orbit__line--two {
+  .gjd-orbit__line,
+  .gjd-orbit__line i {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+  }
+
+  .gjd-orbit__line i {
+    transform: translateX(-50%) !important;
   }
 }
