@@ -101,6 +101,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dearhani.com/dear-gongjindan.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dearhani.com/be-deer.html</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
