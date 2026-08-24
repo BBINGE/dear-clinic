@@ -369,6 +369,7 @@
   width: min(38vw, 520px);
   aspect-ratio: 1;
   justify-self: end;
+  margin-right: clamp(4.5rem, 8vw, 7.5rem);
 }
 
 .gjd-orbit::before {
@@ -420,19 +421,6 @@
   inset: 18%;
   border-style: dashed;
   border-color: rgba(36, 120, 96, 0.2);
-}
-
-.gjd-orbit__line::after {
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green-deep);
-  box-shadow: 0 0 0 6px rgba(36, 120, 96, 0.08);
-  content: "";
-  transform: translateX(-50%);
 }
 
 .gjd-orbit__line i {
@@ -1159,6 +1147,7 @@
   .gjd-orbit {
     width: min(78vw, 520px);
     justify-self: center;
+    margin-right: 0;
   }
 
   .gjd-process {
