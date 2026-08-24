@@ -7,6 +7,7 @@
   const filmCurrent = film?.querySelector("[data-film-current]");
   const filmToggle = film?.querySelector("[data-film-toggle]");
   const filmNext = film?.querySelector("[data-film-next]");
+  const filmProgress = film?.querySelector("[data-film-progress]");
   let filmIndex = 0;
   let filmPlaying = !reduceMotion;
   let filmTimer = 0;
@@ -20,6 +21,15 @@
       frame.setAttribute("aria-hidden", String(!active));
     });
     if (filmCurrent) filmCurrent.textContent = String(filmIndex + 1).padStart(2, "0");
+    restartFilmProgress();
+  }
+
+  function restartFilmProgress() {
+    if (!filmProgress) return;
+    filmProgress.classList.remove("is-running", "is-paused");
+    void filmProgress.offsetWidth;
+    filmProgress.classList.add("is-running");
+    filmProgress.classList.toggle("is-paused", !filmPlaying);
   }
 
   function stopFilmTimer() {
@@ -37,6 +47,7 @@
     if (!filmToggle) return;
     filmToggle.setAttribute("aria-pressed", String(filmPlaying));
     filmToggle.textContent = filmPlaying ? "일시정지" : "자동재생";
+    filmProgress?.classList.toggle("is-paused", !filmPlaying);
   }
 
   filmToggle?.addEventListener("click", () => {
