@@ -264,7 +264,7 @@ const navSubmenuDefinitions = {
     links: [
       ["BE DEER", "/be-deer.html", "체중과 생활 리듬"],
       ["DEAR GONGJINDAN", "/services.html#dear-gongjindan", "기력과 회복"],
-      ["HERBAL DECOCTION", "/services.html#herbal-decoction", "체질 맞춤 한약"],
+      ["KOREAN HERBAL MEDICINE", "/services.html#herbal-decoction", "체질 맞춤 한약"],
       ["DEER BALANCE", "/services.html#deer-balance", "수면과 마음"],
       ["서비스 전체 보기", "/services.html", "DEAR SERVICES"],
     ],
