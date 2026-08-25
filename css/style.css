@@ -9150,3 +9150,422 @@ body.director-page {
 @media (prefers-reduced-motion:reduce) {
   .columns-discovery-topic__image,.columns-discovery-card,.columns-discovery-card img,.columns-discovery-card b,.columns-discovery-route,.columns-discovery-route b { transition:none;transform:none; }
 }
+
+/* Weight & inattentional blindness column — journal reading rhythm */
+.column-weight-inattentional-blindness {
+  --weight-column-green: #247860;
+  --weight-column-ink: #2c302e;
+  --weight-column-soft: #f3f7f5;
+  --weight-column-warm: #f8f6f1;
+  --weight-column-line: #d9e1dd;
+}
+
+.column-weight-inattentional-blindness .column-article__content > p {
+  margin: .78rem 0;
+  font-size: 1.02rem;
+  line-height: 1.9;
+  letter-spacing: -.012em;
+  word-break: keep-all;
+}
+
+.column-weight-inattentional-blindness .column-answer-box {
+  margin: 0 0 clamp(4rem, 7vw, 5.5rem);
+  padding: clamp(1.55rem, 3.5vw, 2.2rem);
+  border: 1px solid #bcd2ca;
+  border-top: 3px solid var(--weight-column-green);
+  background: var(--weight-column-soft);
+}
+
+.column-weight-inattentional-blindness .column-answer-box small {
+  display: block;
+  margin-bottom: .75rem;
+  color: var(--weight-column-green);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.column-weight-inattentional-blindness .column-answer-box h2 {
+  margin: 0;
+  color: var(--weight-column-ink);
+  font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+  font-weight: 750;
+  line-height: 1.5;
+  letter-spacing: -.035em;
+  word-break: keep-all;
+}
+
+.column-weight-inattentional-blindness .column-answer-box p {
+  margin: 1rem 0 0;
+  color: #4f5c57;
+  font-size: .96rem;
+  line-height: 1.82;
+  word-break: keep-all;
+}
+
+.column-weight-inattentional-blindness .column-article__content > .column-related {
+  box-sizing: border-box;
+  width: 100%;
+  margin: clamp(5rem, 8vw, 6.5rem) 0 5.5rem;
+  padding: clamp(2.4rem, 4.5vw, 3.25rem) clamp(2rem, 4vw, 3rem) 0;
+}
+
+.column-weight-inattentional-blindness .column-related > p {
+  margin-bottom: 1rem;
+}
+
+.column-weight-inattentional-blindness .column-related h2 {
+  margin: 0 0 clamp(2rem, 3vw, 2.5rem);
+  font-size: clamp(1.65rem, 2.8vw, 2.15rem);
+  line-height: 1.35;
+}
+
+.column-weight-inattentional-blindness .column-related__grid {
+  margin-right: calc(clamp(2rem, 4vw, 3rem) * -1);
+  margin-left: calc(clamp(2rem, 4vw, 3rem) * -1);
+}
+
+.column-weight-inattentional-blindness .column-related__grid a {
+  min-height: 138px;
+  padding: 1.55rem 1.45rem;
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit {
+  margin: 3.25rem 0 3.5rem;
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit__canvas {
+  position: relative;
+  width: min(100%, 650px);
+  aspect-ratio: 1.58;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(34, 117, 91, 0.18);
+  border-radius: 28px;
+  background: radial-gradient(circle at center, rgba(34, 117, 91, 0.07) 0 27%, transparent 27.5%), #f7f9f6;
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit__canvas::before,
+.column-weight-inattentional-blindness .health-metrics-orbit__canvas::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: "";
+  border: 1px solid rgba(34, 117, 91, 0.17);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit__canvas::before { width: 72%; height: 76%; }
+.column-weight-inattentional-blindness .health-metrics-orbit__canvas::after { width: 54%; height: 57%; border-style: dashed; }
+
+.column-weight-inattentional-blindness .health-metrics-orbit__center,
+.column-weight-inattentional-blindness .health-metrics-orbit__item {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  box-shadow: 0 12px 28px rgba(39, 73, 62, 0.09);
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit__center {
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  color: #fff;
+  background: #22755b;
+  transform: translate(-50%, -50%);
+  align-content: center;
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit__center span {
+  margin-bottom: .25rem;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  opacity: .72;
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit__center strong { font-size: 1.35rem; line-height: 1.2; }
+
+.column-weight-inattentional-blindness .health-metrics-orbit__item {
+  width: 84px;
+  height: 84px;
+  border: 1px solid rgba(34, 117, 91, 0.24);
+  color: #225f4d;
+  font-size: .96rem;
+  font-weight: 700;
+  background: linear-gradient(145deg, #fff 38%, #f0f6f3 100%);
+  cursor: default;
+  transform: translateZ(0) scale(1);
+  transition: transform .28s cubic-bezier(.2, .8, .2, 1), box-shadow .28s ease, border-color .28s ease, color .28s ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .column-weight-inattentional-blindness .health-metrics-orbit__item:hover {
+    z-index: 3;
+    border-color: rgba(34, 117, 91, .48);
+    color: #174e3e;
+    box-shadow: 0 20px 34px rgba(18, 63, 52, .2), inset 0 1px 0 rgba(255, 255, 255, .9);
+    transform: translateY(-7px) scale(1.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .column-weight-inattentional-blindness .health-metrics-orbit__item {
+    transition: none;
+  }
+}
+
+.column-weight-inattentional-blindness .health-metrics-orbit__item--1 { top: 8%; left: 19%; }
+.column-weight-inattentional-blindness .health-metrics-orbit__item--2 { top: 8%; right: 19%; }
+.column-weight-inattentional-blindness .health-metrics-orbit__item--3 { top: 40%; right: 7%; }
+.column-weight-inattentional-blindness .health-metrics-orbit__item--4 { right: 19%; bottom: 7%; }
+.column-weight-inattentional-blindness .health-metrics-orbit__item--5 { bottom: 7%; left: 19%; }
+.column-weight-inattentional-blindness .health-metrics-orbit__item--6 { top: 40%; left: 7%; }
+
+.column-weight-inattentional-blindness .health-metrics-orbit figcaption { margin-top: 1rem; }
+
+.column-weight-inattentional-blindness .column-article__content > .health-metrics-orbit__list {
+  margin: -2.15rem 0 3.5rem;
+  color: #356b5a;
+  font-size: .92rem;
+  font-weight: 650;
+  line-height: 1.7;
+  text-align: center;
+  letter-spacing: .01em;
+}
+
+.column-weight-inattentional-blindness .column-article__content > h2 {
+  position: relative;
+  margin-top: clamp(5rem, 8vw, 6.5rem);
+  margin-bottom: 2rem;
+  padding-top: 2.55rem;
+  border-top: 1px solid var(--weight-column-line);
+  color: var(--weight-column-ink);
+  font-size: clamp(1.8rem, 3.2vw, 2.35rem);
+  font-weight: 600;
+  line-height: 1.34;
+  letter-spacing: -.045em;
+  word-break: keep-all;
+}
+
+.column-weight-inattentional-blindness .column-article__content > h2::before {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  color: var(--weight-column-green);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.column-weight-inattentional-blindness .column-article__content > h2:nth-of-type(1)::before { content: "01 · THE NUMBER"; }
+.column-weight-inattentional-blindness .column-article__content > h2:nth-of-type(2)::before { content: "02 · PHYSIOLOGY"; }
+.column-weight-inattentional-blindness .column-article__content > h2:nth-of-type(3)::before { content: "03 · WHAT WE LOSE"; }
+.column-weight-inattentional-blindness .column-article__content > h2:nth-of-type(4)::before { content: "04 · THE GOAL"; }
+.column-weight-inattentional-blindness .column-article__content > h2:nth-of-type(5)::before { content: "05 · CLINICAL VIEW"; }
+
+@media (min-width: 681px) {
+  .column-weight-inattentional-blindness .column-article__content > h2:nth-of-type(3) {
+    font-size: clamp(1.62rem, 2.25vw, 1.82rem);
+    white-space: nowrap;
+  }
+}
+
+.column-weight-inattentional-blindness .column-article__content > h2 + p {
+  margin-bottom: 1.35rem;
+  color: #3d4f49;
+  font-size: clamp(1.08rem, 1.9vw, 1.22rem);
+  font-weight: 650;
+  line-height: 1.72;
+}
+
+.column-weight-inattentional-blindness .column-article__content > p:has(> strong > br) {
+  margin: 2.25rem 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-top: 3px solid var(--weight-column-green);
+  border-right: 1px solid #bcd2ca;
+  border-bottom: 1px solid #bcd2ca;
+  border-left: 1px solid #bcd2ca;
+  background: var(--weight-column-soft);
+}
+
+.column-weight-inattentional-blindness .column-article__content > p:has(> strong > br) strong {
+  display: block;
+  color: var(--weight-column-ink);
+  font-size: clamp(1.12rem, 2.2vw, 1.42rem);
+  line-height: 1.68;
+  letter-spacing: -.025em;
+  word-break: keep-all;
+}
+
+.column-weight-inattentional-blindness .column-article__content > p:has(> strong > br):last-of-type {
+  position: relative;
+  isolation: isolate;
+  min-height: 190px;
+  margin-top: 3rem;
+  padding: clamp(2.4rem, 5vw, 3.8rem) clamp(2rem, 5vw, 3.5rem);
+  overflow: hidden;
+  border: 0;
+  border-radius: 2px;
+  background: linear-gradient(135deg, #123f34 0%, #185b47 58%, #0e382f 100%);
+  box-shadow: 0 22px 48px rgba(18, 63, 52, .16);
+}
+
+.column-weight-inattentional-blindness .column-article__content > p:has(> strong > br):last-of-type::before {
+  position: absolute;
+  z-index: -1;
+  right: clamp(1.5rem, 4vw, 3rem);
+  bottom: .08em;
+  content: "DEAR";
+  color: rgba(255, 255, 255, .075);
+  font-family: Arial, sans-serif;
+  font-size: clamp(5.5rem, 12vw, 8rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -.045em;
+  white-space: nowrap;
+}
+
+.column-weight-inattentional-blindness .column-article__content > p:has(> strong > br):last-of-type::after {
+  position: absolute;
+  top: 0;
+  left: clamp(2rem, 5vw, 3.5rem);
+  width: 64px;
+  height: 4px;
+  content: "";
+  background: #b9d8cc;
+}
+
+.column-weight-inattentional-blindness .column-article__content > p:has(> strong > br):last-of-type strong {
+  position: relative;
+  max-width: 570px;
+  color: #fff;
+  font-size: clamp(1.24rem, 2.5vw, 1.62rem);
+  font-weight: 650;
+  line-height: 1.72;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .08);
+}
+
+.column-weight-inattentional-blindness .column-article__content > figure {
+  margin-top: clamp(3.2rem, 6vw, 4.8rem);
+  margin-bottom: clamp(3.7rem, 6vw, 5rem);
+}
+
+.column-weight-inattentional-blindness .column-article__content > figure img {
+  display: block;
+  width: 100%;
+  border-radius: 2px;
+}
+
+.column-weight-inattentional-blindness .column-article__content > figure:not(.health-metrics-orbit) {
+  position: relative;
+  padding: clamp(3.9rem, 7vw, 5rem) clamp(1rem, 2.5vw, 1.5rem) clamp(1.15rem, 2.5vw, 1.5rem);
+  border: 1px solid #b8cec6;
+  border-top: 3px solid var(--weight-column-green);
+  background: #f5f8f6;
+  box-shadow: 0 18px 42px rgba(30, 75, 61, .08);
+}
+
+.column-weight-inattentional-blindness .column-article__content > figure:not(.health-metrics-orbit)::before {
+  position: absolute;
+  top: 1.15rem;
+  left: clamp(1rem, 2.5vw, 1.5rem);
+  content: "DEAR KOREAN MEDICINE CLINIC  ·  디어한의원";
+  color: var(--weight-column-green);
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: .12em;
+}
+
+.column-weight-inattentional-blindness .column-article__content > figure:not(.health-metrics-orbit) img {
+  border: 1px solid rgba(34, 117, 91, .16);
+}
+
+.column-weight-inattentional-blindness .column-article__content > figure figcaption {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid #9bbdb2;
+  color: #6a706d;
+  font-size: .82rem;
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+@media (max-width: 680px) {
+  .column-weight-inattentional-blindness .health-metrics-orbit { margin: 2.5rem 0 3rem; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__canvas { aspect-ratio: 1 / 1.12; border-radius: 22px; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__canvas::before { width: 82%; height: 70%; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__canvas::after { width: 61%; height: 52%; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__center { width: 116px; height: 116px; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__center strong { font-size: 1.12rem; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__item { width: 68px; height: 68px; font-size: .83rem; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__item--1 { top: 7%; left: 13%; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__item--2 { top: 7%; right: 13%; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__item--3 { top: 41%; right: 4%; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__item--4 { right: 13%; bottom: 7%; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__item--5 { bottom: 7%; left: 13%; }
+  .column-weight-inattentional-blindness .health-metrics-orbit__item--6 { top: 41%; left: 4%; }
+  .column-weight-inattentional-blindness .column-article__content > .health-metrics-orbit__list { margin-top: -1.85rem; font-size: .86rem; }
+
+  .column-weight-inattentional-blindness .column-article__content > p {
+    font-size: 1rem;
+    line-height: 1.86;
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > h2 {
+    margin-top: 4.6rem;
+    padding-top: 2.35rem;
+    font-size: clamp(1.62rem, 7vw, 1.95rem);
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > p:has(> strong > br) {
+    padding: 1.35rem 1.2rem;
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > p:has(> strong > br):last-of-type {
+    min-height: 170px;
+    padding: 2.4rem 1.5rem;
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > p:has(> strong > br):last-of-type::before {
+    right: .65rem;
+    bottom: .18em;
+    font-size: clamp(4.3rem, 20vw, 6rem);
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > figure:not(.health-metrics-orbit) {
+    padding: 4.15rem .85rem 1rem;
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > figure:not(.health-metrics-orbit)::before {
+    top: 1rem;
+    left: .85rem;
+    max-width: calc(100% - 1.7rem);
+    font-size: .61rem;
+    letter-spacing: .08em;
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > p:has(> strong > br):last-of-type::after {
+    left: 1.5rem;
+  }
+
+  .column-weight-inattentional-blindness .column-article__content > .column-related {
+    margin-top: 4.5rem;
+    padding: 2rem 1.35rem 0;
+  }
+
+  .column-weight-inattentional-blindness .column-related__grid {
+    margin-right: -1.35rem;
+    margin-left: -1.35rem;
+  }
+
+  .column-weight-inattentional-blindness .column-related__grid a {
+    padding: 1.3rem 1.35rem;
+  }
+}

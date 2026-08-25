@@ -216,6 +216,10 @@ function validateContent(content, { requireReady = true } = {}) {
   if (content.faqs && !Array.isArray(content.faqs)) {
     throw new Error("FAQ 형식이 올바르지 않습니다.");
   }
+  if (content.answerBox) {
+    assertString(content.answerBox.heading, "핵심 답변 제목", 5, 100);
+    assertString(content.answerBox.text, "핵심 답변 내용", 20, 700);
+  }
   if (content.sources && !Array.isArray(content.sources)) {
     throw new Error("참고자료 형식이 올바르지 않습니다.");
   }
@@ -229,6 +233,7 @@ function validateContent(content, { requireReady = true } = {}) {
     bodyHtml: content.bodyHtml,
     blocks: content.blocks,
     designBlocks: content.designBlocks,
+    answerBox: content.answerBox,
     faqs: content.faqs,
   });
   const blockedClaims = ["완치", "100% 효과", "부작용 없음", "무조건 낫", "치료를 보장", "효과를 보장"];
@@ -631,6 +636,7 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
   const articleUrl = `${BASE_URL}/columns/${content.slug}.html`;
   const imageUrl = `${BASE_URL}/${coverPath}`;
   const sourceUrls = (content.sources || []).map((item) => item.url).filter(Boolean);
+  const aboutTopics = content.tags.map((tag) => ({ "@type": "Thing", name: tag }));
   const graph = [
     {
       "@type": "MedicalWebPage",
@@ -643,10 +649,7 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
       dateModified: modifiedAt,
       lastReviewed: modifiedAt,
       reviewedBy: { "@id": `${BASE_URL}/director.html#kim-minji` },
-      about: [
-        { "@type": "MedicalCondition", name: "우울증" },
-        { "@type": "MedicalCondition", name: "불면증" },
-      ],
+      about: aboutTopics,
       mainEntity: { "@id": `${articleUrl}#article` },
     },
     {
@@ -700,6 +703,9 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
   const relatedHtml = Array.isArray(content.relatedLinks) && content.relatedLinks.length
     ? `<section class="column-related" aria-labelledby="related-columns-title"><p>CONTINUE READING</p><h2 id="related-columns-title">함께 읽으면 좋은 글</h2><div class="column-related__grid">${content.relatedLinks.map((item) => `<a href="${escapeHtml(item.href)}"><small>${escapeHtml(item.label)}</small><strong>${escapeHtml(item.title)}</strong></a>`).join("")}</div></section>`
     : "";
+  const answerHtml = content.answerBox
+    ? `<aside class="column-answer-box" aria-labelledby="column-answer-title"><small>KEY ANSWER</small><h2 id="column-answer-title">${escapeHtml(content.answerBox.heading)}</h2><p>${textWithBreaks(content.answerBox.text)}</p></aside>`
+    : "";
   const previewMeta = preview
     ? '  <meta name="robots" content="noindex,nofollow,noarchive">\n  <meta name="googlebot" content="noindex,nofollow,noarchive">\n'
     : "";
@@ -734,7 +740,7 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="twitter:image" content="${imageUrl}">
   <meta name="twitter:image:alt" content="${escapeHtml(content.coverAlt)}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260818-3">
+  <link rel="stylesheet" href="../css/style.css?v=20260825-6">
   <script type="application/ld+json">${schema}</script>
 </head>
 <body class="column-article-body column-${content.slug}${preview ? " is-preview" : ""}">
@@ -758,6 +764,7 @@ ${previewNotice}
   <div class="column-article__layout">
     ${tocHtml}
     <div class="column-article__content">
+      ${answerHtml}
       ${body}
       ${relatedHtml}
       <section class="column-consult"><p class="column-section-label">CONSULTATION</p><h2>현재의 상태를<br>함께 살펴보고 싶다면</h2><p>불편함과 생활의 변화를 편하게 이야기해 주세요.<br>진찰을 통해 확인이 필요한 부분과 가능한 방향을 설명해 드립니다.</p><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">네이버 진료 예약 <span aria-hidden="true">→</span></a></section>
@@ -768,6 +775,21 @@ ${previewNotice}
   </div>
 </article></main>
 <footer class="footer" id="contact"><div class="footer__inner"><div class="footer__top"><div class="footer__brand"><img class="footer__logo-img" src="../assets/images/logo-full-white.png" alt="디어한의원 로고" width="84" height="140" loading="lazy"><p class="footer__slogan">ALWAYS "DEAR" YOU</p></div></div><div class="footer__nap-row"><address class="footer__nap">디어한의원 · 대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address><div class="footer__legal-links"><a href="../privacy.html">개인정보처리방침</a><a href="../non-covered.html">비급여항목 안내</a><a href="../patient-rights.html">환자의 권리와 의무</a></div></div><p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p></div></footer>
+${content.slug === "weight-inattentional-blindness" ? `<script>
+(() => {
+  const heading = document.getElementById('측정하는-것이-목표가-되는-순간');
+  const metricList = heading?.nextElementSibling?.nextElementSibling;
+  if (!metricList || document.querySelector('.health-metrics-orbit')) return;
+  const labels = ['혈압', '혈당', '체온', '심박수', '체중', '체지방률'];
+  const figure = document.createElement('figure');
+  figure.className = 'health-metrics-orbit';
+  figure.setAttribute('aria-labelledby', 'health-metrics-title');
+  figure.innerHTML = '<div class="health-metrics-orbit__canvas"><div class="health-metrics-orbit__center"><span>DIET</span><strong id="health-metrics-title">다이어트</strong></div>' + labels.map((label, index) => '<div class="health-metrics-orbit__item health-metrics-orbit__item--' + (index + 1) + '">' + label + '</div>').join('') + '</div><figcaption>다이어트의 경과는 체중 하나가 아니라 서로 연결된 여러 건강 지표를 함께 살펴야 합니다.</figcaption>';
+  metricList.classList.add('health-metrics-orbit__list');
+  metricList.after(figure);
+  figure.after(metricList);
+})();
+</script>` : ""}
 <script src="../js/main.js?v=20260824-9"></script>
 </body>
 </html>
