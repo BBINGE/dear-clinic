@@ -22,7 +22,7 @@ const articles = [...source.matchAll(/<a class="column-card[^>]*href="([^"]+)"[^
   summary: match[7].replace(/<[^>]+>/g, ''),
 }));
 
-assert.equal(articles.length, 17, '공개 칼럼 17편을 검색 색인에서 읽어야 합니다.');
+assert.equal(articles.length, 18, '공개 칼럼 18편을 검색 색인에서 읽어야 합니다.');
 
 const reflux = engine.searchArticles('밥 먹고 나면 목이 답답하고 신물이 올라와요', articles);
 assert.equal(reflux.categories[0], 'Relief');

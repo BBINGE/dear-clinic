@@ -131,16 +131,16 @@ try {
   assert.equal(JSON.parse(schemaText)["@context"], "https://schema.org");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
   assert.match(index, /data-column-slug="publisher-test-column"[^>]*data-category="Calm"[^>]*data-search="[^"]*수면[^"]*생활 리듬/);
-  assert.match(index, /class="column-featured js-reveal" href="columns\/gongjindan\.html" data-journal-number="18"/);
+  assert.match(index, /class="column-featured js-reveal" href="columns\/attunement-two-voices\.html" data-journal-number="19"/);
   assert.match(index, /data-column-slug="publisher-test-column"[\s\S]*?data-journal-number="03"/);
   const collectionSchemaText = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((match) => JSON.parse(match[1]))
     .find((entry) => entry["@type"] === "CollectionPage");
-  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 18);
-  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/gongjindan.html");
+  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 19);
+  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/attunement-two-voices.html");
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
-  assert.match(rss, /<lastBuildDate>Sat, 22 Aug 2026 00:00:00 GMT<\/lastBuildDate>[\s\S]*?<item><title>디어한의원 공진단은 어떻게 만들어질까요\?<\/title>/);
+  assert.match(rss, /<lastBuildDate>Tue, 25 Aug 2026 00:00:00 GMT<\/lastBuildDate>[\s\S]*?<item><title>Attunement: 진료실에 존재하는 두 개의 음<\/title>/);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
     true,
@@ -154,9 +154,9 @@ try {
     true,
   );
   const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
-  assert.equal(latestColumnMenu.slug, "gongjindan");
-  assert.equal(latestColumnMenu.href, "/columns/gongjindan.html");
-  assert.equal(latestColumnMenu.image, "/assets/images/columns/gongjindan-handmade/thumbnail-deer-gongjindan-v2.png");
+  assert.equal(latestColumnMenu.slug, "attunement-two-voices");
+  assert.equal(latestColumnMenu.href, "/columns/attunement-two-voices.html");
+  assert.equal(latestColumnMenu.image, "/assets/images/columns/attunement-two-voices/cover-v2.webp");
   assert.equal(latestColumnMenu.imagePosition, "50% 30%");
 
   const removed = publish(contentPath, "remove");
@@ -164,8 +164,8 @@ try {
   assert.equal(fs.existsSync(articlePath), false);
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
-  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/gongjindan\.html" data-journal-number="17"/);
-  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "gongjindan");
+  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/attunement-two-voices\.html" data-journal-number="18"/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "attunement-two-voices");
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 
