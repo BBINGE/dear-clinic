@@ -36,6 +36,11 @@
     .cg-hero{grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);height:min(680px,calc(100svh - 80px));min-height:590px}.cg-hero__copy{padding:38px clamp(28px,5.7vw,92px)}.cg-hero__masthead{margin:10px 0 24px;padding:10px 0;font-size:9px}.cg-eyebrow{margin-bottom:16px;font-size:11px}.cg-hero h1{max-width:710px;font-size:clamp(40px,4.15vw,62px);line-height:1.13}.cg-hero__lead{max-width:660px;margin-top:20px;font-size:clamp(15px,1.1vw,17px);line-height:1.75}.cg-hero__actions{margin-top:24px}.cg-button{min-width:198px;padding:15px 18px;font-size:13px}.cg-hero__visual{min-height:590px}.cg-hero__badge{right:20px;bottom:20px;width:min(300px,calc(100% - 40px));padding:17px 19px}.cg-hero__badge small{margin-bottom:6px;font-size:10px}.cg-hero__badge strong{font-size:15px;line-height:1.45}.cg-proof div{padding:25px clamp(24px,4vw,64px)}.cg-proof small{margin-bottom:7px;font-size:10px}.cg-proof strong{font-size:15px}.cg-bridge{display:grid;grid-template-columns:170px minmax(0,1.15fr) minmax(280px,.85fr);gap:clamp(26px,4vw,58px);align-items:start;max-width:1240px;margin:0 auto;padding:64px 28px 58px;border-bottom:1px solid #cad5d0}.cg-bridge__label{padding-top:8px;color:#5a9da0;font-size:10px;font-weight:700;letter-spacing:.2em}.cg-bridge h2{margin:0;color:#183f36;font-size:clamp(28px,2.8vw,42px);font-weight:600;line-height:1.34;letter-spacing:-.04em}.cg-bridge p{margin:4px 0 0;color:#4a5652;font-size:15px;line-height:1.85}.cg-offer{padding:clamp(68px,7vw,104px) 28px}.cg-offer__panel h2{font-size:clamp(38px,3.6vw,54px)}.cg-offer__tagline{margin:16px 0 24px;font-size:17px;line-height:1.75}.cg-offer__spec div{grid-template-columns:86px 1fr;gap:18px;padding:14px 0}.cg-offer__spec dt{font-size:11px}.cg-offer__spec dd{font-size:14px;line-height:1.55}.cg-offer__notice{margin-top:18px;padding:16px 18px;font-size:13px;line-height:1.65}.cg-offer__actions{margin-top:12px}.cg-offer__micro{margin-top:12px;font-size:11px}.cg-section{padding:clamp(68px,7.5vw,108px) 28px}.cg-section__head{grid-template-columns:160px minmax(0,1fr);gap:34px;margin-bottom:42px}.cg-section__number{font-size:11px}.cg-section h2{font-size:clamp(32px,3.2vw,46px);line-height:1.22}.cg-need{min-height:220px;padding:30px}.cg-need span{margin-bottom:38px;font-size:11px}.cg-need h3{margin-bottom:13px;font-size:21px}.cg-need p,.cg-check p{font-size:15px;line-height:1.75}.cg-check{min-height:250px;padding:32px}.cg-check h3{margin:34px 0 13px;font-size:24px}.cg-conversion{margin-top:36px;padding:30px 34px}.cg-conversion h3{font-size:23px}.cg-conversion p{font-size:14px}.cg-gallery img{min-height:280px}.cg-gallery figure:first-child img{min-height:660px}.cg-step{padding:30px 24px}.cg-step h3{margin:30px 0 12px;font-size:20px}.cg-step p{font-size:14px;line-height:1.7}.cg-faq__inner{padding:clamp(68px,7.5vw,104px) 28px}.cg-faq h2{font-size:clamp(32px,3.2vw,46px)}.cg-final{padding:clamp(68px,7.5vw,104px) 28px}.cg-final h2{font-size:clamp(34px,3.5vw,50px)}
     @media(max-width:900px){.cg-hero{grid-template-columns:1fr;height:auto;min-height:auto}.cg-hero__copy{padding:64px 24px 44px}.cg-hero__visual{min-height:560px}.cg-proof div{padding:21px 24px}.cg-bridge{grid-template-columns:1fr;gap:16px;padding:52px 24px}}
     @media(max-width:560px){.cg-hero__copy{padding:52px 20px 38px}.cg-hero h1{font-size:36px}.cg-hero__visual{min-height:440px}.cg-bridge{padding:44px 20px}.cg-bridge h2{font-size:29px}.cg-offer{padding:58px 20px}.cg-offer__panel h2{font-size:38px}.cg-section{padding:62px 20px}.cg-section h2{font-size:32px}}
+    /* Visual commerce layer: real imagery, restrained motion, clear rhythm. */
+    .cg-scroll-progress{position:fixed;top:0;left:0;z-index:1200;width:0;height:3px;background:linear-gradient(90deg,#155b49,#66b99a);box-shadow:0 0 16px rgba(102,185,154,.35);pointer-events:none}.cg-hero__visual::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(11,42,35,.03) 45%,rgba(11,42,35,.24) 100%);pointer-events:none}.cg-hero__visual>.cg-hero__main-image{display:block;transform:translate3d(0,var(--hero-shift,0),0) scale(1.035);transition:transform .12s linear;object-position:center 28%}.cg-hero__folio{z-index:3}.cg-hero__detail{position:absolute;left:20px;bottom:20px;z-index:4;width:152px;margin:0;padding:8px;background:rgba(248,248,246,.94);box-shadow:0 18px 50px rgba(16,61,52,.2);transform:rotate(-2.5deg)}.cg-hero__detail img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}.cg-hero__detail figcaption{padding:9px 3px 2px;color:#315e52;font-size:9px;font-weight:700;letter-spacing:.12em}.cg-hero__badge{z-index:4;backdrop-filter:blur(8px)}.cg-proof{padding:0!important}.cg-proof div{position:relative;overflow:hidden}.cg-proof div::after{content:"";position:absolute;right:-26px;bottom:-46px;width:100px;height:100px;border:1px solid rgba(147,196,183,.2);border-radius:50%}.cg-bridge{position:relative}.cg-bridge::before{content:"";position:absolute;top:0;left:28px;width:74px;height:2px;background:#67a99a}.cg-offer__visual figure,.cg-gallery figure{box-shadow:0 12px 34px rgba(25,57,49,.07)}.cg-offer__visual figure:first-child{border-radius:160px 160px 0 0}.cg-offer__visual figure:not(:first-child){border-radius:0 0 18px 18px}.cg-gallery figure:first-child{border-radius:180px 180px 0 0}.cg-gallery figure:not(:first-child){border-radius:18px}.cg-need,.cg-check{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}.cg-need:hover,.cg-check:hover{transform:translateY(-5px);border-color:#83ad9e;box-shadow:0 18px 40px rgba(27,78,63,.08)}.cg-motion-ready .cg-reveal,.cg-motion-ready .cg-media-reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}.cg-motion-ready .cg-media-reveal{transform:translateY(42px) scale(.985)}.cg-motion-ready .cg-reveal.is-visible,.cg-motion-ready .cg-media-reveal.is-visible{opacity:1;transform:none}.cg-motion-ready .cg-media-reveal img{transform:scale(1.055);transition:transform 1.15s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}.cg-motion-ready .cg-media-reveal.is-visible img{transform:scale(1)}
+    @media(max-width:900px){.cg-hero__detail{top:72px;bottom:auto;width:132px}.cg-offer__visual figure:first-child,.cg-gallery figure:first-child{border-radius:100px 100px 0 0}}
+    @media(max-width:560px){.cg-hero__detail{top:54px;left:14px;width:108px;padding:6px}.cg-hero__detail figcaption{display:none}.cg-hero__badge{right:14px;bottom:14px;width:min(246px,calc(100% - 28px))}.cg-bridge::before{left:20px}.cg-need:hover,.cg-check:hover{transform:none}}
+    @media(prefers-reduced-motion:reduce){.cg-scroll-progress{display:none}.cg-hero__visual>.cg-hero__main-image,.cg-motion-ready .cg-reveal,.cg-motion-ready .cg-media-reveal,.cg-motion-ready .cg-media-reveal img{opacity:1;transform:none;transition:none}.cg-need,.cg-check{transition:none}}
   </style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@graph":[{"@type":"MedicalWebPage","@id":"https://dearhani.com/columns/cheongdam-gongjindan.html#webpage","url":"https://dearhani.com/columns/cheongdam-gongjindan.html","name":"청담 공진단 선물, 포장보다 먼저 볼 것들","description":"청담에서 공진단을 찾는 분께, 귀한 분을 위한 한 환을 고를 때 포장보다 먼저 확인할 사향과 약재, 대표원장 상담, 원내 직접 조제 과정을 보여드립니다.","inLanguage":"ko-KR","datePublished":"2026-08-26","dateModified":"2026-08-26","lastReviewed":"2026-08-26","reviewedBy":{"@id":"https://dearhani.com/director.html#kim-minji"},"about":{"@type":"MedicalTherapy","name":"공진단 진료"},"mainEntity":{"@id":"https://dearhani.com/columns/cheongdam-gongjindan.html#article"}},{"@type":"Article","@id":"https://dearhani.com/columns/cheongdam-gongjindan.html#article","headline":"청담 공진단 선물, 포장보다 먼저 볼 것들","description":"귀한 분께 드릴 공진단을 고를 때 실제 약재와 원내 조제 과정, 상담과 복용 안내를 확인하는 선택 가이드입니다.","image":"https://dearhani.com/assets/images/columns/cheongdam-gongjindan/cover-v2.webp","datePublished":"2026-08-26","dateModified":"2026-08-26","author":{"@id":"https://dearhani.com/director.html#kim-minji"},"publisher":{"@id":"https://dearhani.com/#clinic"},"mainEntityOfPage":{"@id":"https://dearhani.com/columns/cheongdam-gongjindan.html#webpage"},"keywords":["청담 공진단","사향 공진단","공진단 선물","공진단 상담","원내 조제"],"relatedLink":"https://dearhani.com/dear-gongjindan.html"},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"홈","item":"https://dearhani.com/"},{"@type":"ListItem","position":2,"name":"Columns","item":"https://dearhani.com/columns.html"},{"@type":"ListItem","position":3,"name":"청담 공진단 선택 가이드"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"공진단 상담 전에는 어떤 정보를 준비하면 되나요?","acceptedAnswer":{"@type":"Answer","text":"복용할 분의 평소 불편감과 복용 목적, 기존 질환, 현재 복용 중인 약을 알려주시면 상담에 도움이 됩니다."}},{"@type":"Question","name":"디어한의원 공진단에는 모두 사향이 들어가나요?","acceptedAnswer":{"@type":"Answer","text":"디어한의원에서 공진단이라는 이름으로 상담·처방·조제하는 공진단에는 사향이 들어갑니다. 목향과 침향은 사향과 다른 약재이며 같은 처방으로 혼용하지 않습니다."}},{"@type":"Question","name":"선물용 공진단도 상담이 필요한가요?","acceptedAnswer":{"@type":"Answer","text":"복용할 분의 건강 상태와 기존 질환, 복용 중인 약에 따라 확인할 내용이 달라질 수 있으므로 선물 목적이라도 먼저 상담하는 편이 적절합니다."}},{"@type":"Question","name":"공진단은 미리 대량으로 만들어 두나요?","acceptedAnswer":{"@type":"Answer","text":"디어한의원은 상담 후 처방이 결정되면 필요한 만큼 원내에서 소량씩 조제하는 것을 원칙으로 합니다."}}]}]}
@@ -48,6 +53,7 @@
   <ul class="nav__menu" id="navMenu"><li><a href="../about.html" class="nav__link" data-ready="true">About DEAR</a></li><li><a href="../columns.html" class="nav__link is-active" data-ready="true">Columns</a></li><li><a href="../care.html" class="nav__link" data-ready="true">Care</a></li><li><a href="../services.html" class="nav__link" data-ready="true">DEAR SERVICES</a></li><li><a href="/#info" class="nav__link" data-ready="true">Contact</a></li></ul>
 </nav>
 <main class="cg-page">
+  <div class="cg-scroll-progress" id="cgScrollProgress" aria-hidden="true"></div>
   <article>
     <header class="cg-hero">
       <div class="cg-hero__copy">
@@ -58,7 +64,7 @@
         <p class="cg-hero__lead">청담에서 공진단을 찾는 분께, 실제 약재와 조제하는 사람, 상담 이후의 과정을 먼저 보여드립니다.</p>
         <div class="cg-hero__actions"><a class="cg-button cg-button--primary" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">공진단 상담 예약 <span>→</span></a><a class="cg-button cg-button--secondary" href="tel:02-3486-1777">전화로 문의 <span>02-3486-1777</span></a></div>
       </div>
-      <div class="cg-hero__visual"><span class="cg-hero__folio" aria-hidden="true">ISSUE 20 · CHEONGDAM</span><img src="../assets/images/columns/cheongdam-gongjindan/cover.webp" alt="디어한의원 공진단의 큰 패키지와 작은 패턴 상자"><div class="cg-hero__badge"><small>MADE IN DEAR</small><strong>상담 후, 대표원장이 원내에서<br>필요한 만큼 소량 조제합니다.</strong></div></div>
+      <div class="cg-hero__visual"><span class="cg-hero__folio" aria-hidden="true">ISSUE 20 · CHEONGDAM</span><img class="cg-hero__main-image" src="../assets/images/gongjindan-2.jpg" alt="손으로 디어한의원 공진단 패키지를 여는 순간"><figure class="cg-hero__detail"><img src="../assets/images/gongjindan-4.png" alt="원내에서 직접 조제한 금박 공진단"><figcaption>ACTUAL GONGJINDAN</figcaption></figure><div class="cg-hero__badge"><small>MADE IN DEAR</small><strong>상담 후, 대표원장이 원내에서<br>필요한 만큼 소량 조제합니다.</strong></div></div>
     </header>
 
     <section class="cg-proof" aria-label="디어 공진단의 세 가지 원칙"><div><small>01 · PRESCRIPTION</small><strong>현재 상태와 복용 목적을 먼저 확인</strong></div><div><small>02 · INGREDIENTS</small><strong>사향을 포함한 실제 구성 약재 확인</strong></div><div><small>03 · IN-HOUSE</small><strong>대표원장이 원내에서 직접 소량 조제</strong></div></section>
@@ -90,5 +96,58 @@
 </main>
 <footer class="footer" id="contact"><div class="footer__inner"><div class="footer__top"><div class="footer__brand"><img class="footer__logo-img" src="../assets/images/logo-full-white.png" alt="디어한의원 로고" width="84" height="140" loading="lazy"><p class="footer__slogan">ALWAYS "DEAR" YOU</p></div></div><div class="footer__nap-row"><address class="footer__nap">디어한의원 · 대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address><div class="footer__legal-links"><a href="../privacy.html">개인정보처리방침</a><a href="../non-covered.html">비급여항목 안내</a><a href="../patient-rights.html">환자의 권리와 의무</a></div></div><p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p></div></footer>
 <script src="../js/main.js?v=20260824-9"></script>
+<script>
+  (() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const progress = document.getElementById('cgScrollProgress');
+    const hero = document.querySelector('.cg-hero');
+    const heroImage = document.querySelector('.cg-hero__main-image');
+    const revealGroups = [
+      ['.cg-bridge', '.cg-offer__panel', '.cg-section__head', '.cg-conversion', '.cg-gift__copy', '.cg-faq__inner', '.cg-final'],
+      ['.cg-proof > div', '.cg-need', '.cg-check', '.cg-step'],
+      ['.cg-offer__visual figure', '.cg-gallery figure', '.cg-gift > img']
+    ];
+    const targets = [];
+    revealGroups.forEach((group, groupIndex) => {
+      group.forEach((selector) => {
+        document.querySelectorAll(selector).forEach((element, index) => {
+          element.classList.add(groupIndex === 2 ? 'cg-media-reveal' : 'cg-reveal');
+          element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 90}ms`);
+          targets.push(element);
+        });
+      });
+    });
+    if (!reducedMotion && 'IntersectionObserver' in window) {
+      document.documentElement.classList.add('cg-motion-ready');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+      targets.forEach((target) => observer.observe(target));
+    } else {
+      targets.forEach((target) => target.classList.add('is-visible'));
+    }
+    let ticking = false;
+    const renderScroll = () => {
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      if (progress) progress.style.width = `${Math.min((window.scrollY / maxScroll) * 100, 100)}%`;
+      if (!reducedMotion && hero && heroImage) {
+        const heroBottom = hero.offsetTop + hero.offsetHeight;
+        const ratio = Math.min(Math.max(window.scrollY / heroBottom, 0), 1);
+        heroImage.style.setProperty('--hero-shift', `${ratio * 18}px`);
+      }
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(renderScroll);
+    }, { passive: true });
+    renderScroll();
+  })();
+</script>
 </body>
 </html>
