@@ -40,6 +40,12 @@
     .cg-scroll-progress{position:fixed;top:0;left:0;z-index:1200;width:0;height:3px;background:linear-gradient(90deg,#155b49,#66b99a);box-shadow:0 0 16px rgba(102,185,154,.35);pointer-events:none}.cg-hero__visual::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(11,42,35,.03) 45%,rgba(11,42,35,.24) 100%);pointer-events:none}.cg-hero__visual>.cg-hero__main-image{display:block;transform:translate3d(0,var(--hero-shift,0),0) scale(1.035);transition:transform .12s linear;object-position:center 28%}.cg-hero__folio{z-index:3}.cg-hero__detail{position:absolute;left:20px;bottom:20px;z-index:4;width:152px;margin:0;padding:8px;background:rgba(248,248,246,.94);box-shadow:0 18px 50px rgba(16,61,52,.2);transform:rotate(-2.5deg)}.cg-hero__detail img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}.cg-hero__detail figcaption{padding:9px 3px 2px;color:#315e52;font-size:9px;font-weight:700;letter-spacing:.12em}.cg-hero__badge{z-index:4;backdrop-filter:blur(8px)}.cg-proof{padding:0!important}.cg-proof div{position:relative;overflow:hidden}.cg-proof div::after{content:"";position:absolute;right:-26px;bottom:-46px;width:100px;height:100px;border:1px solid rgba(147,196,183,.2);border-radius:50%}.cg-bridge{position:relative}.cg-bridge::before{content:"";position:absolute;top:0;left:28px;width:74px;height:2px;background:#67a99a}.cg-offer__visual figure,.cg-gallery figure{box-shadow:0 12px 34px rgba(25,57,49,.07)}.cg-offer__visual figure:first-child{border-radius:160px 160px 0 0}.cg-offer__visual figure:not(:first-child){border-radius:0 0 18px 18px}.cg-gallery figure:first-child{border-radius:180px 180px 0 0}.cg-gallery figure:not(:first-child){border-radius:18px}.cg-need,.cg-check{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}.cg-need:hover,.cg-check:hover{transform:translateY(-5px);border-color:#83ad9e;box-shadow:0 18px 40px rgba(27,78,63,.08)}.cg-motion-ready .cg-reveal,.cg-motion-ready .cg-media-reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}.cg-motion-ready .cg-media-reveal{transform:translateY(42px) scale(.985)}.cg-motion-ready .cg-reveal.is-visible,.cg-motion-ready .cg-media-reveal.is-visible{opacity:1;transform:none}.cg-motion-ready .cg-media-reveal img{transform:scale(1.055);transition:transform 1.15s cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}.cg-motion-ready .cg-media-reveal.is-visible img{transform:scale(1)}
     @media(max-width:900px){.cg-hero__detail{top:72px;bottom:auto;width:132px}.cg-offer__visual figure:first-child,.cg-gallery figure:first-child{border-radius:100px 100px 0 0}}
     @media(max-width:560px){.cg-hero__detail{top:54px;left:14px;width:108px;padding:6px}.cg-hero__detail figcaption{display:none}.cg-hero__badge{right:14px;bottom:14px;width:min(246px,calc(100% - 28px))}.cg-bridge::before{left:20px}.cg-need:hover,.cg-check:hover{transform:none}}
+    /* Purpose concierge: the visitor chooses a context and the page answers it. */
+    .cg-purpose{max-width:1240px;margin:0 auto;padding:clamp(72px,8vw,118px) 28px}.cg-purpose__header{display:grid;grid-template-columns:160px minmax(0,1fr);gap:34px;margin-bottom:36px}.cg-purpose__header h2{max-width:780px;margin:0;color:var(--cg-green);font-size:clamp(32px,3.2vw,46px);font-weight:600;line-height:1.22;letter-spacing:-.045em}.cg-purpose__tabs{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #b8cbc3;background:#fff}.cg-purpose__tab{appearance:none;padding:18px 20px;border:0;border-right:1px solid #c8d6d0;background:#fff;color:#587069;font:inherit;text-align:left;cursor:pointer;transition:background .25s ease,color .25s ease}.cg-purpose__tab:last-child{border-right:0}.cg-purpose__tab small{display:block;margin-bottom:5px;color:#639b9d;font-size:9px;font-weight:700;letter-spacing:.16em}.cg-purpose__tab strong{font-size:15px}.cg-purpose__tab[aria-selected="true"]{background:var(--cg-green);color:#fff}.cg-purpose__tab[aria-selected="true"] small{color:#b8ded2}.cg-purpose__panel{display:grid;grid-template-columns:minmax(340px,.88fr) minmax(0,1.12fr);min-height:510px;background:var(--cg-deep);color:#fff}.cg-purpose__media{position:relative;overflow:hidden;margin:0;background:#dfe5e2}.cg-purpose__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(8,39,32,.34))}.cg-purpose__media img{display:block;width:100%;height:100%;object-fit:cover;transition:opacity .28s ease,transform .6s cubic-bezier(.2,.7,.2,1)}.cg-purpose__media.is-changing img{opacity:.35;transform:scale(1.025)}.cg-purpose__content{display:flex;flex-direction:column;justify-content:center;padding:clamp(42px,6vw,82px)}.cg-purpose__kicker{margin:0 0 18px;color:#9bc9bd;font-size:10px;font-weight:700;letter-spacing:.18em}.cg-purpose__content h3{max-width:600px;margin:0;font-size:clamp(31px,3vw,46px);font-weight:500;line-height:1.25;letter-spacing:-.045em}.cg-purpose__description{max-width:610px;margin:24px 0 0;color:#d6e5df;font-size:16px;line-height:1.85}.cg-purpose__points{display:grid;grid-template-columns:repeat(2,1fr);gap:0 24px;margin:30px 0 0;padding:0;list-style:none;border-top:1px solid rgba(255,255,255,.2)}.cg-purpose__points li{padding:15px 0;border-bottom:1px solid rgba(255,255,255,.16);color:#eef6f2;font-size:13px;line-height:1.55}.cg-purpose__content .cg-button{align-self:flex-start;margin-top:28px;border-color:#fff;background:#fff;color:var(--cg-green)}
+    /* One continuous making story replaces the detached gallery and step cards. */
+    .cg-story{background:var(--cg-deep);color:#fff}.cg-story__intro{display:grid;grid-template-columns:160px minmax(0,1fr);gap:34px;max-width:1240px;margin:0 auto;padding:clamp(76px,8vw,118px) 28px 44px}.cg-story__intro .cg-section__number{color:#8ec0b4}.cg-story__intro h2{max-width:800px;margin:0;font-size:clamp(34px,3.5vw,50px);font-weight:500;line-height:1.22;letter-spacing:-.045em}.cg-story__layout{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(360px,.82fr);gap:clamp(42px,6vw,90px);max-width:1360px;margin:0 auto;padding:0 28px clamp(88px,10vw,144px)}.cg-story__stage{position:sticky;top:100px;height:calc(100svh - 140px);min-height:560px;max-height:760px;overflow:hidden;background:#dce2df}.cg-story__image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.035);transition:opacity .65s ease,transform 1s cubic-bezier(.2,.7,.2,1)}.cg-story__image.is-active{z-index:1;opacity:1;transform:scale(1)}.cg-story__stage::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,transparent 56%,rgba(7,33,28,.58));pointer-events:none}.cg-story__caption{position:absolute;right:24px;bottom:24px;left:24px;z-index:3;display:flex;align-items:end;justify-content:space-between;gap:20px}.cg-story__caption span{max-width:430px;font-size:13px;line-height:1.6}.cg-story__counter{font-size:11px;font-weight:700;letter-spacing:.14em;white-space:nowrap}.cg-story__counter b{font-size:24px;font-weight:500}.cg-story__steps{padding-top:8vh}.cg-story__steps::after{content:"";display:block;height:150px}.cg-story__step{display:flex;min-height:62vh;flex-direction:column;justify-content:center;padding:44px 0;border-top:1px solid rgba(255,255,255,.2);opacity:.38;transition:opacity .35s ease}.cg-story__step:last-child{border-bottom:1px solid rgba(255,255,255,.2)}.cg-story__step.is-active{opacity:1}.cg-story__mobile-image{display:none}.cg-story__step small{color:#8fc4b7;font-size:10px;font-weight:700;letter-spacing:.16em}.cg-story__step h3{margin:16px 0 18px;font-size:clamp(28px,2.7vw,40px);font-weight:500;line-height:1.25;letter-spacing:-.04em}.cg-story__step p{max-width:490px;margin:0;color:#cedfd9;font-size:15px;line-height:1.85}.cg-story__step strong{display:block;margin-top:24px;color:#fff;font-size:13px;font-weight:600}.cg-story__cta{display:inline-flex;align-self:flex-start;justify-content:space-between;min-width:220px;margin-top:28px;padding:16px 19px;border:1px solid rgba(255,255,255,.65);color:#fff;text-decoration:none;font-size:13px;font-weight:700}
+    @media(max-width:900px){.cg-purpose__header,.cg-story__intro{grid-template-columns:1fr;gap:16px}.cg-purpose__panel{grid-template-columns:1fr;min-height:0}.cg-purpose__media{height:430px}.cg-purpose__content{padding:46px 34px}.cg-story__layout{display:block}.cg-story__stage{display:none}.cg-story__steps{padding-top:0}.cg-story__steps::after{display:none}.cg-story__step{min-height:0;padding:54px 0;opacity:1}.cg-story__mobile-image{display:block;width:100%;margin:0 0 30px;aspect-ratio:4/3;object-fit:cover}.cg-story__caption{right:18px;bottom:18px;left:18px}}
+    @media(max-width:560px){.cg-purpose{padding:62px 20px}.cg-purpose__tabs{grid-template-columns:1fr}.cg-purpose__tab{border-right:0;border-bottom:1px solid #c8d6d0}.cg-purpose__tab:last-child{border-bottom:0}.cg-purpose__media{height:320px}.cg-purpose__content{padding:38px 24px}.cg-purpose__content h3{font-size:31px}.cg-purpose__points{grid-template-columns:1fr}.cg-purpose__content .cg-button{width:100%}.cg-story__intro{padding:62px 20px 34px}.cg-story__layout{padding:0 20px 78px}.cg-story__stage{top:70px;height:38svh;min-height:260px}.cg-story__caption span{max-width:235px;font-size:11px}.cg-story__counter b{font-size:20px}.cg-story__step{min-height:330px;padding:34px 0}.cg-story__step h3{font-size:29px}}
     @media(prefers-reduced-motion:reduce){.cg-scroll-progress{display:none}.cg-hero__visual>.cg-hero__main-image,.cg-motion-ready .cg-reveal,.cg-motion-ready .cg-media-reveal,.cg-motion-ready .cg-media-reveal img{opacity:1;transform:none;transition:none}.cg-need,.cg-check{transition:none}}
   </style>
   <script type="application/ld+json">
@@ -76,13 +82,39 @@
       <div class="cg-offer__panel"><p class="cg-eyebrow">DEAR SIGNATURE · CONSULTATION PRODUCT</p><h2 id="offer-title">디어 공진단</h2><p class="cg-offer__tagline">누구에게 전할지, 왜 필요한지를 확인한 뒤<br>한 분을 위한 구성으로 준비합니다.</p><dl class="cg-offer__spec"><div><dt>상담</dt><dd>복용할 분의 현재 상태와 목적을 먼저 확인합니다.</dd></div><div><dt>구성</dt><dd>사향을 포함한 실제 약재와 처방 방향을 설명합니다.</dd></div><div><dt>조제</dt><dd>김민지 대표원장이 원내에서 필요한 만큼 직접 조제합니다.</dd></div><div><dt>전달</dt><dd>복용·보관 안내와 함께 디어 패키지로 준비합니다.</dd></div></dl><p class="cg-offer__notice">정해진 구성을 바로 고르는 방식이 아닙니다. 먼저 상담한 뒤 복용할 분에게 필요한 구성과 환수를 함께 정합니다.</p><div class="cg-offer__actions"><a class="cg-button cg-button--primary" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">이 구성 상담하기 <span>→</span></a><a class="cg-button cg-button--secondary" href="tel:02-3486-1777">전화 문의 <span>→</span></a></div><p class="cg-offer__micro">진료 후 처방이 결정됩니다 · 방문 전 네이버 예약 권장</p></div>
     </section>
 
-    <section class="cg-section" aria-labelledby="needs-title"><div class="cg-section__head"><span class="cg-section__number">01 · PURPOSE</span><h2 id="needs-title">누구를 위한 공진단인지부터<br>이야기를 시작합니다.</h2></div><div class="cg-needs"><article class="cg-need"><span>FOR MYSELF</span><h3>나를 위해 찾는 경우</h3><p>바쁜 일정과 생활의 변화 속에서 현재 상태를 확인하고, 공진단이 적합한지 상담합니다.</p></article><article class="cg-need"><span>FOR FAMILY</span><h3>부모님과 가족을 위한 경우</h3><p>선물이라는 이유로 같은 구성을 권하지 않습니다. 복용할 분의 건강 상태와 기존 약을 함께 확인합니다.</p></article><article class="cg-need"><span>FOR A MOMENT</span><h3>중요한 시기를 앞둔 경우</h3><p>복용 목적과 일정, 수면·식사·소화 상태를 살핀 뒤 필요한 방향과 복용 방법을 안내합니다.</p></article></div></section>
+    <section class="cg-purpose" aria-labelledby="needs-title">
+      <div class="cg-purpose__header"><span class="cg-section__number">01 · PURPOSE CONCIERGE</span><h2 id="needs-title">누구를 위한 공진단인가요?<br>선택에 맞춰 확인할 내용을 보여드립니다.</h2></div>
+      <div class="cg-purpose__tabs" role="tablist" aria-label="공진단 상담 목적 선택">
+        <button class="cg-purpose__tab" type="button" role="tab" id="purpose-family" aria-controls="purpose-panel" aria-selected="true" data-purpose="family"><small>FOR FAMILY</small><strong>부모님·가족에게</strong></button>
+        <button class="cg-purpose__tab" type="button" role="tab" id="purpose-moment" aria-controls="purpose-panel" aria-selected="false" data-purpose="moment" tabindex="-1"><small>FOR A MOMENT</small><strong>중요한 시기를 앞두고</strong></button>
+        <button class="cg-purpose__tab" type="button" role="tab" id="purpose-self" aria-controls="purpose-panel" aria-selected="false" data-purpose="self" tabindex="-1"><small>FOR MYSELF</small><strong>나를 위해</strong></button>
+      </div>
+      <div class="cg-purpose__panel" id="purpose-panel" role="tabpanel" aria-labelledby="purpose-family">
+        <figure class="cg-purpose__media"><img id="purpose-image" src="../assets/images/gongjindan-2.jpg" alt="부모님과 가족에게 전하기 좋은 디어한의원 공진단 패키지" loading="lazy"></figure>
+        <div class="cg-purpose__content"><p class="cg-purpose__kicker" id="purpose-kicker">A CONSIDERATE GIFT</p><h3 id="purpose-title">포장은 같아도,<br>받는 분의 처방은 같지 않습니다.</h3><p class="cg-purpose__description" id="purpose-description">선물이라는 이유로 정해진 구성을 바로 권하지 않습니다. 복용할 분의 건강 상태와 기존 약을 확인한 뒤 필요한 구성과 환수를 상담합니다.</p><ul class="cg-purpose__points"><li id="purpose-point-1">복용할 분의 현재 상태</li><li id="purpose-point-2">기존 질환과 복용 중인 약</li><li id="purpose-point-3">포장·보관·수령 방법</li><li id="purpose-point-4">필요한 구성과 환수</li></ul><a class="cg-button" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener"><span id="purpose-cta">가족을 위한 상담 예약</span><span>→</span></a></div>
+      </div>
+    </section>
 
     <section class="cg-checks"><div class="cg-section"><div class="cg-section__head"><span class="cg-section__number">02 · CHECKLIST</span><h2>공진단을 고르기 전,<br>네 가지를 확인해 보세요.</h2></div><div class="cg-check-grid"><article class="cg-check"><small>01 · NAME</small><h3>이름과 실제 구성이 같은가</h3><p>사향·녹용·당귀·산수유를 중심으로 하는 공진단과 목향·침향을 사용한 처방은 구성이 다릅니다. 디어한의원은 서로 다른 약재를 같은 이름으로 혼용하지 않습니다.</p></article><article class="cg-check"><small>02 · MATERIAL</small><h3>사용할 약재를 확인하는가</h3><p>디어한의원은 정식 수입 절차와 관련 서류, 품질 표시를 확인한 사향 원료를 사용하며 조제 전 실제 약재의 상태를 다시 살핍니다.</p></article><article class="cg-check"><small>03 · MAKER</small><h3>누가 어디에서 조제하는가</h3><p>상담과 처방의 의도가 조제까지 이어질 수 있도록 대표원장이 원내에서 약재 확인과 분쇄, 배합 및 환 조제를 직접 맡습니다.</p></article><article class="cg-check"><small>04 · GUIDANCE</small><h3>복용 전후 안내가 이어지는가</h3><p>현재 건강 상태와 기존 질환, 복용 중인 약을 살피고 복용 방법과 보관, 수령에 필요한 내용을 함께 안내합니다.</p></article></div><div class="cg-conversion"><div><h3>구성과 환수는 상담 후 안내합니다.</h3><p>복용할 분의 현재 상태와 목적을 확인한 뒤 필요한 처방과 수량을 함께 정합니다.</p></div><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">공진단 구성 상담하기 →</a></div></div></section>
 
-    <section class="cg-section" aria-labelledby="evidence-title"><div class="cg-section__head"><span class="cg-section__number">03 · ACTUAL PROCESS</span><h2 id="evidence-title">말보다 실제 과정으로<br>디어의 기준을 보여드립니다.</h2></div><div class="cg-gallery"><figure><img src="../assets/images/columns/gongjindan-handmade/musk-closeup.jpg" alt="디어한의원에서 조제 전 확인하는 사향 원료" loading="lazy"><figcaption>조제 전 대표원장이 직접 확인하는 실제 사향 원료</figcaption></figure><figure><img src="../assets/images/columns/gongjindan-handmade/herbal-powders.jpg" alt="공진단 조제를 위해 준비한 여러 약재 분말" loading="lazy"><figcaption>원내에서 확인하고 준비한 구성 약재</figcaption></figure><figure><img src="../assets/images/gongjindan-5.png" alt="디어한의원 공진단 패키지를 열어 본 모습" loading="lazy"><figcaption>조제 후 안전하게 담아 전달하는 디어 패키지</figcaption></figure></div></section>
-
-    <section class="cg-process"><div class="cg-section"><div class="cg-section__head"><span class="cg-section__number">04 · FROM CONSULT</span><h2>상담에서 한 환이<br>완성되기까지.</h2></div><div class="cg-process__grid"><article class="cg-step"><span>01</span><h3>상태와 목적 확인</h3><p>수면·식사·소화·생활 패턴과 기존 질환, 복용 중인 약을 확인합니다.</p></article><article class="cg-step"><span>02</span><h3>처방 방향 결정</h3><p>공진단이 적합한지 판단하고 필요한 구성과 복용 방향을 정합니다.</p></article><article class="cg-step"><span>03</span><h3>원내 직접 조제</h3><p>대표원장이 약재를 확인하고 필요한 만큼 소량씩 직접 조제합니다.</p></article><article class="cg-step"><span>04</span><h3>포장과 복용 안내</h3><p>복용 방법과 보관, 수령 및 배송에 필요한 내용을 안내합니다.</p></article></div></div></section>
+    <section class="cg-story" aria-labelledby="evidence-title">
+      <div class="cg-story__intro"><span class="cg-section__number">03 · FROM MATERIAL TO ONE PILL</span><h2 id="evidence-title">말보다 실제 장면으로,<br>상담에서 한 환까지 이어집니다.</h2></div>
+      <div class="cg-story__layout">
+        <div class="cg-story__stage" aria-live="polite">
+          <img class="cg-story__image is-active" src="../assets/images/columns/gongjindan-handmade/musk-closeup.jpg" alt="디어한의원에서 조제 전 확인하는 사향 원료" loading="lazy" data-story-image="0">
+          <img class="cg-story__image" src="../assets/images/columns/gongjindan-handmade/herbal-powders.jpg" alt="공진단 조제를 위해 준비한 여러 약재 분말" loading="lazy" data-story-image="1">
+          <img class="cg-story__image" src="../assets/images/gongjindan-4.png" alt="디어한의원 원내에서 조제한 금박 공진단" loading="lazy" data-story-image="2">
+          <img class="cg-story__image" src="../assets/images/gongjindan-2.jpg" alt="완성된 디어한의원 공진단 패키지" loading="lazy" data-story-image="3">
+          <div class="cg-story__caption"><span id="story-caption">조제 전 대표원장이 직접 확인하는 실제 사향 원료</span><span class="cg-story__counter"><b id="story-current">01</b> / 04</span></div>
+        </div>
+        <div class="cg-story__steps">
+          <article class="cg-story__step is-active" data-story-step="0" data-caption="조제 전 대표원장이 직접 확인하는 실제 사향 원료"><img class="cg-story__mobile-image" src="../assets/images/columns/gongjindan-handmade/musk-closeup.jpg" alt="디어한의원에서 조제 전 확인하는 사향 원료" loading="lazy"><small>01 · MATERIAL</small><h3>약재의 이름보다<br>실물을 먼저 확인합니다.</h3><p>정식 수입 절차와 관련 서류, 품질 표시를 확인한 사향 원료를 사용하며 조제 전 상태를 다시 살핍니다.</p><strong>확인하는 것 · 원료·서류·보관 상태</strong></article>
+          <article class="cg-story__step" data-story-step="1" data-caption="상담과 처방에 맞춰 원내에서 준비한 구성 약재"><img class="cg-story__mobile-image" src="../assets/images/columns/gongjindan-handmade/herbal-powders.jpg" alt="공진단 조제를 위해 준비한 여러 약재 분말" loading="lazy"><small>02 · PRESCRIPTION</small><h3>상담의 내용이<br>약재 구성으로 이어집니다.</h3><p>수면·식사·소화·생활 패턴과 기존 질환, 복용 중인 약을 확인하고 공진단이 적합한지와 필요한 방향을 결정합니다.</p><strong>결정하는 것 · 처방 방향·구성·환수</strong></article>
+          <article class="cg-story__step" data-story-step="2" data-caption="김민지 대표원장이 원내에서 필요한 만큼 직접 조제합니다"><img class="cg-story__mobile-image" src="../assets/images/gongjindan-4.png" alt="디어한의원 원내에서 조제한 금박 공진단" loading="lazy"><small>03 · MAKING</small><h3>상담한 사람이<br>필요한 만큼 직접 만듭니다.</h3><p>상담과 처방의 의도가 조제까지 이어지도록 김민지 대표원장이 원내에서 약재 확인과 배합, 환 조제를 맡습니다.</p><strong>지키는 것 · 원내 직접 조제·소량 조제</strong></article>
+          <article class="cg-story__step" data-story-step="3" data-caption="복용과 보관 안내를 담아 완성한 디어 공진단 패키지"><img class="cg-story__mobile-image" src="../assets/images/gongjindan-2.jpg" alt="완성된 디어한의원 공진단 패키지" loading="lazy"><small>04 · DELIVERY</small><h3>한 환을 건네는 순간까지<br>진료는 끝나지 않습니다.</h3><p>복용 방법과 보관, 수령 및 가능한 배송 방법을 안내하고 받는 분에게 필요한 내용을 디어 패키지에 함께 담습니다.</p><strong>안내하는 것 · 복용·보관·수령</strong><a class="cg-story__cta" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">공진단 구성 상담하기 <span>→</span></a></article>
+        </div>
+      </div>
+    </section>
 
     <section class="cg-section"><div class="cg-gift"><img src="../assets/images/gongjindan-1.jpg" alt="디어한의원 공진단 한 환을 패키지에서 꺼내는 모습" loading="lazy"><div class="cg-gift__copy"><p class="cg-eyebrow">A THOUGHTFUL CHOICE</p><h2>선물용이어도<br>받는 분을 먼저 봅니다.</h2><p>공진단은 포장만 보고 고르는 일반 상품과 다릅니다. 부모님이나 소중한 분께 전하고 싶다면 복용할 분의 건강 상태와 복용 중인 약, 평소 불편감을 확인해야 합니다.</p><p>상담 후에는 필요한 구성과 환수, 복용 방법, 포장과 수령 방법을 차분히 안내해 드립니다.</p><ul class="cg-gift__list"><li><b>01</b><span>복용할 분의 건강 상태 확인</span></li><li><b>02</b><span>목적에 맞는 구성과 환수 안내</span></li><li><b>03</b><span>포장·보관·수령 방법 안내</span></li></ul></div></div></section>
 
@@ -103,10 +135,81 @@
     const hero = document.querySelector('.cg-hero');
     const heroImage = document.querySelector('.cg-hero__main-image');
     const revealGroups = [
-      ['.cg-bridge', '.cg-offer__panel', '.cg-section__head', '.cg-conversion', '.cg-gift__copy', '.cg-faq__inner', '.cg-final'],
-      ['.cg-proof > div', '.cg-need', '.cg-check', '.cg-step'],
-      ['.cg-offer__visual figure', '.cg-gallery figure', '.cg-gift > img']
+      ['.cg-bridge', '.cg-offer__panel', '.cg-purpose__header', '.cg-purpose__panel', '.cg-section__head', '.cg-conversion', '.cg-story__intro', '.cg-gift__copy', '.cg-faq__inner', '.cg-final'],
+      ['.cg-proof > div', '.cg-check'],
+      ['.cg-offer__visual figure', '.cg-gift > img']
     ];
+    const purposeData = {
+      family: {
+        image: '../assets/images/gongjindan-2.jpg',
+        alt: '부모님과 가족에게 전하기 좋은 디어한의원 공진단 패키지',
+        kicker: 'A CONSIDERATE GIFT',
+        title: '포장은 같아도,<br>받는 분의 처방은 같지 않습니다.',
+        description: '선물이라는 이유로 정해진 구성을 바로 권하지 않습니다. 복용할 분의 건강 상태와 기존 약을 확인한 뒤 필요한 구성과 환수를 상담합니다.',
+        points: ['복용할 분의 현재 상태', '기존 질환과 복용 중인 약', '포장·보관·수령 방법', '필요한 구성과 환수'],
+        cta: '가족을 위한 상담 예약'
+      },
+      moment: {
+        image: '../assets/images/gongjindan-3.jpg',
+        alt: '중요한 시기를 앞둔 분을 위해 준비하는 디어한의원 공진단',
+        kicker: 'FOR AN IMPORTANT MOMENT',
+        title: '중요한 일정일수록,<br>복용 시점까지 함께 봅니다.',
+        description: '바쁜 업무, 시험이나 큰 일정을 앞두고 있다면 현재 수면·식사·소화 상태와 남은 일정을 함께 살펴 복용 방향을 안내합니다.',
+        points: ['앞두고 있는 일정', '최근 수면과 식사 상태', '평소 소화와 생활 패턴', '복용 시작 시점과 방법'],
+        cta: '중요한 시기 상담 예약'
+      },
+      self: {
+        image: '../assets/images/gongjindan-1.jpg',
+        alt: '나를 위해 한 환씩 준비된 디어한의원 공진단',
+        kicker: 'A QUIET CARE FOR MYSELF',
+        title: '버티는 것에 익숙해졌다면,<br>지금의 몸부터 확인합니다.',
+        description: '바쁜 일정과 생활의 변화 속에서 느끼는 불편을 듣고, 공진단이 지금의 나에게 적합한지부터 차분히 상담합니다.',
+        points: ['최근 느끼는 몸의 변화', '수면·식사·소화 상태', '기존 질환과 복용 중인 약', '일상에 맞춘 복용 안내'],
+        cta: '나를 위한 상담 예약'
+      }
+    };
+    const purposeTabs = Array.from(document.querySelectorAll('.cg-purpose__tab'));
+    const purposePanel = document.getElementById('purpose-panel');
+    const purposeMedia = document.querySelector('.cg-purpose__media');
+    const purposeImage = document.getElementById('purpose-image');
+    const setPurpose = (key, focusTab = false) => {
+      const data = purposeData[key];
+      const selectedTab = purposeTabs.find((tab) => tab.dataset.purpose === key);
+      if (!data || !selectedTab || !purposePanel) return;
+      purposeTabs.forEach((tab) => {
+        const selected = tab === selectedTab;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+      });
+      purposePanel.setAttribute('aria-labelledby', selectedTab.id);
+      purposeMedia?.classList.add('is-changing');
+      window.setTimeout(() => {
+        purposeImage.src = data.image;
+        purposeImage.alt = data.alt;
+        document.getElementById('purpose-kicker').textContent = data.kicker;
+        document.getElementById('purpose-title').innerHTML = data.title;
+        document.getElementById('purpose-description').textContent = data.description;
+        data.points.forEach((point, index) => {
+          document.getElementById(`purpose-point-${index + 1}`).textContent = point;
+        });
+        document.getElementById('purpose-cta').textContent = data.cta;
+        purposeMedia?.classList.remove('is-changing');
+      }, reducedMotion ? 0 : 180);
+      if (focusTab) selectedTab.focus();
+    };
+    purposeTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => setPurpose(tab.dataset.purpose));
+      tab.addEventListener('keydown', (event) => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let nextIndex = index;
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % purposeTabs.length;
+        if (event.key === 'ArrowLeft') nextIndex = (index - 1 + purposeTabs.length) % purposeTabs.length;
+        if (event.key === 'Home') nextIndex = 0;
+        if (event.key === 'End') nextIndex = purposeTabs.length - 1;
+        setPurpose(purposeTabs[nextIndex].dataset.purpose, true);
+      });
+    });
     const targets = [];
     revealGroups.forEach((group, groupIndex) => {
       group.forEach((selector) => {
@@ -129,6 +232,24 @@
       targets.forEach((target) => observer.observe(target));
     } else {
       targets.forEach((target) => target.classList.add('is-visible'));
+    }
+    const storySteps = Array.from(document.querySelectorAll('.cg-story__step'));
+    const storyImages = Array.from(document.querySelectorAll('.cg-story__image'));
+    const storyCaption = document.getElementById('story-caption');
+    const storyCurrent = document.getElementById('story-current');
+    const setStoryStep = (index) => {
+      storySteps.forEach((step, stepIndex) => step.classList.toggle('is-active', stepIndex === index));
+      storyImages.forEach((image, imageIndex) => image.classList.toggle('is-active', imageIndex === index));
+      if (storyCaption) storyCaption.textContent = storySteps[index]?.dataset.caption || '';
+      if (storyCurrent) storyCurrent.textContent = String(index + 1).padStart(2, '0');
+    };
+    if ('IntersectionObserver' in window && storySteps.length) {
+      const storyObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setStoryStep(Number(entry.target.dataset.storyStep));
+        });
+      }, { threshold: 0, rootMargin: '-35% 0px -50% 0px' });
+      storySteps.forEach((step) => storyObserver.observe(step));
     }
     let ticking = false;
     const renderScroll = () => {
