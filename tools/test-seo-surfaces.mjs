@@ -29,6 +29,8 @@ for (const pageUrl of sitemapUrls) {
   const absolutePath = path.join(siteRoot, relativePath);
   assert.ok(fs.existsSync(absolutePath), `사이트맵 페이지 파일이 없습니다: ${relativePath}`);
   const html = fs.readFileSync(absolutePath, "utf8");
+  assert.doesNotMatch(html, /assets\/images\/favicon\.svg/, `이전 파비콘을 참조합니다: ${relativePath}`);
+  assert.match(html, /assets\/images\/dear-favicon\.png/, `디어 파비콘이 없습니다: ${relativePath}`);
   assert.match(html, /<title>[^<]+<\/title>/i, `title이 없습니다: ${relativePath}`);
   const descriptionTag = [...html.matchAll(/<meta\b[^>]*>/gi)].find((match) => /\bname="description"/i.test(match[0]));
   assert.match(descriptionTag?.[0] || "", /\bcontent="[^"]+"/i, `description이 없습니다: ${relativePath}`);

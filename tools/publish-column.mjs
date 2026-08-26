@@ -723,7 +723,7 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../assets/images/dear-favicon.png" type="image/png">
   <meta name="theme-color" content="#F8F8F6">
 ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="description" content="${escapeHtml(content.description)}">

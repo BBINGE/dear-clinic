@@ -82,7 +82,7 @@ function Generate {
   $b = BodyHtml $body.Text
   $html = @"
 <!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml"><title>$t</title><meta name="description" content="$s">
+<link rel="icon" href="../assets/images/dear-favicon.png" type="image/png"><title>$t</title><meta name="description" content="$s">
 <link rel="canonical" href="https://dearhani.com/columns/$id.html"><meta property="og:type" content="article"><meta property="og:title" content="$t"><meta property="og:description" content="$s"><meta property="og:image" content="https://dearhani.com/assets/images/columns/$imgName">
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"><link rel="stylesheet" href="../css/style.css"><script type="application/ld+json">$schema</script></head>
 <body class="column-article-body"><nav class="nav" id="top"><a href="../index.html" class="nav__logo">DEAR</a><button class="nav__toggle" id="navToggle" aria-label="메뉴 열기"><span></span><span></span><span></span></button><ul class="nav__menu" id="navMenu"><li><a href="../about.html" class="nav__link">About DEAR</a></li><li><a href="../columns.html" class="nav__link is-active">Columns</a></li><li><a href="../care.html" class="nav__link">Care</a></li><li><a href="../services.html" class="nav__link">DEAR SERVICES</a></li><li><a href="../index.html#info" class="nav__link">Contact</a></li></ul></nav>
