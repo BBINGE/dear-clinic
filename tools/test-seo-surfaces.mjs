@@ -69,6 +69,7 @@ const cheongdamGongjindanCopy = cheongdamGongjindan
   .replace(/<[^>]+>/g, " ");
 assert.match(cheongdamGongjindan, /href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "청담 공진단 칼럼에 네이버 예약 CTA가 없습니다.");
 assert.match(cheongdamGongjindan, /href="tel:02-3486-1777"/, "청담 공진단 칼럼에 전화 CTA가 없습니다.");
+assert.match(cheongdamGongjindan, /class="cg-offer"[\s\S]*class="cg-offer__spec"[\s\S]*이 구성 상담하기/, "청담 공진단 칼럼의 상담형 상품 모듈이 없습니다.");
 assert.doesNotMatch(cheongdamGongjindanCopy, /(?:₩|\d[\d,]*\s*원(?:\s|$)|\d+\s*퍼센트|할인|특가)/, "청담 공진단 칼럼에 가격 또는 할인 표현이 노출됩니다.");
 
 const koreanHtml = [
