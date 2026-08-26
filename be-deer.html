@@ -24,6 +24,42 @@
   <meta name="twitter:description" content="몸을 다그치기보다, 달라지는 이유부터. 지금의 몸과 생활을 함께 살피는 BE DEER.">
   <meta name="twitter:image" content="https://dearhani.com/assets/images/be-deer/be-deer-og-20260807.jpg">
   <link rel="image_src" href="https://dearhani.com/assets/images/be-deer/be-deer-og-20260807.jpg">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "MedicalWebPage",
+        "@id": "https://dearhani.com/be-deer.html#webpage",
+        "url": "https://dearhani.com/be-deer.html",
+        "name": "BE DEER 다이어트 프로그램",
+        "description": "체중과 체성분, 식욕과 수면, 소화와 움직임, 생활의 리듬까지 함께 살피는 디어한의원의 BE DEER 다이어트 프로그램입니다.",
+        "inLanguage": "ko-KR",
+        "about": { "@id": "https://dearhani.com/be-deer.html#service" },
+        "mainEntity": { "@id": "https://dearhani.com/be-deer.html#service" },
+        "reviewedBy": { "@id": "https://dearhani.com/director.html#kim-minji" },
+        "publisher": { "@id": "https://dearhani.com/#clinic" }
+      },
+      {
+        "@type": "Service",
+        "@id": "https://dearhani.com/be-deer.html#service",
+        "name": "BE DEER 다이어트 진료",
+        "serviceType": "체중과 생활 리듬을 함께 살피는 한의 비만 진료",
+        "url": "https://dearhani.com/be-deer.html",
+        "provider": { "@id": "https://dearhani.com/#clinic" },
+        "areaServed": { "@type": "City", "name": "서울" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://dearhani.com/" },
+          { "@type": "ListItem", "position": 2, "name": "DEAR SERVICES", "item": "https://dearhani.com/services.html" },
+          { "@type": "ListItem", "position": 3, "name": "BE DEER" }
+        ]
+      }
+    ]
+  }
+  </script>
   <link rel="icon" href="assets/images/dear-favicon.png" type="image/png">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
   <link rel="stylesheet" href="css/style.css?v=20260824-8">
@@ -31,14 +67,14 @@
 </head>
 <body class="be-deer-page">
   <nav class="nav" id="top">
-    <a href="index.html" class="nav__logo">DEAR</a>
+    <a href="/" class="nav__logo">DEAR</a>
     <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
     <ul class="nav__menu" id="navMenu">
       <li><a href="about.html" class="nav__link" data-ready="true">About DEAR</a></li>
       <li><a href="columns.html" class="nav__link" data-ready="true">Columns</a></li>
       <li><a href="care.html" class="nav__link" data-ready="true">Care</a></li>
       <li><a href="services.html" class="nav__link" data-ready="true">DEAR SERVICES</a></li>
-      <li><a href="index.html#info" class="nav__link" data-ready="true">Contact</a></li>
+      <li><a href="/#info" class="nav__link" data-ready="true">Contact</a></li>
     </ul>
   </nav>
 

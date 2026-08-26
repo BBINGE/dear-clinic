@@ -136,7 +136,7 @@ async function api(request, response, pathname) {
       content.status = "ready";
       fs.writeFileSync(contentPath, `${JSON.stringify(content, null, 2)}\n`, "utf8");
       const result = runPublisher(contentPath, "publish");
-      const git = spawnSync("git", ["add", "--", "columns.html", "sitemap.xml", `columns/${content.slug}.html`, `assets/images/columns/${content.slug}`], { cwd: siteRoot, encoding: "utf8" });
+      const git = spawnSync("git", ["add", "--", "columns.html", "sitemap.xml", "rss.xml", "assets/data/latest-column.json", `columns/${content.slug}.html`, `assets/images/columns/${content.slug}`], { cwd: siteRoot, encoding: "utf8" });
       if (git.status !== 0) throw new Error(git.stderr.trim() || "Git 저장 준비에 실패했습니다.");
       const commit = spawnSync("git", ["commit", "-m", `칼럼 게시: ${content.title}`], { cwd: siteRoot, encoding: "utf8" });
       if (commit.status !== 0) throw new Error(commit.stderr.trim() || commit.stdout.trim() || "커밋하지 못했습니다.");

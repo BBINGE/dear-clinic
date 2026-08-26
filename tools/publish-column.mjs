@@ -6,11 +6,11 @@ import { fileURLToPath } from "node:url";
 const BASE_URL = "https://dearhani.com";
 const PUBLISHER_MARKER = "<!-- GENERATED_BY_DEAR_COLUMN_PUBLISHER -->";
 const CATEGORY_MAP = {
-  Focus: { label: "인지·집중", display: "FOCUS" },
-  Calm: { label: "긴장·수면", display: "CALM" },
-  Restore: { label: "피로·회복", display: "RESTORE" },
-  Relief: { label: "통증·불편", display: "RELIEF" },
-  Shape: { label: "체중·리듬", display: "SHAPE" },
+  Focus: { label: "인지·집중", display: "FOCUS", relatedPath: "/care.html?care=Focus" },
+  Calm: { label: "긴장·수면", display: "CALM", relatedPath: "/services.html#deer-balance" },
+  Restore: { label: "피로·회복", display: "RESTORE", relatedPath: "/dear-gongjindan.html" },
+  Relief: { label: "통증·불편", display: "RELIEF", relatedPath: "/services.html#herbal-decoction" },
+  Shape: { label: "체중·리듬", display: "SHAPE", relatedPath: "/be-deer.html" },
 };
 
 function parseArgs(argv) {
@@ -256,8 +256,12 @@ function resolveMediaFile(mediaRoot, relativePath) {
   if (![".jpg", ".jpeg", ".png", ".webp"].includes(extension)) {
     throw new Error(`JPG, PNG, WebP 이미지만 사용할 수 있습니다: ${relativePath}`);
   }
-  if (fs.statSync(resolved).size > 5 * 1024 * 1024) {
+  const fileSize = fs.statSync(resolved).size;
+  if (fileSize > 5 * 1024 * 1024) {
     throw new Error(`이미지 파일이 5MB를 초과합니다: ${relativePath}`);
+  }
+  if (extension !== ".webp" && fileSize > 1024 * 1024) {
+    throw new Error(`1MB를 초과하는 JPG·PNG는 WebP로 최적화한 뒤 사용해 주세요: ${relativePath}`);
   }
   return { resolved, extension };
 }
@@ -661,6 +665,7 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
       inLanguage: "ko-KR",
       keywords: content.tags,
       image: imageUrl,
+      relatedLink: `${BASE_URL}${category.relatedPath}`,
       datePublished: content.publishedAt,
       dateModified: modifiedAt,
       author: { "@id": `${BASE_URL}/director.html#kim-minji` },
@@ -747,13 +752,13 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
 ${PUBLISHER_MARKER}
 ${previewNotice}
 <nav class="nav" id="top">
-  <a href="../index.html" class="nav__logo">DEAR</a>
+  <a href="/" class="nav__logo">DEAR</a>
   <button class="nav__toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false"><span></span><span></span><span></span></button>
-  <ul class="nav__menu" id="navMenu"><li><a href="../about.html" class="nav__link" data-ready="true">About DEAR</a></li><li><a href="../columns.html" class="nav__link is-active" data-ready="true">Columns</a></li><li><a href="../care.html" class="nav__link" data-ready="true">Care</a></li><li><a href="../services.html" class="nav__link" data-ready="true">DEAR SERVICES</a></li><li><a href="../index.html#info" class="nav__link" data-ready="true">Contact</a></li></ul>
+  <ul class="nav__menu" id="navMenu"><li><a href="../about.html" class="nav__link" data-ready="true">About DEAR</a></li><li><a href="../columns.html" class="nav__link is-active" data-ready="true">Columns</a></li><li><a href="../care.html" class="nav__link" data-ready="true">Care</a></li><li><a href="../services.html" class="nav__link" data-ready="true">DEAR SERVICES</a></li><li><a href="/#info" class="nav__link" data-ready="true">Contact</a></li></ul>
 </nav>
 <main class="column-article"><article>
   <header class="column-article__header">
-    <nav class="column-breadcrumb" aria-label="현재 위치"><a href="../index.html">홈</a><span>›</span><a href="../columns.html">Columns</a><span>›</span><span>${category.label}</span></nav>
+    <nav class="column-breadcrumb" aria-label="현재 위치"><a href="/">홈</a><span>›</span><a href="../columns.html">Columns</a><span>›</span><span>${category.label}</span></nav>
     <p class="column-meta">${category.display} · ${category.label}</p>
     <h1>${textWithBreaks(content.title)}</h1>
     <p class="column-article__lead">${textWithBreaks(content.lead)}</p>
@@ -870,7 +875,7 @@ function syncLatestColumnMenuData(siteRoot, source) {
     href: `/${latest.href}`,
     image,
     imagePosition: "50% 30%",
-    alt: latest.imageAlt,
+    alt: latest.imageAlt || stripHtml(latest.title),
   }, null, 2)}\n`, "utf8");
 }
 
