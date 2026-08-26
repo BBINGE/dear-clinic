@@ -159,7 +159,7 @@ try {
   const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
   assert.equal(latestColumnMenu.slug, "cheongdam-gongjindan");
   assert.equal(latestColumnMenu.href, "/columns/cheongdam-gongjindan.html");
-  assert.equal(latestColumnMenu.image, "/assets/images/columns/cheongdam-gongjindan/cover-v4.webp");
+  assert.equal(latestColumnMenu.image, "/assets/images/columns/cheongdam-gongjindan/cover-v5.webp");
   assert.equal(latestColumnMenu.imagePosition, "50% 30%");
   assert.ok(latestColumnMenu.alt.trim());
 
