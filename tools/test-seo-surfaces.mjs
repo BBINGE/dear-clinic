@@ -62,6 +62,15 @@ for (const href of directCardLinks) {
   assert.ok(rss.includes(`<link>${absoluteUrl}</link>`), `칼럼 카드가 RSS에 없습니다: ${href}`);
 }
 
+const cheongdamGongjindan = read("columns/cheongdam-gongjindan.html");
+const cheongdamGongjindanCopy = cheongdamGongjindan
+  .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
+  .replace(/<script\b[\s\S]*?<\/script>/gi, " ")
+  .replace(/<[^>]+>/g, " ");
+assert.match(cheongdamGongjindan, /href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "청담 공진단 칼럼에 네이버 예약 CTA가 없습니다.");
+assert.match(cheongdamGongjindan, /href="tel:02-3486-1777"/, "청담 공진단 칼럼에 전화 CTA가 없습니다.");
+assert.doesNotMatch(cheongdamGongjindanCopy, /(?:₩|\d[\d,]*\s*원(?:\s|$)|\d+\s*퍼센트|할인|특가)/, "청담 공진단 칼럼에 가격 또는 할인 표현이 노출됩니다.");
+
 const koreanHtml = [
   ...fs.readdirSync(siteRoot).filter((name) => name.endsWith(".html")).map((name) => path.join(siteRoot, name)),
   ...fs.readdirSync(path.join(siteRoot, "columns")).filter((name) => name.endsWith(".html")).map((name) => path.join(siteRoot, "columns", name)),

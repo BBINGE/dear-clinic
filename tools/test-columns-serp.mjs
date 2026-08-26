@@ -22,7 +22,10 @@ const articles = [...source.matchAll(/<a class="column-card[^>]*href="([^"]+)"[^
   summary: match[7].replace(/<[^>]+>/g, ''),
 }));
 
-assert.equal(articles.length, 19, '공개 칼럼 19편을 검색 색인에서 읽어야 합니다.');
+assert.equal(articles.length, 20, '공개 칼럼 20편을 검색 색인에서 읽어야 합니다.');
+
+const cheongdamGongjindan = engine.searchArticles('청담 공진단 선물 상담', articles);
+assert.equal(cheongdamGongjindan.articles[0].slug, 'cheongdam-gongjindan');
 
 const reflux = engine.searchArticles('밥 먹고 나면 목이 답답하고 신물이 올라와요', articles);
 assert.equal(reflux.categories[0], 'Relief');

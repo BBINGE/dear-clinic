@@ -2,10 +2,17 @@
 
 최종 갱신: 2026-08-26
 
+## 2026-08-26 청담 공진단 전환형 칼럼 랜딩
+
+- `columns/cheongdam-gongjindan.html`을 단순 정보글이 아니라 상담 전환을 목표로 한 칼럼형 랜딩페이지로 공개했다. 첫 화면과 본문 중간, 마지막에 네이버 진료 예약·전화 문의 CTA를 배치했다.
+- 가격·할인·특가·금액은 공개하지 않는다. 실제 사향과 구성 약재, 대표원장 상담, 원내 직접 소량 조제, 선물 전 확인사항, 포장·복용·수령 안내를 선택 근거로 제시한다. `tools/test-seo-surfaces.mjs`가 숫자형 금액과 할인 표현의 재유입을 검사한다.
+- 기존 실제 공진단 패키지·사향·약재·원내 조제 사진만 사용했으며, 치료후기·효과 보장·치료 전후 비교는 넣지 않았다. 모바일 375px과 PC 1265px에서 가로 넘침, 이미지 로드, CTA 링크, 단일 H1을 확인했다.
+- 새 글은 `Restore` 분류의 최신 `DEAR JOURNAL · 20`으로 Columns 대표 글·검색 SERP·RSS·sitemap·최신 칼럼 메가 메뉴 이미지에 연결했다. canonical과 `MedicalWebPage`·`Article`·`BreadcrumbList`·`FAQPage` 구조화 데이터도 포함한다.
+
 ## 2026-08-26 전 페이지 파비콘 통일
 
 - 일부 최신 칼럼과 칼럼 발행 템플릿에 남아 있던 옛 나뭇가지 `favicon.svg` 참조를 제거하고 메인과 같은 `assets/images/dear-favicon.png`로 통일했다.
-- 현재 공개된 사이트맵 58개 문서는 모두 디어 파비콘을 사용하며, 새 칼럼 발행기와 이전 PowerShell 작성기도 같은 파비콘을 생성한다. `tools/test-seo-surfaces.mjs`가 옛 파비콘 참조의 재발을 검사한다.
+- 현재 공개된 사이트맵 59개 문서는 모두 디어 파비콘을 사용하며, 새 칼럼 발행기와 이전 PowerShell 작성기도 같은 파비콘을 생성한다. `tools/test-seo-surfaces.mjs`가 옛 파비콘 참조의 재발을 검사한다.
 
 ## 2026-08-26 SEO·GEO·AEO 기반 및 칼럼 발행 안정화
 
@@ -16,7 +23,7 @@
 - 2026-08-25 체중 칼럼의 PNG 세 장은 같은 크기의 WebP로 교체했다. 참조 용량은 약 5.5MB에서 약 0.43MB로 감소했으며 원본 PNG는 저장소에 보존한다.
 - 로컬 칼럼 작성기는 업로드 사진을 최대 변 2,000px·WebP 품질 90으로 자동 변환한다. CLI 발행기는 1MB를 넘는 JPG·PNG를 차단해 최적화하지 않은 대형 이미지가 다시 공개되지 않게 했다.
 - 발행기의 Git 준비 목록에 `rss.xml`과 `assets/data/latest-column.json`을 추가했다. 최신 칼럼 메뉴 이미지의 대체 텍스트가 비어 있으면 제목을 사용하며, 발행된 Article 구조화 데이터에는 카테고리별 Care·Service 연결을 기록한다.
-- `node tools/test-seo-surfaces.mjs`는 사이트맵 파일 존재, title·description·canonical·단일 H1, JSON-LD 구문, 최신 칼럼 이미지·링크·alt, Columns 카드의 sitemap/RSS 연결과 한국어 `index.html` 링크 재발을 한 번에 검사한다. 기존 발행기·SERP 테스트도 공개 칼럼 19편 기준으로 갱신했다.
+- `node tools/test-seo-surfaces.mjs`는 사이트맵 파일 존재, title·description·canonical·단일 H1, JSON-LD 구문, 최신 칼럼 이미지·링크·alt, Columns 카드의 sitemap/RSS 연결과 한국어 `index.html` 링크 재발을 한 번에 검사한다. 기존 발행기·SERP 테스트도 공개 칼럼 20편 기준으로 갱신했다.
 
 ## 2026-08-25 체중과 부주의 맹시 칼럼 발행
 
