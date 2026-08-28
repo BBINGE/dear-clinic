@@ -2466,6 +2466,7 @@
 
 @media (max-width:900px) {
   .column-article__layout { grid-template-columns:1fr; }
+  .column-article__layout > * { min-width:0; }
   .column-toc { padding:1.15rem; }
 }
 
