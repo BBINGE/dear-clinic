@@ -29,6 +29,19 @@ for (const pageUrl of sitemapUrls) {
   const absolutePath = path.join(siteRoot, relativePath);
   assert.ok(fs.existsSync(absolutePath), `사이트맵 페이지 파일이 없습니다: ${relativePath}`);
   const html = fs.readFileSync(absolutePath, "utf8");
+  for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/gi)) {
+    const reference = match[1].replaceAll("&amp;", "&");
+    if (!reference || reference.startsWith("#") || reference.startsWith("//") || /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(reference)) continue;
+    const cleanReference = decodeURIComponent(reference.split("#")[0].split("?")[0]);
+    if (!cleanReference) continue;
+    let targetPath = cleanReference.startsWith("/")
+      ? path.join(siteRoot, cleanReference.replace(/^\/+/, ""))
+      : path.resolve(path.dirname(absolutePath), cleanReference);
+    if (cleanReference.endsWith("/") || (fs.existsSync(targetPath) && fs.statSync(targetPath).isDirectory())) {
+      targetPath = path.join(targetPath, "index.html");
+    }
+    assert.ok(fs.existsSync(targetPath), `내부 파일 참조가 끊겼습니다: ${relativePath} -> ${reference}`);
+  }
   assert.doesNotMatch(html, /assets\/images\/favicon\.svg/, `이전 파비콘을 참조합니다: ${relativePath}`);
   assert.match(html, /assets\/images\/dear-favicon\.png/, `디어 파비콘이 없습니다: ${relativePath}`);
   assert.match(html, /<title>[^<]+<\/title>/i, `title이 없습니다: ${relativePath}`);
@@ -41,7 +54,12 @@ for (const pageUrl of sitemapUrls) {
   assert.equal(canonicalOwners.has(canonical), false, `canonical이 중복됩니다: ${canonical}`);
   canonicalOwners.set(canonical, relativePath);
   assert.equal((html.match(/<h1\b/gi) || []).length, 1, `H1은 정확히 하나여야 합니다: ${relativePath}`);
-  for (const [index, match] of [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)].entries()) {
+  const schemaMatches = [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)];
+  if (relativePath.startsWith("columns/")) {
+    assert.ok(schemaMatches.length > 0, `칼럼 구조화 데이터가 없습니다: ${relativePath}`);
+    assert.match(html, /\.\.\/css\/style\.css\?v=20260830-1/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
+  }
+  for (const [index, match] of schemaMatches.entries()) {
     assert.doesNotThrow(() => JSON.parse(match[1]), `JSON-LD ${index + 1}을 해석할 수 없습니다: ${relativePath}`);
   }
 }
@@ -55,12 +73,26 @@ const columns = read("columns.html");
 const directCardLinks = [...columns.matchAll(/<a\s+class="column-card[^>]+href="([^"]+)"/g)].map((match) => match[1]);
 assert.ok(directCardLinks.length > 0, "칼럼 카드 링크를 찾지 못했습니다.");
 const rss = read("rss.xml");
+const rssItemLinks = [...rss.matchAll(/<item>[\s\S]*?<link>(https:\/\/dearhani\.com\/columns\/[^<]+)<\/link>[\s\S]*?<\/item>/g)].map((match) => match[1]);
+assert.equal(new Set(rssItemLinks).size, rssItemLinks.length, "RSS에 중복 칼럼이 있습니다.");
+assert.equal(rssItemLinks.length, directCardLinks.length, "RSS 칼럼 수와 공개 칼럼 카드 수가 다릅니다.");
 for (const href of directCardLinks) {
   assert.ok(fs.existsSync(path.join(siteRoot, href)), `칼럼 카드 파일이 없습니다: ${href}`);
   const absoluteUrl = `${baseUrl}/${href}`;
   assert.ok(sitemap.includes(`<loc>${absoluteUrl}</loc>`), `칼럼 카드가 사이트맵에 없습니다: ${href}`);
   assert.ok(rss.includes(`<link>${absoluteUrl}</link>`), `칼럼 카드가 RSS에 없습니다: ${href}`);
 }
+
+const depressionNoHope = read("columns/depression-no-hope.html");
+assert.doesNotMatch(depressionNoHope, /depression-no-hope\/(?:cover-v2|thumbnail-deer-v2)\.png/, "최신 우울증 칼럼이 대용량 PNG를 참조합니다.");
+for (const filename of ["cover-v2.webp", "thumbnail-deer-v2.webp"]) {
+  const imagePath = path.join(siteRoot, "assets", "images", "columns", "depression-no-hope", filename);
+  assert.ok(fs.existsSync(imagePath), `최신 우울증 칼럼 이미지가 없습니다: ${filename}`);
+  assert.ok(fs.statSync(imagePath).size < 1_000_000, `최신 우울증 칼럼 이미지가 1MB 이상입니다: ${filename}`);
+}
+
+const dietPrice = read("columns/diet-herbal-medicine-price.html");
+assert.match(dietPrice, /class="column-table-scroll"[^>]*tabindex="0"[\s\S]*?<table>/, "다이어트 한약 가격표의 모바일 스크롤 래퍼가 없습니다.");
 
 const cheongdamGongjindan = read("columns/cheongdam-gongjindan.html");
 const cheongdamGongjindanCopy = cheongdamGongjindan

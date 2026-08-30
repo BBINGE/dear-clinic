@@ -102,6 +102,7 @@ try {
 
   assert.match(article, /GENERATED_BY_DEAR_COLUMN_PUBLISHER/);
   assert.match(article, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/publisher-test-column\.html"/);
+  assert.match(article, /style\.css\?v=20260830-1/);
   assert.doesNotMatch(article, /href="\.\.\/index\.html/);
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /"author":\{"@id":"https:\/\/dearhani\.com\/director\.html#kim-minji"\}/);
@@ -134,16 +135,16 @@ try {
   assert.equal(articleSchema["@graph"].find((item) => item["@type"] === "Article").relatedLink, "https://dearhani.com/services.html#deer-balance");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
   assert.match(index, /data-column-slug="publisher-test-column"[^>]*data-category="Calm"[^>]*data-search="[^"]*수면[^"]*생활 리듬/);
-  assert.match(index, /class="column-featured js-reveal" href="columns\/map-is-not-the-territory\.html" data-journal-number="22"/);
+  assert.match(index, /class="column-featured js-reveal" href="columns\/depression-no-hope\.html" data-journal-number="23"/);
   assert.match(index, /data-column-slug="publisher-test-column"[\s\S]*?data-journal-number="03"/);
   const collectionSchemaText = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((match) => JSON.parse(match[1]))
     .find((entry) => entry["@type"] === "CollectionPage");
-  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 22);
-  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/map-is-not-the-territory.html");
+  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 23);
+  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/depression-no-hope.html");
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
-  assert.match(rss, /<lastBuildDate>Wed, 26 Aug 2026 00:00:00 GMT<\/lastBuildDate>/);
+  assert.match(rss, /<lastBuildDate>Sat, 29 Aug 2026 00:00:00 GMT<\/lastBuildDate>/);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
     true,
@@ -157,9 +158,9 @@ try {
     true,
   );
   const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
-  assert.equal(latestColumnMenu.slug, "map-is-not-the-territory");
-  assert.equal(latestColumnMenu.href, "/columns/map-is-not-the-territory.html");
-  assert.equal(latestColumnMenu.image, "/assets/images/columns/map-is-not-the-territory/cover.webp");
+  assert.equal(latestColumnMenu.slug, "depression-no-hope");
+  assert.equal(latestColumnMenu.href, "/columns/depression-no-hope.html");
+  assert.equal(latestColumnMenu.image, "/assets/images/columns/depression-no-hope/thumbnail-deer-v2.webp");
   assert.equal(latestColumnMenu.imagePosition, "50% 30%");
   assert.ok(latestColumnMenu.alt.trim());
 
@@ -168,8 +169,8 @@ try {
   assert.equal(fs.existsSync(articlePath), false);
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
-  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/map-is-not-the-territory\.html" data-journal-number="21"/);
-  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "map-is-not-the-territory");
+  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/depression-no-hope\.html" data-journal-number="22"/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "depression-no-hope");
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 

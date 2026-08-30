@@ -22,7 +22,7 @@ const articles = [...source.matchAll(/<a class="column-card[^>]*href="([^"]+)"[^
   summary: match[7].replace(/<[^>]+>/g, ''),
 }));
 
-assert.equal(articles.length, 21, '공개 칼럼 21편을 검색 색인에서 읽어야 합니다.');
+assert.equal(articles.length, 22, '공개 칼럼 22편을 검색 색인에서 읽어야 합니다.');
 
 const cheongdamGongjindan = engine.searchArticles('청담 공진단 선물 상담', articles);
 assert.equal(cheongdamGongjindan.articles[0].slug, 'cheongdam-gongjindan');
