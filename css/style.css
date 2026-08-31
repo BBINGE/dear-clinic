@@ -6657,6 +6657,7 @@ img, video {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   font-size: 2.3rem;
   line-height: 1;
+  white-space: nowrap;
   filter: drop-shadow(0 6px 10px rgba(0,0,0,.32));
   content: "☁️";
 }
@@ -6697,9 +6698,9 @@ img, video {
   animation: weather-emoji-cloud-right 7.2s ease-in-out infinite reverse;
 }
 .about[data-weather="rain"] .weather-card__icon::before { content: "🌧️"; animation: weather-emoji-rain 1.8s ease-in-out infinite; }
-.about[data-weather="heavy-rain"] .weather-card__icon::before { content: "🌧️🌧️"; width: 82px; animation: weather-emoji-rain 1.25s ease-in-out infinite; }
+.about[data-weather="heavy-rain"] .weather-card__icon::before { content: "🌧️"; animation: weather-emoji-rain 1.25s ease-in-out infinite; }
 .about[data-weather="snow"] .weather-card__icon::before { content: "🌨️"; animation: weather-emoji-snow 3s ease-in-out infinite; }
-.about[data-weather="heavy-snow"] .weather-card__icon::before { content: "🌨️❄️"; width: 82px; animation: weather-emoji-snow 2.2s ease-in-out infinite; }
+.about[data-weather="heavy-snow"] .weather-card__icon::before { content: "🌨️"; animation: weather-emoji-snow 2.2s ease-in-out infinite; }
 .about[data-weather="strong-wind"] .weather-card__icon::before { content: "💨"; animation: weather-emoji-wind 2.4s ease-in-out infinite; }
 .about[data-weather="storm"] .weather-card__icon::before { content: "⛈️"; animation: weather-emoji-storm 4.5s steps(1, end) infinite; }
 

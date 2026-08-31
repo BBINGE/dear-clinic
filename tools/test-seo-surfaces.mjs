@@ -94,6 +94,12 @@ for (const filename of ["cover-v2.webp", "thumbnail-deer-v2.webp"]) {
 const dietPrice = read("columns/diet-herbal-medicine-price.html");
 assert.match(dietPrice, /class="column-table-scroll"[^>]*tabindex="0"[\s\S]*?<table>/, "다이어트 한약 가격표의 모바일 스크롤 래퍼가 없습니다.");
 
+const home = read("index.html");
+const sharedCss = read("css/style.css");
+assert.match(home, /css\/style\.css\?v=20260831-1/, "홈의 공통 CSS 캐시 버전이 다릅니다.");
+assert.match(sharedCss, /\.weather-card__icon::before\s*\{[\s\S]*?white-space:\s*nowrap;/, "날씨 아이콘 줄바꿈 방지 규칙이 없습니다.");
+assert.doesNotMatch(sharedCss, /"(?:🌧️🌧️|🌨️❄️)"/, "강수량 강조용 복수 이모지가 아이콘 슬롯을 넘을 수 있습니다.");
+
 const cheongdamGongjindan = read("columns/cheongdam-gongjindan.html");
 const cheongdamGongjindanCopy = cheongdamGongjindan
   .replace(/<style\b[\s\S]*?<\/style>/gi, " ")
