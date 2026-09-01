@@ -100,15 +100,30 @@ assert.match(home, /css\/style\.css\?v=20260901-5/, "홈의 공통 CSS 캐시 �
 assert.match(sharedCss, /\.weather-card__icon::before\s*\{[\s\S]*?white-space:\s*nowrap;/, "날씨 아이콘 줄바꿈 방지 규칙이 없습니다.");
 assert.doesNotMatch(sharedCss, /"(?:🌧️🌧️|🌨️❄️)"/, "강수량 강조용 복수 이모지가 아이콘 슬롯을 넘을 수 있습니다.");
 
-const localizedPages = ["index", "about", "director", "career", "philosophy", "care", "services", "columns"];
+const localizedPages = ["index", "about", "director", "career", "philosophy", "care", "services", "columns", "privacy", "non-covered", "patient-rights"];
 const localizedDirectories = ["en", "ja", "zh-cn"];
 for (const directory of localizedDirectories) {
   for (const page of localizedPages) {
     const relativePath = `${directory}/${page}.html`;
     const html = read(relativePath);
     assert.match(html, /\.\.\/css\/style\.css\?v=20260901-5/, `다국어 CSS 버전이 다릅니다: ${relativePath}`);
-    assert.match(html, /\.\.\/js\/main\.js\?v=20260901-5/, `다국어 JS 버전이 다릅니다: ${relativePath}`);
+    const expectedMainVersion = ["privacy", "non-covered", "patient-rights"].includes(page) ? "20260901-6" : "20260901-5";
+    assert.match(html, new RegExp(`\\.\\.\\/js\\/main\\.js\\?v=${expectedMainVersion}`), `다국어 JS 버전이 다릅니다: ${relativePath}`);
     assert.equal((html.match(/<h1\b/gi) || []).length, 1, `다국어 H1은 정확히 하나여야 합니다: ${relativePath}`);
+    if (["privacy", "non-covered", "patient-rights"].includes(page)) {
+      assert.match(html, new RegExp(`<link rel="canonical" href="https://dearhani\\.com/${directory}/${page}\\.html">`), `다국어 법률 canonical이 다릅니다: ${relativePath}`);
+      assert.doesNotMatch(html, /data-ready="false"\s+href="#"|href="#"\s+data-ready="false"/, `다국어 법률 링크가 비활성 상태입니다: ${relativePath}`);
+    }
+  }
+}
+
+for (const directory of localizedDirectories) {
+  for (const page of localizedPages) {
+    const html = read(`${directory}/${page}.html`);
+    assert.doesNotMatch(html, /data-ready="false"\s+href="#"|href="#"\s+data-ready="false"/, `외국어 페이지에 비활성 법률 링크가 있습니다: ${directory}/${page}.html`);
+    assert.match(html, /href="privacy\.html"/, `외국어 개인정보 링크가 언어 폴더를 벗어납니다: ${directory}/${page}.html`);
+    assert.match(html, /href="non-covered\.html"/, `외국어 비급여 링크가 언어 폴더를 벗어납니다: ${directory}/${page}.html`);
+    assert.match(html, /href="patient-rights\.html"/, `외국어 환자 권리 링크가 언어 폴더를 벗어납니다: ${directory}/${page}.html`);
   }
 }
 

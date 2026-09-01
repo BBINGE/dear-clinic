@@ -151,9 +151,13 @@
   </url>
   <url>
     <loc>https://dearhani.com/privacy.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url><loc>https://dearhani.com/en/privacy.html</loc><lastmod>2026-09-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dearhani.com/ja/privacy.html</loc><lastmod>2026-09-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/privacy.html</loc><lastmod>2026-09-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url>
     <loc>https://dearhani.com/international-appointment.html</loc>
     <lastmod>2026-08-10</lastmod>
@@ -162,15 +166,22 @@
   </url>
   <url>
     <loc>https://dearhani.com/patient-rights.html</loc>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <url><loc>https://dearhani.com/en/patient-rights.html</loc><lastmod>2026-09-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dearhani.com/ja/patient-rights.html</loc><lastmod>2026-09-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/patient-rights.html</loc><lastmod>2026-09-01</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url>
     <loc>https://dearhani.com/non-covered.html</loc>
-    <lastmod>2026-08-06</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
+  <url><loc>https://dearhani.com/en/non-covered.html</loc><lastmod>2026-09-01</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://dearhani.com/ja/non-covered.html</loc><lastmod>2026-09-01</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/non-covered.html</loc><lastmod>2026-09-01</lastmod><changefreq>monthly</changefreq><priority>0.4</priority></url>
   <!-- COLUMN_SITEMAP:diet-herbal-medicine-price:START -->
   <url>
     <loc>https://dearhani.com/columns/diet-herbal-medicine-price.html</loc>
