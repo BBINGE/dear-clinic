@@ -102,7 +102,7 @@ try {
 
   assert.match(article, /GENERATED_BY_DEAR_COLUMN_PUBLISHER/);
   assert.match(article, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/publisher-test-column\.html"/);
-  assert.match(article, /style\.css\?v=20260830-1/);
+  assert.match(article, /style\.css\?v=20260901-4/);
   assert.doesNotMatch(article, /href="\.\.\/index\.html/);
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /"author":\{"@id":"https:\/\/dearhani\.com\/director\.html#kim-minji"\}/);

@@ -57,7 +57,7 @@ for (const pageUrl of sitemapUrls) {
   const schemaMatches = [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)];
   if (relativePath.startsWith("columns/")) {
     assert.ok(schemaMatches.length > 0, `칼럼 구조화 데이터가 없습니다: ${relativePath}`);
-    assert.match(html, /\.\.\/css\/style\.css\?v=20260830-1/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-4/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
   }
   for (const [index, match] of schemaMatches.entries()) {
     assert.doesNotThrow(() => JSON.parse(match[1]), `JSON-LD ${index + 1}을 해석할 수 없습니다: ${relativePath}`);
@@ -96,9 +96,31 @@ assert.match(dietPrice, /class="column-table-scroll"[^>]*tabindex="0"[\s\S]*?<ta
 
 const home = read("index.html");
 const sharedCss = read("css/style.css");
-assert.match(home, /css\/style\.css\?v=20260831-1/, "홈의 공통 CSS 캐시 버전이 다릅니다.");
+assert.match(home, /css\/style\.css\?v=20260901-4/, "홈의 공통 CSS 캐시 버전이 다릅니다.");
 assert.match(sharedCss, /\.weather-card__icon::before\s*\{[\s\S]*?white-space:\s*nowrap;/, "날씨 아이콘 줄바꿈 방지 규칙이 없습니다.");
 assert.doesNotMatch(sharedCss, /"(?:🌧️🌧️|🌨️❄️)"/, "강수량 강조용 복수 이모지가 아이콘 슬롯을 넘을 수 있습니다.");
+
+const localizedPages = ["index", "about", "director", "career", "philosophy", "care", "services", "columns"];
+const localizedDirectories = ["en", "ja", "zh-cn"];
+for (const directory of localizedDirectories) {
+  for (const page of localizedPages) {
+    const relativePath = `${directory}/${page}.html`;
+    const html = read(relativePath);
+    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-4/, `다국어 CSS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, /\.\.\/js\/main\.js\?v=20260901-4/, `다국어 JS 버전이 다릅니다: ${relativePath}`);
+    assert.equal((html.match(/<h1\b/gi) || []).length, 1, `다국어 H1은 정확히 하나여야 합니다: ${relativePath}`);
+  }
+}
+
+const sharedMain = read("js/main.js");
+assert.match(sharedMain, /function getDearPageLocale\(\)/, "브라우저 번역과 분리된 URL 기반 언어 판별이 없습니다.");
+assert.match(sharedMain, /if \(nav && navMenu\) \{/, "다국어 메가메뉴 초기화가 없습니다.");
+assert.match(sharedMain, /function alignLocalizedPageUi\(\)/, "다국어 최신 UI 정렬 계층이 없습니다.");
+for (const requiredClass of ["services-hero-card", "services-principle", "care-moment", "director__articles", "columns-search-stage", "home-be-deer", "home-care-bridge"]) {
+  assert.ok(sharedMain.includes(requiredClass), `다국어 UI 보강 클래스가 없습니다: ${requiredClass}`);
+}
+assert.match(sharedCss, /\.dear-locale-ja[\s\S]*?overflow-wrap:\s*anywhere;/, "일본어 모바일 줄바꿈 보호 규칙이 없습니다.");
+assert.match(sharedCss, /\.columns-search-stage\s*\{[^}]*grid-template-columns:minmax\(0,1fr\)/, "다국어 칼럼 검색 헤더의 모바일 폭 보호가 없습니다.");
 
 const cheongdamGongjindan = read("columns/cheongdam-gongjindan.html");
 const cheongdamGongjindanCopy = cheongdamGongjindan

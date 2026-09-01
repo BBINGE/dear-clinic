@@ -2179,6 +2179,33 @@
   -webkit-overflow-scrolling: touch;
 }
 
+/* 2026-09-01: CJK translated copy must never enlarge the shared mobile canvas. */
+@media (max-width: 768px) {
+  html:is([lang="ja"], [lang="zh-CN"], [lang="zh-cn"], .dear-locale-ja, .dear-locale-zh-cn) main {
+    min-width: 0;
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
+  .care-viewer__inner,
+  .care-tabs {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .care-viewer {
+    overflow-x: clip;
+  }
+
+  .care-tabs {
+    contain: inline-size;
+  }
+
+  .philosophy-statement__motif {
+    max-width: 58vw;
+  }
+}
+
 .column-table-scroll {
   width: 100%;
   margin: clamp(2rem, 4vw, 3rem) 0;
@@ -9011,7 +9038,7 @@ body.director-page {
 /* Columns: search-led journal header */
 .columns-page-body .columns-hero { min-height:0;padding:clamp(7.5rem,10vw,9rem) var(--gap) 0; }
 .columns-page-body .columns-hero__inner { display:block; }
-.columns-search-stage { display:grid;justify-items:center;padding:clamp(1.6rem,4vw,3rem) 0 clamp(2.6rem,5vw,4.25rem);text-align:center; }
+.columns-search-stage { display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;width:100%;min-width:0;padding:clamp(1.6rem,4vw,3rem) 0 clamp(2.6rem,5vw,4.25rem);text-align:center; }
 .columns-search-stage .columns-kicker { margin:0 0 1.4rem; }
 .columns-search-title { display:grid;gap:.45rem;margin:0 0 1.4rem;color:var(--green-deep);font-size:clamp(1.05rem,1.8vw,1.35rem);font-weight:600;line-height:1.35;letter-spacing:-.02em; }
 .columns-search-title span { color:var(--teal-pattern);font-family:var(--font-en);font-size:.72rem;font-weight:600;letter-spacing:.2em; }
@@ -9026,7 +9053,7 @@ body.director-page {
 .columns-search-prompts button:nth-child(2) { animation-delay:-1.6s;animation-duration:5.2s; }
 .columns-search-prompts button:nth-child(3) { animation-delay:-3.1s;animation-duration:4.9s; }
 .columns-search-prompts button:hover,.columns-search-prompts button:focus-visible { border-color:rgba(36,120,96,.5);outline:0;background:#fff;box-shadow:0 10px 24px rgba(37,70,61,.1);color:var(--green-deep); }
-.columns-page-body .columns-journal-nav { display:block;border-top:1px solid rgba(36,120,96,.2);border-bottom:1px solid rgba(36,120,96,.2); }
+.columns-page-body .columns-journal-nav { display:block;width:100%;min-width:0;border-top:1px solid rgba(36,120,96,.2);border-bottom:1px solid rgba(36,120,96,.2); }
 .columns-page-body .columns-journal-nav .columns-filters { grid-template-columns:repeat(6,minmax(0,1fr)); }
 .columns-page-body .columns-journal-nav .columns-filters button:first-child { border-left:0; }
 .columns-page-body .columns-journal-nav .columns-filters button { white-space:nowrap; }
@@ -9039,7 +9066,8 @@ body.director-page {
   .columns-search--floating input { min-height:58px;padding-right:1.5rem; }
   .columns-search-prompts { justify-content:flex-start;gap:.55rem;margin-top:1.2rem; }
   .columns-search-prompts button { padding:.58rem .82rem;font-size:.73rem; }
-  .columns-page-body .columns-journal-nav .columns-filters { grid-auto-columns:max-content;grid-auto-flow:column;grid-template-columns:none; }
+  .columns-page-body .columns-journal-nav { overflow-x:auto;overscroll-behavior-inline:contain; }
+  .columns-page-body .columns-journal-nav .columns-filters { grid-auto-columns:max-content;grid-auto-flow:column;grid-template-columns:none;width:max-content;min-width:100%; }
   .columns-page-body .columns-journal-nav .columns-filters button { min-width:190px; }
   .columns-page-body .columns-journal-nav .columns-filters button:first-child { min-width:118px; }
 }
@@ -9584,5 +9612,19 @@ body.director-page {
 
   .column-weight-inattentional-blindness .column-related__grid a {
     padding: 1.3rem 1.35rem;
+  }
+}
+
+/* 다국어 CJK 문구는 공유 반응형 규칙보다 뒤에서 줄바꿈을 보장한다. */
+@media (max-width: 768px) {
+  html:is([lang="ja"], [lang="zh-CN"], [lang="zh-cn"], .dear-locale-ja, .dear-locale-zh-cn) :is(.philosophy-hero h1, .philosophy-statement h2, .philosophy-statement p, .philosophy-chapter p, .philosophy-values h2, .philosophy-values p, .philosophy-next h2, .philosophy-next p, .service-chapter h2, .service-chapter p, .service-chapter li) {
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  html:is([lang="ja"], [lang="zh-CN"], [lang="zh-cn"], .dear-locale-ja, .dear-locale-zh-cn) :is(.service-chapter__inner, .service-chapter__heading, .service-chapter__media, .service-chapter__body) {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 }
