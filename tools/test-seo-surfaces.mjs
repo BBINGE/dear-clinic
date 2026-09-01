@@ -57,7 +57,7 @@ for (const pageUrl of sitemapUrls) {
   const schemaMatches = [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)];
   if (relativePath.startsWith("columns/")) {
     assert.ok(schemaMatches.length > 0, `칼럼 구조화 데이터가 없습니다: ${relativePath}`);
-    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-4/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-5/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
   }
   for (const [index, match] of schemaMatches.entries()) {
     assert.doesNotThrow(() => JSON.parse(match[1]), `JSON-LD ${index + 1}을 해석할 수 없습니다: ${relativePath}`);
@@ -96,7 +96,7 @@ assert.match(dietPrice, /class="column-table-scroll"[^>]*tabindex="0"[\s\S]*?<ta
 
 const home = read("index.html");
 const sharedCss = read("css/style.css");
-assert.match(home, /css\/style\.css\?v=20260901-4/, "홈의 공통 CSS 캐시 버전이 다릅니다.");
+assert.match(home, /css\/style\.css\?v=20260901-5/, "홈의 공통 CSS 캐시 버전이 다릅니다.");
 assert.match(sharedCss, /\.weather-card__icon::before\s*\{[\s\S]*?white-space:\s*nowrap;/, "날씨 아이콘 줄바꿈 방지 규칙이 없습니다.");
 assert.doesNotMatch(sharedCss, /"(?:🌧️🌧️|🌨️❄️)"/, "강수량 강조용 복수 이모지가 아이콘 슬롯을 넘을 수 있습니다.");
 
@@ -106,8 +106,8 @@ for (const directory of localizedDirectories) {
   for (const page of localizedPages) {
     const relativePath = `${directory}/${page}.html`;
     const html = read(relativePath);
-    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-4/, `다국어 CSS 버전이 다릅니다: ${relativePath}`);
-    assert.match(html, /\.\.\/js\/main\.js\?v=20260901-4/, `다국어 JS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-5/, `다국어 CSS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, /\.\.\/js\/main\.js\?v=20260901-5/, `다국어 JS 버전이 다릅니다: ${relativePath}`);
     assert.equal((html.match(/<h1\b/gi) || []).length, 1, `다국어 H1은 정확히 하나여야 합니다: ${relativePath}`);
   }
 }

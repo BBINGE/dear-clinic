@@ -9617,7 +9617,7 @@ body.director-page {
 
 /* 다국어 CJK 문구는 공유 반응형 규칙보다 뒤에서 줄바꿈을 보장한다. */
 @media (max-width: 768px) {
-  html:is([lang="ja"], [lang="zh-CN"], [lang="zh-cn"], .dear-locale-ja, .dear-locale-zh-cn) :is(.philosophy-hero h1, .philosophy-statement h2, .philosophy-statement p, .philosophy-chapter p, .philosophy-values h2, .philosophy-values p, .philosophy-next h2, .philosophy-next p, .service-chapter h2, .service-chapter p, .service-chapter li) {
+  html:is([lang="ja"], [lang="zh-CN"], [lang="zh-cn"], .dear-locale-ja, .dear-locale-zh-cn) :is(.philosophy-hero h1, .philosophy-statement h2, .philosophy-statement p, .philosophy-chapter p, .philosophy-values h2, .philosophy-values p, .philosophy-next h2, .philosophy-next p, .care-hero h1, .care-hero p, .care-viewer__intro h2, .care-viewer__intro p, .care-panel h2, .care-panel p, .service-chapter h2, .service-chapter p, .service-chapter li) {
     word-break: normal;
     overflow-wrap: anywhere;
   }
