@@ -18,6 +18,7 @@ function columnFooterFromHome() {
   return footer
     .replace('src="assets/', 'src="../assets/')
     .replace('href="privacy.html"', 'href="../privacy.html"')
+    .replace('href="terms.html"', 'href="../terms.html"')
     .replace('href="non-covered.html"', 'href="../non-covered.html"')
     .replace('href="patient-rights.html"', 'href="../patient-rights.html"');
 }

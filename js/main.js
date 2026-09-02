@@ -276,7 +276,7 @@ if (nav && navMenu && !document.body.classList.contains("error-page")) {
   const localizedPages = new Set([
     "index.html", "about.html", "director.html", "career.html",
     "philosophy.html", "care.html", "services.html", "columns.html",
-    "privacy.html", "non-covered.html", "patient-rights.html",
+    "privacy.html", "terms.html", "non-covered.html", "patient-rights.html",
   ]);
   const hasLocalizedEquivalent = localizedPages.has(currentPage);
   const pagePath = currentPage === "index.html" ? "" : currentPage;
