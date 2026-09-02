@@ -58,6 +58,7 @@ for (const pageUrl of sitemapUrls) {
   if (relativePath.startsWith("columns/")) {
     assert.ok(schemaMatches.length > 0, `칼럼 구조화 데이터가 없습니다: ${relativePath}`);
     assert.match(html, /\.\.\/css\/style\.css\?v=20260901-5/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, /<footer class="footer" id="contact">/, `칼럼 공통 푸터가 없습니다: ${relativePath}`);
   }
   for (const [index, match] of schemaMatches.entries()) {
     assert.doesNotThrow(() => JSON.parse(match[1]), `JSON-LD ${index + 1}을 해석할 수 없습니다: ${relativePath}`);
@@ -93,6 +94,12 @@ for (const filename of ["cover-v2.webp", "thumbnail-deer-v2.webp"]) {
 
 const dietPrice = read("columns/diet-herbal-medicine-price.html");
 assert.match(dietPrice, /class="column-table-scroll"[^>]*tabindex="0"[\s\S]*?<table>/, "다이어트 한약 가격표의 모바일 스크롤 래퍼가 없습니다.");
+
+const insomnia = read("columns/insomnia-without-sleeping-pills.html");
+assert.match(insomnia, /class="column-nap"/, "불면증 칼럼의 NAP 카드가 없습니다.");
+assert.match(insomnia, /href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "불면증 칼럼의 네이버 예약 링크가 없습니다.");
+assert.match(insomnia, /href="https:\/\/map\.naver\.com\/p\/search\//, "불면증 칼럼의 위치 보기 링크가 없습니다.");
+assert.doesNotMatch(insomnia, /<footer class="footer-card"/, "불면증 칼럼에 간이 푸터가 남아 있습니다.");
 
 const home = read("index.html");
 const sharedCss = read("css/style.css");
