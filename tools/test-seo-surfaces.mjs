@@ -109,7 +109,8 @@ assert.match(insomnia, /class="column-nap"/, "불면증 칼럼의 NAP 카드가 
 assert.match(insomnia, /href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "불면증 칼럼의 네이버 예약 링크가 없습니다.");
 assert.match(insomnia, /href="https:\/\/map\.naver\.com\/p\/search\//, "불면증 칼럼의 위치 보기 링크가 없습니다.");
 assert.doesNotMatch(insomnia, /<footer class="footer-card"/, "불면증 칼럼에 간이 푸터가 남아 있습니다.");
-assert.match(insomnia, /\.consult\{margin:clamp\(2\.4rem,4vw,3\.5rem\) 0 0\}\.faq,\.sources\{margin-top:clamp\(2\.4rem,4vw,3\.5rem\)\}/, "불면증 칼럼의 하단 섹션 간격이 다른 칼럼 기준과 다릅니다.");
+assert.match(insomnia, /\.faq\{margin-top:clamp\(2\.4rem,4vw,3\.5rem\);padding:0\}/, "불면증 칼럼 FAQ에 사이트 전역 section 패딩이 다시 적용될 수 있습니다.");
+assert.match(insomnia, /\.sources\{margin-top:clamp\(2\.4rem,4vw,3\.5rem\);padding:2rem 0 0\}/, "불면증 칼럼 참고자료의 하단 패딩이 다른 칼럼 기준과 다릅니다.");
 
 const home = read("index.html");
 const sharedCss = read("css/style.css");

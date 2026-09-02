@@ -4,8 +4,8 @@
 
 ## 2026-09-02 불면증 칼럼 하단 간격 정리
 
-- `columns/insomnia-without-sleeping-pills.html`의 상담 CTA·FAQ·참고자료·NAP 사이에만 남아 있던 72~88px 고정 여백을 다른 칼럼과 같은 `clamp(2.4rem, 4vw, 3.5rem)` 반응형 간격으로 통일했다.
-- 390px·768px에서는 각 구간이 38px, 1440px에서는 56px 간격이며 세 화면 모두 가로 넘침이 없다. 본문·CTA 카피·푸터 구조는 변경하지 않았다.
+- `columns/insomnia-without-sleeping-pills.html`은 전용 본문 래퍼가 `.article`이라 공통 칼럼의 `section { padding: 0; }` 보호 규칙을 받지 못했고, 사이트 전역 `section` 패딩이 FAQ 위·아래와 참고자료 아래에 최대 128px씩 적용되고 있었다.
+- FAQ 패딩을 `0`, 참고자료 패딩을 공통 칼럼과 같은 `2rem 0 0`으로 명시하고, 상담 CTA·FAQ·참고자료·NAP의 바깥 간격은 `clamp(2.4rem, 4vw, 3.5rem)`으로 맞췄다. 본문·CTA 카피·푸터 구조는 변경하지 않았다.
 
 ## 2026-09-02 전체 칼럼 푸터 메인 기준 통일
 
