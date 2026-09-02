@@ -119,17 +119,33 @@ assert.match(home, /css\/style\.css\?v=20260901-5/, "홈의 공통 CSS 캐시 �
 assert.match(sharedCss, /\.weather-card__icon::before\s*\{[\s\S]*?white-space:\s*nowrap;/, "날씨 아이콘 줄바꿈 방지 규칙이 없습니다.");
 assert.doesNotMatch(sharedCss, /"(?:🌧️🌧️|🌨️❄️)"/, "강수량 강조용 복수 이모지가 아이콘 슬롯을 넘을 수 있습니다.");
 
+const legalPages = ["privacy", "terms", "non-covered", "patient-rights"];
+for (const page of legalPages) {
+  const html = read(`${page}.html`);
+  assert.match(html, /css\/style\.css\?v=20260902-2/, `한국어 법률 페이지 CSS 버전이 다릅니다: ${page}.html`);
+}
+assert.match(sharedCss, /\.legal-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2rem, 3\.6vw, 3\.25rem\);/, "법률 페이지 H1이 문서형 크기로 제한되지 않았습니다.");
+assert.match(sharedCss, /\.legal-content p,\s*\.legal-content li\s*\{[\s\S]*?line-height:\s*1\.8;/, "법률 페이지 본문 행간이 문서형 기준과 다릅니다.");
+assert.doesNotMatch(sharedCss, /\.legal-content br\s*\{[\s\S]*?display:\s*none;/, "모바일에서 법률 정보의 구조용 줄바꿈이 숨겨질 수 있습니다.");
+assert.match(sharedCss, /\.non-covered-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2rem, 3\.6vw, 3\.25rem\);/, "비급여 안내 제목이 다른 법률 페이지보다 과도하게 큽니다.");
+for (const directory of ["", "en/", "ja/", "zh-cn/"]) {
+  const html = read(`${directory}non-covered.html`);
+  const hero = html.match(/<header class="non-covered-hero">[\s\S]*?<\/header>/)?.[0] || "";
+  assert.doesNotMatch(hero, /<h1>[\s\S]*?<br\s*\/?>(?:[\s\S]*?)<\/h1>|<div class="non-covered-hero__intro">[\s\S]*?<br\s*\/?>/i, `비급여 안내 히어로에 강제 줄바꿈이 남아 있습니다: ${directory}non-covered.html`);
+}
+
 const localizedPages = ["index", "about", "director", "career", "philosophy", "care", "services", "columns", "privacy", "terms", "non-covered", "patient-rights"];
 const localizedDirectories = ["en", "ja", "zh-cn"];
 for (const directory of localizedDirectories) {
   for (const page of localizedPages) {
     const relativePath = `${directory}/${page}.html`;
     const html = read(relativePath);
-    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-5/, `다국어 CSS 버전이 다릅니다: ${relativePath}`);
-    const expectedMainVersion = ["privacy", "terms", "non-covered", "patient-rights"].includes(page) ? "20260902-1" : "20260901-5";
+    const expectedCssVersion = legalPages.includes(page) ? "20260902-2" : "20260901-5";
+    assert.match(html, new RegExp(`\\.\\.\\/css\\/style\\.css\\?v=${expectedCssVersion}`), `다국어 CSS 버전이 다릅니다: ${relativePath}`);
+    const expectedMainVersion = legalPages.includes(page) ? "20260902-1" : "20260901-5";
     assert.match(html, new RegExp(`\\.\\.\\/js\\/main\\.js\\?v=${expectedMainVersion}`), `다국어 JS 버전이 다릅니다: ${relativePath}`);
     assert.equal((html.match(/<h1\b/gi) || []).length, 1, `다국어 H1은 정확히 하나여야 합니다: ${relativePath}`);
-    if (["privacy", "terms", "non-covered", "patient-rights"].includes(page)) {
+    if (legalPages.includes(page)) {
       assert.match(html, new RegExp(`<link rel="canonical" href="https://dearhani\\.com/${directory}/${page}\\.html">`), `다국어 법률 canonical이 다릅니다: ${relativePath}`);
       assert.doesNotMatch(html, /data-ready="false"\s+href="#"|href="#"\s+data-ready="false"/, `다국어 법률 링크가 비활성 상태입니다: ${relativePath}`);
     }
