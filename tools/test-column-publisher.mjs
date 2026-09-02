@@ -142,13 +142,13 @@ try {
   assert.equal(articleSchema["@graph"].find((item) => item["@type"] === "Article").relatedLink, "https://dearhani.com/services.html#deer-balance");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
   assert.match(index, /data-column-slug="publisher-test-column"[^>]*data-category="Calm"[^>]*data-search="[^"]*수면[^"]*생활 리듬/);
-  assert.match(index, /class="column-featured js-reveal" href="columns\/insomnia-without-sleeping-pills\.html" data-journal-number="24"/);
+  assert.match(index, /class="column-featured js-reveal" href="columns\/postpartum-leg-swelling\.html" data-journal-number="25"/);
   assert.match(index, /data-column-slug="publisher-test-column"[\s\S]*?data-journal-number="03"/);
   const collectionSchemaText = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((match) => JSON.parse(match[1]))
     .find((entry) => entry["@type"] === "CollectionPage");
-  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 24);
-  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/insomnia-without-sleeping-pills.html");
+  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 25);
+  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/postpartum-leg-swelling.html");
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
   assert.match(rss, /<lastBuildDate>Wed, 02 Sep 2026 00:00:00 GMT<\/lastBuildDate>/);
@@ -165,9 +165,9 @@ try {
     true,
   );
   const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
-  assert.equal(latestColumnMenu.slug, "insomnia-without-sleeping-pills");
-  assert.equal(latestColumnMenu.href, "/columns/insomnia-without-sleeping-pills.html");
-  assert.equal(latestColumnMenu.image, "/assets/images/columns/autumn-insomnia-herbal-medicine/cover.png");
+  assert.equal(latestColumnMenu.slug, "postpartum-leg-swelling");
+  assert.equal(latestColumnMenu.href, "/columns/postpartum-leg-swelling.html");
+  assert.equal(latestColumnMenu.image, "/assets/images/columns/postpartum-leg-swelling/thumbnail.png");
   assert.equal(latestColumnMenu.imagePosition, "50% 30%");
   assert.ok(latestColumnMenu.alt.trim());
 
@@ -176,8 +176,8 @@ try {
   assert.equal(fs.existsSync(articlePath), false);
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
-  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/insomnia-without-sleeping-pills\.html" data-journal-number="23"/);
-  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "insomnia-without-sleeping-pills");
+  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/postpartum-leg-swelling\.html" data-journal-number="24"/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "postpartum-leg-swelling");
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 
