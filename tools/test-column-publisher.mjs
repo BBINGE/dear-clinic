@@ -104,6 +104,13 @@ try {
   assert.match(article, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/publisher-test-column\.html"/);
   assert.match(article, /style\.css\?v=20260901-5/);
   assert.doesNotMatch(article, /href="\.\.\/index\.html/);
+  assert.match(article, /class="footer__sns"/);
+  assert.match(article, /href="https:\/\/www\.instagram\.com\/dearhani__\/"/);
+  assert.match(article, /href="https:\/\/blog\.naver\.com\/thisisdear"/);
+  assert.match(article, /href="https:\/\/talk\.naver\.com\/ct\/w5zr5u"/);
+  assert.match(article, /href="\.\.\/privacy\.html"/);
+  assert.match(article, /href="\.\.\/non-covered\.html"/);
+  assert.match(article, /href="\.\.\/patient-rights\.html"/);
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /"author":\{"@id":"https:\/\/dearhani\.com\/director\.html#kim-minji"\}/);
   assert.match(article, /class="column-author-link" href="\.\.\/director\.html" rel="author">김민지 대표원장<\/a>/);

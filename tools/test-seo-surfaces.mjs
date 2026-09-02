@@ -24,6 +24,14 @@ assert.ok(sitemapUrls.length > 0, "사이트맵 URL을 찾지 못했습니다.")
 assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, "사이트맵에 중복 URL이 있습니다.");
 
 const canonicalOwners = new Map();
+const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
+const homeFooter = read("index.html").match(footerPattern)?.[0];
+assert.ok(homeFooter, "메인 공통 푸터가 없습니다.");
+const expectedColumnFooter = homeFooter
+  .replace('src="assets/', 'src="../assets/')
+  .replace('href="privacy.html"', 'href="../privacy.html"')
+  .replace('href="non-covered.html"', 'href="../non-covered.html"')
+  .replace('href="patient-rights.html"', 'href="../patient-rights.html"');
 for (const pageUrl of sitemapUrls) {
   const relativePath = localPathFromUrl(pageUrl);
   const absolutePath = path.join(siteRoot, relativePath);
@@ -59,6 +67,7 @@ for (const pageUrl of sitemapUrls) {
     assert.ok(schemaMatches.length > 0, `칼럼 구조화 데이터가 없습니다: ${relativePath}`);
     assert.match(html, /\.\.\/css\/style\.css\?v=20260901-5/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
     assert.match(html, /<footer class="footer" id="contact">/, `칼럼 공통 푸터가 없습니다: ${relativePath}`);
+    assert.equal(html.match(footerPattern)?.[0], expectedColumnFooter, `메인과 칼럼 푸터가 다릅니다: ${relativePath}`);
   }
   for (const [index, match] of schemaMatches.entries()) {
     assert.doesNotThrow(() => JSON.parse(match[1]), `JSON-LD ${index + 1}을 해석할 수 없습니다: ${relativePath}`);
