@@ -175,8 +175,8 @@ assert.match(sharedMain, /productionHosts\.has\(window\.location\.hostname\)/, "
 assert.match(sharedMain, /window\.location\.pathname\.startsWith\("\/preview\/"\)/, "네이버 애널리틱스에서 미리보기 경로를 제외하지 않습니다.");
 assert.match(sharedMain, /script\[src\*="wcs\.pstatic\.net\/wcslog\.js"\]/, "네이버 공통 스크립트 중복 로드 방지가 없습니다.");
 const koreanPrivacy = read("privacy.html");
-assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*네이버 애널리틱스를 통한 홈페이지 방문·유입·페이지 이용 통계 분석/, "개인정보처리방침에 네이버 애널리틱스 위탁 내용이 없습니다.");
-assert.match(koreanPrivacy, /Google Analytics 4와 네이버 애널리틱스/, "개인정보처리방침의 자동수집 안내에 네이버 애널리틱스가 없습니다.");
+assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*NAVER Analytics를 통한 홈페이지 방문·유입·페이지 이용 통계 분석/, "개인정보처리방침에 NAVER Analytics 위탁 내용이 없습니다.");
+assert.match(koreanPrivacy, /Google Analytics 4\(GA4\)와 NAVER Analytics/, "개인정보처리방침의 분석 서비스명이 공식 표기로 통일되지 않았습니다.");
 assert.match(koreanPrivacy, /시행일자 2026년 9월 3일/, "개인정보처리방침 시행일이 갱신되지 않았습니다.");
 const internationalAppointmentScript = read("js/international-appointment.js");
 assert.match(internationalAppointmentScript, /naverAnalyticsId="1ac7bf67a05a6c0"/, "외국인 예약 페이지에 네이버 애널리틱스 발급 ID가 없습니다.");
