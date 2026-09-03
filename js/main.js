@@ -1,3 +1,39 @@
+// NAVER Analytics 공통 설정
+// 실제 운영 도메인에서만 수집하며 preview와 로컬 확인 데이터는 제외한다.
+(function initializeDearNaverAnalytics() {
+  "use strict";
+
+  const analyticsId = "1ac7bf67a05a6c0";
+  const productionHosts = new Set(["dearhani.com", "www.dearhani.com"]);
+  if (!productionHosts.has(window.location.hostname) || window.location.pathname.startsWith("/preview/")) return;
+  if (window.__dearNaverAnalyticsInitialized) return;
+  window.__dearNaverAnalyticsInitialized = true;
+
+  window.wcs_add = window.wcs_add || {};
+  window.wcs_add.wa = analyticsId;
+
+  const sendPageView = () => {
+    if (typeof window.wcs_do === "function") window.wcs_do();
+  };
+
+  if (window.wcs) {
+    sendPageView();
+    return;
+  }
+
+  const existingScript = document.querySelector('script[src*="wcs.pstatic.net/wcslog.js"]');
+  if (existingScript) {
+    existingScript.addEventListener("load", sendPageView, { once: true });
+    return;
+  }
+
+  const naverAnalyticsTag = document.createElement("script");
+  naverAnalyticsTag.async = true;
+  naverAnalyticsTag.src = "https://wcs.pstatic.net/wcslog.js";
+  naverAnalyticsTag.addEventListener("load", sendPageView, { once: true });
+  document.head.appendChild(naverAnalyticsTag);
+})();
+
 // Google Analytics 4 공통 설정
 // 모든 공개 페이지가 이 파일을 불러오므로 새 칼럼에도 같은 측정 설정이 적용된다.
 (function initializeDearAnalytics() {

@@ -831,7 +831,7 @@ ${content.slug === "weight-inattentional-blindness" ? `<script>
   figure.after(metricList);
 })();
 </script>` : ""}
-<script src="../js/main.js?v=20260901-5"></script>
+<script src="../js/main.js?v=20260903-1"></script>
 </body>
 </html>
 `;

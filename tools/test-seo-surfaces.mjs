@@ -24,6 +24,7 @@ assert.ok(sitemapUrls.length > 0, "사이트맵 URL을 찾지 못했습니다.")
 assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, "사이트맵에 중복 URL이 있습니다.");
 
 const canonicalOwners = new Map();
+const sharedMainVersion = "20260903-1";
 const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
 const homeFooter = read("index.html").match(footerPattern)?.[0];
 assert.ok(homeFooter, "메인 공통 푸터가 없습니다.");
@@ -38,6 +39,11 @@ for (const pageUrl of sitemapUrls) {
   const absolutePath = path.join(siteRoot, relativePath);
   assert.ok(fs.existsSync(absolutePath), `사이트맵 페이지 파일이 없습니다: ${relativePath}`);
   const html = fs.readFileSync(absolutePath, "utf8");
+  if (relativePath === "international-appointment.html") {
+    assert.match(html, /js\/international-appointment\.js\?v=20260903-1/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
+  } else {
+    assert.match(html, new RegExp(`(?:\\.\\.\\/|)js\\/main\\.js\\?v=${sharedMainVersion}`), `공통 JS 캐시 버전이 다릅니다: ${relativePath}`);
+  }
   for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/gi)) {
     const reference = match[1].replaceAll("&amp;", "&");
     if (!reference || reference.startsWith("#") || reference.startsWith("//") || /^(?:https?:|mailto:|tel:|data:|javascript:)/i.test(reference)) continue;
@@ -142,8 +148,7 @@ for (const directory of localizedDirectories) {
     const html = read(relativePath);
     const expectedCssVersion = legalPages.includes(page) ? "20260902-2" : "20260901-5";
     assert.match(html, new RegExp(`\\.\\.\\/css\\/style\\.css\\?v=${expectedCssVersion}`), `다국어 CSS 버전이 다릅니다: ${relativePath}`);
-    const expectedMainVersion = legalPages.includes(page) ? "20260902-1" : "20260901-5";
-    assert.match(html, new RegExp(`\\.\\.\\/js\\/main\\.js\\?v=${expectedMainVersion}`), `다국어 JS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, new RegExp(`\\.\\.\\/js\\/main\\.js\\?v=${sharedMainVersion}`), `다국어 JS 버전이 다릅니다: ${relativePath}`);
     assert.equal((html.match(/<h1\b/gi) || []).length, 1, `다국어 H1은 정확히 하나여야 합니다: ${relativePath}`);
     if (legalPages.includes(page)) {
       assert.match(html, new RegExp(`<link rel="canonical" href="https://dearhani\\.com/${directory}/${page}\\.html">`), `다국어 법률 canonical이 다릅니다: ${relativePath}`);
@@ -164,6 +169,18 @@ for (const directory of localizedDirectories) {
 }
 
 const sharedMain = read("js/main.js");
+assert.match(sharedMain, /const analyticsId = "1ac7bf67a05a6c0";/, "네이버 애널리틱스 발급 ID가 공통 스크립트에 없습니다.");
+assert.match(sharedMain, /https:\/\/wcs\.pstatic\.net\/wcslog\.js/, "네이버 애널리틱스 수집 스크립트가 없습니다.");
+assert.match(sharedMain, /productionHosts\.has\(window\.location\.hostname\)/, "네이버 애널리틱스의 운영 도메인 제한이 없습니다.");
+assert.match(sharedMain, /window\.location\.pathname\.startsWith\("\/preview\/"\)/, "네이버 애널리틱스에서 미리보기 경로를 제외하지 않습니다.");
+assert.match(sharedMain, /script\[src\*="wcs\.pstatic\.net\/wcslog\.js"\]/, "네이버 공통 스크립트 중복 로드 방지가 없습니다.");
+const koreanPrivacy = read("privacy.html");
+assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*네이버 애널리틱스를 통한 홈페이지 방문·유입·페이지 이용 통계 분석/, "개인정보처리방침에 네이버 애널리틱스 위탁 내용이 없습니다.");
+assert.match(koreanPrivacy, /Google Analytics 4와 네이버 애널리틱스/, "개인정보처리방침의 자동수집 안내에 네이버 애널리틱스가 없습니다.");
+assert.match(koreanPrivacy, /시행일자 2026년 9월 3일/, "개인정보처리방침 시행일이 갱신되지 않았습니다.");
+const internationalAppointmentScript = read("js/international-appointment.js");
+assert.match(internationalAppointmentScript, /naverAnalyticsId="1ac7bf67a05a6c0"/, "외국인 예약 페이지에 네이버 애널리틱스 발급 ID가 없습니다.");
+assert.match(internationalAppointmentScript, /https:\/\/wcs\.pstatic\.net\/wcslog\.js/, "외국인 예약 페이지에 네이버 수집 스크립트가 없습니다.");
 assert.match(sharedMain, /function getDearPageLocale\(\)/, "브라우저 번역과 분리된 URL 기반 언어 판별이 없습니다.");
 assert.match(sharedMain, /if \(nav && navMenu\) \{/, "다국어 메가메뉴 초기화가 없습니다.");
 assert.match(sharedMain, /function alignLocalizedPageUi\(\)/, "다국어 최신 UI 정렬 계층이 없습니다.");

@@ -1,4 +1,11 @@
 (function(){"use strict";
+const naverAnalyticsId="1ac7bf67a05a6c0",productionHosts=new Set(["dearhani.com","www.dearhani.com"]);
+if(productionHosts.has(location.hostname)&&!location.pathname.startsWith("/preview/")){
+window.wcs_add=window.wcs_add||{};window.wcs_add.wa=naverAnalyticsId;
+const sendNaverPageView=()=>{if(typeof window.wcs_do==="function")window.wcs_do()};
+const existingNaverScript=document.querySelector('script[src*="wcs.pstatic.net/wcslog.js"]');
+if(window.wcs)sendNaverPageView();else if(existingNaverScript)existingNaverScript.addEventListener("load",sendNaverPageView,{once:true});else{const naverScript=document.createElement("script");naverScript.async=true;naverScript.src="https://wcs.pstatic.net/wcslog.js";naverScript.addEventListener("load",sendNaverPageView,{once:true});document.head.appendChild(naverScript)}
+}
 const locale={en:"en-US",ja:"ja-JP",zh:"zh-CN"};
 const weekdays={en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],ja:["日","月","火","水","木","金","土"],zh:["日","一","二","三","四","五","六"]};
 const hours=[null,"10–13 / 14–20","10–13 / 14–20","10–13 / 14–20","14–20","10–13 / 14–20","10–15"];
