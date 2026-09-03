@@ -181,8 +181,8 @@ assert.match(sharedMain, /sendAdvertisingConversion\("custom001"\)/, "네이버 
 assert.match(sharedMain, /sendAdvertisingConversion\("custom002"\)/, "전화 클릭 전환이 없습니다.");
 assert.match(sharedMain, /m\.booking\.naver\.com\/booking\/13\/bizes\/729883/, "예약 전환 대상이 공식 네이버 예약 주소와 일치하지 않습니다.");
 const koreanPrivacy = read("privacy.html");
-assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*NAVER Analytics를 통한 홈페이지 방문·유입·페이지 이용 통계 및 네이버 검색광고 유입·예약 및 전화 버튼 클릭 전환 분석/, "개인정보처리방침에 네이버 분석·광고 전환 위탁 내용이 없습니다.");
-assert.match(koreanPrivacy, /Google Analytics 4\(GA4\), NAVER Analytics 및 네이버 검색광고 전환추적/, "개인정보처리방침에 실제 분석·전환 서비스가 모두 없습니다.");
+assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*NAVER Analytics를 통한 홈페이지 방문·유입·페이지 이용 통계 분석[\s\S]*네이버 검색광고\(파워링크\) 전환추적을 통한 홈페이지 유입 및 예약·전화 버튼 클릭 성과 분석/, "개인정보처리방침에 NAVER Analytics와 파워링크 전환추적 위탁 범위가 구분되어 있지 않습니다.");
+assert.match(koreanPrivacy, /Google Analytics 4\(GA4\), NAVER Analytics 및 네이버 검색광고\(파워링크\) 전환추적/, "개인정보처리방침에 실제 분석·전환 서비스가 모두 없습니다.");
 assert.match(koreanPrivacy, /NaPm[\s\S]*실제 예약 완료 여부, 통화 성립 여부, 상담 내용/, "개인정보처리방침에 광고 유입정보와 클릭 전환의 한계가 없습니다.");
 assert.match(koreanPrivacy, /시행일자 2026년 9월 3일/, "개인정보처리방침 시행일이 갱신되지 않았습니다.");
 const internationalAppointmentScript = read("js/international-appointment.js");
@@ -194,7 +194,7 @@ assert.match(internationalAppointmentScript, /wcs\.trans\(\{type:"custom002"\}\)
 for (const localizedPrivacyPath of ["en/privacy.html", "ja/privacy.html", "zh-cn/privacy.html"]) {
   const localizedPrivacy = read(localizedPrivacyPath);
   assert.match(localizedPrivacy, /NaPm/, `다국어 개인정보처리방침에 네이버 광고 유입 식별정보가 없습니다: ${localizedPrivacyPath}`);
-  assert.match(localizedPrivacy, /Naver Search Ads|Naver検索広告|Naver搜索广告/, `다국어 개인정보처리방침에 네이버 검색광고 전환추적이 없습니다: ${localizedPrivacyPath}`);
+  assert.match(localizedPrivacy, /Powerlink|パワーリンク/, `다국어 개인정보처리방침에 파워링크 전환추적 범위가 없습니다: ${localizedPrivacyPath}`);
 }
 assert.match(sharedMain, /function getDearPageLocale\(\)/, "브라우저 번역과 분리된 URL 기반 언어 판별이 없습니다.");
 assert.match(sharedMain, /if \(nav && navMenu\) \{/, "다국어 메가메뉴 초기화가 없습니다.");
