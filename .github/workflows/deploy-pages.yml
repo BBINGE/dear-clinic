@@ -29,6 +29,7 @@ jobs:
           node tools/test-column-publisher.mjs
           node tools/test-columns-serp.mjs
           node tools/test-seo-surfaces.mjs
+          node tools/test-naver-tracking.mjs
       - uses: actions/configure-pages@v5
       - name: 공개 사이트 구성
         run: |

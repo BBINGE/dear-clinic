@@ -1,10 +1,11 @@
 (function(){"use strict";
-const naverAnalyticsId="1ac7bf67a05a6c0",productionHosts=new Set(["dearhani.com","www.dearhani.com"]);
+const naverAnalyticsId="1ac7bf67a05a6c0",naverAdvertisingId="s_3fd3c8db3a1b",productionHosts=new Set(["dearhani.com","www.dearhani.com"]);
 if(productionHosts.has(location.hostname)&&!location.pathname.startsWith("/preview/")){
-window.wcs_add=window.wcs_add||{};window.wcs_add.wa=naverAnalyticsId;
-const sendNaverPageView=()=>{if(typeof window.wcs_do==="function")window.wcs_do()};
-const existingNaverScript=document.querySelector('script[src*="wcs.pstatic.net/wcslog.js"]');
-if(window.wcs)sendNaverPageView();else if(existingNaverScript)existingNaverScript.addEventListener("load",sendNaverPageView,{once:true});else{const naverScript=document.createElement("script");naverScript.async=true;naverScript.src="https://wcs.pstatic.net/wcslog.js";naverScript.addEventListener("load",sendNaverPageView,{once:true});document.head.appendChild(naverScript)}
+const loadNaverScript=src=>new Promise((resolve,reject)=>{const host=new URL(src).hostname,existing=document.querySelector(`script[src*="${host}/wcslog.js"]`);if(existing){if(window.wcs)resolve();else{existing.addEventListener("load",resolve,{once:true});existing.addEventListener("error",reject,{once:true})}return}const script=document.createElement("script");script.async=true;script.src=src;script.addEventListener("load",resolve,{once:true});script.addEventListener("error",reject,{once:true});document.head.appendChild(script)});
+const selectNaverAccount=id=>{window.wcs_add=window.wcs_add||{};window.wcs_add.wa=id};
+const advertisingReady=loadNaverScript("https://wcs.naver.net/wcslog.js").then(()=>{selectNaverAccount(naverAdvertisingId);window._nasa=window._nasa||{};if(window.wcs&&typeof window.wcs.inflow==="function")window.wcs.inflow();if(typeof window.wcs_do==="function")window.wcs_do()});
+advertisingReady.then(()=>loadNaverScript("https://wcs.pstatic.net/wcslog.js")).then(()=>{selectNaverAccount(naverAnalyticsId);if(typeof window.wcs_do==="function")window.wcs_do()}).catch(()=>{});
+document.addEventListener("click",event=>{const link=event.target.closest("a[href^='tel:']");if(!link)return;const transmit=()=>{if(!window.wcs||typeof window.wcs.trans!=="function")return;selectNaverAccount(naverAdvertisingId);window.wcs.trans({type:"custom002"});selectNaverAccount(naverAnalyticsId)};if(window.wcs&&typeof window.wcs.trans==="function")transmit();else advertisingReady.then(transmit).catch(()=>{})});
 }
 const locale={en:"en-US",ja:"ja-JP",zh:"zh-CN"};
 const weekdays={en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],ja:["日","月","火","水","木","金","土"],zh:["日","一","二","三","四","五","六"]};

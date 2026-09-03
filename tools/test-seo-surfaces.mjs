@@ -24,7 +24,7 @@ assert.ok(sitemapUrls.length > 0, "사이트맵 URL을 찾지 못했습니다.")
 assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, "사이트맵에 중복 URL이 있습니다.");
 
 const canonicalOwners = new Map();
-const sharedMainVersion = "20260903-1";
+const sharedMainVersion = "20260903-2";
 const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
 const homeFooter = read("index.html").match(footerPattern)?.[0];
 assert.ok(homeFooter, "메인 공통 푸터가 없습니다.");
@@ -40,7 +40,7 @@ for (const pageUrl of sitemapUrls) {
   assert.ok(fs.existsSync(absolutePath), `사이트맵 페이지 파일이 없습니다: ${relativePath}`);
   const html = fs.readFileSync(absolutePath, "utf8");
   if (relativePath === "international-appointment.html") {
-    assert.match(html, /js\/international-appointment\.js\?v=20260903-1/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
+    assert.match(html, /js\/international-appointment\.js\?v=20260903-2/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
   } else {
     assert.match(html, new RegExp(`(?:\\.\\.\\/|)js\\/main\\.js\\?v=${sharedMainVersion}`), `공통 JS 캐시 버전이 다릅니다: ${relativePath}`);
   }
@@ -173,14 +173,29 @@ assert.match(sharedMain, /const analyticsId = "1ac7bf67a05a6c0";/, "네이버 �
 assert.match(sharedMain, /https:\/\/wcs\.pstatic\.net\/wcslog\.js/, "네이버 애널리틱스 수집 스크립트가 없습니다.");
 assert.match(sharedMain, /productionHosts\.has\(window\.location\.hostname\)/, "네이버 애널리틱스의 운영 도메인 제한이 없습니다.");
 assert.match(sharedMain, /window\.location\.pathname\.startsWith\("\/preview\/"\)/, "네이버 애널리틱스에서 미리보기 경로를 제외하지 않습니다.");
-assert.match(sharedMain, /script\[src\*="wcs\.pstatic\.net\/wcslog\.js"\]/, "네이버 공통 스크립트 중복 로드 방지가 없습니다.");
+assert.match(sharedMain, /const advertisingId = "s_3fd3c8db3a1b";/, "네이버 검색광고 공통 인증키가 없습니다.");
+assert.match(sharedMain, /https:\/\/wcs\.naver\.net\/wcslog\.js/, "네이버 검색광고 공통 스크립트가 없습니다.");
+assert.match(sharedMain, /script\[src\*="\$\{host\}\/wcslog\.js"\]/, "네이버 공통 스크립트 중복 로드 방지가 없습니다.");
+assert.match(sharedMain, /window\.wcs\.inflow\(\)/, "네이버 검색광고 유입 호출이 없습니다.");
+assert.match(sharedMain, /sendAdvertisingConversion\("custom001"\)/, "네이버 예약 클릭 전환이 없습니다.");
+assert.match(sharedMain, /sendAdvertisingConversion\("custom002"\)/, "전화 클릭 전환이 없습니다.");
+assert.match(sharedMain, /m\.booking\.naver\.com\/booking\/13\/bizes\/729883/, "예약 전환 대상이 공식 네이버 예약 주소와 일치하지 않습니다.");
 const koreanPrivacy = read("privacy.html");
-assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*NAVER Analytics를 통한 홈페이지 방문·유입·페이지 이용 통계 분석/, "개인정보처리방침에 NAVER Analytics 위탁 내용이 없습니다.");
-assert.match(koreanPrivacy, /Google Analytics 4\(GA4\)와 NAVER Analytics/, "개인정보처리방침의 분석 서비스명이 공식 표기로 통일되지 않았습니다.");
+assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*NAVER Analytics를 통한 홈페이지 방문·유입·페이지 이용 통계 및 네이버 검색광고 유입·예약 및 전화 버튼 클릭 전환 분석/, "개인정보처리방침에 네이버 분석·광고 전환 위탁 내용이 없습니다.");
+assert.match(koreanPrivacy, /Google Analytics 4\(GA4\), NAVER Analytics 및 네이버 검색광고 전환추적/, "개인정보처리방침에 실제 분석·전환 서비스가 모두 없습니다.");
+assert.match(koreanPrivacy, /NaPm[\s\S]*실제 예약 완료 여부, 통화 성립 여부, 상담 내용/, "개인정보처리방침에 광고 유입정보와 클릭 전환의 한계가 없습니다.");
 assert.match(koreanPrivacy, /시행일자 2026년 9월 3일/, "개인정보처리방침 시행일이 갱신되지 않았습니다.");
 const internationalAppointmentScript = read("js/international-appointment.js");
 assert.match(internationalAppointmentScript, /naverAnalyticsId="1ac7bf67a05a6c0"/, "외국인 예약 페이지에 네이버 애널리틱스 발급 ID가 없습니다.");
 assert.match(internationalAppointmentScript, /https:\/\/wcs\.pstatic\.net\/wcslog\.js/, "외국인 예약 페이지에 네이버 수집 스크립트가 없습니다.");
+assert.match(internationalAppointmentScript, /naverAdvertisingId="s_3fd3c8db3a1b"/, "외국인 예약 페이지에 네이버 검색광고 공통 인증키가 없습니다.");
+assert.match(internationalAppointmentScript, /https:\/\/wcs\.naver\.net\/wcslog\.js/, "외국인 예약 페이지에 네이버 검색광고 공통 스크립트가 없습니다.");
+assert.match(internationalAppointmentScript, /wcs\.trans\(\{type:"custom002"\}\)/, "외국인 예약 페이지의 전화 클릭 전환이 없습니다.");
+for (const localizedPrivacyPath of ["en/privacy.html", "ja/privacy.html", "zh-cn/privacy.html"]) {
+  const localizedPrivacy = read(localizedPrivacyPath);
+  assert.match(localizedPrivacy, /NaPm/, `다국어 개인정보처리방침에 네이버 광고 유입 식별정보가 없습니다: ${localizedPrivacyPath}`);
+  assert.match(localizedPrivacy, /Naver Search Ads|Naver検索広告|Naver搜索广告/, `다국어 개인정보처리방침에 네이버 검색광고 전환추적이 없습니다: ${localizedPrivacyPath}`);
+}
 assert.match(sharedMain, /function getDearPageLocale\(\)/, "브라우저 번역과 분리된 URL 기반 언어 판별이 없습니다.");
 assert.match(sharedMain, /if \(nav && navMenu\) \{/, "다국어 메가메뉴 초기화가 없습니다.");
 assert.match(sharedMain, /function alignLocalizedPageUi\(\)/, "다국어 최신 UI 정렬 계층이 없습니다.");

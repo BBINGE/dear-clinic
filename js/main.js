@@ -1,37 +1,93 @@
-// NAVER Analytics 공통 설정
+// NAVER Analytics + 네이버 검색광고 전환추적 공통 설정
 // 실제 운영 도메인에서만 수집하며 preview와 로컬 확인 데이터는 제외한다.
-(function initializeDearNaverAnalytics() {
+(function initializeDearNaverTracking() {
   "use strict";
 
   const analyticsId = "1ac7bf67a05a6c0";
+  const advertisingId = "s_3fd3c8db3a1b";
+  const advertisingScriptUrl = "https://wcs.naver.net/wcslog.js";
+  const analyticsScriptUrl = "https://wcs.pstatic.net/wcslog.js";
   const productionHosts = new Set(["dearhani.com", "www.dearhani.com"]);
   if (!productionHosts.has(window.location.hostname) || window.location.pathname.startsWith("/preview/")) return;
-  if (window.__dearNaverAnalyticsInitialized) return;
-  window.__dearNaverAnalyticsInitialized = true;
+  if (window.__dearNaverTrackingInitialized) return;
+  window.__dearNaverTrackingInitialized = true;
 
-  window.wcs_add = window.wcs_add || {};
-  window.wcs_add.wa = analyticsId;
+  const loadScriptOnce = (src) =>
+    new Promise((resolve, reject) => {
+      const host = new URL(src).hostname;
+      const existingScript = document.querySelector(`script[src*="${host}/wcslog.js"]`);
+      if (existingScript) {
+        if (window.wcs) {
+          resolve();
+          return;
+        }
+        existingScript.addEventListener("load", resolve, { once: true });
+        existingScript.addEventListener("error", reject, { once: true });
+        return;
+      }
 
-  const sendPageView = () => {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = src;
+      script.addEventListener("load", resolve, { once: true });
+      script.addEventListener("error", reject, { once: true });
+      document.head.appendChild(script);
+    });
+
+  const selectAccount = (accountId) => {
+    window.wcs_add = window.wcs_add || {};
+    window.wcs_add.wa = accountId;
+  };
+
+  const sendAdvertisingPageView = () => {
+    selectAccount(advertisingId);
+    window._nasa = window._nasa || {};
+    if (window.wcs && typeof window.wcs.inflow === "function") window.wcs.inflow();
     if (typeof window.wcs_do === "function") window.wcs_do();
   };
 
-  if (window.wcs) {
-    sendPageView();
-    return;
-  }
+  const sendAnalyticsPageView = () => {
+    selectAccount(analyticsId);
+    if (typeof window.wcs_do === "function") window.wcs_do();
+  };
 
-  const existingScript = document.querySelector('script[src*="wcs.pstatic.net/wcslog.js"]');
-  if (existingScript) {
-    existingScript.addEventListener("load", sendPageView, { once: true });
-    return;
-  }
+  const advertisingReady = loadScriptOnce(advertisingScriptUrl).then(() => {
+    sendAdvertisingPageView();
+  });
 
-  const naverAnalyticsTag = document.createElement("script");
-  naverAnalyticsTag.async = true;
-  naverAnalyticsTag.src = "https://wcs.pstatic.net/wcslog.js";
-  naverAnalyticsTag.addEventListener("load", sendPageView, { once: true });
-  document.head.appendChild(naverAnalyticsTag);
+  window.__dearNaverAdvertisingReady = advertisingReady;
+  advertisingReady
+    .then(() => loadScriptOnce(analyticsScriptUrl))
+    .then(sendAnalyticsPageView)
+    .catch(() => {
+      // 추적 스크립트 차단이 홈페이지 이용을 방해하지 않게 한다.
+    });
+
+  const sendAdvertisingConversion = (type) => {
+    const transmit = () => {
+      if (!window.wcs || typeof window.wcs.trans !== "function") return;
+      selectAccount(advertisingId);
+      window.wcs.trans({ type });
+      selectAccount(analyticsId);
+    };
+
+    if (window.wcs && typeof window.wcs.trans === "function") transmit();
+    else advertisingReady.then(transmit).catch(() => {});
+  };
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+
+    const href = link.getAttribute("href") || "";
+    if (href.startsWith("tel:")) {
+      sendAdvertisingConversion("custom002");
+      return;
+    }
+    if (href.includes("m.booking.naver.com/booking/13/bizes/729883")) {
+      sendAdvertisingConversion("custom001");
+    }
+  });
 })();
 
 // Google Analytics 4 공통 설정
