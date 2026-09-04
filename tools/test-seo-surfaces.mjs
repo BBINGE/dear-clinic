@@ -244,6 +244,7 @@ const koreanHtml = [
 for (const absolutePath of koreanHtml) {
   const html = fs.readFileSync(absolutePath, "utf8");
   assert.doesNotMatch(html, /href="(?:\.\.\/)?index\.html(?:#info)?"/, `홈 링크가 index.html을 가리킵니다: ${path.relative(siteRoot, absolutePath)}`);
+  assert.doesNotMatch(html, /href="(?:\.\.\/)?be-deer\.html\?v=/, `BE DEER 내부 링크에 캐시용 쿼리가 남아 있습니다: ${path.relative(siteRoot, absolutePath)}`);
 }
 
 process.stdout.write(`SEO 표면 검증 통과: 사이트맵 ${sitemapUrls.length}개, 칼럼 ${directCardLinks.length}개\n`);

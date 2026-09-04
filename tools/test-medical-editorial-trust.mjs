@@ -96,12 +96,27 @@ assert.match(read("director.html"), /href="medical-information-policy\.html"/, "
 assert.match(read("index.html"), new RegExp(`"publishingPrinciples": "${policyUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`), "병원 엔티티에 편집·정정 원칙이 없습니다.");
 
 const beDeer = read("be-deer.html");
-for (const slug of [
+const beDeerColumnSlugs = [
   "seocho-diet-herbal-medicine", "seocho-diet-6-reasons", "diet-without-hunger",
   "diet-herbal-medicine-price", "gyodae-diet-premenstrual-appetite", "gangnam-obesity-fatty-liver",
-]) {
+];
+for (const slug of beDeerColumnSlugs) {
   assert.match(beDeer, new RegExp(`href="columns/${slug}\\.html"`), `BE DEER 허브에 핵심 칼럼이 없습니다: ${slug}`);
 }
+const beDeerNodes = schemasFrom(beDeer, "be-deer.html").flatMap((schema) => Array.isArray(schema?.["@graph"]) ? schema["@graph"] : [schema]);
+const beDeerPage = beDeerNodes.find((node) => node?.["@id"] === "https://dearhani.com/be-deer.html#webpage");
+const beDeerService = beDeerNodes.find((node) => node?.["@id"] === "https://dearhani.com/be-deer.html#service");
+assert.ok(beDeerPage, "BE DEER MedicalWebPage 구조화 데이터가 없습니다.");
+assert.ok(beDeerService, "BE DEER Service 구조화 데이터가 없습니다.");
+const relatedColumnUrls = (beDeerPage.hasPart || []).map((item) => item.url);
+for (const slug of beDeerColumnSlugs) {
+  assert.ok(relatedColumnUrls.includes(`https://dearhani.com/columns/${slug}.html`), `BE DEER 구조화 데이터에 핵심 칼럼이 없습니다: ${slug}`);
+}
+assert.deepEqual(
+  (beDeerService.areaServed || []).map((item) => item.name),
+  ["서울 서초구", "서초동", "강남역", "교대역"],
+  "BE DEER 서비스 지역이 공식 지역 신호와 다릅니다.",
+);
 
 const publisher = read("tools/publish-column.mjs");
 assert.ok(publisher.includes(editorialStatement), "향후 발행 템플릿에 작성·검토 안내가 없습니다.");
