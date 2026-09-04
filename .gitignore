@@ -4,3 +4,7 @@ Thumbs.db
 HANDOFF.local.md
 .column-editor/
 /admin-app/
+worker/dear-ai/node_modules/
+worker/dear-ai/.dev.vars
+worker/dear-ai/.env
+worker/dear-ai/.wrangler/

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; img-src 'self' data:; connect-src https://dear-ai-preview.dearhani-ai.workers.dev; base-uri 'none'; form-action 'none'">
+  <meta name="theme-color" content="#f5f2ec">
+  <meta name="dear-ai-endpoint" content="https://dear-ai-preview.dearhani-ai.workers.dev/chat">
+  <title>디어한의원 AI 안내 테스트</title>
+  <link rel="icon" href="../assets/images/dear-favicon.png" type="image/png">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="../css/dear-ai.css?v=20260905-1">
+</head>
+<body>
+  <main class="ai-preview">
+    <header class="ai-preview__header">
+      <a class="ai-preview__brand" href="../index.html" aria-label="디어한의원 홈">DEAR</a>
+      <p>비공개 대화 테스트</p>
+    </header>
+
+    <section class="dear-chat" aria-labelledby="dearChatTitle">
+      <header class="dear-chat__top">
+        <div class="dear-chat__profile" aria-hidden="true">
+          <img src="../assets/images/disoongi-profile.png" alt="">
+        </div>
+        <div>
+          <h1 id="dearChatTitle">디숭이</h1>
+          <p><span class="dear-chat__status" aria-hidden="true"></span> 디어한의원 AI 안내</p>
+        </div>
+        <button class="dear-chat__reset" type="button" data-chat-reset aria-label="대화 새로 시작">새 대화</button>
+      </header>
+
+      <div class="dear-chat__notice">
+        지금은 삥이와 부끄님만 보는 테스트판이에요. 이름·전화번호 같은 개인정보는 적지 말아주세요.
+      </div>
+
+      <div class="dear-chat__messages" data-chat-messages aria-live="polite" aria-busy="false">
+        <article class="chat-message chat-message--assistant">
+          <div class="chat-message__avatar" aria-hidden="true">
+            <img src="../assets/images/disoongi-profile.png" alt="">
+          </div>
+          <div class="chat-message__body">
+            <p>안녕하세요, 디어한의원 대표 마스코트 디숭이예요 :)</p>
+            <p>요즘 몸에서 제일 신경 쓰이는 게 있나요? 말이 좀 엉켜도 괜찮으니 그냥 편하게 얘기해주세요 😊</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="dear-chat__suggestions" data-chat-suggestions aria-label="대화 예시">
+        <button type="button">요즘 살이 잘 안 빠져요</button>
+        <button type="button">공진단이 궁금해요</button>
+        <button type="button">기력이 너무 없어요</button>
+        <button type="button">진료·예약 안내</button>
+      </div>
+
+      <form class="dear-chat__composer" data-chat-form>
+        <label class="sr-only" for="dearChatInput">디숭이에게 보낼 말</label>
+        <textarea id="dearChatInput" rows="1" maxlength="1200" placeholder="아무 말이나 적어도 돼요. 예약도 도와드려요 :)" data-chat-input required></textarea>
+        <button type="submit" data-chat-send aria-label="메시지 보내기">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3 9.7 14.3M21 3l-7.1 18-4.2-6.7L3 10.1 21 3Z"/></svg>
+        </button>
+      </form>
+
+      <p class="dear-chat__legal">디숭이는 진단·처방을 대신하지 않아요. 정확한 진료는 김민지 대표원장 상담으로 이루어집니다.</p>
+
+      <div class="dear-chat__gate" data-chat-gate>
+        <form data-gate-form>
+          <img src="../assets/images/disoongi-profile.png" alt="디어한의원 대표 마스코트 디숭이">
+          <h2>우리끼리 먼저 만나봐요</h2>
+          <p>아직 공개 전이에요. 테스트 암호를 입력하면 디숭이와 대화할 수 있어요.</p>
+          <label for="dearTestCode">테스트 암호</label>
+          <div>
+            <input id="dearTestCode" type="password" autocomplete="off" data-gate-input required>
+            <button type="submit">들어가기</button>
+          </div>
+          <p class="dear-chat__gate-error" data-gate-error role="alert"></p>
+        </form>
+      </div>
+    </section>
+
+    <p class="ai-preview__foot">ALWAYS “DEAR” YOU</p>
+  </main>
+  <script src="../js/dear-ai.js?v=20260905-1"></script>
+</body>
+</html>

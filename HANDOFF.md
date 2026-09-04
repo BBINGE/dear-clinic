@@ -904,6 +904,18 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 
 ## 10. 검증 기준
 
+### 2026-09-05 디숭이 AI 안내 비공개 테스트판
+
+- 사용자 승인으로 실제 LLM 기반 안내 위젯의 비공개 테스트판을 구현했다. 공개 메뉴나 공통 홈페이지에는 아직 연결하지 않는다.
+- 테스트 화면은 `preview/dear-ai.html`, 전용 스타일과 동작은 `css/dear-ai.css`, `js/dear-ai.js`에 있다. 부끄님이 제작한 원본 디숭이 이미지를 파생 생성 없이 `assets/images/disoongi-profile.png` 프로필로 사용한다.
+- 백엔드는 `worker/dear-ai/`의 Cloudflare Worker다. 배포 이름은 `dear-ai-preview`, 주소는 `https://dear-ai-preview.dearhani-ai.workers.dev`이며 본사이트 DNS와 GitHub Pages 구조는 변경하지 않았다.
+- Claude `claude-sonnet-4-6`이 전체 대화 맥락으로 `계속 대화`, `예약 제안`, `긴급 안내` 중 하나를 구조화해 선택한다. 코드의 키워드·횟수 트리거와 응답 본문의 예약 태그 파싱은 사용하지 않는다.
+- 말투는 자연스러운 해요체를 기본으로 하되 오타·비문·반말·욕설·밈·사투리·연령대별 표현을 뜻과 감정 중심으로 해석한다. 유행어를 억지로 먼저 쓰지 않고, 이모지와 이모티콘은 상황에 맞게 제한적으로 바꿔 쓴다.
+- 테스트판은 별도 암호로 잠그고, 대화 원문을 서버 DB·브라우저 영구 저장소·GA4·NAVER 로그에 저장하지 않는다. 최근 14개 메시지만 브라우저 메모리에서 요청마다 전달한다.
+- Anthropic API 키는 공개 저장소에 두지 않고 Worker Secret `ANTHROPIC_API_KEY`로만 등록한다. 테스트 암호도 Worker Secret `PREVIEW_ACCESS_CODE`로 관리하며 문서에 값을 기록하지 않는다.
+- 정적·보안 계약 검사는 `node tools/test-dear-ai.mjs`, Worker 번들 검사는 `worker/dear-ai`에서 `npm run check`로 실행한다.
+- 개인정보처리방침과 국외 이전·처리 안내, 공개 노출 위치, 남용 방지, 비식별 전환 측정, 외부 채널 지식 동기화 범위는 삥이·부끄님 실사용 테스트와 승인 뒤 확정한다. 그 전에는 환자에게 공개하지 않는다.
+
 - HTML/CSS/JS 문법
 - `git diff --check`
 - 내부 링크와 외부 CTA
