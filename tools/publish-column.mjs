@@ -767,9 +767,9 @@ ${previewNotice}
     <div class="column-byline"><a class="column-author-link" href="../director.html" rel="author">김민지 대표원장</a><time datetime="${content.publishedAt}">${publishedDisplay}</time></div>
     ${tagsHtml}
   </header>
-  <aside class="column-editorial-note" aria-label="의료정보 작성 및 검토">
-    <div class="column-editorial-note__copy"><span>MEDICAL EDITORIAL</span><strong>김민지 대표원장 직접 작성·의학적 검토·최종 발행</strong></div>
-    <a href="../medical-information-policy.html">작성·검토 원칙 보기 <span aria-hidden="true">→</span></a>
+  <aside class="column-editorial-note" aria-label="의료정보 집필 및 검토">
+    <div class="column-editorial-note__copy"><span>MEDICAL EDITORIAL</span><strong>김민지 대표원장 직접 집필·의학적 검토·최종 승인</strong></div>
+    <a href="../medical-information-policy.html">편집·정정 원칙 보기 <span aria-hidden="true">→</span></a>
   </aside>
   <figure class="column-article__hero"><img src="../${coverPath}" alt="${escapeHtml(content.coverAlt)}"></figure>
   <div class="column-article__layout">

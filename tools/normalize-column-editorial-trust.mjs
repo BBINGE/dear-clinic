@@ -5,9 +5,9 @@ import { fileURLToPath } from "node:url";
 const PERSON_ID = "https://dearhani.com/director.html#kim-minji";
 const CLINIC_ID = "https://dearhani.com/#clinic";
 const POLICY_URL = "https://dearhani.com/medical-information-policy.html";
-const EDITORIAL_NOTE = `<aside class="column-editorial-note" aria-label="의료정보 작성 및 검토">
-  <div class="column-editorial-note__copy"><span>MEDICAL EDITORIAL</span><strong>김민지 대표원장 직접 작성·의학적 검토·최종 발행</strong></div>
-  <a href="../medical-information-policy.html">작성·검토 원칙 보기 <span aria-hidden="true">→</span></a>
+const EDITORIAL_NOTE = `<aside class="column-editorial-note" aria-label="의료정보 집필 및 검토">
+  <div class="column-editorial-note__copy"><span>MEDICAL EDITORIAL</span><strong>김민지 대표원장 직접 집필·의학적 검토·최종 승인</strong></div>
+  <a href="../medical-information-policy.html">편집·정정 원칙 보기 <span aria-hidden="true">→</span></a>
 </aside>`;
 
 const excludedSourceHosts = new Set([
@@ -128,7 +128,9 @@ function normalizeSchema(html, relativePath) {
 
 function normalizeArticle(html, relativePath) {
   let next = html;
-  if (!next.includes('class="column-editorial-note"')) {
+  if (next.includes('class="column-editorial-note"')) {
+    next = next.replace(/<aside class="column-editorial-note"[\s\S]*?<\/aside>/i, EDITORIAL_NOTE);
+  } else {
     const headerEnd = next.search(/<\/header>/i);
     if (headerEnd < 0) throw new Error(`${relativePath}: 대표 헤더의 닫는 태그가 없습니다.`);
     const insertionPoint = headerEnd + next.slice(headerEnd).match(/<\/header>/i)[0].length;

@@ -118,7 +118,7 @@ try {
   assert.match(article, /"lastReviewed":"2026-07-27"/);
   assert.match(article, /"publishingPrinciples":"https:\/\/dearhani\.com\/medical-information-policy\.html"/);
   assert.match(article, /class="column-author-link" href="\.\.\/director\.html" rel="author">김민지 대표원장<\/a>/);
-  assert.match(article, /김민지 대표원장 직접 작성·의학적 검토·최종 발행/);
+  assert.match(article, /김민지 대표원장 직접 집필·의학적 검토·최종 승인/);
   assert.match(article, /href="\.\.\/medical-information-policy\.html"/);
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
   assert.match(article, /href="#제목-3도-칼럼-소제목으로-표시됩니다"/);

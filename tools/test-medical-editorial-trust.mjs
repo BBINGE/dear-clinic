@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "utf8");
 const personId = "https://dearhani.com/director.html#kim-minji";
 const policyUrl = "https://dearhani.com/medical-information-policy.html";
-const editorialStatement = "김민지 대표원장 직접 작성·의학적 검토·최종 발행";
+const editorialStatement = "김민지 대표원장 직접 집필·의학적 검토·최종 승인";
 const excludedSourceHosts = new Set([
   "cdn.jsdelivr.net", "fonts.googleapis.com", "dearhani.com", "www.dearhani.com",
   "m.booking.naver.com", "map.naver.com", "talk.naver.com", "blog.naver.com",
@@ -61,7 +61,7 @@ for (const relativePath of articlePaths) {
   for (const node of editorialNodes) {
     const types = typeList(node);
     assert.equal(node.author?.["@id"], personId, `${relativePath}: 작성자 Person ID가 다릅니다.`);
-    assert.equal(node.publishingPrinciples, policyUrl, `${relativePath}: 작성·검토 원칙 URL이 다릅니다.`);
+    assert.equal(node.publishingPrinciples, policyUrl, `${relativePath}: 편집·정정 원칙 URL이 다릅니다.`);
     if (types.includes("Article") || types.includes("BlogPosting")) {
       assert.equal(node.editor?.["@id"], personId, `${relativePath}: Article 편집자 Person ID가 다릅니다.`);
     }
@@ -86,12 +86,14 @@ for (const relativePath of articlePaths) {
 }
 
 const policy = read("medical-information-policy.html");
-assert.ok(policy.includes("모든 의료정보 칼럼은 김민지 대표원장이 직접 주제를 선정하고 집필하며"), "작성·검토 원칙 페이지에 운영 사실이 없습니다.");
-assert.match(policy, /href="director\.html"/, "작성·검토 원칙 페이지가 원장 소개와 연결되지 않았습니다.");
-assert.ok(read("sitemap.xml").includes(`<loc>${policyUrl}</loc>`), "작성·검토 원칙 페이지가 사이트맵에 없습니다.");
-assert.match(columnsIndex, /href="medical-information-policy\.html"/, "칼럼 목록이 작성·검토 원칙과 연결되지 않았습니다.");
-assert.match(read("director.html"), /href="medical-information-policy\.html"/, "원장 소개가 작성·검토 원칙과 연결되지 않았습니다.");
-assert.match(read("index.html"), new RegExp(`"publishingPrinciples": "${policyUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`), "병원 엔티티에 작성·검토 원칙이 없습니다.");
+assert.ok(policy.includes("모든 의료정보 칼럼은") && policy.includes("김민지 대표원장") && policy.includes("직접 주제를 선정하고 집필합니다"), "편집·정정 원칙 페이지에 운영 사실이 없습니다.");
+assert.ok(policy.includes("내부 운영 협력자가 수행할 수 있습니다"), "편집·정정 원칙 페이지에 내부 협업 범위가 없습니다.");
+assert.equal(/검색·AI|구조화 데이터|제3자 검수/.test(policy), false, "편집·정정 원칙 페이지에 해명형 또는 개발자형 문구가 남아 있습니다.");
+assert.match(policy, /href="director\.html"/, "편집·정정 원칙 페이지가 원장 소개와 연결되지 않았습니다.");
+assert.ok(read("sitemap.xml").includes(`<loc>${policyUrl}</loc>`), "편집·정정 원칙 페이지가 사이트맵에 없습니다.");
+assert.match(columnsIndex, /href="medical-information-policy\.html"/, "칼럼 목록이 편집·정정 원칙과 연결되지 않았습니다.");
+assert.match(read("director.html"), /href="medical-information-policy\.html"/, "원장 소개가 편집·정정 원칙과 연결되지 않았습니다.");
+assert.match(read("index.html"), new RegExp(`"publishingPrinciples": "${policyUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`), "병원 엔티티에 편집·정정 원칙이 없습니다.");
 
 const beDeer = read("be-deer.html");
 for (const slug of [
