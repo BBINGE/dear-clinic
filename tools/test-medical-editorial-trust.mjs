@@ -57,6 +57,7 @@ for (const relativePath of articlePaths) {
     return types.includes("Article") || types.includes("BlogPosting") || types.includes("MedicalWebPage");
   });
   assert.ok(editorialNodes.length > 0, `${relativePath}: Article 또는 MedicalWebPage가 없습니다.`);
+  assert.ok(editorialNodes.some((node) => typeList(node).includes("MedicalWebPage")), `${relativePath}: 의료 페이지 검토자 표면이 없습니다.`);
   for (const node of editorialNodes) {
     const types = typeList(node);
     assert.equal(node.author?.["@id"], personId, `${relativePath}: 작성자 Person ID가 다릅니다.`);

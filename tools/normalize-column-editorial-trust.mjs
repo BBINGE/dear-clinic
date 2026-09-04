@@ -78,13 +78,42 @@ function normalizeSchema(html, relativePath) {
     } catch (error) {
       throw new Error(`${relativePath}: JSON-LD를 해석할 수 없습니다 (${error.message})`);
     }
-    const nodes = Array.isArray(data?.["@graph"]) ? data["@graph"] : [data];
+    let nodes = Array.isArray(data?.["@graph"]) ? data["@graph"] : [data];
     const fallbackDates = {
       published: nodes.find((node) => node?.datePublished)?.datePublished
         || html.match(/property="article:published_time"\s+content="([^"]+)"/i)?.[1],
       modified: nodes.find((node) => node?.dateModified)?.dateModified
         || html.match(/property="article:modified_time"\s+content="([^"]+)"/i)?.[1],
     };
+
+    const articleNode = nodes.find((node) => {
+      const types = typesOf(node);
+      return types.includes("Article") || types.includes("BlogPosting");
+    });
+    const hasMedicalPage = nodes.some((node) => typesOf(node).includes("MedicalWebPage"));
+    if (articleNode && !hasMedicalPage) {
+      const canonicalUrl = articleNode.url
+        || (typeof articleNode.mainEntityOfPage === "string" ? articleNode.mainEntityOfPage : articleNode.mainEntityOfPage?.["@id"])
+        || `https://dearhani.com/${relativePath.replaceAll("\\", "/")}`;
+      const medicalPage = {
+        "@type": "MedicalWebPage",
+        "@id": `${canonicalUrl}#medical-webpage`,
+        url: canonicalUrl,
+        name: articleNode.headline,
+        description: articleNode.description,
+        inLanguage: articleNode.inLanguage || "ko-KR",
+        datePublished: articleNode.datePublished || fallbackDates.published,
+        dateModified: articleNode.dateModified || fallbackDates.modified || articleNode.datePublished || fallbackDates.published,
+        publisher: articleNode.publisher || { "@id": CLINIC_ID },
+        citation: articleNode.citation,
+      };
+      if (Array.isArray(data?.["@graph"])) {
+        data["@graph"].push(medicalPage);
+      } else {
+        data = { "@context": data["@context"] || "https://schema.org", "@graph": [data, medicalPage] };
+      }
+      nodes = Array.isArray(data["@graph"]) ? data["@graph"] : [data];
+    }
     for (const node of nodes) normalizedNodes += normalizeNode(node, sources, fallbackDates);
     const serialized = JSON.stringify(data, null, 2)
       .replaceAll("<", "\\u003c")
