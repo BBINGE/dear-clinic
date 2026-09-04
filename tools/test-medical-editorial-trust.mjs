@@ -86,9 +86,9 @@ for (const relativePath of articlePaths) {
 }
 
 const policy = read("medical-information-policy.html");
-assert.ok(policy.includes("모든 의료정보 칼럼은") && policy.includes("김민지 대표원장") && policy.includes("직접 주제를 선정하고 집필합니다"), "편집·정정 원칙 페이지에 운영 사실이 없습니다.");
-assert.ok(policy.includes("내부 운영 협력자가 수행할 수 있습니다"), "편집·정정 원칙 페이지에 내부 협업 범위가 없습니다.");
-assert.equal(/검색·AI|구조화 데이터|제3자 검수/.test(policy), false, "편집·정정 원칙 페이지에 해명형 또는 개발자형 문구가 남아 있습니다.");
+assert.ok(policy.includes("모든 의료정보 칼럼은 김민지 대표원장이 직접 주제를 선정하고"), "편집·정정 원칙 페이지에 운영 사실이 없습니다.");
+assert.ok(policy.includes("진료 경험과 조사, 해석을 중심으로 작성합니다"), "편집·정정 원칙 페이지에 저자 관점이 없습니다.");
+assert.equal(/검색·AI|구조화 데이터|제3자 검수|내부 운영 협력자/.test(policy), false, "편집·정정 원칙 페이지에 해명형 또는 내부 실무 문구가 남아 있습니다.");
 assert.match(policy, /href="director\.html"/, "편집·정정 원칙 페이지가 원장 소개와 연결되지 않았습니다.");
 assert.ok(read("sitemap.xml").includes(`<loc>${policyUrl}</loc>`), "편집·정정 원칙 페이지가 사이트맵에 없습니다.");
 assert.match(columnsIndex, /href="medical-information-policy\.html"/, "칼럼 목록이 편집·정정 원칙과 연결되지 않았습니다.");
