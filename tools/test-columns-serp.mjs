@@ -22,7 +22,11 @@ const articles = [...source.matchAll(/<a class="column-card[^>]*href="([^"]+)"[^
   summary: match[7].replace(/<[^>]+>/g, ''),
 }));
 
-assert.equal(articles.length, 24, '공개 칼럼 24편을 검색 색인에서 읽어야 합니다.');
+assert.equal(articles.length, 25, '공개 칼럼 25편을 검색 색인에서 읽어야 합니다.');
+
+const chemotherapyPain = engine.searchArticles('항암치료 후 손발 저림과 통증', articles);
+assert.equal(chemotherapyPain.categories[0], 'Relief');
+assert.equal(chemotherapyPain.articles[0].slug, 'chemotherapy-pain-clinic');
 
 const cheongdamGongjindan = engine.searchArticles('청담 공진단 선물 상담', articles);
 assert.equal(cheongdamGongjindan.articles[0].slug, 'cheongdam-gongjindan');
