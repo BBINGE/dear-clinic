@@ -24,7 +24,8 @@ assert.ok(sitemapUrls.length > 0, "사이트맵 URL을 찾지 못했습니다.")
 assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, "사이트맵에 중복 URL이 있습니다.");
 
 const canonicalOwners = new Map();
-const sharedMainVersion = "20260903-2";
+const sharedCssVersion = "20260904-1";
+const sharedMainVersion = "20260904-1";
 const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
 const homeFooter = read("index.html").match(footerPattern)?.[0];
 assert.ok(homeFooter, "메인 공통 푸터가 없습니다.");
@@ -34,6 +35,7 @@ const expectedColumnFooter = homeFooter
   .replace('href="terms.html"', 'href="../terms.html"')
   .replace('href="non-covered.html"', 'href="../non-covered.html"')
   .replace('href="patient-rights.html"', 'href="../patient-rights.html"');
+const normalizeLineEndings = (value) => value.replaceAll("\r\n", "\n");
 for (const pageUrl of sitemapUrls) {
   const relativePath = localPathFromUrl(pageUrl);
   const absolutePath = path.join(siteRoot, relativePath);
@@ -72,9 +74,9 @@ for (const pageUrl of sitemapUrls) {
   const schemaMatches = [...html.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/gi)];
   if (relativePath.startsWith("columns/")) {
     assert.ok(schemaMatches.length > 0, `칼럼 구조화 데이터가 없습니다: ${relativePath}`);
-    assert.match(html, /\.\.\/css\/style\.css\?v=20260901-5/, `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, new RegExp(`\\.\\.\\/css\\/style\\.css\\?v=${sharedCssVersion}`), `칼럼 공통 CSS 버전이 다릅니다: ${relativePath}`);
     assert.match(html, /<footer class="footer" id="contact">/, `칼럼 공통 푸터가 없습니다: ${relativePath}`);
-    assert.equal(html.match(footerPattern)?.[0], expectedColumnFooter, `메인과 칼럼 푸터가 다릅니다: ${relativePath}`);
+    assert.equal(normalizeLineEndings(html.match(footerPattern)?.[0] || ""), normalizeLineEndings(expectedColumnFooter), `메인과 칼럼 푸터가 다릅니다: ${relativePath}`);
   }
   for (const [index, match] of schemaMatches.entries()) {
     assert.doesNotThrow(() => JSON.parse(match[1]), `JSON-LD ${index + 1}을 해석할 수 없습니다: ${relativePath}`);
@@ -121,14 +123,24 @@ assert.match(insomnia, /\.sources\{margin-top:clamp\(2\.4rem,4vw,3\.5rem\);paddi
 
 const home = read("index.html");
 const sharedCss = read("css/style.css");
-assert.match(home, /css\/style\.css\?v=20260901-5/, "홈의 공통 CSS 캐시 버전이 다릅니다.");
+assert.match(home, new RegExp(`css\\/style\\.css\\?v=${sharedCssVersion}`), "홈의 공통 CSS 캐시 버전이 다릅니다.");
+assert.match(home, /js\/weather-scene\.js\?v=20260904-1/, "날씨 장면 지연 로더의 캐시 버전이 다릅니다.");
+const deferredWeatherScenes = [...home.matchAll(/<img\b[^>]*class="[^"]*weather-lens__scene[^"]*"[^>]*data-src="([^"]+)"[^>]*>/g)];
+assert.equal(deferredWeatherScenes.length, 4, "날씨 배경 네 장이 필요할 때만 로드되도록 설정되지 않았습니다.");
+for (const match of deferredWeatherScenes) {
+  assert.doesNotMatch(match[0], /\ssrc="/, "날씨 배경이 초기 화면에서 모두 다운로드됩니다.");
+  assert.ok(fs.existsSync(path.join(siteRoot, match[1])), `날씨 배경 파일이 없습니다: ${match[1]}`);
+  assert.match(match[0], /\bwidth="1224"\s+height="941"/, "날씨 배경의 고정 크기 정보가 없습니다.");
+}
+assert.match(read("js/weather-scene.js"), /function loadWeatherScene\(state, daylight\)/, "현재 날씨 장면만 불러오는 로더가 없습니다.");
 assert.match(sharedCss, /\.weather-card__icon::before\s*\{[\s\S]*?white-space:\s*nowrap;/, "날씨 아이콘 줄바꿈 방지 규칙이 없습니다.");
 assert.doesNotMatch(sharedCss, /"(?:🌧️🌧️|🌨️❄️)"/, "강수량 강조용 복수 이모지가 아이콘 슬롯을 넘을 수 있습니다.");
+assert.match(sharedCss, /@media \(max-width:1100px\)[\s\S]*?\.columns-page-body \.columns-journal-nav \{ overflow-x:auto;[\s\S]*?scrollbar-width:none;/, "태블릿 칼럼 필터가 겹치지 않도록 가로 탐색으로 전환되지 않습니다.");
 
 const legalPages = ["privacy", "terms", "non-covered", "patient-rights"];
 for (const page of legalPages) {
   const html = read(`${page}.html`);
-  assert.match(html, /css\/style\.css\?v=20260902-2/, `한국어 법률 페이지 CSS 버전이 다릅니다: ${page}.html`);
+  assert.match(html, new RegExp(`css\\/style\\.css\\?v=${sharedCssVersion}`), `한국어 법률 페이지 CSS 버전이 다릅니다: ${page}.html`);
 }
 assert.match(sharedCss, /\.legal-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2rem, 3\.6vw, 3\.25rem\);/, "법률 페이지 H1이 문서형 크기로 제한되지 않았습니다.");
 assert.match(sharedCss, /\.legal-content p,\s*\.legal-content li\s*\{[\s\S]*?line-height:\s*1\.8;/, "법률 페이지 본문 행간이 문서형 기준과 다릅니다.");
@@ -146,8 +158,7 @@ for (const directory of localizedDirectories) {
   for (const page of localizedPages) {
     const relativePath = `${directory}/${page}.html`;
     const html = read(relativePath);
-    const expectedCssVersion = legalPages.includes(page) ? "20260902-2" : "20260901-5";
-    assert.match(html, new RegExp(`\\.\\.\\/css\\/style\\.css\\?v=${expectedCssVersion}`), `다국어 CSS 버전이 다릅니다: ${relativePath}`);
+    assert.match(html, new RegExp(`\\.\\.\\/css\\/style\\.css\\?v=${sharedCssVersion}`), `다국어 CSS 버전이 다릅니다: ${relativePath}`);
     assert.match(html, new RegExp(`\\.\\.\\/js\\/main\\.js\\?v=${sharedMainVersion}`), `다국어 JS 버전이 다릅니다: ${relativePath}`);
     assert.equal((html.match(/<h1\b/gi) || []).length, 1, `다국어 H1은 정확히 하나여야 합니다: ${relativePath}`);
     if (legalPages.includes(page)) {

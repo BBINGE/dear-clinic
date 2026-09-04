@@ -102,7 +102,7 @@ try {
 
   assert.match(article, /GENERATED_BY_DEAR_COLUMN_PUBLISHER/);
   assert.match(article, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/publisher-test-column\.html"/);
-  assert.match(article, /style\.css\?v=20260901-5/);
+  assert.match(article, /style\.css\?v=20260904-1/);
   assert.doesNotMatch(article, /href="\.\.\/index\.html/);
   assert.match(article, /class="footer__sns"/);
   assert.match(article, /href="https:\/\/www\.instagram\.com\/dearhani__\/"/);
@@ -113,7 +113,13 @@ try {
   assert.match(article, /href="\.\.\/patient-rights\.html"/);
   assert.match(article, /"@type":"FAQPage"/);
   assert.match(article, /"author":\{"@id":"https:\/\/dearhani\.com\/director\.html#kim-minji"\}/);
+  assert.match(article, /"reviewedBy":\{"@id":"https:\/\/dearhani\.com\/director\.html#kim-minji"\}/);
+  assert.match(article, /"editor":\{"@id":"https:\/\/dearhani\.com\/director\.html#kim-minji"\}/);
+  assert.match(article, /"lastReviewed":"2026-07-27"/);
+  assert.match(article, /"publishingPrinciples":"https:\/\/dearhani\.com\/medical-information-policy\.html"/);
   assert.match(article, /class="column-author-link" href="\.\.\/director\.html" rel="author">김민지 대표원장<\/a>/);
+  assert.match(article, /김민지 대표원장 직접 작성·의학적 검토·최종 발행/);
+  assert.match(article, /href="\.\.\/medical-information-policy\.html"/);
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
   assert.match(article, /href="#제목-3도-칼럼-소제목으로-표시됩니다"/);
   assert.doesNotMatch(article, /의료진/);

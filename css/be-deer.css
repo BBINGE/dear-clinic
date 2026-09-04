@@ -887,6 +887,65 @@ img { display: block; width: 100%; }
 }
 .self-check__bridge p { margin: 0 auto 0 0; font-size: clamp(17px, 1.35vw, 21px); font-weight: 600; }
 .self-check__bridge span:last-child { color: #fff; font-size: 20px; }
+.be-deer-journal {
+  padding: clamp(92px, 8vw, 128px) 7vw;
+  background: #f3f6f3;
+}
+.be-deer-journal .section-heading > p:last-child {
+  max-width: 640px;
+  margin: 0;
+  color: var(--secondary);
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.75;
+}
+.be-deer-journal__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(36,120,96,.3);
+  border-left: 1px solid rgba(36,120,96,.3);
+}
+.be-deer-journal__card {
+  display: flex;
+  min-height: 230px;
+  padding: clamp(24px, 2.5vw, 38px);
+  flex-direction: column;
+  border-right: 1px solid rgba(36,120,96,.3);
+  border-bottom: 1px solid rgba(36,120,96,.3);
+  background: rgba(255,255,255,.5);
+  transition: background-color 220ms ease, transform 220ms ease;
+}
+.be-deer-journal__card:hover,
+.be-deer-journal__card:focus-visible {
+  background: #fff;
+  outline: none;
+  transform: translateY(-2px);
+}
+.be-deer-journal__card small {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+.be-deer-journal__card strong {
+  margin: 22px 0 auto;
+  color: var(--text);
+  font-size: clamp(20px, 1.7vw, 26px);
+  line-height: 1.45;
+}
+.be-deer-journal__card span,
+.be-deer-journal__all {
+  margin-top: 26px;
+  color: var(--dark);
+  font-size: 13px;
+  font-weight: 700;
+}
+.be-deer-journal__all {
+  display: inline-flex;
+  gap: 14px;
+  align-items: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--dark);
+}
 .final-cta {
   position: relative;
   min-height: 78vh;
@@ -1110,6 +1169,7 @@ img { display: block; width: 100%; }
   .final-cta__primary { min-height: 64px; padding: 19px 24px; }
   .final-cta__secondary { min-height: 52px; }
   .final-cta__note { margin-top: 22px; }
+  .be-deer-journal__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 640px) {
@@ -1171,6 +1231,9 @@ img { display: block; width: 100%; }
   .result-story { margin-bottom: 88px; }
   .review-editorial { gap: 68px; }
   .self-check__photo { aspect-ratio: 4 / 3; }
+  .be-deer-journal { padding: 76px 20px 84px; }
+  .be-deer-journal__grid { grid-template-columns: 1fr; }
+  .be-deer-journal__card { min-height: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

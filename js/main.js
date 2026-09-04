@@ -194,10 +194,10 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   const pageLanguage = dearPageLocale.toLowerCase();
   const language = pageLanguage === "ja" ? "ja" : pageLanguage.startsWith("zh") ? "zh" : pageLanguage === "en" ? "en" : "ko";
   const copy = {
-    ko: { nav: "빠른 메뉴", phone: "전화문의", phoneAria: "전화 문의", booking: "네이버예약", bookingAria: "네이버 예약", talk: "톡톡문의", talkAria: "네이버 톡톡", blog: "블로그", instagram: "인스타그램", top: "맨위로", topAria: "맨 위로" },
-    en: { nav: "Quick menu", phone: "Call Us", phoneAria: "Phone inquiry", booking: "Naver Reservation", bookingAria: "Naver Reservation", talk: "Naver Talk", talkAria: "Naver Talk", blog: "Blog", instagram: "Instagram", top: "Top", topAria: "Back to top" },
-    ja: { nav: "クイックメニュー", phone: "電話相談", phoneAria: "電話で相談", booking: "Naver予約", bookingAria: "Naver予約", talk: "Naver Talk", talkAria: "Naver Talk", blog: "ブログ", instagram: "Instagram", top: "トップ", topAria: "ページ上部へ" },
-    zh: { nav: "快捷菜单", phone: "电话咨询", phoneAria: "电话咨询", booking: "Naver预约", bookingAria: "Naver预约", talk: "Naver咨询", talkAria: "Naver咨询", blog: "博客", instagram: "Instagram", top: "顶部", topAria: "返回顶部" },
+    ko: { nav: "빠른 메뉴", phone: "전화 문의", phoneAria: "전화 문의", booking: "네이버 예약", bookingAria: "네이버 예약", talk: "톡톡 문의", talkAria: "톡톡 문의", blog: "블로그", instagram: "인스타그램", top: "맨 위로", topAria: "맨 위로" },
+    en: { nav: "Quick menu", phone: "Call Us", phoneAria: "Call Us", booking: "Naver Reservation", bookingAria: "Naver Reservation", talk: "Naver Talk", talkAria: "Naver Talk", blog: "Blog", instagram: "Instagram", top: "Top", topAria: "Top" },
+    ja: { nav: "クイックメニュー", phone: "電話相談", phoneAria: "電話相談", booking: "Naver予約", bookingAria: "Naver予約", talk: "Naver Talk", talkAria: "Naver Talk", blog: "ブログ", instagram: "Instagram", top: "トップ", topAria: "トップ" },
+    zh: { nav: "快捷菜单", phone: "电话咨询", phoneAria: "电话咨询", booking: "Naver预约", bookingAria: "Naver预约", talk: "Naver咨询", talkAria: "Naver咨询", blog: "博客", instagram: "Instagram", top: "顶部", topAria: "顶部" },
   }[language];
   const icons = {
     phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M8.5 4.5h-3a1 1 0 0 0-1 1c0 8.3 6.7 15 15 15a1 1 0 0 0 1-1v-3a1 1 0 0 0-.8-1l-3.3-.7a1 1 0 0 0-1 .3l-1.2 1.4a12.4 12.4 0 0 1-5.7-5.7l1.4-1.2a1 1 0 0 0 .3-1L9.5 5.3a1 1 0 0 0-1-.8z"/></svg>',
@@ -231,10 +231,10 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   const pageLanguage = dearPageLocale;
   const language = pageLanguage === "ja" ? "ja" : pageLanguage.startsWith("zh") ? "zh" : pageLanguage === "en" ? "en" : "ko";
   const copy = {
-    ko: { label: "Intl. Booking", aria: "International appointment schedule and phone booking", query: "en" },
-    en: { label: "International", aria: "International patient schedule and phone appointment", query: "en" },
-    ja: { label: "海外予約", aria: "海外患者さまの診療日程と電話予約", query: "ja" },
-    zh: { label: "国际预约", aria: "国际患者门诊时间和电话预约", query: "zh" },
+    ko: { label: "Intl. Booking", aria: "Intl. Booking", query: "en" },
+    en: { label: "International", aria: "International", query: "en" },
+    ja: { label: "海外予約", aria: "海外予約", query: "ja" },
+    zh: { label: "国际预约", aria: "国际预约", query: "zh" },
   }[language];
   const icon = '<svg class="quickmenu__international-icon" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><rect x="4.5" y="6.5" width="21" height="19" rx="4" stroke="currentColor" stroke-width="1.55"/><path d="M4.75 11.5h20.5M10 4.5v4M20 4.5v4" stroke="currentColor" stroke-width="1.55" stroke-linecap="round"/><circle cx="15" cy="18" r="4.25" fill="currentColor"/><path d="M15 15.6v2.65l1.85 1.15" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
@@ -326,7 +326,10 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   if (!quickmenu) return;
   Object.entries(selectors).forEach(([key, selector]) => {
     const label = quickmenu.querySelector(selector)?.querySelector(".quickmenu__label");
-    if (label) label.textContent = labels[key];
+    if (label) {
+      label.textContent = labels[key];
+      label.closest("a")?.setAttribute("aria-label", labels[key]);
+    }
   });
 })();
 
@@ -336,12 +339,27 @@ const nav = document.querySelector(".nav");
 const heroEl = document.querySelector(".hero");
 
 if (heroEl) {
+  let navScrollThreshold = Math.max(0, heroEl.getBoundingClientRect().height - 80);
+  let navScrollQueued = false;
+
   function updateNavOnScroll() {
-    const threshold = heroEl.offsetHeight - 80;
-    nav.classList.toggle("is-scrolled", window.scrollY > threshold);
+    nav.classList.toggle("is-scrolled", window.scrollY > navScrollThreshold);
+    navScrollQueued = false;
   }
 
-  window.addEventListener("scroll", updateNavOnScroll);
+  function queueNavOnScroll() {
+    if (navScrollQueued) return;
+    navScrollQueued = true;
+    window.requestAnimationFrame(updateNavOnScroll);
+  }
+
+  window.addEventListener("scroll", queueNavOnScroll, { passive: true });
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(() => {
+      navScrollThreshold = Math.max(0, heroEl.getBoundingClientRect().height - 80);
+      queueNavOnScroll();
+    }).observe(heroEl);
+  }
   updateNavOnScroll();
 } else {
   nav.classList.add("is-scrolled");

@@ -653,6 +653,7 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
       dateModified: modifiedAt,
       lastReviewed: modifiedAt,
       reviewedBy: { "@id": `${BASE_URL}/director.html#kim-minji` },
+      publishingPrinciples: `${BASE_URL}/medical-information-policy.html`,
       about: aboutTopics,
       mainEntity: { "@id": `${articleUrl}#article` },
     },
@@ -669,7 +670,8 @@ function buildArticle(content, coverPath, body, toc, faq, sources, { preview = f
       datePublished: content.publishedAt,
       dateModified: modifiedAt,
       author: { "@id": `${BASE_URL}/director.html#kim-minji` },
-      reviewedBy: { "@id": `${BASE_URL}/director.html#kim-minji` },
+      editor: { "@id": `${BASE_URL}/director.html#kim-minji` },
+      publishingPrinciples: `${BASE_URL}/medical-information-policy.html`,
       mainEntityOfPage: { "@id": `${articleUrl}#webpage` },
       ...(sourceUrls.length ? { citation: sourceUrls } : {}),
       publisher: {
@@ -745,7 +747,7 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="twitter:image" content="${imageUrl}">
   <meta name="twitter:image:alt" content="${escapeHtml(content.coverAlt)}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260901-5">
+  <link rel="stylesheet" href="../css/style.css?v=20260904-1">
   <script type="application/ld+json">${schema}</script>
 </head>
 <body class="column-article-body column-${content.slug}${preview ? " is-preview" : ""}">
@@ -765,6 +767,10 @@ ${previewNotice}
     <div class="column-byline"><a class="column-author-link" href="../director.html" rel="author">김민지 대표원장</a><time datetime="${content.publishedAt}">${publishedDisplay}</time></div>
     ${tagsHtml}
   </header>
+  <aside class="column-editorial-note" aria-label="의료정보 작성 및 검토">
+    <div class="column-editorial-note__copy"><span>MEDICAL EDITORIAL</span><strong>김민지 대표원장 직접 작성·의학적 검토·최종 발행</strong></div>
+    <a href="../medical-information-policy.html">작성·검토 원칙 보기 <span aria-hidden="true">→</span></a>
+  </aside>
   <figure class="column-article__hero"><img src="../${coverPath}" alt="${escapeHtml(content.coverAlt)}"></figure>
   <div class="column-article__layout">
     ${tocHtml}
@@ -831,7 +837,7 @@ ${content.slug === "weight-inattentional-blindness" ? `<script>
   figure.after(metricList);
 })();
 </script>` : ""}
-<script src="../js/main.js?v=20260903-2"></script>
+<script src="../js/main.js?v=20260904-1"></script>
 </body>
 </html>
 `;

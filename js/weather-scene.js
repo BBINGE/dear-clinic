@@ -183,6 +183,16 @@
     return ["rain", "heavy-rain", "snow", "heavy-snow", "storm"].includes(state);
   }
 
+  function loadWeatherScene(state, daylight) {
+    let selector = ".weather-lens__scene--day";
+    if (["snow", "heavy-snow"].includes(state)) selector = ".weather-lens__scene--snow";
+    else if (daylight === "night" && ["rain", "heavy-rain", "storm"].includes(state)) selector = ".weather-lens__scene--rain-night";
+    else if (daylight === "night") selector = ".weather-lens__scene--night";
+
+    const scene = section.querySelector(selector);
+    if (scene?.dataset.src && !scene.getAttribute("src")) scene.src = scene.dataset.src;
+  }
+
   async function fetchOpenMeteo() {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => controller.abort(), 7000);
@@ -225,6 +235,7 @@
       }
     }
 
+    loadWeatherScene(state, daylight);
     section.dataset.weather = state;
     section.dataset.daylight = daylight;
     section.dataset.weatherStatus = WEATHER[previewState] ? "preview" : "ready";
