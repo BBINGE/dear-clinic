@@ -327,6 +327,12 @@ html.embedded .dear-chat { height: 100%; min-height: 0; border: 0; border-radius
 .dear-chat__gate[hidden] { display: none; }
 .dear-consent { overflow-y: auto; align-items: start; padding: 18px; }
 .dear-consent form { margin: auto; text-align: left; }
+.dear-consent h2 { font-size: 20px; line-height: 1.4; margin: 0 0 10px; color: var(--dear-green); }
+.dear-consent .dear-consent-welcome { font-size: 14px; line-height: 1.65; margin: 0 0 12px; }
+.dear-consent .dear-consent-note { font-size: 12px; line-height: 1.6; color: #536b62; margin: 0 0 6px; }
+.dear-consent .dear-consent-details { font-size: 12px; margin: 0 0 10px; }
+.dear-consent .dear-consent-alternative { font-size: 12px; line-height: 1.5; margin: 12px 0 6px; }
+.dear-consent fieldset .dear-consent-all { padding: 10px; border-radius: 10px; background: #eaf1ed; font-weight: 600; margin: 0 0 10px; }
 .dear-consent fieldset { border: 0; padding: 0; margin: 12px 0; }
 .dear-consent fieldset label { display: flex; align-items: start; gap: 8px; margin: 12px 0; line-height: 1.55; font-size: 13px; }
 .dear-consent input[type="checkbox"] { flex: 0 0 auto; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--dear-green); }

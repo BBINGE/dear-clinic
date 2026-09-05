@@ -74,6 +74,13 @@
   close.textContent = copy[2];
   shadow.querySelector('.end').textContent = copy[3];
   greeting.textContent = copy[0];
+  const isHome = /^\/(?:en\/|ja\/|zh-cn\/)?(?:index\.html)?$/.test(location.pathname);
+  if (!isHome) greeting.textContent += '\n' + ({
+    ko: '작게 접어두거나\n원하는 곳으로 옮길 수 있어요 :)',
+    en: 'You can minimize me\nor drag me to another spot :)',
+    ja: '小さくたたんだり、\n好きな場所に移動できます :)',
+    zh: '可以把我收起来，\n也可以拖到喜欢的位置 :)'
+  }[lang] || 'You can minimize me or drag me to another spot :)');
   let frame, closeTimer, openFrame, position = null;
   let drag = null, suppressClick = false;
   const clamp = (value, min, max) => Math.min(Math.max(min, max), Math.max(min, value));
@@ -201,12 +208,38 @@
     ['dear-ai-test', 'dear-ai-greeted', 'dear-ai-chat', 'dear-ai-position', 'dear-ai-compact'].forEach(storage.remove);
     window.removeEventListener('resize', restorePosition);
     clearTimeout(closeTimer); cancelAnimationFrame(openFrame);
+    clearTimeout(greetingTimer); clearTimeout(greetingHideTimer);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
     const clean = new URL(location.href); clean.searchParams.delete('dear-ai-test');
     history.replaceState(null, '', clean); host.remove();
   });
-  if (!storage.get('dear-ai-greeted')) {
-    storage.set('dear-ai-greeted', '1');
-    setTimeout(() => { if (host.isConnected && panel.hidden && !compact && !drag) { greeting.hidden = false; placeOverlays(); launcher.classList.add('hello'); } }, 1800);
-    setTimeout(() => { greeting.hidden = true; }, 8000);
+  // Six seconds of greeting, then twelve quiet seconds. No session-wide suppression.
+  let greetingTimer, greetingHideTimer;
+  function hideGreeting() {
+    clearTimeout(greetingHideTimer);
+    greeting.hidden = true;
+    launcher.classList.remove('hello');
   }
+  function showGreeting() {
+    if (!host.isConnected || document.hidden || !panel.hidden || compact || drag) return;
+    clearTimeout(greetingHideTimer);
+    greeting.hidden = false;
+    placeOverlays();
+    launcher.classList.add('hello');
+    greetingHideTimer = setTimeout(hideGreeting, 6000);
+  }
+  function greetingCycle() {
+    if (!host.isConnected) return;
+    showGreeting();
+    greetingTimer = setTimeout(greetingCycle, 18000);
+  }
+  function onVisibilityChange() {
+    clearTimeout(greetingTimer);
+    hideGreeting();
+    if (!document.hidden) greetingTimer = setTimeout(greetingCycle, 1800);
+  }
+  launcher.addEventListener('mouseenter', showGreeting);
+  launcher.addEventListener('focus', showGreeting);
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  greetingTimer = setTimeout(greetingCycle, 1800);
 })();

@@ -6,7 +6,7 @@
   if (!enabled) return;
   const load = () => {
     const script = document.createElement('script');
-    script.src = '/js/dear-ai-widget.js?v=20260905-5';
+    script.src = '/js/dear-ai-widget.js?v=20260906-2';
     document.head.appendChild(script);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, { once: true });

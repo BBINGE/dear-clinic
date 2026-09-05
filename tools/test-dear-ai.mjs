@@ -24,6 +24,17 @@ const visitorContext = {
 assert.throws(() => vm.runInNewContext(widget, visitorContext), /widget-mount/, 'Public release reaches the widget mount for ordinary visitors');
 vm.runInNewContext(widget.replace('const PUBLIC_WIDGET_ENABLED = true', 'const PUBLIC_WIDGET_ENABLED = false'), visitorContext);
 assert.match(widget, /prefers-reduced-motion/);
+assert.match(widget, /setTimeout\(greetingCycle, 18000\)/);
+assert.match(widget, /setTimeout\(hideGreeting, 6000\)/);
+assert.doesNotMatch(widget, /if \(!storage.get\('dear-ai-greeted'\)\)/);
+assert.match(widget, /작게 접어두거나/);
+assert.match(widget, /document.hidden \|\| !panel.hidden \|\| compact \|\| drag/);
+const consentUi = read('js/dear-ai-consent.js');
+assert.match(consentUi, /name="all"/);
+assert.match(consentUi, /all.addEventListener\('change'/);
+assert.match(consentUi, /all.indeterminate/);
+assert.doesNotMatch(consentUi, /type="checkbox"[^>]*\schecked(?:[\s=>])/);
+assert.match(consentUi, /안녕하세요, 디숭이예요/);
 assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
 assert.match(widget, /white-space:pre-line;word-break:keep-all/);
 assert.match(widget, /font-family:"Pretendard",sans-serif/);

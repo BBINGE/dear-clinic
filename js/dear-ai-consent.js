@@ -9,14 +9,38 @@
   };
   window.createDearConsent = function ({ endpoint, language, getAccessCode, onStop, onReady }) {
     const t = copy[language] || copy.ko;
+    const note = {
+      ko: '저는 AI로 진료·예약 방법을 안내해요. 진단·처방은 원장님 진료로, 예약 확정은 예약 채널에서 진행돼요. 대화에는 이름·연락처·진료기록이나 다른 사람의 정보는 빼고 적어주세요.',
+      en: 'I’m an AI guide to care and booking. Diagnosis and prescriptions require a clinician; bookings are confirmed through the booking channel. Leave names, contact details, medical records and other people’s information out of the chat.',
+      ja: '私は診療や予約方法をご案内するAIです。診断・処方は医師の診察で、予約確定は予約窓口で行います。氏名・連絡先・診療記録や他の方の情報は入力せずにお話しください。',
+      zh: '我是介绍诊疗和预约方式的AI。诊断和处方由医生面诊后决定，预约由预约渠道确认。聊天时请省略姓名、联系方式、诊疗记录及他人的信息。'
+    }[language] || t[1];
+    const welcome = {
+      ko: ['안녕하세요, 디숭이예요 😊', '진료 안내나 예약 방법이 궁금하면 편하게 물어보세요. 시작 전에 아래 내용을 확인해주세요.', '아래 내용 확인 · 전체 동의', '동의하고 이야기하기', '전화나 예약 페이지로 바로 연결할 수도 있어요.'],
+      en: ['Hi, I’m Disoongi 😊', 'Ask me about DEAR or how to book. Please review the details below before we chat.', 'Review and agree to all below', 'Agree and chat', 'You can also call or open the appointment page directly.'],
+      ja: ['こんにちは、ディスンイです 😊', '診療のご案内や予約方法など、気軽に聞いてください。会話の前に、以下をご確認ください。', '以下を確認してすべてに同意', '同意してお話しする', 'お電話や予約ページも直接ご利用いただけます。'],
+      zh: ['你好，我是迪崇 😊', '想了解诊疗信息或预约方法，都可以问我。开始前请确认以下内容。', '确认以下内容并全部同意', '同意并开始聊天', '也可以直接致电或打开预约页面。']
+    }[language] || ['Hi, I’m Disoongi 😊', 'Please review the details below before we chat.', 'Review and agree to all below', 'Agree and chat', 'You can also call or open the appointment page directly.'];
     const root = document.createElement('div');
     root.className = 'dear-chat__gate dear-consent'; root.hidden = true;
     root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-labelledby', 'dearConsentTitle');
     const policy = `${language === 'ko' ? '' : '/' + (language === 'zh' ? 'zh-cn' : language)}/privacy.html#ai-guide`;
     const booking = language === 'ko' ? 'https://m.booking.naver.com/booking/13/bizes/729883' : `/international-appointment.html?lang=${language}`;
-    root.innerHTML = `<form><h2 id="dearConsentTitle">${t[0]}</h2><p>${t[1]}</p><p><a href="${policy}" target="_blank" rel="noopener">${t[6]}</a></p><fieldset><legend class="sr-only">${t[0]}</legend>${['age14','personal','health','overseas'].map((name,i)=>`<label><input type="checkbox" name="${name}" required><span>${t[i+2]}</span></label>`).join('')}</fieldset><button type="submit">${t[7]}</button><p role="status" data-consent-status></p><p>${t[8]}</p><nav><a href="tel:+82234861777">${t[9]}</a><a href="${booking}" target="_blank" rel="noopener">${t[10]}</a></nav></form>`;
+    root.innerHTML = `<form><h2 id="dearConsentTitle">${welcome[0]}</h2><p class="dear-consent-welcome">${welcome[1]}</p><p class="dear-consent-note">${note}</p><p class="dear-consent-details"><a href="${policy}" target="_blank" rel="noopener">${t[6]}</a></p><fieldset><legend class="sr-only">${t[0]}</legend><label class="dear-consent-all"><input type="checkbox" name="all"><span>${welcome[2]}</span></label>${['age14','personal','health','overseas'].map((name,i)=>`<label><input type="checkbox" name="${name}" required><span>${t[i+2]}</span></label>`).join('')}</fieldset><button type="submit">${welcome[3]}</button><p role="status" data-consent-status></p><p class="dear-consent-alternative">${welcome[4]}</p><nav><a href="tel:+82234861777">${t[9]}</a><a href="${booking}" target="_blank" rel="noopener">${t[10]}</a></nav></form>`;
     document.querySelector('.dear-chat').appendChild(root);
     const form = root.querySelector('form');
+    const all = form.elements.all;
+    const choices = ['age14','personal','health','overseas'].map(name => form.elements[name]);
+    function syncAll() {
+      all.checked = choices.every(input => input.checked);
+      all.indeterminate = !all.checked && choices.some(input => input.checked);
+    }
+    all.addEventListener('change', () => {
+      for (const input of choices) input.checked = all.checked;
+      syncAll();
+    });
+    for (const input of choices) input.addEventListener('change', syncAll);
+    form.addEventListener('reset', () => { all.indeterminate = false; });
     const status = root.querySelector('[data-consent-status]');
     const controls = document.createElement('div'); controls.className = 'dear-chat__legal dear-consent-controls'; controls.hidden = true;
     const end = document.createElement('button'); end.type='button'; end.textContent=t[11];

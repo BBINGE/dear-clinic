@@ -25,7 +25,7 @@ assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, "사이트맵에 중
 
 const canonicalOwners = new Map();
 const sharedCssVersion = "20260904-1";
-const sharedMainVersion = "20260906-1";
+const sharedMainVersion = "20260906-2";
 const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
 const homeFooter = read("index.html").match(footerPattern)?.[0];
 assert.ok(homeFooter, "메인 공통 푸터가 없습니다.");
