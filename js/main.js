@@ -1,3 +1,17 @@
+// Opt-in, password-protected AI test widget; no normal-visitor UI.
+(function () {
+  let enabled = /[?&]dear-ai-test=/.test(window.location.search || '');
+  try { enabled = enabled || sessionStorage.getItem('dear-ai-test') === '1'; } catch {}
+  if (!enabled) return;
+  const load = () => {
+    const script = document.createElement('script');
+    script.src = '/js/dear-ai-widget.js?v=20260905-1';
+    document.head.appendChild(script);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, { once: true });
+  else load();
+})();
+
 // NAVER Analytics + 네이버 검색광고 전환추적 공통 설정
 // 실제 운영 도메인에서만 수집하며 preview와 로컬 확인 데이터는 제외한다.
 (function initializeDearNaverTracking() {

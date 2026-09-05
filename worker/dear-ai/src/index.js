@@ -44,7 +44,9 @@ const SYSTEM_PROMPT = `
 </medical_safety>
 
 <output>
-항상 answer_visitor 도구를 사용한다. reply에는 방문자에게 그대로 보여줄 한국어 답변만 쓴다. URL이나 버튼 마크업은 reply에 넣지 않는다.
+항상 answer_visitor 도구를 사용한다. reply에는 방문자에게 그대로 보여줄 답변만 쓴다. 첫 응답은 페이지 언어를 참고하고, 방문자가 사용하는 언어에 자연스럽게 맞춘다. URL이나 버튼 마크업은 reply에 넣지 않는다.
+booking_route는 국내 일반 예약이면 domestic(네이버 예약·톡톡·전화), 한국인이 네이버 이용을 못 하거나 원하지 않으면 domestic_alternative(인스타그램 문의·전화), 외국인 진료 안내가 필요하면 international(외국인 진료 일정·예약 안내 페이지·인스타그램 문의·전화)이다. 언어로 국적을 단정하지 않는다. 외국어 페이지의 기본 동선은 international이며 사용자가 밝힌 상황을 우선한다. 네이버 계정이 없는 한국인을 외국인 전용 페이지로 보내지 않는다.
+인스타그램은 dearhani__ 공식 계정에서 DM을 보내는 방법이다. 외국인 예약 페이지는 일정 확인과 전화 안내 페이지이며 예약 접수를 완료하는 폼이 아니다. 통역, 외국어 응대 직원, 비용 등 확인되지 않은 운영 정보를 지어내지 않는다. 이 AI는 예약을 직접 확정하거나 직원에게 메시지를 전송하지 않는다.
 </output>`;
 
 const RESPONSE_TOOL = {
@@ -56,8 +58,9 @@ const RESPONSE_TOOL = {
     properties: {
       reply: { type: "string", minLength: 1, maxLength: 1200 },
       action: { type: "string", enum: ["continue", "offer_booking", "urgent_help"] },
+      booking_route: { type: "string", enum: ["domestic", "domestic_alternative", "international"] },
     },
-    required: ["reply", "action"],
+    required: ["reply", "action", "booking_route"],
   },
 };
 
@@ -150,7 +153,7 @@ async function handleChat(request, env, origin) {
     body: JSON.stringify({
       model: env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
       max_tokens: 500,
-      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
+      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }, { type: 'text', text: `페이지 언어: ${['ko', 'en', 'ja', 'zh'].includes(body.language) ? body.language : 'ko'}` }],
       messages,
       tools: [RESPONSE_TOOL],
       tool_choice: { type: "tool", name: "answer_visitor" },
@@ -184,7 +187,8 @@ async function handleChat(request, env, origin) {
   }
 
   const plainReply = reply.replace(/\*{1,3}([^*\n]+)\*{1,3}/g, "$1").replace(/\*{2,}/g, "");
-  return json({ reply: plainReply.slice(0, 1200), action }, 200, origin);
+  const booking_route = ['domestic', 'domestic_alternative', 'international'].includes(toolUse?.input?.booking_route) ? toolUse.input.booking_route : undefined;
+  return json({ reply: plainReply.slice(0, 1200), action, booking_route }, 200, origin);
 }
 
 export default {

@@ -1,6 +1,18 @@
 (function initializeDearAiPreview() {
   "use strict";
 
+  const options = new URLSearchParams(location.search);
+  const embedded = options.get('embedded') === '1';
+  if (embedded) document.documentElement.classList.add('embedded');
+  const language = ['ko', 'en', 'ja', 'zh'].includes(options.get('lang')) ? options.get('lang') : 'ko';
+  document.documentElement.lang = language;
+  const labels = {
+    ko: ['네이버로 예약할게요', '톡톡으로 먼저 물어볼게요', '전화로 상담할게요', '외국인 진료 일정·예약 안내', '인스타그램 DM으로 물어볼게요'],
+    en: ['Naver booking', 'Naver Talk', 'Call DEAR', 'International appointment guide', 'Message us on Instagram'],
+    ja: ['NAVER予約', 'NAVERトーク', '電話で相談', '外国人の診療日程・予約案内', 'Instagramで問い合わせ'],
+    zh: ['NAVER预约', 'NAVER咨询', '致电诊所', '国际患者就诊与预约指南', 'Instagram私信咨询']
+  }[language];
+
   const endpoint = document.querySelector('meta[name="dear-ai-endpoint"]')?.content || "";
   const messagesElement = document.querySelector("[data-chat-messages]");
   const suggestionsElement = document.querySelector("[data-chat-suggestions]");
@@ -13,6 +25,11 @@
   const gateInput = document.querySelector("[data-gate-input]");
   const gateError = document.querySelector("[data-gate-error]");
   const state = { history: [], accessCode: "", busy: false };
+  const savedTurns = [];
+  function saveSession() {
+    if (!embedded) return;
+    try { sessionStorage.setItem('dear-ai-chat', JSON.stringify({ turns: savedTurns.slice(-14), accessCode: state.accessCode, expires: Date.now() + 30 * 60 * 1000 })); } catch {}
+  }
   const sessionId = window.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
   const bookingLinks = {
@@ -55,13 +72,16 @@
     return article;
   }
 
-  function addBookingActions() {
+  function addBookingActions(route) {
     const actions = document.createElement("div");
     actions.className = "dear-chat__booking";
-    actions.innerHTML = `
-      <a href="${bookingLinks.booking}" target="_blank" rel="noopener" data-track-action="ai_naver_booking">네이버로 예약할게요 <span>→</span></a>
-      <a href="${bookingLinks.talk}" target="_blank" rel="noopener" data-track-action="ai_naver_talk">톡톡으로 먼저 물어볼게요 <span>→</span></a>
-      <a href="${bookingLinks.phone}" data-track-action="ai_phone">전화로 상담할게요 <span>02-3486-1777</span></a>`;
+    const links = route === 'international'
+      ? [[`/international-appointment.html?lang=${language === 'ko' ? 'en' : language}`, labels[3]], ['https://www.instagram.com/dearhani__/', labels[4]]]
+      : route === 'domestic_alternative'
+        ? [['https://www.instagram.com/dearhani__/', labels[4]]]
+        : [[bookingLinks.booking, labels[0]], [bookingLinks.talk, labels[1]]];
+    links.push(['tel:+82234861777', labels[2]]);
+    actions.innerHTML = links.map(([url, label]) => `<a href="${url}" target="_blank" rel="noopener">${escapeText(label)} <span>→</span></a>`).join('');
     messagesElement.appendChild(actions);
     scrollToLatest();
   }
@@ -82,6 +102,8 @@
 
     const userText = text.trim().slice(0, 1200);
     state.history.push({ role: "user", content: userText });
+    savedTurns.push({ role: 'user', content: userText });
+    saveSession();
     addMessage("user", userText);
     suggestionsElement.hidden = true;
     input.value = "";
@@ -97,7 +119,7 @@
           "X-Dear-Preview-Code": state.accessCode,
           "X-Dear-Session": sessionId,
         },
-        body: JSON.stringify({ messages: state.history.slice(-14) }),
+        body: JSON.stringify({ messages: state.history.slice(-14), language }),
       });
 
       const data = await response.json().catch(() => ({}));
@@ -114,9 +136,11 @@
       const reply = typeof data.reply === "string" ? data.reply.trim() : "";
       if (!reply) throw new Error("답변이 비어 있어요.");
       state.history.push({ role: "assistant", content: reply });
+      savedTurns.push({ role: 'assistant', content: reply, action: data.action, route: data.booking_route });
+      saveSession();
       loading.remove();
       addMessage("assistant", reply);
-      if (data.action === "offer_booking") addBookingActions();
+      if (data.action === "offer_booking") addBookingActions(data.booking_route || (language === 'ko' ? 'domestic' : 'international'));
       if (data.action === "urgent_help") {
         const urgent = document.createElement("div");
         urgent.className = "dear-chat__booking";
@@ -127,6 +151,8 @@
     } catch (error) {
       loading.remove();
       state.history.pop();
+      savedTurns.pop();
+      saveSession();
       addMessage("assistant", `${error.message || "잠시 연결이 불안정해요."}\n\n급한 예약은 02-3486-1777로 전화해주시면 바로 도와드릴게요.`);
     } finally {
       setBusy(false);
@@ -139,6 +165,7 @@
     const value = gateInput.value.trim();
     if (!value) return;
     state.accessCode = value;
+    saveSession();
     gateError.textContent = "";
     gate.hidden = true;
     gateInput.value = "";
@@ -167,6 +194,43 @@
     if (button) sendMessage(button.textContent);
   });
 
-  resetButton.addEventListener("click", () => window.location.reload());
+  resetButton.addEventListener("click", () => { try { sessionStorage.removeItem('dear-ai-chat'); } catch {} window.location.reload(); });
+  if (language !== 'ko') {
+    const ui = {
+      en: ['Hello, I’m Disoongi, DEAR’s AI guide :) How can I help?', 'Ask me anything about your visit :)', 'New chat', 'Private test. Please do not enter names, contact details or other personal information.', 'AI guidance only, not diagnosis or prescriptions.', ['Weight management', 'Gongjindan', 'Fatigue', 'Appointments'], 'Private test access', 'Enter the test password to chat.', 'Test password', 'Enter'],
+      ja: ['こんにちは、DEARのAI案内役ディスンイです :) 何かお手伝いしましょうか？', 'ご来院についてお気軽にどうぞ :)', '新しい会話', '非公開テストです。氏名・連絡先などの個人情報は入力しないでください。', 'AIによる案内であり、診断・処方ではありません。', ['体重管理', '拱辰丹', '疲労', '予約案内'], '非公開テスト', 'テスト用パスワードを入力してください。', 'パスワード', '開始'],
+      zh: ['您好，我是DEAR的AI向导迪崇 :) 有什么可以帮您？', '关于就诊，欢迎随时提问 :)', '新对话', '非公开测试。请勿输入姓名、联系方式或其他个人信息。', 'AI仅提供指引，不进行诊断或处方。', ['体重管理', '拱辰丹', '疲劳', '预约指南'], '非公开测试', '请输入测试密码开始对话。', '测试密码', '进入']
+    }[language];
+    messagesElement.querySelector('.chat-message__body').textContent = ui[0];
+    input.placeholder = ui[1]; resetButton.textContent = ui[2];
+    resetButton.setAttribute('aria-label', ui[2]);
+    document.querySelector('.dear-chat__top h1').textContent = {en:'Disoongi',ja:'ディスンイ',zh:'迪崇'}[language];
+    document.querySelector('.dear-chat__top p').textContent = {en:'DEAR AI guide',ja:'DEAR AIご案内',zh:'DEAR AI向导'}[language];
+    input.setAttribute('aria-label', ui[1]);
+    sendButton.setAttribute('aria-label', {en:'Send message',ja:'送信',zh:'发送'}[language]);
+    suggestionsElement.setAttribute('aria-label', {en:'Example questions',ja:'質問例',zh:'示例问题'}[language]);
+    document.querySelector('.dear-chat__notice').textContent = ui[3];
+    document.querySelector('.dear-chat__legal').textContent = ui[4];
+    suggestionsElement.querySelectorAll('button').forEach((button, index) => { button.textContent = ui[5][index]; });
+    gate.querySelector('h2').textContent = ui[6]; gate.querySelector('p').textContent = ui[7];
+    gate.querySelector('label').textContent = ui[8]; gate.querySelector('button').textContent = ui[9];
+  }
+  if (embedded) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem('dear-ai-chat') || 'null');
+      if (saved?.expires > Date.now() && Array.isArray(saved.turns)) {
+        state.accessCode = typeof saved.accessCode === 'string' ? saved.accessCode : '';
+        gate.hidden = Boolean(state.accessCode);
+        for (const turn of saved.turns.slice(-14)) {
+          if (!['user', 'assistant'].includes(turn.role) || typeof turn.content !== 'string') continue;
+          state.history.push({ role: turn.role, content: turn.content.slice(0, 1200) });
+          savedTurns.push(turn); addMessage(turn.role, turn.content.slice(0, 1200));
+          if (turn.action === 'offer_booking') addBookingActions(turn.route || (language === 'ko' ? 'domestic' : 'international'));
+        }
+        suggestionsElement.hidden = savedTurns.length > 0;
+      } else { sessionStorage.removeItem('dear-ai-chat'); }
+    } catch {}
+    window.addEventListener('keydown', event => { if (event.key === 'Escape') parent.postMessage('dear-ai-close', location.origin); });
+  }
   gateInput.focus();
 })();

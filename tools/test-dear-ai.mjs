@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -9,6 +10,23 @@ const html = read("preview/dear-ai.html");
 const client = read("js/dear-ai.js");
 const worker = read("worker/dear-ai/src/index.js");
 const config = read("worker/dear-ai/wrangler.jsonc");
+const widget = read('js/dear-ai-widget.js');
+const ordinaryWindow = {};
+ordinaryWindow.top = ordinaryWindow;
+vm.runInNewContext(widget, {
+  window: ordinaryWindow, location: { pathname: '/', search: '' }, URLSearchParams,
+  sessionStorage: { getItem: () => null },
+  document: { createElement: () => { throw new Error('Ordinary visitors must not get widget UI'); } },
+});
+assert.match(widget, /prefers-reduced-motion/);
+assert.match(client, /domestic_alternative/);
+assert.match(client, /sessionStorage.removeItem\('dear-ai-chat'\)/);
+assert.match(worker, /네이버 계정이 없는 한국인을 외국인 전용 페이지로 보내지 않는다/);
+for (const match of read('sitemap.xml').matchAll(/<loc>(.*?)<\/loc>/g)) {
+  let page = decodeURIComponent(new URL(match[1]).pathname).replace(/^\//, '');
+  if (!page || page.endsWith('/')) page += 'index.html';
+  assert.match(read(page), /js\/(?:main|dear-ai-widget)\.js/, page);
+}
 
 assert.match(html, /noindex, nofollow, noarchive/);
 assert.match(html, /disoongi-profile\.png/);
