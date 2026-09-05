@@ -19,6 +19,16 @@ vm.runInNewContext(widget, {
   document: { createElement: () => { throw new Error('Ordinary visitors must not get widget UI'); } },
 });
 assert.match(widget, /prefers-reduced-motion/);
+assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
+assert.match(widget, /white-space:pre-line;word-break:keep-all/);
+assert.match(widget, /font-family:"Pretendard",sans-serif/);
+assert.match(widget, /transition:opacity 220ms/);
+assert.match(widget, /panel\.inert = true/);
+assert.match(widget, /setPointerCapture/);
+assert.match(widget, /Math\.hypot\(dx, dy\) < 6/);
+assert.match(widget, /dear-ai-position/);
+assert.match(widget, /dear-ai-compact/);
+assert.match(widget, /window\.addEventListener\('resize', restorePosition\)/);
 assert.match(widget, /disoongi-launcher-v1\.webp/);
 assert.match(widget, /width:144px;height:214px/);
 assert.match(widget, /width:100px;height:149px/);
