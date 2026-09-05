@@ -79,6 +79,20 @@ assert.deepEqual(await success.json(), {
   reply: "당연히 도와드릴게요 :) 편한 방법을 골라주세요!",
   action: "offer_booking",
 });
+globalThis.fetch = async () => new Response(JSON.stringify({
+  error: { type: "forbidden", message: "Request not allowed" },
+}), { status: 403 });
+const forbidden = await workerModule.default.fetch(makeRequest(), env);
+assert.equal(forbidden.status, 502);
+assert.deepEqual((await forbidden.json()).diagnostic, {
+  status: 403, type: "forbidden", reason: "request_not_allowed",
+});
+globalThis.fetch = async () => new Response(JSON.stringify({
+  error: { type: "unexpected-private-type", message: "private text test-api-key" },
+}), { status: 400 });
+const privateFailure = await workerModule.default.fetch(makeRequest(), env);
+const privateBody = await privateFailure.text();
+assert.doesNotMatch(privateBody, /private text|test-api-key|unexpected-private-type/);
 globalThis.fetch = originalFetch;
 
 console.log("디어 AI 정적·보안 계약 검사 통과");

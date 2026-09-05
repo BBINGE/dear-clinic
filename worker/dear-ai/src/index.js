@@ -158,7 +158,18 @@ async function handleChat(request, env, origin) {
 
   if (!anthropicResponse.ok) {
     // 환자의 대화나 Anthropic 원문 오류 본문을 로그에 남기지 않는다.
-    return json({ error: "AI 연결이 잠시 불안정해요." }, 502, origin);
+    const failure = await anthropicResponse.json().catch(() => null);
+    const message = typeof failure?.error?.message === "string" ? failure.error.message : "";
+    const knownTypes = ["authentication_error", "permission_error", "not_found_error", "invalid_request_error", "rate_limit_error", "overloaded_error", "api_error", "forbidden"];
+    const type = knownTypes.includes(failure?.error?.type) ? failure.error.type : "unknown";
+    let reason = type;
+    if (/credit balance|purchase credits|insufficient.*credit/i.test(message)) reason = "insufficient_credit";
+    else if (/invalid.*api.?key|api.?key.*invalid/i.test(message)) reason = "invalid_api_key";
+    else if (/model/i.test(message)) reason = "model_request_error";
+    else if (/request not allowed/i.test(message)) reason = "request_not_allowed";
+    else if (/country|region|location/i.test(message)) reason = "location_restricted";
+    else if (/disabled|suspended/i.test(message)) reason = "account_disabled";
+    return json({ error: "AI 연결이 잠시 불안정해요.", diagnostic: { status: anthropicResponse.status, type, reason } }, 502, origin);
   }
 
   const result = await anthropicResponse.json();
