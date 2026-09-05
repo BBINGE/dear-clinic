@@ -48,7 +48,7 @@ const consentEnv={...env,CHAT_BUDGET:{getByName:()=>budget}};
 for(const key of ['age14','personal','health','overseas']) {
   assert.equal((await worker.fetch(consentRequest({consent:{...consent,[key]:false}}),consentEnv)).status,428,key);
 }
-assert.equal((await worker.fetch(consentRequest({consent:{...consent,acceptedAt:Date.now()-31*60000}}),consentEnv)).status,428);
+assert.equal((await worker.fetch(consentRequest({consent:{...consent,version:'outdated'}}),consentEnv)).status,428);
 assert.equal((await worker.fetch(consentRequest({consent}),privateEnv)).status,401);
 const registration=await worker.fetch(consentRequest({consent}),consentEnv);
 assert.equal(registration.status,200);
@@ -57,6 +57,9 @@ assert.equal(await budget.consent('check',receipt.id,consent.version),true);
 assert.equal((await worker.fetch(consentRequest({action:'withdraw',token:receipt.id}),consentEnv)).status,200);
 assert.equal((await worker.fetch(request({...body,consentToken:receipt.id}),consentEnv)).status,428);
 assert.equal(db.prepare('SELECT COUNT(*) AS n FROM consent_sessions').get().n,0);
+const expired=await budget.consent('accept','expired-test',consent.version);
+db.prepare('UPDATE consent_sessions SET expires_at = ? WHERE id = ?').run(Date.now()-1,expired.id);
+assert.equal(await budget.consent('check',expired.id,consent.version),false);
 assert.equal(calls,3,'Consent and withdrawal must never call Anthropic');
 console.log('동의 등록·필수 항목·만료·철회·서버 기록 삭제 검사 통과');
 globalThis.fetch=original;db.close();

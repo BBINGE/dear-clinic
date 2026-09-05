@@ -25,7 +25,7 @@
     const receiptView = document.createElement('details'); const summary=document.createElement('summary'); summary.textContent=t[15]; receiptView.appendChild(summary);
     const receiptText=document.createElement('pre'); receiptView.appendChild(receiptText);
     controls.append(end,receiptView);document.querySelector('.dear-chat').appendChild(controls);
-    let receipt = null; let timer; let pending = false;
+    let receipt = null; let timer; let pending = false; let deadline = 0;
     async function call(body) {
       const response = await fetch(endpoint.replace(/\/chat$/, '/consent'), {method:'POST',headers:{'Content-Type':'application/json','X-Dear-Preview-Code':getAccessCode()},body:JSON.stringify(body),signal:AbortSignal.timeout(10000)});
       if (!response.ok) throw new Error(t[12]);
@@ -42,8 +42,9 @@
         const data=await call({consent});
         if(typeof data.receipt?.id!=='string'||!Number.isFinite(data.receipt.expires))throw new Error(t[12]);
         receipt=data.receipt;receiptText.textContent=`${receipt.version}\n${new Date(receipt.acceptedAt).toLocaleString(language)} → ${new Date(receipt.expires).toLocaleString(language)}`;
+        const lifetime=Math.max(0,Math.min(30*60000,receipt.expires-receipt.acceptedAt));deadline=performance.now()+lifetime;
         root.hidden=true;setCovered(false);controls.hidden=false;clearTimeout(timer);
-        timer=setTimeout(()=>{receipt=null;onStop();show();},Math.max(0,receipt.expires-Date.now()));
+        timer=setTimeout(()=>{receipt=null;onStop();show();},lifetime);
         onReady();
       } catch { status.textContent=t[12]; }
       finally {pending=false;form.querySelector('button').disabled=false;}
@@ -60,6 +61,6 @@
       if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     });
-    return { show, token:()=>root.hidden&&receipt?.expires>Date.now()?receipt.id:null, clear:()=>{clearTimeout(timer);receipt=null;controls.hidden=true;form.reset();} };
+    return { show, token:()=>root.hidden&&receipt&&deadline>performance.now()?receipt.id:null, clear:()=>{clearTimeout(timer);receipt=null;controls.hidden=true;form.reset();} };
   };
 })();

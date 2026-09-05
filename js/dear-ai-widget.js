@@ -21,6 +21,7 @@
     ja: ['気になることはありますか？お手伝いします :)', 'ディスンイと話す', '閉じる', 'テスト終了'],
     zh: ['有什么想问的吗？我来帮您 :)', '和迪崇聊聊', '关闭', '结束测试']
   }[lang] || ['Questions? I’m here to help :)', 'Chat with Disoongi', 'Close', 'End test'];
+  if(PUBLIC_WIDGET_ENABLED)copy[3]={ko:'디숭이 숨기기',en:'Hide Disoongi',ja:'ディスンイを隠す',zh:'隐藏迪崇'}[lang]||'Hide Disoongi';
   const controls = {
     ko: ['디숭이', '작게 접어두기', '디숭이 펼치기', '드래그해서 이동 · Alt+방향키로 이동'],
     en: ['Disoongi', 'Minimize mascot', 'Expand mascot', 'Drag to move · Alt+arrow keys'],
@@ -131,7 +132,7 @@
     if (open && !frame) {
       frame = document.createElement('iframe');
       frame.title = copy[1];
-      frame.src = '/preview/dear-ai.html?embedded=1&lang=' + encodeURIComponent(lang) + (query.get('consent-review') === '1' ? '&consent-review=1' : '');
+      frame.src = '/preview/dear-ai.html?embedded=1&lang=' + encodeURIComponent(lang) + (PUBLIC_WIDGET_ENABLED ? '&public=1' : '') + (query.get('consent-review') === '1' ? '&consent-review=1' : '');
       panel.appendChild(frame);
     }
     greeting.hidden = true;

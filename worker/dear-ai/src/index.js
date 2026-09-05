@@ -5,8 +5,8 @@ const TALK_URL = "https://talk.naver.com/ct/w5zr5u";
 const CONSENT_VERSION = '20260905-public-1';
 
 function validConsent(consent) {
-  return consent?.version === CONSENT_VERSION && ['age14', 'personal', 'health', 'overseas'].every(key => consent[key] === true)
-    && Number.isSafeInteger(consent.acceptedAt) && consent.acceptedAt <= Date.now() + 60000 && consent.acceptedAt > Date.now() - 30 * 60000;
+  // The server timestamps acceptance; an incorrectly set visitor clock must not block access.
+  return consent?.version === CONSENT_VERSION && ['age14', 'personal', 'health', 'overseas'].every(key => consent[key] === true);
 }
 
 async function readLimitedJson(request, limit = 32000) {

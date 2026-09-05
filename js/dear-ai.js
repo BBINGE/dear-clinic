@@ -266,10 +266,14 @@
   }
   gateInput.focus();
   if(consentEnabled&&gate.hidden)consentUi.show();
-  fetch(endpoint.replace(/\/chat$/, '/health'), {signal:AbortSignal.timeout(5000)}).then(response=>response.json()).then(config=>{
-    if(config.publicChat!==true)return;
+  function enablePublicView(){
+    if(state.publicMode)return;
     state.publicMode=true;state.accessCode='';consentEnabled=true;gate.hidden=true;
+    const title={ko:'디어한의원 AI 안내',en:'DEAR AI guide',ja:'DEAR AI案内',zh:'DEAR AI指引'}[language];
+    document.title=title;document.querySelector('.ai-preview__header p').textContent=title;
     document.querySelector('.dear-chat__notice').textContent={ko:'AI 안내예요. 이름·연락처·진료기록은 입력하지 말아주세요.',en:'AI guidance. Do not enter names, contact details or medical records.',ja:'AIによる案内です。氏名・連絡先・診療記録は入力しないでください。',zh:'AI指引。请勿输入姓名、联系方式或诊疗记录。'}[language];
     consentUi.show();
-  }).catch(()=>{});
+  }
+  if(options.get('public')==='1')enablePublicView();
+  fetch(endpoint.replace(/\/chat$/, '/health'), {signal:AbortSignal.timeout(5000)}).then(response=>response.json()).then(config=>{if(config.publicChat===true)enablePublicView();}).catch(()=>{});
 })();
