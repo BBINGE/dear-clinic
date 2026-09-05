@@ -1,0 +1,45 @@
+# 디숭이 공개 전 검증 기록 — 2026-09-05
+
+## 완료한 구현·검증
+
+- 공개 스위치 OFF: `js/main.js`, `js/dear-ai-widget.js`의 `PUBLIC_WIDGET_ENABLED=false`; Worker `PUBLIC_CHAT_ENABLED=false`.
+- 서버: 인증, IP 해시 제한, 일/월 호출 제한, 요청 크기·응답 대기 제한, 비밀키 비노출.
+- 동의: 네 언어에서 연령 확인과 개인정보·건강정보·국외 이전 항목을 각각 선택한다. 기본 체크와 전체 동의는 없다. 만 14세 미만/미동의자는 전화·외부 예약 안내를 사용할 수 있다.
+- 서버 동의 증표: 동의 화면 버전/서버 접수·만료 시각/임의 번호만 기록한다. 이름·IP·대화와 결합하지 않는다. 유효기간 30분, 철회 즉시 활성 레코드 삭제, 만료 정리 알람. 공급자 백업 삭제와 동일시하지 않는다. 장기 법적 증빙 보관 체계를 구축했다고 주장하지 않는다.
+- 브라우저: 동의 전 전송 차단, 동의 만료 시 입력 중단·문맥 삭제, 철회 시 진행 중 응답의 화면 복귀 방지, 실패한 철회 재시도, 키보드 포커스 제한.
+- 실제 외부 호출: 국내 네이버 예약, 국내 네이버 미사용, 영어·일본어·중국어 외국인 예약, 응급 안내 6종 HTTP 200 및 action/route 검증. 철회 후 같은 증표의 재전송은 428. 임시 QA 키 삭제 완료.
+- 390/768/1440px 및 네 언어 동의 화면 확인. 일반 홈페이지 방문자는 위젯을 불러오지 않는다.
+
+## 비공개 리허설
+
+`https://dearhani.com/?dear-ai-test=1&consent-review=1`
+
+기존 테스트 암호 다음에 새 동의 화면을 확인한다. 가상 질문만 사용한다. 공개 전 동의 화면의 기술 리허설이며, 이 화면의 존재나 체크가 미확정 국외 이전 고지의 법적 적정성을 확정하지 않는다.
+
+## 공개 전에 남은 사실 확인
+
+국외 이전 동의를 근거로 공개하려면 이전 국가 등을 미리 알려야 한다. 현재 공식 자료는 Anthropic 저장 위치를 미국으로 명시하지만 기본 처리 경로는 미국·유럽·아시아·호주의 일부 국가, 하위처리자 위치는 Worldwide로 안내한다. Cloudflare도 글로벌망을 사용한다. 따라서 이 구성 전체를 ‘미국에서만 처리’라고 기재할 수 없다.
+
+- 법문: https://www.law.go.kr/LSW/lsLinkCommonInfo.do?lsJoLnkSeq=1033215841
+- Anthropic 공식 위치: https://privacy.claude.com/en/articles/7996890-where-are-your-servers-located-do-you-host-your-models-on-eu-servers
+- Anthropic 하위처리자: https://trust.anthropic.com/subprocessors
+- Cloudflare 하위처리자: https://www.cloudflare.com/gdpr/subprocessors/cloudflare-services/
+
+이는 **공급자 회신을 반드시 받아야 한다는 뜻이 아니다.** 적용되는 국가/조건을 공식 계약이나 설정으로 확정하거나, 현재 공식 고지 범위로 적용 가능한 법적 근거를 검토하면 된다. 미확정인 이 항목을 성공으로 표시하거나 동의 UI로 대체하지 않는다. 미국 추론 옵션만 켜서 중계·지원까지 미국 전용이라고 주장하지 않는다.
+
+## 최종 공개 시 순서
+
+1. 위 고지 적용 범위를 확정하고 네 언어 고지의 테스트/공개 상태를 실제와 맞춘다. 안내가 바뀌면 서버와 UI의 동의 버전도 함께 변경한다.
+2. Worker의 공개 모드를 활성화하고 비공개 키 없이 동의 발급 → 가상 대화 → 철회 → 재사용 차단을 확인한다.
+3. 두 홈페이지 노출 스위치를 함께 활성화한다. 일반 페이지와 독립 외국인 예약 페이지 캐시를 갱신하고 실제 Pages 배포를 확인한다.
+4. 이상 시 Worker 공개 모드를 먼저 끈다. DO를 삭제하거나 초기화하지 않는다.
+
+## 재검사
+
+```
+node tools/test-dear-ai.mjs
+node tools/test-dear-ai-public.mjs
+node tools/test-dear-ai-budget-runtime.mjs
+```
+
+실제 유료 호출 시험은 `node tools/smoke-dear-ai-release.mjs`다. Cloudflare 로그인과 Worker 의존성이 필요하다. 이 스크립트는 기존 비밀키를 읽지 않고 14분 만료 임시 QA 키를 만들며 종료 시 삭제한다. AI 호출 비용이 발생하므로 정기 Pages 빌드에서는 실행하지 않는다.

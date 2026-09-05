@@ -34,8 +34,15 @@
   const gateForm = document.querySelector("[data-gate-form]");
   const gateInput = document.querySelector("[data-gate-input]");
   const gateError = document.querySelector("[data-gate-error]");
-  const state = { history: [], accessCode: "", busy: false };
+  const state = { history: [], accessCode: "", busy: false, publicMode: false, generation: 0, controller: null };
+  let consentEnabled = options.get('consent-review') === '1';
   const savedTurns = [];
+  const consentUi = window.createDearConsent({endpoint,language,getAccessCode:()=>state.accessCode,onReady:()=>input.focus(),onStop:()=>{
+    state.generation++;state.controller?.abort();state.history=[];savedTurns.length=0;
+    while(messagesElement.children.length>1)messagesElement.lastElementChild.remove();
+    suggestionsElement.hidden=false;input.value='';setBusy(false);
+    try{sessionStorage.removeItem('dear-ai-chat');}catch{}
+  }});
   function saveSession() {
     if (!embedded) return;
     try { sessionStorage.setItem('dear-ai-chat', JSON.stringify({ turns: savedTurns.slice(-14), accessCode: state.accessCode, expires: Date.now() + 30 * 60 * 1000 })); } catch {}
@@ -104,7 +111,8 @@
   }
 
   async function sendMessage(text) {
-    if (state.busy || !text.trim() || !gate.hidden || !state.accessCode) return;
+    if (state.busy || !text.trim() || !gate.hidden || (!state.publicMode && !state.accessCode)) return;
+    if (consentEnabled && !consentUi.token()) {consentUi.show();return;}
     if (!endpoint || endpoint.includes("__DEAR_AI_ENDPOINT__")) {
       addMessage("assistant", "아직 AI 연결 주소가 들어오지 않았어요. 열음에게 Cloudflare 연결을 마쳐달라고 해주세요 :)");
       return;
@@ -125,6 +133,8 @@
     while (requestHistory.length > 1 && requestHistory.reduce((sum, turn) => sum + turn.content.length, 0) > 9000) requestHistory.shift();
     while (requestHistory.length > 1 && requestHistory[0].role !== 'user') requestHistory.shift();
     const controller = new AbortController();
+    state.controller=controller;
+    const generation=state.generation;
     const timeout = setTimeout(() => controller.abort(), 30000);
 
     try {
@@ -136,11 +146,13 @@
           "X-Dear-Preview-Code": state.accessCode,
           "X-Dear-Session": sessionId,
         },
-        body: JSON.stringify({ messages: requestHistory, language }),
+        body: JSON.stringify({ messages: requestHistory, language, ...(consentEnabled ? {consentReview:true,consentToken:consentUi.token()} : {}) }),
       });
 
       const data = await response.json().catch(() => ({}));
+      if(generation!==state.generation)return;
       if (!response.ok) {
+        if(response.status===428&&consentEnabled){consentUi.clear();consentUi.show();}
         if (response.status === 401) {
           state.accessCode = "";
           gate.hidden = false;
@@ -166,6 +178,7 @@
         scrollToLatest();
       }
     } catch (error) {
+      if(generation!==state.generation)return;
       loading.remove();
       state.history.pop();
       savedTurns.pop();
@@ -173,6 +186,7 @@
       addMessage("assistant", `${error.message || "잠시 연결이 불안정해요."}\n\n급한 예약은 02-3486-1777로 전화해주시면 바로 도와드릴게요.`);
     } finally {
       clearTimeout(timeout);
+      if(generation!==state.generation)return;
       setBusy(false);
       if (gate.hidden) input.focus();
     }
@@ -187,7 +201,7 @@
     gateError.textContent = "";
     gate.hidden = true;
     gateInput.value = "";
-    input.focus();
+    if(consentEnabled)consentUi.show();else input.focus();
   });
 
   form.addEventListener("submit", (event) => {
@@ -251,4 +265,11 @@
     window.addEventListener('keydown', event => { if (event.key === 'Escape') parent.postMessage('dear-ai-close', location.origin); });
   }
   gateInput.focus();
+  if(consentEnabled&&gate.hidden)consentUi.show();
+  fetch(endpoint.replace(/\/chat$/, '/health'), {signal:AbortSignal.timeout(5000)}).then(response=>response.json()).then(config=>{
+    if(config.publicChat!==true)return;
+    state.publicMode=true;state.accessCode='';consentEnabled=true;gate.hidden=true;
+    document.querySelector('.dear-chat__notice').textContent={ko:'AI 안내예요. 이름·연락처·진료기록은 입력하지 말아주세요.',en:'AI guidance. Do not enter names, contact details or medical records.',ja:'AIによる案内です。氏名・連絡先・診療記録は入力しないでください。',zh:'AI指引。请勿输入姓名、联系方式或诊疗记录。'}[language];
+    consentUi.show();
+  }).catch(()=>{});
 })();

@@ -2,6 +2,56 @@ export { ChatBudget } from './budget.js';
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 const BOOKING_URL = "https://m.booking.naver.com/booking/13/bizes/729883";
 const TALK_URL = "https://talk.naver.com/ct/w5zr5u";
+const CONSENT_VERSION = '20260905-public-1';
+
+function validConsent(consent) {
+  return consent?.version === CONSENT_VERSION && ['age14', 'personal', 'health', 'overseas'].every(key => consent[key] === true)
+    && Number.isSafeInteger(consent.acceptedAt) && consent.acceptedAt <= Date.now() + 60000 && consent.acceptedAt > Date.now() - 30 * 60000;
+}
+
+async function readLimitedJson(request, limit = 32000) {
+  const reader = request.body?.getReader();
+  if (!reader) throw new Error('empty');
+  const chunks = []; let length = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    length += value.byteLength;
+    if (length > limit) { await reader.cancel(); throw new Error('too-large'); }
+    chunks.push(value);
+  }
+  const bytes = new Uint8Array(length); let offset = 0;
+  for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+  return JSON.parse(new TextDecoder().decode(bytes));
+}
+
+function consentCoordinator(env, token) {
+  if (typeof token !== 'string' || !/^\d{4}-\d{2}:[0-9a-f-]{36}$/.test(token)) return null;
+  const now=Date.now()+9*3600000;
+  if (![now,now-30*60000].some(time=>new Date(time).toISOString().slice(0,7)===token.slice(0,7))) return null;
+  return env.CHAT_BUDGET?.getByName(`dear:${token.slice(0, 7)}`);
+}
+
+async function handleConsent(request, env, origin) {
+  if (env.PUBLIC_CHAT_ENABLED !== 'true' && !(await authorizedPreview(request, env))) return json({error:'테스트 암호를 확인해주세요.'},401,origin);
+  if (!env.CHAT_BUDGET || !env.RATE_LIMITER || !request.headers.get('CF-Connecting-IP')) return json({error:'안내를 잠시 점검하고 있어요.'},503,origin);
+  let body;
+  try { body = await readLimitedJson(request, 4096); } catch { return json({error:'요청 형식을 확인해주세요.'},400,origin); }
+  if (body?.action === 'withdraw') {
+    const coordinator = consentCoordinator(env, body.token);
+    if (!coordinator) return json({error:'요청 형식을 확인해주세요.'},400,origin);
+    await coordinator.consent('withdraw',body.token,CONSENT_VERSION);
+    return json({withdrawn:true},200,origin);
+  }
+  if (!validConsent(body?.consent)) return json({error:'각 항목을 확인해주세요.'},428,origin);
+  const ipHash = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(request.headers.get('CF-Connecting-IP'))))).map(v=>v.toString(16).padStart(2,'0')).join('');
+  const { success } = await env.RATE_LIMITER.limit({key:'consent:'+ipHash});
+  if (!success) return json({error:'잠시 후 다시 시도해주세요.'},429,origin);
+  const month = new Date(Date.now()+9*3600000).toISOString().slice(0,7);
+  const token = `${month}:${crypto.randomUUID()}`;
+  const receipt = await env.CHAT_BUDGET.getByName(`dear:${month}`).consent('accept',token,CONSENT_VERSION);
+  return receipt ? json({receipt},200,origin) : json({error:'잠시 후 다시 시도해주세요.'},429,origin);
+}
 
 const SYSTEM_PROMPT = `
 <role>
@@ -105,6 +155,14 @@ async function equalSecret(provided, expected) {
   return difference === 0;
 }
 
+async function authorizedPreview(request, env) {
+  const provided = request.headers.get('X-Dear-Preview-Code');
+  if (await equalSecret(provided,env.PREVIEW_ACCESS_CODE)) return true;
+  // Optional admin-created release test credential; expires even if cleanup is interrupted.
+  const expires = Number(env.RELEASE_QA_CODE?.split('.')[0]);
+  return Number.isSafeInteger(expires) && expires > Date.now() && expires <= Date.now()+15*60000 && await equalSecret(provided,env.RELEASE_QA_CODE);
+}
+
 function validateMessages(value) {
   if (!Array.isArray(value) || value.length < 1 || value.length > 14) return null;
   let totalLength = 0;
@@ -124,7 +182,7 @@ function validateMessages(value) {
 async function handleChat(request, env, origin) {
   const publicMode = env.PUBLIC_CHAT_ENABLED === 'true';
   const protectedMode = publicMode || env.CHAT_PROTECTIONS_ENABLED === 'true';
-  if (!publicMode && !(await equalSecret(request.headers.get("X-Dear-Preview-Code"), env.PREVIEW_ACCESS_CODE))) {
+  if (!publicMode && !(await authorizedPreview(request, env))) {
     return json({ error: "테스트 암호가 맞지 않아요." }, 401, origin);
   }
 
@@ -159,8 +217,9 @@ async function handleChat(request, env, origin) {
   } catch {
     return json({ error: "요청 형식을 읽지 못했어요." }, 400, origin);
   }
-  if (publicMode && (body?.consent?.version !== '20260905-public-1' || body.consent.age14 !== true || body.consent.personal !== true || body.consent.health !== true || body.consent.overseas !== true)) {
-    return json({ error: '대화를 시작하기 전 정보 처리 안내를 확인해 주세요.' }, 428, origin);
+  if (publicMode || body?.consentReview === true) {
+    const coordinator = consentCoordinator(env, body?.consentToken);
+    if (!coordinator || !(await coordinator.consent('check',body.consentToken,CONSENT_VERSION))) return json({ error: '대화를 시작하기 전 정보 처리 안내를 확인해 주세요.' }, 428, origin);
   }
   const messages = validateMessages(body?.messages);
   if (!messages) return json({ error: "대화 형식을 확인해주세요." }, 400, origin);
@@ -237,11 +296,12 @@ export default {
       });
     }
 
-    if (url.pathname === "/health" && request.method === "GET") return json({ ok: true, service: "dear-ai-preview", revision: "20260905-guards-2", publicChat: env.PUBLIC_CHAT_ENABLED === 'true', protections: env.CHAT_PROTECTIONS_ENABLED === 'true' && Boolean(env.RATE_LIMITER && env.CHAT_BUDGET) }, 200, origin);
-    if (url.pathname !== "/chat" || request.method !== "POST") return json({ error: "Not found" }, 404, origin);
+    if (url.pathname === "/health" && request.method === "GET") return json({ ok: true, service: "dear-ai-preview", revision: "20260905-consent-1", publicChat: env.PUBLIC_CHAT_ENABLED === 'true', protections: env.CHAT_PROTECTIONS_ENABLED === 'true' && Boolean(env.RATE_LIMITER && env.CHAT_BUDGET), consentVersion: CONSENT_VERSION }, 200, origin);
+    if (!['/chat','/consent'].includes(url.pathname) || request.method !== "POST") return json({ error: "Not found" }, 404, origin);
     if (!origin) return json({ error: "허용되지 않은 화면이에요." }, 403, "");
 
     try {
+      if (url.pathname === '/consent') return await handleConsent(request, env, origin);
       return await handleChat(request, env, origin);
     } catch {
       return json({ error: "잠시 연결이 불안정해요." }, 500, origin);

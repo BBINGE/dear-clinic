@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+  const PUBLIC_WIDGET_ENABLED = false; // Also covers the standalone international page.
   if (window.top !== window || location.pathname.startsWith('/preview/')) return;
   const storage = {
     get(key) { try { return sessionStorage.getItem(key); } catch { return null; } },
@@ -12,7 +13,7 @@
     return;
   }
   if (query.get('dear-ai-test') === '1') storage.set('dear-ai-test', '1');
-  if (storage.get('dear-ai-test') !== '1') return;
+  if (!PUBLIC_WIDGET_ENABLED && storage.get('dear-ai-test') !== '1') return;
   const lang = (document.documentElement.lang || 'ko').slice(0, 2);
   const copy = {
     ko: ['궁금한 거 있어요?\n제가 도와드릴게요 :)', '디숭이와 이야기하기', '닫기', '테스트 종료'],
@@ -130,7 +131,7 @@
     if (open && !frame) {
       frame = document.createElement('iframe');
       frame.title = copy[1];
-      frame.src = '/preview/dear-ai.html?embedded=1&lang=' + encodeURIComponent(lang);
+      frame.src = '/preview/dear-ai.html?embedded=1&lang=' + encodeURIComponent(lang) + (query.get('consent-review') === '1' ? '&consent-review=1' : '');
       panel.appendChild(frame);
     }
     greeting.hidden = true;
