@@ -1,4 +1,42 @@
-/* Keep AI privacy disclosures readable without changing other legal sections. */
+/* Privacy documents only: other legal and editorial pages keep their design. */
+.legal-page { padding-top: 110px; padding-bottom: 64px; }
+.legal-hero, .legal-content { width: min(100%, 860px); }
+.legal-hero { padding-bottom: 24px; }
+.legal-hero h1 { font-size: 28px; line-height: 1.4; letter-spacing: -.025em; }
+.legal-hero p, .legal-content p, .legal-content li { font-size: 15px; line-height: 1.7; overflow-wrap: anywhere; }
+.legal-hero .legal-eyebrow, .legal-hero .legal-effective { font-size: 12px; }
+.legal-content section { padding: 24px 0; scroll-margin-top: 100px; }
+.legal-content h2 { font-size: 18px; line-height: 1.5; margin-bottom: 12px; }
+.legal-content h3 { font-size: 15px; line-height: 1.6; margin: 18px 0 6px; }
+.legal-content ul { gap: 2px; margin: 8px 0; }
+.legal-content .legal-info { padding: 16px; font-size: 14px; line-height: 1.7; border-radius: 4px; }
+.privacy-toc, .privacy-history { font-size: 14px; line-height: 1.7; border-bottom: 1px solid #d9dfda; padding: 14px 0; }
+.privacy-toc summary, .privacy-history summary { cursor: pointer; color: #234f47; font-weight: 600; }
+.privacy-toc details > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 24px; padding-top: 14px; }
+.privacy-toc a { overflow-wrap: anywhere; }
+.privacy-table-wrap { margin: 16px 0; }
+.privacy-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 14px; line-height: 1.7; }
+.privacy-table caption { text-align: left; font-size: 13px; margin-bottom: 8px; color: #566760; }
+.privacy-table th, .privacy-table td { border: 1px solid #d9dfda; padding: 12px; vertical-align: top; text-align: left; overflow-wrap: anywhere; word-break: normal; }
+.privacy-table th { font-weight: 600; background: #f0f3ef; }
+.privacy-table th:first-child { width: 21%; }
+.privacy-sources p { font-size: 13px; color: #566760; }
+html[lang="ja"] .legal-content, html[lang="zh-CN"] .legal-content { word-break: normal; }
+@media (max-width: 680px) {
+  .legal-page { padding-top: 96px; padding-left: 20px; padding-right: 20px; }
+  .legal-hero h1 { font-size: 26px; }
+  .legal-content h2 { font-size: 17px; }
+  .legal-content section { padding: 20px 0; }
+  .privacy-toc details > div { grid-template-columns: 1fr; }
+  .privacy-table { font-size: 14px; }
+  .privacy-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .privacy-table tbody, .privacy-table tr, .privacy-table th, .privacy-table td { display: block; width: auto; }
+  .privacy-table tr { margin-bottom: 14px; border: 1px solid #d9dfda; }
+  .privacy-table th:first-child { width: auto; }
+  .privacy-table th, .privacy-table td { padding: 10px 12px; border: 0; }
+  .privacy-table td + td { border-top: 1px solid #d9dfda; }
+  .privacy-table td::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: #566760; margin-bottom: 4px; }
+}
 #ai-guide p, #ai-guide li, #ai-guide a { overflow-wrap: anywhere; }
 html[lang="ja"] #ai-guide p, html[lang="ja"] #ai-guide li,
 html[lang="zh-CN"] #ai-guide p, html[lang="zh-CN"] #ai-guide li { word-break: normal; }

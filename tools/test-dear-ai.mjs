@@ -50,7 +50,10 @@ for (const folder of ['', 'en/', 'ja/', 'zh-cn/']) {
   const policy = read(folder + 'privacy.html');
   const previous = read(folder + 'privacy-20260903.html');
   assert.match(policy, /id="ai-guide"/);
-  assert.match(policy, /css\/privacy-ai\.css\?v=20260905-1/);
+    assert.match(policy, /css\/privacy-ai\.css\?v=20260905-2/);
+    assert.match(policy, /class="privacy-toc"/);
+    assert.match(policy, /class="privacy-table"/);
+    assert.match(policy, /<details class="privacy-history">/);
   assert.match(policy, /Cloudflare, Inc\./);
   assert.match(policy, /Anthropic, PBC/);
   assert.match(policy, /sessionStorage/);
