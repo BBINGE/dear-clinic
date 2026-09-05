@@ -1,3 +1,4 @@
+export { ChatBudget } from './budget.js';
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 const BOOKING_URL = "https://m.booking.naver.com/booking/13/bizes/729883";
 const TALK_URL = "https://talk.naver.com/ct/w5zr5u";
@@ -121,13 +122,18 @@ function validateMessages(value) {
 }
 
 async function handleChat(request, env, origin) {
-  if (!(await equalSecret(request.headers.get("X-Dear-Preview-Code"), env.PREVIEW_ACCESS_CODE))) {
+  const publicMode = env.PUBLIC_CHAT_ENABLED === 'true';
+  if (!publicMode && !(await equalSecret(request.headers.get("X-Dear-Preview-Code"), env.PREVIEW_ACCESS_CODE))) {
     return json({ error: "테스트 암호가 맞지 않아요." }, 401, origin);
   }
 
   const sessionId = (request.headers.get("X-Dear-Session") || "").slice(0, 100);
+  const ip = request.headers.get('CF-Connecting-IP');
+  if (publicMode && (!ip || !env.RATE_LIMITER || !env.CHAT_BUDGET)) return json({ error: 'AI 안내를 잠시 점검하고 있어요.' }, 503, origin);
+  // Cloudflare supplies this header at ingress. Do not trust a visitor-generated ID in public mode.
+  const rateKey = publicMode ? Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip)))).map(v => v.toString(16).padStart(2, '0')).join('') : sessionId || 'preview';
   if (env.RATE_LIMITER) {
-    const { success } = await env.RATE_LIMITER.limit({ key: sessionId || "preview" });
+    const { success } = await env.RATE_LIMITER.limit({ key: rateKey });
     if (!success) return json({ error: "대화가 잠시 너무 빨라요. 1분 뒤 다시 말해주세요 :)" }, 429, origin);
   }
 
@@ -136,14 +142,34 @@ async function handleChat(request, env, origin) {
 
   let body;
   try {
-    body = await request.json();
+    const reader = request.body?.getReader();
+    if (!reader) return json({ error: '빈 요청이에요.' }, 400, origin);
+    const chunks = []; let length = 0;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      length += value.byteLength;
+      if (length > 32000) { await reader.cancel(); return json({ error: '메시지가 너무 길어요.' }, 413, origin); }
+      chunks.push(value);
+    }
+    const bytes = new Uint8Array(length); let offset = 0;
+    for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+    body = JSON.parse(new TextDecoder().decode(bytes));
   } catch {
     return json({ error: "요청 형식을 읽지 못했어요." }, 400, origin);
   }
-  const messages = validateMessages(body.messages);
+  if (publicMode && (body?.consent?.version !== '20260905-public-1' || body.consent.age14 !== true || body.consent.personal !== true || body.consent.health !== true || body.consent.overseas !== true)) {
+    return json({ error: '대화를 시작하기 전 정보 처리 안내를 확인해 주세요.' }, 428, origin);
+  }
+  const messages = validateMessages(body?.messages);
   if (!messages) return json({ error: "대화 형식을 확인해주세요." }, 400, origin);
+  if (publicMode) {
+    const month = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 7);
+    if (!(await env.CHAT_BUDGET.getByName(`dear:${month}`).reserve())) return json({ error: '오늘은 AI 안내가 잠시 쉬고 있어요. 전화나 예약 채널로 도와드릴게요.' }, 429, origin);
+  }
 
   const anthropicResponse = await fetch(ANTHROPIC_API_URL, {
+    signal: AbortSignal.timeout(25000),
     method: "POST",
     headers: {
       "Content-Type": "application/json",

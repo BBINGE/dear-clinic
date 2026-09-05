@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" href="../assets/images/dear-favicon.png" type="image/png"><meta name="theme-color" content="#F8F8F6"><title>个人信息处理方针 | DEAR韩医院</title><link rel="canonical" href="https://dearhani.com/zh-cn/privacy.html"><link rel="alternate" hreflang="ko" href="https://dearhani.com/privacy.html"><link rel="alternate" hreflang="en" href="https://dearhani.com/en/privacy.html"><link rel="alternate" hreflang="ja" href="https://dearhani.com/ja/privacy.html"><link rel="alternate" hreflang="zh-Hans" href="https://dearhani.com/zh-cn/privacy.html"><link rel="alternate" hreflang="x-default" href="https://dearhani.com/privacy.html"><meta name="description" content="DEAR韩医院个人信息处理目的、处理标准、信息主体权利及行使方式说明。"><link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css"><link rel="stylesheet" href="../css/style.css?v=20260904-1"><link rel="stylesheet" href="../css/privacy-ai.css?v=20260905-2"></head>
 <body class="legal-page-body"><nav class="nav" id="top"><a href="./" class="nav__logo">DEAR</a><button class="nav__toggle" id="navToggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button><ul class="nav__menu" id="navMenu"><li><a href="about.html" class="nav__link" data-ready="true">About DEAR</a></li><li><a href="columns.html" class="nav__link" data-ready="true">Columns</a></li><li><a href="care.html" class="nav__link" data-ready="true">Care</a></li><li><a href="services.html" class="nav__link" data-ready="true">DEAR SERVICES</a></li><li><a href="index.html#info" class="nav__link" data-ready="true">Contact</a></li></ul></nav>
-<main class="legal-page"><header class="legal-hero"><p class="legal-eyebrow">PRIVACY POLICY</p><h1>DEAR韩医院个人信息处理方针</h1><p>DEAR韩医院遵守韩国《个人信息保护法》及相关法律，依法、安全地处理个人信息。</p><p class="legal-effective">施行日期 2026年9月5日 · 本中文译文仅为阅读便利而提供。如表述存在差异，以<a href="../privacy.html" lang="ko">韩文官方方针</a>为准。</p></header><div class="legal-content">
-<nav class="privacy-toc" aria-label="目录"><details><summary>目录</summary><div><a href="#privacy-article-1">第一条 处理目的</a>
+<main class="legal-page"><header class="legal-hero"><p class="legal-eyebrow">PRIVACY POLICY</p><h1>DEAR韩医院个人信息处理方针</h1><p>DEAR韩医院遵守韩国《个人信息保护法》及相关法律，依法、安全地处理个人信息。</p><p class="legal-effective">施行日期 本中文译文仅为阅读便利而提供。如表述存在差异，以<a href="../privacy.html" lang="ko">韩文官方方针</a>为准。</p></header><div class="legal-content">
+<nav class="privacy-toc" aria-label="目录"><details><summary>目录</summary><div><a href="#ai-guide">Disoongi AI指引的信息处理</a>
+<a href="#privacy-article-1">第一条 处理目的</a>
 <a href="#privacy-article-2">第二条 处理的信息项目</a>
 <a href="#privacy-article-3">第三条 保存期限</a>
 <a href="#privacy-article-4">第四条 向第三方提供</a>
@@ -15,7 +16,19 @@
 <a href="#privacy-article-11">第十一条 个人信息保护负责人</a>
 <a href="#privacy-article-12">第十二条 权益救济</a>
 <a href="#privacy-article-13">第十三条 方针变更</a>
-<a href="#ai-guide">Disoongi AI指引的信息处理</a></div></details></nav>
+</div></details></nav>
+<section id="ai-guide"><h2>Disoongi AI指引的信息处理</h2>
+<p>Disoongi是提供诊疗领域、到院及预约渠道信息的访问受限AI测试，不进行诊断、处方或预约确认。请使用虚构情境或无法识别个人的一般问题进行测试。</p>
+<div class="privacy-table-wrap"><table class="privacy-table"><caption>Disoongi AI指引的信息处理</caption><thead><tr><th scope="col">处理主体</th><th scope="col">信息及目的</th><th scope="col">保存与删除</th></tr></thead><tbody><tr><th scope="row">浏览器</th><td data-label="信息及目的">临时保存最近最多14条消息、访问码及显示设置，以保持对话连续。</td><td data-label="保存与删除">嵌入式聊天使用当前标签页的sessionStorage。距最后保存超过30分钟的记录会在下次加载聊天时删除。“新对话”清除对话，“结束测试”还清除访问码与显示设置。独立测试页面仅使用页面内存。</td></tr>
+<tr><th scope="row">Cloudflare, Inc.</th><td data-label="信息及目的">处理消息及连接信息（IP地址、时间、路径、浏览器等），用于转发、访问验证、防滥用与故障排查。</td><td data-label="保存与删除">Workers运行日志依套餐保存3天或7天。服务商自身的安全及连接信息适用其隐私政策。</td></tr>
+<tr><th scope="row">Anthropic, PBC</th><td data-label="信息及目的">使用最近最多14条消息及页面语言生成AI回复。</td><td data-label="保存与删除">标准API输入及输出在30天内删除。被判定违反使用政策的内容可能保存最长2年，安全分类评分最长7年；另有法定义务等例外。</td></tr></tbody></table></div>
+<h3>传输与使用选择</h3>
+<p>每次发送消息时，数据经Cloudflare Workers以加密通信传输至Anthropic API。随机会话标识符用于请求限流，访问码用于验证，均不包含在发往Anthropic的请求正文中。Anthropic在美国存储数据，处理国家取决于路由条件。Cloudflare也使用全球网络，不保证数据仅在韩国境内处理。</p>
+<p>请勿输入姓名、电话号码、身份证件号码、地址、诊疗记录等可识别本人或他人的信息。本功能不提供完全自动匿名化。DEAR不将对话正文保存在自有服务器数据库或日志中，也不发送至GA4、NAVER分析或广告事件。</p>
+<p>Anthropic商业API默认不将输入及输出用于模型训练，但自愿共享数据或提交反馈等可能属于例外。删除浏览器记录并不代表立即删除服务商端数据。使用共享设备时，请结束测试并清除网站数据。</p>
+<p>停止使用AI即可停止发送新的消息，仅屏蔽Cookie不会停止消息传输。不使用AI也可通过电话或外部预约、咨询渠道联系，对话正文不会自动转交。行使个人信息权利请联系上文的个人信息保护负责人。</p>
+<div class="privacy-sources"><p>供应商说明及联系：<a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic保留政策</a> · <a href="https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training" target="_blank" rel="noopener">训练使用</a> · <a href="https://privacy.claude.com/en/articles/7996890-where-are-your-servers-located-do-you-host-your-models-on-eu-servers" target="_blank" rel="noopener">数据位置</a> · <a href="https://privacy.claude.com/" target="_blank" rel="noopener">Anthropic隐私联系</a> · <a href="https://www.cloudflare.com/policies/privacy/" target="_blank" rel="noopener">Cloudflare隐私及联系</a> · <a href="https://developers.cloudflare.com/workers/observability/logs/workers-logs/" target="_blank" rel="noopener">Workers日志保留</a></p></div>
+</section>
 <section id="privacy-article-1"><h2>第一条 处理目的</h2><p>为提供诊疗服务、确认患者身份并管理诊疗记录、收取或退还费用、确认保险资格及依法申报、管理预约与通知、处理咨询与投诉、履行相关法律义务，DEAR仅处理必要的最少个人信息。如处理目的发生变化，将依法采取另行征得同意等必要措施。</p></section>
 <section id="privacy-article-2"><h2>第二条 处理的信息项目</h2><p>可能处理姓名、出生日期、性别、地址、联系方式、身份与保险资格信息；法律允许处理的居民登记号码或外国人登记号码；症状、既往病史、用药、检查结果、诊断、处方、治疗与进展；支付、保险、证明文件信息；以及未成年人等患者的监护人信息。</p><h3>网站使用</h3><p>本网站不设会员注册或接收患者信息的预约表单。限制访问的迪崇AI测试会处理输入消息，详见下方<a href="#ai-guide">AI信息处理说明</a>。Cookie等在线标识符、浏览页面、访问时间、访问来源及Naver搜索广告（Powerlink）来源标识信息（包括NaPm）、设备和浏览器信息、大致地区，以及电话或预约按钮点击可能被自动处理。点击仅表示尝试打开外部预约页面或发起电话呼叫；本追踪不获取预约是否完成、电话是否接通或咨询内容。进入外部服务后，适用相应运营方的个人信息处理方针。</p></section>
 <section id="privacy-article-3"><h2>第三条 保存期限</h2><p>个人信息在法律规定或实现处理目的所需的期限内保存。依据韩国《医疗法施行规则》，主要期限包括：患者名册5年、诊疗记录10年、处方2年、手术记录10年、检查内容和意见5年、放射线影像及意见书5年、护理和助产记录5年、诊断书等副本3年。仅在相关记录实际形成时适用；为持续诊疗所需时，可在法律允许范围内延长。</p></section>
@@ -29,18 +42,7 @@
 <section id="privacy-article-11"><h2>第十一条 个人信息保护负责人</h2><div class="legal-info"><strong>个人信息保护负责人</strong><br>姓名: Kim Minji<br>职务: 代表院长<br>机构: DEAR韩医院<br>电话: +82-2-3486-1777</div><p>有关查阅、更正、删除、停止处理或投诉等事宜，可通过上述电话提出。</p></section>
 <section id="privacy-article-12"><h2>第十二条 权益救济</h2><p>在韩国境内如需就个人信息侵权进行咨询或寻求救济，可联系个人信息侵权申报中心（118）、个人信息纠纷调解委员会（1833-6972）或有管辖权的警察、行政机关。</p></section>
 <section id="privacy-article-13"><h2>第十三条 方针变更</h2><p>本方针自2026年9月5日起施行。如有变更，将在网站公布变更内容和施行日期。</p></section>
-<section id="ai-guide"><h2>Disoongi AI指引的信息处理</h2>
-<p>Disoongi是提供诊疗领域、到院及预约渠道信息的访问受限AI测试，不进行诊断、处方或预约确认。请使用虚构情境或无法识别个人的一般问题进行测试。</p>
-<div class="privacy-table-wrap"><table class="privacy-table"><caption>Disoongi AI指引的信息处理</caption><thead><tr><th scope="col">处理主体</th><th scope="col">信息及目的</th><th scope="col">保存与删除</th></tr></thead><tbody><tr><th scope="row">浏览器</th><td data-label="信息及目的">临时保存最近最多14条消息、访问码及显示设置，以保持对话连续。</td><td data-label="保存与删除">嵌入式聊天使用当前标签页的sessionStorage。距最后保存超过30分钟的记录会在下次加载聊天时删除。“新对话”清除对话，“结束测试”还清除访问码与显示设置。独立测试页面仅使用页面内存。</td></tr>
-<tr><th scope="row">Cloudflare, Inc.</th><td data-label="信息及目的">处理消息及连接信息（IP地址、时间、路径、浏览器等），用于转发、访问验证、防滥用与故障排查。</td><td data-label="保存与删除">Workers运行日志依套餐保存3天或7天。服务商自身的安全及连接信息适用其隐私政策。</td></tr>
-<tr><th scope="row">Anthropic, PBC</th><td data-label="信息及目的">使用最近最多14条消息及页面语言生成AI回复。</td><td data-label="保存与删除">标准API输入及输出在30天内删除。被判定违反使用政策的内容可能保存最长2年，安全分类评分最长7年；另有法定义务等例外。</td></tr></tbody></table></div>
-<h3>传输与使用选择</h3>
-<p>每次发送消息时，数据经Cloudflare Workers以加密通信传输至Anthropic API。随机会话标识符用于请求限流，访问码用于验证，均不包含在发往Anthropic的请求正文中。Anthropic在美国存储数据，处理国家取决于路由条件。Cloudflare也使用全球网络，不保证数据仅在韩国境内处理。</p>
-<p>请勿输入姓名、电话号码、身份证件号码、地址、诊疗记录等可识别本人或他人的信息。本功能不提供完全自动匿名化。DEAR不将对话正文保存在自有服务器数据库或日志中，也不发送至GA4、NAVER分析或广告事件。</p>
-<p>Anthropic商业API默认不将输入及输出用于模型训练，但自愿共享数据或提交反馈等可能属于例外。删除浏览器记录并不代表立即删除服务商端数据。使用共享设备时，请结束测试并清除网站数据。</p>
-<p>停止使用AI即可停止发送新的消息，仅屏蔽Cookie不会停止消息传输。不使用AI也可通过电话或外部预约、咨询渠道联系，对话正文不会自动转交。行使个人信息权利请联系上文的个人信息保护负责人。</p>
-<div class="privacy-sources"><p>供应商说明及联系：<a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic保留政策</a> · <a href="https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training" target="_blank" rel="noopener">训练使用</a> · <a href="https://privacy.claude.com/en/articles/7996890-where-are-your-servers-located-do-you-host-your-models-on-eu-servers" target="_blank" rel="noopener">数据位置</a> · <a href="https://privacy.claude.com/" target="_blank" rel="noopener">Anthropic隐私联系</a> · <a href="https://www.cloudflare.com/policies/privacy/" target="_blank" rel="noopener">Cloudflare隐私及联系</a> · <a href="https://developers.cloudflare.com/workers/observability/logs/workers-logs/" target="_blank" rel="noopener">Workers日志保留</a></p></div>
-</section>
-<details class="privacy-history"><summary>历史政策</summary><p><a href="privacy-20260903.html">旧版方针（2026年9月3日）</a></p></details>
+
+<details class="privacy-history"><summary>历史政策</summary><p>2026年9月5日：新增Disoongi AI消息处理、服务商、保留期限及境外处理说明。</p><p><a href="privacy-20260903.html">旧版方针（2026年9月3日）</a></p></details>
 </div></main>
 <footer class="footer" id="contact"><div class="footer__inner"><div class="footer__top"><div class="footer__brand"><img class="footer__logo-img" src="../assets/images/logo-full-white.png" alt="DEAR韩医院标志" width="84" height="140" loading="lazy"><p class="footer__slogan">ALWAYS "DEAR" YOU</p></div></div><div class="footer__nap-row"><address class="footer__nap"><span lang="ko">디어한의원 · 대표자 김민지 · 사업자등록번호 828-09-02466<br>서울 서초구 사임당로 143 3층 309호, 310호</span><br><a href="tel:02-3486-1777">02-3486-1777</a></address><div class="footer__legal-links"><a href="privacy.html" aria-current="page">隐私政策</a><a href="terms.html">网站使用条款</a><a href="non-covered.html">非医保项目说明</a><a href="patient-rights.html">患者的权利和义务</a></div></div><p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p></div></footer><script src="../js/main.js?v=20260904-1"></script></body></html>

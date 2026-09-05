@@ -87,7 +87,8 @@ for (const secretName of ["ANTHROPIC_API_KEY", "PREVIEW_ACCESS_CODE"]) {
   assert.match(worker, new RegExp(`env\\.${secretName}`));
 }
 
-const workerModule = await import(`../worker/dear-ai/src/index.js?test=${Date.now()}`);
+// Runtime-specific Durable Object is tested separately; unit-test the fetch handler in Node.
+const workerModule = await import('data:text/javascript;base64,' + Buffer.from(worker.replace("export { ChatBudget } from './budget.js';", '')).toString('base64'));
 const originalFetch = globalThis.fetch;
 globalThis.fetch = async (url, options) => {
   assert.equal(url, "https://api.anthropic.com/v1/messages");
