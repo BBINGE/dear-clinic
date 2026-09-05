@@ -367,6 +367,39 @@ html.embedded .dear-chat { height: 100%; min-height: 0; border: 0; border-radius
 .dear-chat__gate button { padding: 0 14px; color: #fff; background: var(--dear-green); border: 0; border-radius: 11px; cursor: pointer; }
 .dear-chat__gate .dear-chat__gate-error { min-height: 18px; margin: 10px 0 0; color: #a14d3d; font-size: .72rem; }
 
+/* Consent is a compact bottom sheet; the AI profile and greeting stay visible. */
+.dear-chat__gate.dear-consent {
+  padding: 10px;
+  place-items: end center;
+  overflow: hidden;
+  background: rgba(245, 242, 236, .16);
+  backdrop-filter: none;
+}
+.dear-chat__gate.dear-consent form {
+  width: min(100%, 400px);
+  max-height: calc(100% - 150px);
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  margin: 0;
+  padding: 16px;
+  text-align: left;
+  border: 1px solid #dce5df;
+  border-radius: 18px;
+  box-shadow: 0 8px 28px rgba(24, 51, 45, .16);
+}
+.dear-chat__gate.dear-consent h2 { margin: 0 0 6px; font-size: 18px; }
+.dear-chat__gate.dear-consent .dear-consent-welcome { margin-bottom: 8px; line-height: 1.5; }
+.dear-chat__gate.dear-consent fieldset { margin: 8px 0; }
+.dear-chat__gate.dear-consent fieldset label { margin: 6px 0; min-height: 28px; align-items: center; line-height: 1.45; }
+.dear-chat__gate.dear-consent fieldset .dear-consent-all { padding: 8px; margin: 0 0 6px; }
+.dear-chat__gate.dear-consent [data-consent-status]:empty { display: none; }
+.dear-chat__gate.dear-consent .dear-consent-alternative { margin: 8px 0 4px; }
+@media (max-height: 500px) {
+  .dear-chat__gate.dear-consent form { max-height: calc(100% - 70px); }
+}
+
 .ai-preview__foot { padding-top: 17px; text-align: center; }
 
 @media (max-width: 580px) {
