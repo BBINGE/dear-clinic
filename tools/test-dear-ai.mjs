@@ -29,6 +29,7 @@ assert.match(worker, /욕설이 포함돼도/);
 assert.doesNotMatch(worker, /console\.(log|error|warn)/);
 assert.match(config, /"compatibility_date": "2026-09-04"/);
 assert.match(config, /"RATE_LIMITER"/);
+assert.equal(JSON.parse(config).placement.region, "aws:ap-northeast-2");
 
 for (const secretName of ["ANTHROPIC_API_KEY", "PREVIEW_ACCESS_CODE"]) {
   assert.equal(worker.includes(`sk-ant-`), false, `${secretName}처럼 보이는 키가 소스에 없어야 합니다.`);

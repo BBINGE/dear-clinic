@@ -940,6 +940,10 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 - 후속 검사: `tools/test-dear-ai-local.ps1`의 숨김 입력으로 같은 키를 PC에서 호출했으며 사용자가 `HTTP: 200 / RESULT: SUCCESS`를 보고했다. 스크립트는 키를 인자/파일/출력에 남기지 않고 고정된 인사만 보낸다.
 - Worker의 실패 응답에서 `request.cf.colo` 및 상위 응답 CF-Ray 지역 접미사가 모두 `HKG`였다. Anthropic 공식 API 지원 지역 목록(https://www.anthropic.com/supported-countries)에 한국은 있고 홍콩은 없다. 지역 경유 제한이 유력한 가설이나 일반 403만으로 확정되지 않았다. 데이터센터 코드는 수신/응답 경로의 단서이며 발신 IP의 위치를 독립 검증한 것은 아니다.
 - 오류 진단에는 인증 후 데이터센터 코드만 추가했다. 지역 배치 변경이나 프록시 도입은 수행하지 않았다. Worker 버전 `2e9315a4-1cdf-4222-a9e5-d08c85ad120d`.
+- 해결 검증: 후속 작업에서 Cloudflare 공식 Placement Hints의 `placement.region: aws:ap-northeast-2`(서울 인근)를 적용했다. 키, 모델, 프롬프트, DNS, 도메인, 결제 플랜은 변경하지 않았다. 배포 버전은 `413174c0-6c1c-4a6f-b850-0a2a566bba6b`.
+- 적용 직후 같은 Worker의 실제 API 호출이 HTTP 200으로 성공했다. `예약 어케하노 ㅡㅡ`, `야 예약 어캐해`는 `offer_booking`, `그냥 구경 중이야 아직 예약 생각은 없어`는 `continue`를 반환했다. 위치 설정 변경만으로 실패가 해소돼 이전 서버 경로와의 연관성을 확인했으나 Anthropic 내부 차단 규칙 자체를 확인한 것은 아니다.
+- Placement Hints는 지정 클라우드 리전에 지연시간상 가까운 Cloudflare 데이터센터를 선택하는 기능이며 서울 고정이나 국내 데이터 처리 보장이 아니다. 실제 처리 위치를 응답 성공만으로 확정하지 않는다. 참고: https://developers.cloudflare.com/workers/configuration/placement/ .
+- 모의 검사에 서울 인근 배치 설정 회귀 검사를 추가했다. 다음 단계는 사용자의 비공개 화면 실사용 및 말투/예약 흐름 조정이다. 실제 모델 답변에 마크다운 강조나 어색한 구어 표현이 간혹 있으므로 연결 성공과 대화 품질 승인은 별개로 본다.
 
 ## 11. 작업 종료 절차
 
