@@ -9,7 +9,7 @@
   },
   "vars": {
     "ANTHROPIC_MODEL": "claude-sonnet-4-6",
-    "PUBLIC_CHAT_ENABLED": "false",
+    "PUBLIC_CHAT_ENABLED": "true",
     "CHAT_PROTECTIONS_ENABLED": "true",
     "DAILY_REQUEST_LIMIT": "200",
     "MONTHLY_REQUEST_LIMIT": "2000"

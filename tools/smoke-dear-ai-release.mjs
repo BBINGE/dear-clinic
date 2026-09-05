@@ -4,12 +4,13 @@ import { fileURLToPath } from 'node:url';
 import assert from 'node:assert/strict';
 const cwd=fileURLToPath(new URL('../worker/dear-ai/',import.meta.url));
 const endpoint='https://dear-ai-preview.dearhani-ai.workers.dev';
+const publicMode=process.argv.includes('--public');
 const token=`${Date.now()+14*60000}.${randomBytes(32).toString('hex')}`;
 const cli=(args,input)=>spawnSync(process.execPath,['node_modules/wrangler/bin/wrangler.js',...args],{cwd,input,encoding:'utf8',timeout:45000,windowsHide:true});
-const request=(path,body)=>fetch(endpoint+path,{method:'POST',headers:{Origin:'https://dearhani.com','Content-Type':'application/json','X-Dear-Preview-Code':token},body:JSON.stringify(body),signal:AbortSignal.timeout(35000)});
+const request=(path,body)=>fetch(endpoint+path,{method:'POST',headers:{Origin:'https://dearhani.com','Content-Type':'application/json',...(!publicMode?{'X-Dear-Preview-Code':token}:{})},body:JSON.stringify(body),signal:AbortSignal.timeout(35000)});
 const health=await(await fetch(endpoint+'/health')).json();
-assert.equal(health.publicChat,false,'This test must never enable public access');
-assert.equal(cli(['secret','put','RELEASE_QA_CODE'],token).status,0,'Could not install short-lived QA credential');
+assert.equal(health.publicChat,publicMode,'Pass --public only when the service has already been publicly released');
+if(!publicMode)assert.equal(cli(['secret','put','RELEASE_QA_CODE'],token).status,0,'Could not install short-lived QA credential');
 let receipt;
 try {
   let registration;
@@ -41,7 +42,9 @@ try {
   console.log('LIVE CONSENT / ROUTES / WITHDRAWAL: PASS');
 } finally {
   if(receipt)await request('/consent',{action:'withdraw',token:receipt.id}).catch(()=>{});
-  const removal=cli(['secret','delete','RELEASE_QA_CODE'],'y\n');
-  if(removal.status!==0)throw new Error('QA credential cleanup failed; credential expires automatically within 14 minutes.');
-  console.log('TEMPORARY QA CREDENTIAL REMOVED');
+  if(!publicMode){
+    const removal=cli(['secret','delete','RELEASE_QA_CODE'],'y\n');
+    if(removal.status!==0)throw new Error('QA credential cleanup failed; credential expires automatically within 14 minutes.');
+    console.log('TEMPORARY QA CREDENTIAL REMOVED');
+  }
 }

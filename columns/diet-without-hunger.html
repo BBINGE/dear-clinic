@@ -318,7 +318,7 @@
     <p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p>
   </div>
 </footer>
-  <script src="../js/main.js?v=20260904-1"></script>
+  <script src="../js/main.js?v=20260906-1"></script>
   <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');o.unobserve(x.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('is-visible'))}</script>
   <script>(()=>{const links=[...document.querySelectorAll('.toc a[href^="#"]')],items=links.map(link=>({link,target:document.querySelector(link.getAttribute('href'))})).filter(item=>item.target);let queued=false;const update=()=>{queued=false;const line=innerHeight*.34;let current=items[0];for(const item of items){if(item.target.getBoundingClientRect().top<=line)current=item;else break}links.forEach(link=>{const active=link===current.link;link.classList.toggle('is-active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})};addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(update)}},{passive:true});addEventListener('resize',update);update()})()</script>
 </body>

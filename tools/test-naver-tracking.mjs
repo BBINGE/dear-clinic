@@ -31,6 +31,8 @@ function createHarness(hostname, pathname = "/") {
     },
     head: {
       appendChild(script) {
+        // This harness models NAVER only; the public AI loader is tested separately.
+        if (!/^https:\/\/wcs\.(naver\.net|pstatic\.net)\/wcslog\.js$/.test(script.src)) return;
         scripts.push(script);
         queueMicrotask(() => {
           context.window.wcs = {

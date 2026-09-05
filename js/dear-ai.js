@@ -153,7 +153,7 @@
       if(generation!==state.generation)return;
       if (!response.ok) {
         if(response.status===428&&consentEnabled){consentUi.clear();consentUi.show();}
-        if (response.status === 401) {
+        if (response.status === 401 && !state.publicMode) {
           state.accessCode = "";
           gate.hidden = false;
           gateError.textContent = "테스트 암호를 다시 확인해주세요.";

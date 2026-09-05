@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const PUBLIC_WIDGET_ENABLED = false; // Also covers the standalone international page.
+  const PUBLIC_WIDGET_ENABLED = true; // Also covers the standalone international page.
   if (window.top !== window || location.pathname.startsWith('/preview/')) return;
   const storage = {
     get(key) { try { return sessionStorage.getItem(key); } catch { return null; } },

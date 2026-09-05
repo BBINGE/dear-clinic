@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  const version = '20260905-public-1';
+  const version = '20260906-public-1';
   const copy = {
     ko: ['대화 전에 잠깐 확인해주세요', '디숭이는 AI 안내자예요. 진단·처방·예약 확정은 하지 않아요. 이름·전화번호·진료기록과 다른 사람의 정보는 적지 말아주세요.', '만 14세 이상이에요', '대화 입력·응답의 개인정보 처리에 동의해요', '입력에 포함될 수 있는 건강정보 처리에 별도로 동의해요', '안내된 국외 이전에 별도로 동의해요', '처리 항목·보관·국외 이전 자세히 보기', '동의하고 대화 시작', '동의하지 않거나 만 14세 미만이라면', '전화로 안내받기', '예약 안내 보기', '대화 종료·동의 철회', '동의 정보를 확인하지 못했어요. 잠시 후 다시 시도해주세요.', '철회 요청을 완료하지 못했어요. 대화는 중단했으며 재시도할 수 있어요.', '대화가 종료됐어요. 이미 전송된 정보의 삭제 문의는 개인정보방침의 연락처로 요청해주세요.', '동의 내역 보기'],
     en: ['Before we chat', 'Disoongi is an AI guide, not a clinician. It cannot diagnose, prescribe or confirm bookings. Do not enter names, contact details, medical records or another person’s information.', 'I am at least 14 years old', 'I consent to processing personal data in chat inputs and replies', 'I separately consent to processing health information I may enter', 'I separately consent to the described overseas transfers', 'Data, retention and overseas transfer details', 'Agree and start chatting', 'Under 14 or prefer not to agree?', 'Call DEAR', 'Appointment guide', 'End chat and withdraw consent', 'We could not confirm your choices. Please try again.', 'Withdrawal could not be confirmed. Chat has stopped; please retry.', 'Chat ended. For deletion of information already sent, contact the clinic as described in the privacy notice.', 'View consent receipt'],

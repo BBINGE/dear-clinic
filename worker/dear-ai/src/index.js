@@ -2,7 +2,7 @@ export { ChatBudget } from './budget.js';
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 const BOOKING_URL = "https://m.booking.naver.com/booking/13/bizes/729883";
 const TALK_URL = "https://talk.naver.com/ct/w5zr5u";
-const CONSENT_VERSION = '20260905-public-1';
+const CONSENT_VERSION = '20260906-public-1';
 
 function validConsent(consent) {
   // The server timestamps acceptance; an incorrectly set visitor clock must not block access.

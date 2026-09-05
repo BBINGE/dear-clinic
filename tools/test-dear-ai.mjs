@@ -13,11 +13,16 @@ const config = read("worker/dear-ai/wrangler.jsonc");
 const widget = read('js/dear-ai-widget.js');
 const ordinaryWindow = {};
 ordinaryWindow.top = ordinaryWindow;
-vm.runInNewContext(widget, {
+assert.match(widget, /const PUBLIC_WIDGET_ENABLED = true/);
+assert.match(read('js/main.js'), /const PUBLIC_WIDGET_ENABLED = true/);
+assert.equal(JSON.parse(config).vars.PUBLIC_CHAT_ENABLED, 'true');
+const visitorContext = {
   window: ordinaryWindow, location: { pathname: '/', search: '' }, URLSearchParams,
   sessionStorage: { getItem: () => null },
-  document: { createElement: () => { throw new Error('Ordinary visitors must not get widget UI'); } },
-});
+  document: { documentElement: {lang:'ko'}, createElement: () => { throw new Error('widget-mount'); } },
+};
+assert.throws(() => vm.runInNewContext(widget, visitorContext), /widget-mount/, 'Public release reaches the widget mount for ordinary visitors');
+vm.runInNewContext(widget.replace('const PUBLIC_WIDGET_ENABLED = true', 'const PUBLIC_WIDGET_ENABLED = false'), visitorContext);
 assert.match(widget, /prefers-reduced-motion/);
 assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
 assert.match(widget, /white-space:pre-line;word-break:keep-all/);

@@ -14,7 +14,7 @@ for (const invalid of ['invalid', '-1', '0', '1.5', 'Infinity', '']) {
   const blocked = new ChatBudget({storage:{sql:{exec(){return {one:()=>({n:0}),toArray:()=>[]};}}}}, {DAILY_REQUEST_LIMIT:invalid,MONTHLY_REQUEST_LIMIT:2000});
   assert.equal(blocked.reserve(), false, `Invalid limit ${invalid} must fail closed`);
 }
-const consent = {version:'20260905-public-1',age14:true,personal:true,health:true,overseas:true,acceptedAt:Date.now()};
+const consent = {version:'20260906-public-1',age14:true,personal:true,health:true,overseas:true,acceptedAt:Date.now()};
 const consentToken = new Date(Date.now()+9*3600000).toISOString().slice(0,7)+':00000000-0000-4000-8000-000000000001';
 const request = (body,session='one') => new Request('https://example.test/chat',{method:'POST',headers:{Origin:'https://dearhani.com','CF-Connecting-IP':'192.0.2.1','X-Dear-Session':session},body:JSON.stringify(body)});
 let calls=0;const rateKeys=[];

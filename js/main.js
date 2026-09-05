@@ -1,12 +1,12 @@
-// Opt-in, password-protected AI test widget; no normal-visitor UI.
+// Public AI guide; the server requires a valid consent receipt before chat.
 (function () {
-  const PUBLIC_WIDGET_ENABLED = false; // Release switch: keep off until final approval.
+  const PUBLIC_WIDGET_ENABLED = true; // User-approved public release.
   let enabled = PUBLIC_WIDGET_ENABLED || /[?&]dear-ai-test=/.test(window.location.search || '');
   try { enabled = enabled || sessionStorage.getItem('dear-ai-test') === '1'; } catch {}
   if (!enabled) return;
   const load = () => {
     const script = document.createElement('script');
-    script.src = '/js/dear-ai-widget.js?v=20260905-4';
+    script.src = '/js/dear-ai-widget.js?v=20260905-5';
     document.head.appendChild(script);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, { once: true });
