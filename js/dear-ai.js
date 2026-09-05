@@ -104,7 +104,7 @@
   }
 
   async function sendMessage(text) {
-    if (state.busy || !text.trim()) return;
+    if (state.busy || !text.trim() || !gate.hidden || !state.accessCode) return;
     if (!endpoint || endpoint.includes("__DEAR_AI_ENDPOINT__")) {
       addMessage("assistant", "아직 AI 연결 주소가 들어오지 않았어요. 열음에게 Cloudflare 연결을 마쳐달라고 해주세요 :)");
       return;
@@ -120,16 +120,23 @@
     input.style.height = "auto";
     setBusy(true);
     const loading = addLoading();
+    // Keep the newest complete context within the server's 9,000-character limit.
+    const requestHistory = state.history.slice(-14);
+    while (requestHistory.length > 1 && requestHistory.reduce((sum, turn) => sum + turn.content.length, 0) > 9000) requestHistory.shift();
+    while (requestHistory.length > 1 && requestHistory[0].role !== 'user') requestHistory.shift();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
 
     try {
       const response = await fetch(endpoint, {
+        signal: controller.signal,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Dear-Preview-Code": state.accessCode,
           "X-Dear-Session": sessionId,
         },
-        body: JSON.stringify({ messages: state.history.slice(-14), language }),
+        body: JSON.stringify({ messages: requestHistory, language }),
       });
 
       const data = await response.json().catch(() => ({}));
@@ -165,8 +172,9 @@
       saveSession();
       addMessage("assistant", `${error.message || "잠시 연결이 불안정해요."}\n\n급한 예약은 02-3486-1777로 전화해주시면 바로 도와드릴게요.`);
     } finally {
+      clearTimeout(timeout);
       setBusy(false);
-      input.focus();
+      if (gate.hidden) input.focus();
     }
   }
 

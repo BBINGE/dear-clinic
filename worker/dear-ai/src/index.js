@@ -123,15 +123,16 @@ function validateMessages(value) {
 
 async function handleChat(request, env, origin) {
   const publicMode = env.PUBLIC_CHAT_ENABLED === 'true';
+  const protectedMode = publicMode || env.CHAT_PROTECTIONS_ENABLED === 'true';
   if (!publicMode && !(await equalSecret(request.headers.get("X-Dear-Preview-Code"), env.PREVIEW_ACCESS_CODE))) {
     return json({ error: "테스트 암호가 맞지 않아요." }, 401, origin);
   }
 
   const sessionId = (request.headers.get("X-Dear-Session") || "").slice(0, 100);
   const ip = request.headers.get('CF-Connecting-IP');
-  if (publicMode && (!ip || !env.RATE_LIMITER || !env.CHAT_BUDGET)) return json({ error: 'AI 안내를 잠시 점검하고 있어요.' }, 503, origin);
+  if (protectedMode && (!ip || !env.RATE_LIMITER || !env.CHAT_BUDGET)) return json({ error: 'AI 안내를 잠시 점검하고 있어요.' }, 503, origin);
   // Cloudflare supplies this header at ingress. Do not trust a visitor-generated ID in public mode.
-  const rateKey = publicMode ? Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip)))).map(v => v.toString(16).padStart(2, '0')).join('') : sessionId || 'preview';
+  const rateKey = protectedMode ? Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip)))).map(v => v.toString(16).padStart(2, '0')).join('') : sessionId || 'preview';
   if (env.RATE_LIMITER) {
     const { success } = await env.RATE_LIMITER.limit({ key: rateKey });
     if (!success) return json({ error: "대화가 잠시 너무 빨라요. 1분 뒤 다시 말해주세요 :)" }, 429, origin);
@@ -163,7 +164,7 @@ async function handleChat(request, env, origin) {
   }
   const messages = validateMessages(body?.messages);
   if (!messages) return json({ error: "대화 형식을 확인해주세요." }, 400, origin);
-  if (publicMode) {
+  if (protectedMode) {
     const month = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 7);
     if (!(await env.CHAT_BUDGET.getByName(`dear:${month}`).reserve())) return json({ error: '오늘은 AI 안내가 잠시 쉬고 있어요. 전화나 예약 채널로 도와드릴게요.' }, 429, origin);
   }
@@ -236,7 +237,7 @@ export default {
       });
     }
 
-    if (url.pathname === "/health" && request.method === "GET") return json({ ok: true, service: "dear-ai-preview" }, 200, origin);
+    if (url.pathname === "/health" && request.method === "GET") return json({ ok: true, service: "dear-ai-preview", revision: "20260905-guards-2", publicChat: env.PUBLIC_CHAT_ENABLED === 'true', protections: env.CHAT_PROTECTIONS_ENABLED === 'true' && Boolean(env.RATE_LIMITER && env.CHAT_BUDGET) }, 200, origin);
     if (url.pathname !== "/chat" || request.method !== "POST") return json({ error: "Not found" }, 404, origin);
     if (!origin) return json({ error: "허용되지 않은 화면이에요." }, 403, "");
 

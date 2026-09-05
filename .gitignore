@@ -8,3 +8,4 @@ worker/dear-ai/node_modules/
 worker/dear-ai/.dev.vars
 worker/dear-ai/.env
 worker/dear-ai/.wrangler/
+/.wrangler/
