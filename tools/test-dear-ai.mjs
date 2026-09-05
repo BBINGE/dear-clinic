@@ -45,6 +45,20 @@ for (const match of read('sitemap.xml').matchAll(/<loc>(.*?)<\/loc>/g)) {
 }
 
 assert.match(html, /noindex, nofollow, noarchive/);
+assert.equal((html.match(/data-chat-privacy/g) || []).length, 2);
+for (const folder of ['', 'en/', 'ja/', 'zh-cn/']) {
+  const policy = read(folder + 'privacy.html');
+  const previous = read(folder + 'privacy-20260903.html');
+  assert.match(policy, /id="ai-guide"/);
+  assert.match(policy, /css\/privacy-ai\.css\?v=20260905-1/);
+  assert.match(policy, /Cloudflare, Inc\./);
+  assert.match(policy, /Anthropic, PBC/);
+  assert.match(policy, /sessionStorage/);
+  assert.match(policy, /privacy-20260903\.html/);
+  assert.match(previous, /noindex, follow/);
+  assert.doesNotMatch(previous, /id="ai-guide"/);
+  assert.ok(client.includes('/' + folder + 'privacy.html#ai-guide'));
+}
 assert.match(html, /disoongi-profile\.png/);
 assert.match(html, /아무 말이나 적어도 돼요\. 예약도 도와드려요/);
 assert.match(html, /이름·전화번호 같은 개인정보는 적지 말아주세요/);

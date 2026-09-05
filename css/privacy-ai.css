@@ -1,0 +1,4 @@
+/* Keep AI privacy disclosures readable without changing other legal sections. */
+#ai-guide p, #ai-guide li, #ai-guide a { overflow-wrap: anywhere; }
+html[lang="ja"] #ai-guide p, html[lang="ja"] #ai-guide li,
+html[lang="zh-CN"] #ai-guide p, html[lang="zh-CN"] #ai-guide li { word-break: normal; }

@@ -176,13 +176,13 @@
   </url>
   <url>
     <loc>https://dearhani.com/privacy.html</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-09-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  <url><loc>https://dearhani.com/en/privacy.html</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://dearhani.com/ja/privacy.html</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/privacy.html</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dearhani.com/en/privacy.html</loc><lastmod>2026-09-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dearhani.com/ja/privacy.html</loc><lastmod>2026-09-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/privacy.html</loc><lastmod>2026-09-05</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url>
     <loc>https://dearhani.com/terms.html</loc>
     <lastmod>2026-09-02</lastmod>

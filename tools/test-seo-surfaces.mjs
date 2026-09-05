@@ -195,7 +195,7 @@ const koreanPrivacy = read("privacy.html");
 assert.match(koreanPrivacy, /네이버 주식회사[\s\S]*NAVER Analytics를 통한 홈페이지 방문·유입·페이지 이용 통계 분석[\s\S]*네이버 검색광고\(파워링크\) 전환추적을 통한 홈페이지 유입 및 예약·전화 버튼 클릭 성과 분석/, "개인정보처리방침에 NAVER Analytics와 파워링크 전환추적 위탁 범위가 구분되어 있지 않습니다.");
 assert.match(koreanPrivacy, /Google Analytics 4\(GA4\), NAVER Analytics 및 네이버 검색광고\(파워링크\) 전환추적/, "개인정보처리방침에 실제 분석·전환 서비스가 모두 없습니다.");
 assert.match(koreanPrivacy, /NaPm[\s\S]*실제 예약 완료 여부, 통화 성립 여부, 상담 내용/, "개인정보처리방침에 광고 유입정보와 클릭 전환의 한계가 없습니다.");
-assert.match(koreanPrivacy, /시행일자 2026년 9월 3일/, "개인정보처리방침 시행일이 갱신되지 않았습니다.");
+assert.match(koreanPrivacy, /시행일자 2026년 9월 5일/, "개인정보처리방침 시행일이 갱신되지 않았습니다.");
 const internationalAppointmentScript = read("js/international-appointment.js");
 assert.match(internationalAppointmentScript, /naverAnalyticsId="1ac7bf67a05a6c0"/, "외국인 예약 페이지에 네이버 애널리틱스 발급 ID가 없습니다.");
 assert.match(internationalAppointmentScript, /https:\/\/wcs\.pstatic\.net\/wcslog\.js/, "외국인 예약 페이지에 네이버 수집 스크립트가 없습니다.");

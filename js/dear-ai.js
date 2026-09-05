@@ -6,6 +6,16 @@
   if (embedded) document.documentElement.classList.add('embedded');
   const language = ['ko', 'en', 'ja', 'zh'].includes(options.get('lang')) ? options.get('lang') : 'ko';
   document.documentElement.lang = language;
+  const privacyInfo = {
+    ko: ['/privacy.html#ai-guide', 'AI 대화의 전송·보관 안내'],
+    en: ['/en/privacy.html#ai-guide', 'AI chat data and retention'],
+    ja: ['/ja/privacy.html#ai-guide', 'AI会話の送信・保存について'],
+    zh: ['/zh-cn/privacy.html#ai-guide', 'AI对话传输与保留说明']
+  }[language];
+  document.querySelectorAll('[data-chat-privacy]').forEach(link => {
+    link.href = privacyInfo[0];
+    link.textContent = privacyInfo[1];
+  });
   const labels = {
     ko: ['네이버로 예약할게요', '톡톡으로 먼저 물어볼게요', '전화로 상담할게요', '외국인 진료 일정·예약 안내', '인스타그램 DM으로 물어볼게요'],
     en: ['Naver booking', 'Naver Talk', 'Call DEAR', 'International appointment guide', 'Message us on Instagram'],

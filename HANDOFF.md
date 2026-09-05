@@ -1,5 +1,14 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
+## 2026-09-05 디숭이 테스트 개인정보 고지 갱신
+
+- 한국어·영어·일본어·중국어 개인정보처리방침을 9월 5일 시행으로 갱신했다. 입력 기능이 전혀 없다는 기존 문구를 수정하고 `#ai-guide`에 메시지·언어·세션 식별자·접근 코드, Cloudflare 중계와 Anthropic 답변 생성, 브라우저 임시 보관·삭제, 외부 업체 보관 및 국외 처리 범위를 구분했다.
+- 최근 14개 메시지/접근 코드의 sessionStorage 복원은 마지막 저장 후 30분까지이며, 만료 삭제는 다음 로드에서 이루어진다는 실제 코드 기준을 명시한다. 새 대화·테스트 종료는 업체 측 데이터까지 즉시 삭제하지 않는다.
+- 공급자 공식 문서(2026-09-05 확인)에 따라 Anthropic 표준 30일 삭제와 이용정책 위반/법적 예외, 기본 학습 미사용과 예외를 안내했다. ZDR 계약·학습 옵트인 계정 설정을 확인한 것으로 주장하지 않는다. Workers 운영 로그는 요금제별 3/7일이며 자체 로그 미저장과 구분한다. 서울 인근 Placement는 국내 처리 보장이 아니다.
+- 기존 네 언어 방침은 각 언어 폴더의 `privacy-20260903.html`에 검색 제외 상태로 보존하고 현재 방침에서 연결한다. sitemap lastmod는 현재 방침 네 개만 변경했다. 채팅 인증 화면과 하단에 언어별 방침 링크를 추가했다. 대화·예약·노출·인증 로직은 변경하지 않았다.
+- **현재는 여전히 제한 테스트다. 방침 게시 = 일반 공개 승인/동의 획득/법적 절차 완료가 아니다.** 일반 공개 전에 민감정보 처리 및 국외 이전의 적용 근거와 별도 동의 UI, 만 14세 미만 처리, 공급자 계약/재수탁자·실제 이전국가·계정 보관 및 학습 선택 설정을 확인·확정해야 한다. 테스트에는 실제 환자정보를 넣지 않는다.
+- 근거: https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data , https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training , https://privacy.claude.com/en/articles/7996890-where-are-your-servers-located-do-you-host-your-models-on-eu-servers , https://www.cloudflare.com/policies/privacy/ , https://developers.cloudflare.com/workers/observability/logs/workers-logs/ , 개인정보 보호법 제23조·제28조의8. 기존 진료·GA4·NAVER 조항은 AI 관련 모순 문구 외에는 수정하지 않았다.
+
 ## 2026-09-04 BE DEER 비가시 검색 관계 보강
 
 - 합의된 `BE DEER`·`Shape` 작명과 화면 디자인·카피·링크 라벨은 변경하지 않고, 검색엔진과 AI가 읽는 내부 관계만 정리했다.
@@ -751,7 +760,7 @@ Pages CMS 자체의 `Save`, `Add an item`, `Choose content block` 같은 시스�
 
 ## 7. 보안과 개인정보
 
-- 환자 개인정보를 수집하거나 저장하는 기능은 없다.
+- 회원가입·환자정보 예약 폼은 없다. 디숭이 제한 테스트는 입력 메시지를 외부 API로 전송하고 임베드 화면에서 sessionStorage에 임시 보관하므로 문서 상단의 AI 개인정보 고지를 따른다.
 - 문의·예약은 네이버 예약, 전화, 톡톡 등 외부 서비스로 연결한다.
 - 칼럼과 미리보기에 환자 이름, 연락처, 진료 기록, 식별 가능한 사례를 넣지 않는다.
 - 비공개 저장소의 Actions secret 이름은 `DEAR_PUBLIC_REPO_SSH_KEY`다. 값은 GitHub Secrets에만 있고 파일이나 문서에 기록하지 않는다.
