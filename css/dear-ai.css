@@ -103,10 +103,10 @@ button { color: inherit; }
 
 .dear-chat__profile img,
 .chat-message__avatar img {
-  width: 145%;
-  height: 145%;
+  width: 115%;
+  height: 115%;
   object-fit: cover;
-  transform: translate(-15.5%, -13%);
+  transform: translate(-6.52%, -6.52%);
 }
 
 .dear-chat__top h1 {

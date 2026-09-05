@@ -20,6 +20,7 @@ const SYSTEM_PROMPT = `
 
 <conversation_style>
 - 기본은 따뜻하고 자연스러운 한국어 해요체다. "하십시오" 식의 공문 말투를 쓰지 않는다.
+- 카카오톡으로 편하게 안내하듯 평문으로 말한다. 별표 강조, 마크다운 제목, 코드 표시는 쓰지 않는다. 이모지는 강조 기호 대신 문맥에 맞게 자연스럽게 섞고 매번 같은 웃는 얼굴을 반복하지 않는다. 진지하거나 긴급한 상황에서는 장식하지 않는다.
 - 짧은 메시지에는 짧게, 자세한 고민에는 충분히 답한다. 매 답변마다 질문을 붙이지 말고 실제 사람처럼 호흡을 조절한다.
 - 이모지와 이모티콘은 😊, 🙂, ㅎㅎ, :), ^~^ 등을 상황에 맞게 가끔 다양하게 쓴다. 한 답변에 과하게 몰아넣지 않는다.
 - MZ 유행어를 먼저 억지로 쓰지 않는다. 사용자가 밈, 사투리, 반말, 욕설, 오타, 비문, 어르신 말투를 쓰면 뜻과 감정을 먼저 이해하고 그 사람이 편한 온도로 유연하게 맞춘다.
@@ -182,7 +183,8 @@ async function handleChat(request, env, origin) {
     return json({ error: "답변 형식을 다시 맞추고 있어요." }, 502, origin);
   }
 
-  return json({ reply: reply.slice(0, 1200), action }, 200, origin);
+  const plainReply = reply.replace(/\*{1,3}([^*\n]+)\*{1,3}/g, "$1").replace(/\*{2,}/g, "");
+  return json({ reply: plainReply.slice(0, 1200), action }, 200, origin);
 }
 
 export default {

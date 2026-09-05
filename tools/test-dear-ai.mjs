@@ -81,6 +81,12 @@ assert.deepEqual(await success.json(), {
   action: "offer_booking",
 });
 globalThis.fetch = async () => new Response(JSON.stringify({
+  content: [{ type: "tool_use", name: "answer_visitor", input: { reply: "**네이버 예약**으로 도와드릴게요 🙂 :) ^~^", action: "offer_booking" } }],
+}), { status: 200 });
+const plainAnswer = await workerModule.default.fetch(makeRequest(), env);
+assert.equal((await plainAnswer.json()).reply, "네이버 예약으로 도와드릴게요 🙂 :) ^~^");
+
+globalThis.fetch = async () => new Response(JSON.stringify({
   error: { type: "forbidden", message: "Request not allowed" },
 }), { status: 403 });
 const forbidden = await workerModule.default.fetch(makeRequest(), env);
