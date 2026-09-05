@@ -19,6 +19,12 @@ vm.runInNewContext(widget, {
   document: { createElement: () => { throw new Error('Ordinary visitors must not get widget UI'); } },
 });
 assert.match(widget, /prefers-reduced-motion/);
+assert.match(widget, /disoongi-launcher-v1\.webp/);
+assert.match(widget, /width:144px;height:214px/);
+assert.match(widget, /width:100px;height:149px/);
+assert.match(widget, /background:transparent;box-shadow:none/);
+assert.doesNotMatch(widget, /disoongi-profile\.png/);
+assert.ok(fs.statSync(path.join(root, 'assets/images/disoongi-launcher-v1.webp')).size < 300000);
 assert.match(client, /domestic_alternative/);
 assert.match(client, /sessionStorage.removeItem\('dear-ai-chat'\)/);
 assert.match(worker, /네이버 계정이 없는 한국인을 외국인 전용 페이지로 보내지 않는다/);

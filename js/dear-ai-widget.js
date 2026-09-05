@@ -24,21 +24,22 @@
   host.id = 'dear-ai-widget';
   const shadow = host.attachShadow({ mode: 'open' });
   shadow.innerHTML = `<style>
-    :host{position:fixed;right:116px;bottom:22px;z-index:9998;font-family:Pretendard,sans-serif}
+    :host{position:fixed;right:156px;bottom:20px;z-index:9998;font-family:Pretendard,sans-serif}
     *{box-sizing:border-box}button{font:inherit;cursor:pointer} [hidden]{display:none!important}.panel:not([hidden])~.launcher{display:none}
-    .launcher{width:64px;height:64px;padding:0;border:2px solid #fff;border-radius:50%;overflow:hidden;background:#fae7d4;box-shadow:0 5px 22px #18332d30;transition:transform .2s}
-    .launcher img{width:115%;height:115%;object-fit:cover;transform:translate(-6.52%,-6.52%)}
+    .launcher{display:block;width:144px;height:214px;padding:0;border:0;border-radius:0;overflow:visible;background:transparent;box-shadow:none;transform-origin:50% 95%;transition:transform .2s}
+    .launcher img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 3px #18332d24)}
+    .launcher:focus-visible{outline:2px solid #247860;outline-offset:5px;border-radius:12px}
     .launcher:hover{transform:translateY(-4px) rotate(-5deg)}
     .hello{animation:hello 1.4s ease-in-out 1}
     @keyframes hello{0%,100%{transform:rotate(0)}25%{transform:translateY(-6px) rotate(-9deg)}60%{transform:translateY(-3px) rotate(7deg)}}
-    .greeting{position:absolute;right:74px;bottom:8px;width:210px;padding:12px 15px;color:#174f43;background:#fffefa;border:1px solid #dce5df;border-radius:17px 17px 3px 17px;font-size:13px;line-height:1.5;box-shadow:0 4px 16px #18332d12}
-    .panel{position:absolute;bottom:76px;right:0;width:min(440px,calc(100vw - 32px));height:min(740px,calc(100dvh - 118px));background:#fffefa;border-radius:20px;overflow:hidden;box-shadow:0 12px 55px #18332d40;display:flex;flex-direction:column}
+    .greeting{position:absolute;right:150px;bottom:136px;width:210px;padding:12px 15px;color:#174f43;background:#fffefa;border:1px solid #dce5df;border-radius:17px 17px 3px 17px;font-size:13px;line-height:1.5;box-shadow:0 4px 16px #18332d12}
+    .panel{position:absolute;bottom:0;right:0;width:min(440px,calc(100vw - 32px));height:min(740px,calc(100dvh - 40px));background:#fffefa;border-radius:20px;overflow:hidden;box-shadow:0 12px 55px #18332d40;display:flex;flex-direction:column}
     .bar{display:flex;justify-content:space-between;padding:5px 10px;background:#f5f2ec;flex-shrink:0}
     .bar button{border:0;background:none;color:#536b62;padding:7px;font-size:12px}
     iframe{width:100%;flex:1;border:0;min-height:0;background:#fffefa}
-    @media(max-width:580px){:host{right:14px;bottom:calc(78px + env(safe-area-inset-bottom))}.launcher{width:56px;height:56px}.panel{position:fixed;inset:8px;width:calc(100vw - 16px);height:calc(100dvh - 16px);border-radius:18px}.greeting{right:65px}}
+    @media(max-width:768px){:host{right:14px;bottom:calc(78px + env(safe-area-inset-bottom))}.launcher{width:100px;height:149px}.panel{position:fixed;inset:8px;width:calc(100vw - 16px);height:calc(100dvh - 16px);border-radius:18px}.greeting{right:106px;bottom:86px;width:min(210px,calc(100vw - 136px))}}
     @media(prefers-reduced-motion:reduce){.hello{animation:none}.launcher{transition:none}.launcher:hover{transform:none}}
-  </style><div class="greeting" hidden></div><section class="panel" role="dialog" aria-modal="false" hidden><div class="bar"><button class="end" type="button"></button><button class="close" type="button"></button></div></section><button class="launcher" type="button" aria-expanded="false"><img src="/assets/images/disoongi-profile.png" alt=""></button>`;
+  </style><div class="greeting" hidden></div><section class="panel" role="dialog" aria-modal="false" hidden><div class="bar"><button class="end" type="button"></button><button class="close" type="button"></button></div></section><button class="launcher" type="button" aria-expanded="false"><img src="/assets/images/disoongi-launcher-v1.webp" width="404" height="600" alt="" draggable="false"></button>`;
   document.body.appendChild(host);
   const launcher = shadow.querySelector('.launcher');
   const greeting = shadow.querySelector('.greeting');
