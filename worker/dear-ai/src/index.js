@@ -169,7 +169,9 @@ async function handleChat(request, env, origin) {
     else if (/request not allowed/i.test(message)) reason = "request_not_allowed";
     else if (/country|region|location/i.test(message)) reason = "location_restricted";
     else if (/disabled|suspended/i.test(message)) reason = "account_disabled";
-    return json({ error: "AI 연결이 잠시 불안정해요.", diagnostic: { status: anthropicResponse.status, type, reason } }, 502, origin);
+    const edge = typeof request.cf?.colo === "string" && /^[A-Z]{3}$/.test(request.cf.colo) ? request.cf.colo : "unknown";
+    const upstreamEdge = anthropicResponse.headers.get("cf-ray")?.match(/-([A-Z]{3})$/)?.[1] || "unknown";
+    return json({ error: "AI 연결이 잠시 불안정해요.", diagnostic: { status: anthropicResponse.status, type, reason, edge, upstreamEdge } }, 502, origin);
   }
 
   const result = await anthropicResponse.json();

@@ -85,7 +85,7 @@ globalThis.fetch = async () => new Response(JSON.stringify({
 const forbidden = await workerModule.default.fetch(makeRequest(), env);
 assert.equal(forbidden.status, 502);
 assert.deepEqual((await forbidden.json()).diagnostic, {
-  status: 403, type: "forbidden", reason: "request_not_allowed",
+  status: 403, type: "forbidden", reason: "request_not_allowed", edge: "unknown", upstreamEdge: "unknown",
 });
 globalThis.fetch = async () => new Response(JSON.stringify({
   error: { type: "unexpected-private-type", message: "private text test-api-key" },
