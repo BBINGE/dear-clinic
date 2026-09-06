@@ -9,6 +9,9 @@ const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), "u
 const html = read("preview/dear-ai.html");
 const client = read("js/dear-ai.js");
 const worker = read("worker/dear-ai/src/index.js");
+assert.match(worker, /증상명만 보고 가능한 최악의 질환이나 응급 징후 목록을 만들어 붙이지 않는다/);
+assert.match(worker, /진단을 구하는 질문에는 선공감/);
+assert.match(worker, /실제 긴급 징후를 예약으로 돌리거나 안심시키지 않는다/);
 const config = read("worker/dear-ai/wrangler.jsonc");
 const widget = read('js/dear-ai-widget.js');
 const ordinaryWindow = {};
