@@ -75,7 +75,13 @@ for (const folder of ['', 'en/', 'ja/', 'zh-cn/']) {
     assert.match(policy, /<details class="privacy-history">/);
   assert.match(policy, /Cloudflare, Inc\./);
   assert.match(policy, /Anthropic, PBC/);
-  assert.match(policy, /sessionStorage/);
+  const aiPolicy = policy.match(/<section id="ai-guide">[\s\S]*?<\/section>/)[0];
+  assert.doesNotMatch(aiPolicy, /sessionStorage|undefined/);
+  assert.equal((aiPolicy.match(/<h3>/g) || []).length, 3);
+  assert.equal((aiPolicy.match(/<th scope="row">/g) || []).length, 2);
+  assert.match(aiPolicy, /14/);
+  assert.match(aiPolicy, /30/);
+  assert.match(aiPolicy, /href="#privacy-article-1[12]"/);
   assert.match(policy, /privacy-20260903\.html/);
   assert.match(previous, /noindex, follow/);
   assert.doesNotMatch(previous, /id="ai-guide"/);
