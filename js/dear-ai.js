@@ -72,7 +72,7 @@
     article.className = `chat-message chat-message--${role}`;
     const paragraphs = String(text).split(/\n{2,}/).filter(Boolean).map((part) => `<p>${escapeText(part)}</p>`).join("");
     article.innerHTML = role === "assistant"
-      ? `<div class="chat-message__avatar" aria-hidden="true"><img src="../assets/images/disoongi-profile.png" alt=""></div><div class="chat-message__body">${paragraphs}</div>`
+      ? `<div class="chat-message__avatar" aria-hidden="true"><img src="../assets/images/disoongi-face-42@1x.png" srcset="../assets/images/disoongi-face-42@2x.png 2x, ../assets/images/disoongi-face-42@3x.png 3x" width="42" height="42" alt=""></div><div class="chat-message__body">${paragraphs}</div>`
       : `<div class="chat-message__body">${paragraphs}</div>`;
     messagesElement.appendChild(article);
     scrollToLatest();
@@ -83,7 +83,7 @@
     const article = document.createElement("article");
     article.className = "chat-message chat-message--assistant chat-message--loading";
     article.setAttribute("aria-label", "디숭이가 답변을 생각하고 있어요");
-    article.innerHTML = '<div class="chat-message__avatar" aria-hidden="true"><img src="../assets/images/disoongi-profile.png" alt=""></div><div class="chat-message__body"><i></i><i></i><i></i></div>';
+    article.innerHTML = '<div class="chat-message__avatar" aria-hidden="true"><img src="../assets/images/disoongi-face-42@1x.png" srcset="../assets/images/disoongi-face-42@2x.png 2x, ../assets/images/disoongi-face-42@3x.png 3x" width="42" height="42" alt=""></div><div class="chat-message__body"><i></i><i></i><i></i></div>';
     messagesElement.appendChild(article);
     scrollToLatest();
     return article;
