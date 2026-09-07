@@ -1,6 +1,7 @@
 (function () {
   'use strict';
-  const version = '20260906-public-1';
+  const version = '20260907-persistent-1';
+  const storageKey = 'dear-ai-consent';
   const copy = {
     ko: ['대화 전에 잠깐 확인해주세요', '디숭이는 AI 안내자예요. 진단·처방·예약 확정은 하지 않아요. 이름·전화번호·진료기록과 다른 사람의 정보는 적지 말아주세요.', '만 14세 이상이에요', '대화 입력·응답의 개인정보 처리에 동의해요', '입력에 포함될 수 있는 건강정보 처리에 별도로 동의해요', '안내된 국외 이전에 별도로 동의해요', '처리 항목·보관·국외 이전 자세히 보기', '동의하고 대화 시작', '동의하지 않거나 만 14세 미만이라면', '전화로 안내받기', '예약 안내 보기', '대화 종료·동의 철회', '동의 정보를 확인하지 못했어요. 잠시 후 다시 시도해주세요.', '철회 요청을 완료하지 못했어요. 대화는 중단했으며 재시도할 수 있어요.', '대화가 종료됐어요. 이미 전송된 정보의 삭제 문의는 개인정보방침의 연락처로 요청해주세요.', '동의 내역 보기'],
     en: ['Before we chat', 'Disoongi is an AI guide, not a clinician. It cannot diagnose, prescribe or confirm bookings. Do not enter names, contact details, medical records or another person’s information.', 'I am at least 14 years old', 'I consent to processing personal data in chat inputs and replies', 'I separately consent to processing health information I may enter', 'I separately consent to the described overseas transfers', 'Data, retention and overseas transfer details', 'Agree and start chatting', 'Under 14 or prefer not to agree?', 'Call DEAR', 'Appointment guide', 'End chat and withdraw consent', 'We could not confirm your choices. Please try again.', 'Withdrawal could not be confirmed. Chat has stopped; please retry.', 'Chat ended. For deletion of information already sent, contact the clinic as described in the privacy notice.', 'View consent receipt'],
@@ -49,33 +50,51 @@
     const receiptView = document.createElement('details'); const summary=document.createElement('summary'); summary.textContent=t[15]; receiptView.appendChild(summary);
     const receiptText=document.createElement('pre'); receiptView.appendChild(receiptText);
     controls.append(end,receiptView);document.querySelector('.dear-chat').appendChild(controls);
-    let receipt = null; let timer; let pending = false; let deadline = 0;
+    let receipt = null; let pending = false;
+    function saveReceipt() {
+      try { if (receipt) localStorage.setItem(storageKey, JSON.stringify(receipt)); else localStorage.removeItem(storageKey); } catch {}
+    }
+    function validReceipt(value) {
+      return value?.version === version && typeof value.id === 'string' && /^\d{4}-\d{2}:[0-9a-f-]{36}$/.test(value.id) && Number.isFinite(value.acceptedAt) && value.expires === null;
+    }
+    function renderReceipt() {
+      receiptText.textContent = receipt ? `${receipt.version}\n${new Date(receipt.acceptedAt).toLocaleString(language)}` : '';
+      controls.hidden = !receipt;
+    }
+    try {
+      const saved = JSON.parse(localStorage.getItem(storageKey) || 'null');
+      if (validReceipt(saved)) receipt = saved;
+      else localStorage.removeItem(storageKey);
+    } catch {}
+    renderReceipt();
     async function call(body) {
       const response = await fetch(endpoint.replace(/\/chat$/, '/consent'), {method:'POST',headers:{'Content-Type':'application/json','X-Dear-Preview-Code':getAccessCode()},body:JSON.stringify(body),signal:AbortSignal.timeout(10000)});
       if (!response.ok) throw new Error(t[12]);
       return response.json();
     }
     function setCovered(covered) {for(const child of root.parentElement.children)if(child!==root)child.inert=covered;}
-    function show() { root.hidden=false;setCovered(true); controls.hidden=!receipt; form.querySelector('input').focus(); }
+    function show() {
+      if (receipt) { root.hidden=true;setCovered(false);renderReceipt();return; }
+      root.hidden=false;setCovered(true);controls.hidden=true;form.querySelector('input').focus();
+    }
     form.addEventListener('submit', async event => {
       event.preventDefault(); if(pending || !form.reportValidity())return;
       pending=true;form.querySelector('button').disabled=true; status.textContent='';
       try {
-        if(receipt){await call({action:'withdraw',token:receipt.id});receipt=null;retry.hidden=true;}
+        if(receipt){await call({action:'withdraw',token:receipt.id});receipt=null;saveReceipt();retry.hidden=true;}
         const consent={version,acceptedAt:Date.now()};for(const key of ['age14','personal','health','overseas'])consent[key]=form.elements[key].checked;
         const data=await call({consent});
-        if(typeof data.receipt?.id!=='string'||!Number.isFinite(data.receipt.expires))throw new Error(t[12]);
-        receipt=data.receipt;receiptText.textContent=`${receipt.version}\n${new Date(receipt.acceptedAt).toLocaleString(language)} → ${new Date(receipt.expires).toLocaleString(language)}`;
-        const lifetime=Math.max(0,Math.min(30*60000,receipt.expires-receipt.acceptedAt));deadline=performance.now()+lifetime;
-        root.hidden=true;setCovered(false);controls.hidden=false;clearTimeout(timer);
-        timer=setTimeout(()=>{receipt=null;onStop();show();},lifetime);
+        if(!validReceipt(data.receipt))throw new Error(t[12]);
+        receipt=data.receipt;saveReceipt();renderReceipt();
+        root.hidden=true;setCovered(false);controls.hidden=false;
         onReady();
       } catch { status.textContent=t[12]; }
       finally {pending=false;form.querySelector('button').disabled=false;}
     });
     end.addEventListener('click',async()=>{
-      onStop();clearTimeout(timer);show();form.reset();status.textContent='';
-      if(receipt){try{await call({action:'withdraw',token:receipt.id});receipt=null;controls.hidden=true;retry.hidden=true;status.textContent=t[14];}catch{status.textContent=t[13];retry.hidden=false;}}
+      onStop();const withdrawing=receipt;receipt=null;saveReceipt();show();form.reset();status.textContent='';
+      if(withdrawing){try{await call({action:'withdraw',token:withdrawing.id});retry.dataset.token='';retry.hidden=true;status.textContent=t[14];}catch{retry.dataset.token=withdrawing.id;status.textContent=t[13];retry.hidden=false;}}
+      else if(retry.dataset.token){try{await call({action:'withdraw',token:retry.dataset.token});retry.dataset.token='';retry.hidden=true;status.textContent=t[14];}catch{status.textContent=t[13];retry.hidden=false;}}
       else status.textContent=t[14];
       form.querySelector('input').focus();
     });
@@ -85,6 +104,13 @@
       if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
       else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
     });
-    return { show, token:()=>root.hidden&&receipt&&deadline>performance.now()?receipt.id:null, clear:()=>{clearTimeout(timer);receipt=null;controls.hidden=true;form.reset();} };
+    window.addEventListener('storage', event => {
+      if (event.key !== storageKey && event.key !== null) return;
+      let saved; try { saved = JSON.parse(event.newValue || 'null'); } catch {}
+      receipt = validReceipt(saved) ? saved : null;
+      if (!receipt) { onStop();form.reset(); }
+      renderReceipt();show();
+    });
+    return { show, token:()=>root.hidden&&receipt?receipt.id:null, clear:()=>{receipt=null;saveReceipt();renderReceipt();form.reset();} };
   };
 })();

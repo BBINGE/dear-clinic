@@ -56,7 +56,8 @@
 <p>Anthropic 상용 API는 기본적으로 대화를 모델 학습에 사용하지 않습니다. 별도 데이터 제공 선택이나 피드백 등에는 예외가 있습니다.</p>
 <h3>동의·철회 및 삭제</h3>
 <p>대화 시작 전 만 14세 이상 여부와 개인정보·건강정보·국외 이전 동의를 각각 확인합니다. 동의하지 않으면 AI 대화는 이용할 수 없지만 전화·외부 예약·문의 채널은 그대로 이용할 수 있습니다. 대화 내용이 이들 채널에 자동 전달되지는 않습니다.</p>
-<p>임시 동의 번호·안내 버전·동의 및 만료 시각은 대화와 분리해 보관하며 30분 뒤 만료됩니다. 철회하면 활성 기록을 삭제하고, 만료 기록은 다음 요청 또는 정리 작업에서 삭제합니다. 공급자의 복구용 백업에는 일정 기간 남을 수 있습니다.</p>
+<p>동의 번호·안내 버전·동의 시각을 대화와 분리해 브라우저의 지속 저장소(localStorage)와 서버에 보관하여 같은 브라우저에서 재방문할 때 동의를 기억합니다. 새 동의에는 정해진 만료 시간이 없으며, 동의를 철회하거나 안내 버전이 변경되면 다시 확인합니다. 기존 30분짜리 동의를 자동 연장하지는 않습니다. 서버 기록은 철회 시 삭제하고, 더 이상 유효하지 않은 안내 버전의 기록은 후속 요청 또는 정리 작업에서 삭제합니다. 공급자의 복구용 백업에는 일정 기간 남을 수 있습니다.</p>
+<p>사이트 데이터를 삭제하거나 다른 브라우저를 사용하면 다시 동의해야 합니다. 브라우저의 사이트 데이터 삭제는 서버에 철회 요청을 보내지 않으므로 서버의 동의 기록도 지우려면 먼저 ‘대화 종료·동의 철회’를 이용해 주세요. 저장소가 차단되거나 비공개 모드를 사용하면 재방문 시 동의를 기억하지 못할 수 있습니다. 동의 유지와 대화 보관은 별개이며 대화 기록의 임시 보관 방식은 바뀌지 않습니다.</p>
 <p>‘대화 종료·동의 철회’를 누르면 추가 전송을 중단하고 브라우저 대화를 지웁니다. 이미 업체로 전송된 정보까지 즉시 삭제되지는 않습니다. 쿠키 차단만으로는 전송이 중단되지 않으며, 공용 기기에서는 이용 후 사이트 데이터도 삭제해 주세요. 열람·삭제 등 권리행사는 <a href="#privacy-article-12">개인정보 보호책임자</a>에게 요청할 수 있습니다.</p>
 <div class="privacy-sources"><p>업체 안내 및 문의: <a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic 보관 정책</a> · <a href="https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training" target="_blank" rel="noopener">학습 이용 정책</a> · <a href="https://privacy.claude.com/en/articles/7996890-where-are-your-servers-located-do-you-host-your-models-on-eu-servers" target="_blank" rel="noopener">처리 위치 안내</a> · <a href="https://privacy.claude.com/" target="_blank" rel="noopener">Anthropic 개인정보 문의</a> · <a href="https://www.cloudflare.com/policies/privacy/" target="_blank" rel="noopener">Cloudflare 개인정보 및 문의</a> · <a href="https://developers.cloudflare.com/workers/observability/logs/workers-logs/" target="_blank" rel="noopener">Workers 로그 보관 안내</a></p></div>
 </section>
@@ -86,7 +87,7 @@
     <section id="privacy-article-11"><h2>제11조 자동화된 결정에 관한 사항</h2><p>디어한의원은 개인정보를 이용하여 사람의 개입 없이 진료 여부, 치료 방법 또는 환자의 권리·의무에 중대한 영향을 미치는 자동화된 결정을 하지 않습니다.</p></section>
     <section id="privacy-article-12"><h2>제12조 개인정보 보호책임자 및 고충처리</h2><p>디어한의원은 개인정보 처리에 관한 업무를 총괄하고 개인정보 처리와 관련한 문의, 불만 및 피해구제를 위하여 다음과 같이 개인정보 보호책임자와 권리행사 접수창구를 두고 있습니다.</p><div class="legal-info"><strong>개인정보 보호책임자 및 권리행사 접수창구</strong><br>성명: 김민지<br>직책: 대표원장<br>담당기관: 디어한의원<br>전화번호: 02-3486-1777<br>주소: 서울 서초구 사임당로 143 3층 309호, 310호</div><p>개인정보 열람, 정정·삭제, 처리정지 및 고충처리 요청은 위 연락처로 접수할 수 있으며, 디어한의원은 관계 법령에 따라 신속하게 확인하고 처리합니다.</p></section>
     <section id="privacy-article-13"><h2>제13조 개인정보 권익침해에 대한 구제방법</h2><p>개인정보 침해에 대한 상담 또는 피해구제가 필요한 경우 다음 기관에 문의할 수 있습니다.</p><ul><li>개인정보침해신고센터: 국번 없이 118</li><li>개인정보분쟁조정위원회: 1833-6972</li><li>대검찰청: 국번 없이 1301</li><li>경찰청: 국번 없이 182</li></ul><p>위 기관은 디어한의원과는 별개의 기관이며, 디어한의원 자체의 개인정보 처리에 관한 문의는 제12조의 연락처로 먼저 접수할 수 있습니다.</p></section>
-    <section id="privacy-article-14"><h2>제14조 개인정보처리방침의 변경</h2><p>본 개인정보처리방침은 2026년 9월 6일부터 시행합니다. 내용이 변경되는 경우 변경된 내용과 시행일을 홈페이지를 통하여 공개합니다.</p><p>공고일자: 2026년 9월 6일<br>시행일자: 2026년 9월 6일</p></section>
+    <section id="privacy-article-14"><h2>제14조 개인정보처리방침의 변경</h2><p>본 개인정보처리방침은 2026년 9월 7일부터 시행합니다. 내용이 변경되는 경우 변경된 내용과 시행일을 홈페이지를 통하여 공개합니다.</p><p>공고일자: 2026년 9월 7일<br>시행일자: 2026년 9월 7일</p></section>
 
 <details class="privacy-history"><summary>이전 방침 보기</summary><p>2026년 9월 5일: 디숭이 AI 메시지 처리·외부 업체·보관 및 국외 처리 안내를 추가했습니다.</p><p><a href="privacy-20260903.html">이전 방침 (2026년 9월 3일)</a></p></details>
   </div>

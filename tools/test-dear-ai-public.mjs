@@ -61,6 +61,24 @@ const expired=await budget.consent('accept','expired-test',consent.version);
 db.prepare('UPDATE consent_sessions SET expires_at = ? WHERE id = ?').run(Date.now()-1,expired.id);
 assert.equal(await budget.consent('check',expired.id,consent.version),false);
 assert.equal(calls,3,'Consent and withdrawal must never call Anthropic');
+const persistentConsent={...consent,version:'20260907-persistent-1'};
+const persistentResponse=await worker.fetch(consentRequest({consent:persistentConsent}),consentEnv);
+assert.equal(persistentResponse.status,200);
+const persistent=(await persistentResponse.json()).receipt;
+assert.equal(persistent.expires,null);
+const realNow=Date.now;
+try {
+  Date.now=()=>realNow()+400*86400000;
+  assert.equal(await budget.consent('check',persistent.id,persistentConsent.version),true,'Consent must survive a year and month changes');
+  const persistentEnv={...consentEnv,CHAT_BUDGET:{getByName:()=>({consent:(...args)=>budget.consent(...args),reserve:async()=>true})}};
+  assert.equal((await worker.fetch(request({...body,consentToken:persistent.id}),persistentEnv)).status,200,'Old month token must still resolve to its coordinator');
+  assert.equal((await worker.fetch(consentRequest({action:'withdraw',token:persistent.id}),consentEnv)).status,200);
+  assert.equal((await worker.fetch(request({...body,consentToken:persistent.id}),consentEnv)).status,428);
+} finally { Date.now=realNow; }
+assert.equal(await budget.consent('accept','unsupported','future-unknown'),null);
+db.prepare('INSERT INTO consent_sessions VALUES (?, ?, ?, ?)').run('obsolete','obsolete-version',Date.now(),Number.MAX_SAFE_INTEGER);
+await budget.alarm();
+assert.equal(db.prepare('SELECT COUNT(*) AS n FROM consent_sessions').get().n,0,'Cleanup removes obsolete versions');
 console.log('동의 등록·필수 항목·만료·철회·서버 기록 삭제 검사 통과');
 globalThis.fetch=original;db.close();
 console.log('공개 전환용 서버 검사 통과: 동의 누락, IP 제한, 사용량 상한, 크기 제한, 장애 시 차단');

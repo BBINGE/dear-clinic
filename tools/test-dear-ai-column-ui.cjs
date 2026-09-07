@@ -15,7 +15,7 @@ const base = process.env.DEAR_TEST_URL || 'http://127.0.0.1:8000';
           requests.push(r.request().postDataJSON());
           return r.fulfill({json: {reply: '저희 대표원장님의 글을 같이 읽어볼게요.', action: 'continue', recommended_columns: [{url: '/columns/weight-inattentional-blindness.html', title: '체중만 보고 놓치기 쉬운 변화', reason: '질문하신 생활의 변화와 함께 읽을 수 있어요.'}, {url: 'javascript:alert(1)', title: 'invalid'}]}});
         }
-        return r.fulfill({json: {publicChat: true, receipt: {id: 'qa', version: '20260906-public-1', acceptedAt: Date.now(), expires: Date.now()+1800000}}});
+        return r.fulfill({json: {publicChat: true, receipt: {id: '2026-09:00000000-0000-4000-8000-000000000001', version: '20260907-persistent-1', acceptedAt: Date.now(), expires: null}}});
       });
       await page.goto(base + route);
       const widget = page.locator('#dear-ai-widget');
@@ -54,10 +54,7 @@ const base = process.env.DEAR_TEST_URL || 'http://127.0.0.1:8000';
       await frame.locator('.dear-chat__columns a').waitFor();
       assert.equal(requests.length, 1, 'restoring chat must not call AI');
       assert.equal(corpusRequests.length, 0);
-      if (await frame.locator('input[name=all]').isVisible()) {
-        await frame.locator('input[name=all]').check();
-        await frame.locator('.dear-consent button[type=submit]').click();
-      }
+      assert.equal(await frame.locator('input[name=all]').isVisible(), false, 'valid consent must survive a page reload');
       await frame.locator('.dear-chat__columns a').click();
       await page.waitForURL('**/columns/weight-inattentional-blindness.html');
       await greeting.waitFor({state: 'visible'});

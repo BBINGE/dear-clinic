@@ -30,7 +30,8 @@
 <p>Anthropicの商用APIは原則として会話をモデルの学習に使用しません。任意のデータ提供やフィードバック等には例外があります。</p>
 <h3>同意・撤回・削除</h3>
 <p>会話開始前に、14歳以上であることと、個人情報・健康情報・国外移転への同意をそれぞれ確認します。同意しない場合はAIチャットを利用できませんが、電話・外部予約・問い合わせ窓口は引き続き利用できます。会話本文がこれらの窓口に自動転送されることはありません。</p>
-<p>一時的な同意番号・案内の版・同意時刻・有効期限は会話と分けて保存し、30分後に無効となります。撤回時に有効な記録を削除し、期限切れの記録は次のリクエストまたは削除処理で消去します。提供者の復旧用バックアップには一定期間残る場合があります。</p>
+<p>同意番号・案内の版・同意時刻を会話とは別にブラウザの永続ストレージ（localStorage）とサーバーに保存し、同じブラウザでの再訪問時に同意を記憶します。新しい同意に固定の有効期限はなく、撤回または案内の版の変更時に再度確認します。従来の30分間の同意は自動延長しません。サーバーの記録は撤回時に削除し、無効となった案内の版の記録は次のリクエストまたは削除処理で消去します。提供者の復旧用バックアップには一定期間残る場合があります。</p>
+<p>サイトデータを削除した場合や別のブラウザでは、再度同意が必要です。ブラウザのデータ削除だけではサーバーに撤回が通知されないため、サーバーの同意記録も削除するには先に「会話終了・同意撤回」をご利用ください。保存のブロックやプライベートブラウズでは再訪問時に同意を記憶できない場合があります。同意の記憶によって、会話の一時保存期間が延長されることはありません。</p>
 <p>「会話終了・同意撤回」で以後の送信を停止し、ブラウザの会話を削除します。送信済みの事業者側の情報が即時削除されるわけではありません。Cookieのブロックだけでは送信は止まりません。共有端末では利用後にサイトデータも削除してください。開示・削除等の権利行使は<a href="#privacy-article-11">個人情報保護責任者</a>にご連絡ください。</p>
 <div class="privacy-sources"><p>提供会社の案内・窓口：<a href="https://privacy.claude.com/en/articles/7996866-how-long-do-you-store-my-organization-s-data" target="_blank" rel="noopener">Anthropic保存方針</a> · <a href="https://privacy.claude.com/en/articles/7996868-is-my-data-used-for-model-training" target="_blank" rel="noopener">学習利用</a> · <a href="https://privacy.claude.com/en/articles/7996890-where-are-your-servers-located-do-you-host-your-models-on-eu-servers" target="_blank" rel="noopener">データ所在地</a> · <a href="https://privacy.claude.com/" target="_blank" rel="noopener">Anthropic窓口</a> · <a href="https://www.cloudflare.com/policies/privacy/" target="_blank" rel="noopener">Cloudflare方針・窓口</a> · <a href="https://developers.cloudflare.com/workers/observability/logs/workers-logs/" target="_blank" rel="noopener">Workersログ保存</a></p></div>
 </section>
@@ -46,7 +47,7 @@
 <section id="privacy-article-10"><h2>第10条 自動化された決定</h2><p>人の関与なく診療可否、治療方法、患者の権利・義務に重大な影響を与える決定を行いません。</p></section>
 <section id="privacy-article-11"><h2>第11条 個人情報保護責任者</h2><div class="legal-info"><strong>個人情報保護責任者</strong><br>氏名: Kim Minji<br>役職: 代表院長<br>機関: DEAR韓医院<br>電話: +82-2-3486-1777</div><p>閲覧、訂正・削除、処理停止、苦情などは上記電話で受け付けます。</p></section>
 <section id="privacy-article-12"><h2>第12条 救済方法</h2><p>韓国内の個人情報侵害に関する相談・救済は、個人情報侵害申告センター（118）、個人情報紛争調停委員会（1833-6972）、管轄警察・行政機関へお問い合わせいただけます。</p></section>
-<section id="privacy-article-13"><h2>第13条 方針の変更</h2><p>本方針は2026年9月6日から施行されます。内容を変更する場合は、変更内容と施行日をウェブサイトで公開します。</p></section>
+<section id="privacy-article-13"><h2>第13条 方針の変更</h2><p>本方針は2026年9月7日から施行されます。内容を変更する場合は、変更内容と施行日をウェブサイトで公開します。</p></section>
 
 <details class="privacy-history"><summary>以前の方針</summary><p>2026年9月5日：ディスンイAIのメッセージ処理・委託先・保管・国外処理の案内を追加しました。</p><p><a href="privacy-20260903.html">以前の方針（2026年9月3日）</a></p></details>
 </div></main>

@@ -1,6 +1,9 @@
 import { DurableObject } from 'cloudflare:workers';
 
-// One coordinator per clinic/month; aggregate counts and temporary consent receipts, never chat or IP.
+const persistentVersion = '20260907-persistent-1';
+const legacyVersion = '20260906-public-1';
+const persistentExpiry = Number.MAX_SAFE_INTEGER;
+// One coordinator per clinic/month; aggregate counts and consent receipts, never chat or IP.
 export class ChatBudget extends DurableObject {
   constructor(ctx, env) {
     super(ctx, env);
@@ -11,14 +14,18 @@ export class ChatBudget extends DurableObject {
     const sql = this.ctx.storage.sql;
     const now = Date.now();
     sql.exec('DELETE FROM consent_sessions WHERE expires_at <= ?', now);
+    sql.exec('DELETE FROM consent_sessions WHERE version NOT IN (?, ?)', persistentVersion, legacyVersion);
     if (action === 'accept') {
-      // No name, IP, symptoms or conversation: a short-lived server acknowledgement only.
+      if (![persistentVersion, legacyVersion].includes(version)) return null;
+      // Only the new notice permits persistent receipts; old clients keep 30-minute consent.
       if (sql.exec('SELECT COUNT(*) AS n FROM consent_sessions').one().n >= 2000) return null;
-      const expires = now + 30 * 60000;
+      const persistent = version === persistentVersion;
+      const expires = persistent ? persistentExpiry : now + 30 * 60000;
       sql.exec('INSERT INTO consent_sessions (id, version, accepted_at, expires_at) VALUES (?, ?, ?, ?)', id, version, now, expires);
       const scheduled = await this.ctx.storage.getAlarm();
-      if (!scheduled || scheduled > expires + 60000) await this.ctx.storage.setAlarm(expires + 60000);
-      return { id, version, acceptedAt: now, expires };
+      const cleanupAt = Math.min(expires + 60000, now + 86400000);
+      if (!scheduled || scheduled > cleanupAt) await this.ctx.storage.setAlarm(cleanupAt);
+      return { id, version, acceptedAt: now, expires: persistent ? null : expires };
     }
     if (action === 'withdraw') {
       sql.exec('DELETE FROM consent_sessions WHERE id = ?', id);
@@ -28,8 +35,9 @@ export class ChatBudget extends DurableObject {
   }
   async alarm() {
     this.ctx.storage.sql.exec('DELETE FROM consent_sessions WHERE expires_at <= ?', Date.now());
+    this.ctx.storage.sql.exec('DELETE FROM consent_sessions WHERE version NOT IN (?, ?)', persistentVersion, legacyVersion);
     const next = this.ctx.storage.sql.exec('SELECT MIN(expires_at) AS n FROM consent_sessions').one().n;
-    if (next) await this.ctx.storage.setAlarm(next + 60000);
+    if (next) await this.ctx.storage.setAlarm(Math.min(next + 60000, Date.now() + 86400000));
   }
   reserve() {
     const dailyLimit = Number(this.env.DAILY_REQUEST_LIMIT ?? 200);

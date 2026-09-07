@@ -2,11 +2,12 @@ export { ChatBudget } from './budget.js';
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 const BOOKING_URL = "https://m.booking.naver.com/booking/13/bizes/729883";
 const TALK_URL = "https://talk.naver.com/ct/w5zr5u";
-const CONSENT_VERSION = '20260906-public-1';
+const CONSENT_VERSION = '20260907-persistent-1';
+const LEGACY_CONSENT_VERSION = '20260906-public-1'; // Cached clients retain their original short session during rollout.
 
 function validConsent(consent) {
   // The server timestamps acceptance; an incorrectly set visitor clock must not block access.
-  return consent?.version === CONSENT_VERSION && ['age14', 'personal', 'health', 'overseas'].every(key => consent[key] === true);
+  return [CONSENT_VERSION, LEGACY_CONSENT_VERSION].includes(consent?.version) && ['age14', 'personal', 'health', 'overseas'].every(key => consent[key] === true);
 }
 
 async function readLimitedJson(request, limit = 32000) {
@@ -27,8 +28,8 @@ async function readLimitedJson(request, limit = 32000) {
 
 function consentCoordinator(env, token) {
   if (typeof token !== 'string' || !/^\d{4}-\d{2}:[0-9a-f-]{36}$/.test(token)) return null;
-  const now=Date.now()+9*3600000;
-  if (![now,now-30*60000].some(time=>new Date(time).toISOString().slice(0,7)===token.slice(0,7))) return null;
+  const month=token.slice(0,7);
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month) || month < '2026-09' || month > new Date(Date.now()+9*3600000).toISOString().slice(0,7)) return null;
   return env.CHAT_BUDGET?.getByName(`dear:${token.slice(0, 7)}`);
 }
 
@@ -49,7 +50,7 @@ async function handleConsent(request, env, origin) {
   if (!success) return json({error:'잠시 후 다시 시도해주세요.'},429,origin);
   const month = new Date(Date.now()+9*3600000).toISOString().slice(0,7);
   const token = `${month}:${crypto.randomUUID()}`;
-  const receipt = await env.CHAT_BUDGET.getByName(`dear:${month}`).consent('accept',token,CONSENT_VERSION);
+  const receipt = await env.CHAT_BUDGET.getByName(`dear:${month}`).consent('accept',token,body.consent.version);
   return receipt ? json({receipt},200,origin) : json({error:'잠시 후 다시 시도해주세요.'},429,origin);
 }
 
@@ -272,7 +273,7 @@ async function handleChat(request, env, origin) {
   }
   if (publicMode || body?.consentReview === true) {
     const coordinator = consentCoordinator(env, body?.consentToken);
-    if (!coordinator || !(await coordinator.consent('check',body.consentToken,CONSENT_VERSION))) return json({ error: '대화를 시작하기 전 정보 처리 안내를 확인해 주세요.' }, 428, origin);
+    if (!coordinator || !((await coordinator.consent('check',body.consentToken,CONSENT_VERSION)) || (await coordinator.consent('check',body.consentToken,LEGACY_CONSENT_VERSION)))) return json({ error: '대화를 시작하기 전 정보 처리 안내를 확인해 주세요.' }, 428, origin);
   }
   const messages = validateMessages(body?.messages);
   if (!messages) return json({ error: "대화 형식을 확인해주세요." }, 400, origin);
