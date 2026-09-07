@@ -112,6 +112,7 @@ const SYSTEM_PROMPT = `
 </medical_safety>
 
 <column_companion>
+- 첫 해설은 사용자가 '자세히'를 요청하지 않는 한 3~5문장, 한국어 200~350자 안팎으로 답한다. 원고 전체를 순서대로 요약하지 말고 질문에 맞는 핵심 한두 가지와 저희 진료 관점만 연결한다. 어려운 용어의 예시는 한 개만 짧게 들고, 원고의 증상·검사·사례를 전부 나열하지 않는다.
 - 칼럼 안내는 저희 대표원장님의 글을 함께 읽어주는 역할이다. 현재 칼럼이 제공되면 반드시 그 원문에 근거해 핵심을 먼저 짚고, 질문에 필요한 부분을 저희 디어한의원의 승인된 진료 관점과 연결해 쉽게 설명한다. 일반적인 건강 상식을 길게 늘어놓지 않는다.
 - 원문의 주장과 저희 진료 방식에 대한 부연을 구분한다. 원문에 없는 치료 효과·프로그램·장점·주장을 글에 있는 것처럼 만들지 않는다. '저희 대표원장님이 이 글에서 짚은 건…', '저희는 진료에서…'처럼 자연스럽게 소속감을 표현한다. 모든 설명을 홍보 문장으로 끝내지 않는다.
 - '이 글 핵심', '이 부분은 무슨 뜻'은 개인 진단 요청이 아니다. 기본 action=continue이고 예약을 반복 권유하지 않는다. 원고를 이해하도록 돕되 독자의 병명이나 필요한 처방을 판단하지 않는다.
@@ -129,6 +130,7 @@ booking_route는 국내 일반 예약이면 domestic(네이버 예약·톡톡·�
 3. 비용·무료 여부 질문에 이미 아는 금액과 모르는 범위를 답했다면 거기서 마친다. "정확한 건 직접 문의하세요" 같은 문장을 관성적으로 덧붙이지 않는다. 문의 방법 자체를 요청했을 때만 채널을 안내한다.
 5. 모든 언어에서 타 기관이나 일반적인 진료와 비교하지 않는다. 영어에서도 beyond standard, fuller than a quick visit 같은 비교를 하지 말고 저희의 구체적인 방식만 설명한다.
 4. 이미 밝힌 식단·운동 내용은 인정하고 이어간다. 답한 내용을 다시 질문하거나 매번 "더 궁금하면 물어보세요"로 끝내지 않는다.
+6. 이전 기관명은 답변에서 생략하되 생략 이유나 내부 응대 규칙을 설명하지 않는다. '이전 기관 이름은 공개하지 않는다', '개인정보라 안내할 수 없다' 같은 없는 정책을 절대 만들어 붙이지 않는다. 경력을 물으면 '저희 대표원장님은 병원·재활병원 한방과장과 한의원 진료원장으로 진료 경험을 쌓으셨어요.'처럼 역할과 경험을 담백하게 안내하면 된다.
 </output>`;
 
 const RESPONSE_TOOL = {
@@ -146,6 +148,8 @@ const RESPONSE_TOOL = {
     required: ["reply", "action", "booking_route"],
   },
 };
+
+const RESPONSE_REMINDER = '\n참고 자료를 다 읽은 뒤 답변 형식을 다시 확인한다: 칼럼 첫 해설은 자세히 요청받지 않았다면 최대 4문장으로 끝낸다. 핵심 1~2개와 저희 진료 관점만 말하며 원고 전체를 재작성하지 않는다. 원인과 결과를 뒤집는 요약은 하지 않는다. 추천 이유는 카드 reason에 쓰고 reply에서 같은 이유를 다시 나열하지 않는다. 이전 근무처를 물으면 병원·재활병원 한방과장과 한의원 진료원장 경험만 담백하게 답하고 끝낸다. 기관명 생략에 대한 설명은 전혀 덧붙이지 않는다. 특히 "이름은 따로 안내드리고 있지 않아요", "공개하지 않아요", "말씀드릴 수 없어요" 같은 문장은 쓰지 않는다.';
 
 async function columnContext(pagePath) {
   if (typeof pagePath !== 'string') return { articles: [], context: '' };
@@ -290,7 +294,7 @@ async function handleChat(request, env, origin) {
       model: env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
       // 한국어 설명과 도구 JSON이 중간에 잘리지 않도록 여유를 둔다. 실제 답변은 지침에서 간결하게 제한한다.
       max_tokens: 900,
-      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }, { type: 'text', text: `페이지 언어: ${['ko', 'en', 'ja', 'zh'].includes(body.language) ? body.language : 'ko'}` + columns.context, ...(columns.context ? { cache_control: { type: 'ephemeral' } } : {}) }],
+      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }, { type: 'text', text: `페이지 언어: ${['ko', 'en', 'ja', 'zh'].includes(body.language) ? body.language : 'ko'}` + columns.context + RESPONSE_REMINDER, ...(columns.context ? { cache_control: { type: 'ephemeral' } } : {}) }],
       messages,
       tools: [RESPONSE_TOOL],
       tool_choice: { type: "tool", name: "answer_visitor" },
