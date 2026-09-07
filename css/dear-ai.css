@@ -236,9 +236,18 @@ button { color: inherit; }
   background: var(--dear-green);
 }
 
-.dear-chat__columns a { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; overflow-wrap: anywhere; }
-.dear-chat__columns strong { font-size: 13px; line-height: 1.6; }
-.dear-chat__columns small { font-size: 12px; font-weight: 400; line-height: 1.6; opacity: .9; }
+.dear-chat__columns { display: grid; gap: 10px; margin: -4px 0 16px 43px; max-width: 330px; min-width: 0; color: var(--dear-green); }
+.dear-chat__column-intro { margin: 0; font-size: 13px; line-height: 1.7; }
+.dear-chat__column-cards { display: grid; gap: 8px; }
+.dear-chat__columns a { display: flex; align-items: flex-start; gap: 10px; padding: 10px; border: 1px solid var(--dear-line); border-radius: 13px; background: #fff; color: inherit; text-decoration: none; overflow-wrap: anywhere; }
+.dear-chat__columns a img { flex: 0 0 84px; width: 84px; height: 84px; object-fit: contain; border-radius: 8px; background: var(--dear-green-soft); }
+.dear-chat__column-copy { display: grid; gap: 5px; min-width: 0; }
+.dear-chat__columns strong { font-size: 13px; line-height: 1.5; }
+.dear-chat__columns small { font-size: 12px; font-weight: 400; line-height: 1.6; }
+.dear-chat__column-read { font-size: 12px; font-weight: 650; }
+.dear-chat__columns button { padding: 10px 13px; border: 1px solid var(--dear-line); border-radius: 999px; background: var(--dear-green-soft); color: inherit; font: inherit; font-size: 13px; cursor: pointer; }
+.dear-chat__columns button:disabled { opacity: .55; cursor: wait; }
+.dear-chat__columns a:focus-visible, .dear-chat__columns button:focus-visible { outline: 2px solid var(--dear-green); outline-offset: 3px; }
 
 .dear-chat__suggestions {
   display: flex;

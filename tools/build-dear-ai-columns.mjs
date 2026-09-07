@@ -14,8 +14,10 @@ const articles=paths.map(url=>{
  const title=text(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]||html.match(/<title>(.*?)<\/title>/i)?.[1]||'');
  const description=decode(html.match(/<meta\s+name="description"\s+content="([^"]*)"/i)?.[1]||'');
  const body=text(main);
+ const image=decode(html.match(/<meta\s+property="og:image"\s+content="([^"]*)"/i)?.[1]||'').replace(/^https:\/\/dearhani\.com/, '');
+ const thumbnail=/^\/assets\/images\/(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_-]+\.(?:webp|png|jpe?g)(?:\?v=[0-9-]+)?$/.test(image)&&fs.existsSync(path.join(root,image.split('?')[0].slice(1)))?image:undefined;
  if(!title||body.length<100||body.length>30000)throw Error('Column text outside supported size: '+url);
- return {id:path.basename(url,'.html'),url,title,description,text:body};
+ return {id:path.basename(url,'.html'),url,title,description,...(thumbnail?{thumbnail}:{}),text:body};
 });
 if(!articles.length||articles.length>100||new Set(paths).size!==paths.length)throw Error('Invalid column inventory');
 const target=path.join(root,'assets/data/dear-ai-columns.json');

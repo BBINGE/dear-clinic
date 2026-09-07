@@ -10,26 +10,42 @@ assert.deepEqual(corpus.articles.map(a => a.url), paths);
 for (const a of corpus.articles) {
   assert(a.title && a.description && a.text.length > 100 && a.text.length <= 30000);
   assert(!/<(?:script|style|svg)\b/i.test(a.text));
+  assert.match(a.thumbnail, /^\/assets\/images\//);
+  assert(fs.existsSync(path.join(root, a.thumbnail.split('?')[0].slice(1))));
 }
 const source = read('worker/dear-ai/src/index.js');
 const handler = (await import('data:text/javascript;base64,' + Buffer.from(source.replace("export { ChatBudget } from './budget.js';", '')).toString('base64'))).default;
 const originalFetch = globalThis.fetch;
 const article = corpus.articles[0];
-let prompt, fetched = [], unavailable = false;
+let prompt, fetched = [], unavailable = false, intent = 'requested', action = 'continue';
 try {
   globalThis.fetch = async (url, options) => {
     fetched.push(url);
     if (url === 'https://dearhani.com/assets/data/dear-ai-columns.json') return new Response(JSON.stringify(corpus), {status: unavailable ? 503 : 200});
     assert.equal(url, 'https://api.anthropic.com/v1/messages');
     prompt = JSON.parse(options.body);
-    return new Response(JSON.stringify({content: [{type: 'tool_use', name: 'answer_visitor', input: {reply: '이 글을 같이 읽어요.', action: 'continue', booking_route: 'domestic', recommended_columns: [{id: 'invented', reason: 'invalid'}, {id: article.id, reason: '질문에 맞는 글'}, {id: article.id, reason: 'duplicate'}]}}]}));
+    return new Response(JSON.stringify({content: [{type: 'tool_use', name: 'answer_visitor', input: {reply: '이 글을 같이 읽어요.', action, recommendation_intent: intent, booking_route: 'domestic', recommended_columns: [{id: 'invented', reason: 'invalid'}, {id: article.id, reason: '질문에 맞는 글'}, {id: article.id, reason: 'duplicate'}]}}]}));
   };
-  const chat = pagePath => handler.fetch(new Request('https://worker.test/chat', {method: 'POST', headers: {Origin: 'https://dearhani.com', 'X-Dear-Preview-Code': 'test'}, body: JSON.stringify({pagePath, language: 'ko', messages: [{role: 'user', content: '이 글의 핵심과 관련 칼럼 알려줘'}]})}), {PREVIEW_ACCESS_CODE: 'test', ANTHROPIC_API_KEY: 'test'});
+  const chat = (pagePath, extra = {}) => handler.fetch(new Request('https://worker.test/chat', {method: 'POST', headers: {Origin: 'https://dearhani.com', 'X-Dear-Preview-Code': 'test'}, body: JSON.stringify({pagePath, language: 'ko', messages: [{role: 'user', content: '이 글의 핵심과 관련 칼럼 알려줘'}], ...extra})}), {PREVIEW_ACCESS_CODE: 'test', ANTHROPIC_API_KEY: 'test'});
   let response = await chat(article.url);
   assert.equal(response.status, 200);
   let data = await response.json();
   assert.equal(data.recommended_columns.length, 1);
   assert.equal(data.recommended_columns[0].url, article.url);
+  assert.equal(data.recommended_columns[0].thumbnail, article.thumbnail);
+  const followup = {messages: [{role:'user',content:'요즘 잠이 잘 안 와요'}, {role:'assistant',content:'언제부터 그러셨어요?'}, {role:'user',content:'한 달 정도 됐어요'}]};
+  intent = 'contextual';
+  assert(!(await (await chat('/')).json()).recommended_columns, 'unsolicited first-turn recommendation');
+  assert((await (await chat('/', followup)).json()).recommended_columns, 'relevant follow-up can suggest reading');
+  assert(!(await (await chat('/', {...followup, recentColumnIds:[article.id]})).json()).recommended_columns, 'recent recommendation cooldown');
+  assert(prompt.system[2].text.includes(article.id));
+  intent = 'requested';
+  assert((await (await chat('/', {...followup, recentColumnIds:[article.id]})).json()).recommended_columns, 'explicit reread request can repeat');
+  for (action of ['offer_booking', 'urgent_help']) assert(!(await (await chat('/')).json()).recommended_columns, 'no competing cards with booking/emergency');
+  action = 'continue'; intent = 'none';
+  assert(!(await (await chat('/')).json()).recommended_columns);
+  intent = 'requested';
+  await chat(article.url);
   assert(prompt.system[1].text.includes(JSON.stringify(article.text)));
   assert(prompt.system[0].text.includes('타 병원명은 답변에 넣지 않는다'));
   assert(!prompt.system[0].text.includes('前 대한병원'));

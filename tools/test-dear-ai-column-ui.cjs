@@ -13,7 +13,8 @@ const base = process.env.DEAR_TEST_URL || 'http://127.0.0.1:8000';
       await page.route('https://dear-ai-preview.dearhani-ai.workers.dev/**', async r => {
         if (r.request().url().endsWith('/chat')) {
           requests.push(r.request().postDataJSON());
-          return r.fulfill({json: {reply: '저희 대표원장님의 글을 같이 읽어볼게요.', action: 'continue', recommended_columns: [{url: '/columns/weight-inattentional-blindness.html', title: '체중만 보고 놓치기 쉬운 변화', reason: '질문하신 생활의 변화와 함께 읽을 수 있어요.'}, {url: 'javascript:alert(1)', title: 'invalid'}]}});
+          const continuing = requests.length > 1;
+          return r.fulfill({json: {reply: continuing ? '아까 말씀하신 식단은 얼마나 이어오셨어요?' : '질문하신 변화에 관해 함께 살펴볼게요.', action: 'continue', ...(!continuing ? {recommended_columns: [{id: 'weight-inattentional-blindness', url: '/columns/weight-inattentional-blindness.html', thumbnail:'/assets/images/columns/weight-inattentional-blindness/cover.webp', title: '체중만 보고 놓치기 쉬운 변화', reason: '질문하신 생활의 변화와 함께 읽을 수 있어요.'}, {url: 'javascript:alert(1)', title: 'invalid'}]} : {})}});
         }
         return r.fulfill({json: {publicChat: true, receipt: {id: '2026-09:00000000-0000-4000-8000-000000000001', version: '20260907-persistent-1', acceptedAt: Date.now(), expires: null}}});
       });
@@ -40,6 +41,16 @@ const base = process.env.DEAR_TEST_URL || 'http://127.0.0.1:8000';
       assert.equal(requests[0].pagePath, route);
       assert.equal(requests[0].language, lang);
       assert.equal(await frame.locator('.dear-chat__columns a').count(), 1);
+      assert(await frame.locator('.dear-chat__column-intro').textContent());
+      const thumbnail = frame.locator('.dear-chat__columns img');
+      await thumbnail.scrollIntoViewIfNeeded();
+      await thumbnail.evaluate(image => image.decode());
+      assert(await thumbnail.evaluate(image => image.naturalWidth > 0));
+      await frame.locator('[data-column-continue]').click();
+      await frame.locator('.chat-message__body').filter({hasText:'아까 말씀하신 식단은 얼마나'}).waitFor();
+      assert.equal(requests.length, 2);
+      assert.deepEqual(requests[1].recentColumnIds, ['weight-inattentional-blindness']);
+      assert.equal(await frame.locator('.dear-chat__columns a').count(), 1, 'continue must not append another card');
       assert.equal(await frame.locator('html').evaluate(e => e.scrollWidth-innerWidth), 0);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth-innerWidth), 0);
       if (process.env.DEAR_QA_OUTPUT) await page.screenshot({path: process.env.DEAR_QA_OUTPUT + `/columns-${width}-${lang}.png`});
@@ -52,7 +63,7 @@ const base = process.env.DEAR_TEST_URL || 'http://127.0.0.1:8000';
       assert.equal(await greeting.isVisible(), false, 'same-page automatic invite must stay suppressed');
       await widget.locator('.launcher').click();
       await frame.locator('.dear-chat__columns a').waitFor();
-      assert.equal(requests.length, 1, 'restoring chat must not call AI');
+      assert.equal(requests.length, 2, 'restoring chat must not call AI');
       assert.equal(corpusRequests.length, 0);
       assert.equal(await frame.locator('input[name=all]').isVisible(), false, 'valid consent must survive a page reload');
       await frame.locator('.dear-chat__columns a').click();

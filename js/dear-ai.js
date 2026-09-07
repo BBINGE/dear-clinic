@@ -117,26 +117,62 @@
     state.busy = busy;
     input.disabled = busy;
     sendButton.disabled = busy;
+    messagesElement.querySelectorAll('[data-column-continue]').forEach(button => { button.disabled = busy; });
     messagesElement.setAttribute("aria-busy", String(busy));
   }
 
   function addColumnActions(items) {
     if (!Array.isArray(items)) return;
     const actions = document.createElement('div');
-    actions.className = 'dear-chat__booking dear-chat__columns';
+    actions.className = 'dear-chat__columns';
+    const copy = {
+      ko: ['함께 읽어보실 수 있는 저희 대표원장님의 칼럼이에요. 글을 읽어보셔도 좋고, 저랑 더 이야기하셔도 좋아요!', '같이 읽어보기', '디숭이랑 더 이야기하기', '칼럼은 나중에 보고, 지금은 디숭이랑 더 이야기할게요.'],
+      en: ['Here is some reading prepared by our director. You can read it or keep chatting with me!', 'Read together', 'Keep chatting with Disoongi', 'I’ll read the article later. I’d like to keep chatting with you for now.'],
+      ja: ['当院の院長が執筆したコラムです。一緒に読んでも、このまま私とお話ししても大丈夫ですよ！', '一緒に読む', 'ディスンイと話を続ける', 'コラムは後で読んで、今はこのままお話ししたいです。'],
+      zh: ['这是我们院长撰写的专栏。您可以一起读一读，也可以继续和我聊聊！', '一起阅读', '继续和迪崇聊聊', '专栏我稍后再看，现在想继续和你聊聊。']
+    }[language];
+    const cards = document.createElement('div');
+    cards.className = 'dear-chat__column-cards';
     for (const item of items.slice(0, 2)) {
       if (!item || typeof item.url !== 'string' || !/^\/columns\/[a-z0-9-]+\.html$/.test(item.url) || typeof item.title !== 'string') continue;
       const link = document.createElement('a');
       link.href = item.url;
       link.target = '_top';
+      if (typeof item.thumbnail === 'string' && /^\/assets\/images\/(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_-]+\.(?:webp|png|jpe?g)(?:\?v=[0-9-]+)?$/.test(item.thumbnail)) {
+        const image = document.createElement('img');
+        image.src = item.thumbnail;
+        image.alt = '';
+        image.width = 84; image.height = 84;
+        image.loading = 'lazy'; image.decoding = 'async';
+        image.addEventListener('error', () => image.remove(), {once: true});
+        link.appendChild(image);
+      }
+      const content = document.createElement('span');
+      content.className = 'dear-chat__column-copy';
       const title = document.createElement('strong');
       title.textContent = item.title.slice(0, 200);
       const reason = document.createElement('small');
       reason.textContent = typeof item.reason === 'string' ? item.reason.slice(0, 160) : '';
-      link.append(title, reason);
-      actions.appendChild(link);
+      const read = document.createElement('span');
+      read.className = 'dear-chat__column-read';
+      read.textContent = copy[1] + ' →';
+      content.append(title, reason, read);
+      link.appendChild(content);
+      cards.appendChild(link);
     }
-    if (actions.children.length) { messagesElement.appendChild(actions); scrollToLatest(); }
+    if (cards.children.length) {
+      const intro = document.createElement('p');
+      intro.className = 'dear-chat__column-intro';
+      intro.textContent = copy[0];
+      const keepChatting = document.createElement('button');
+      keepChatting.type = 'button';
+      keepChatting.dataset.columnContinue = '';
+      keepChatting.textContent = copy[2];
+      keepChatting.disabled = state.busy;
+      keepChatting.addEventListener('click', () => sendMessage(copy[3]));
+      actions.append(intro, cards, keepChatting);
+      messagesElement.appendChild(actions); scrollToLatest();
+    }
   }
 
   function showFailure(status = 0) {
@@ -195,7 +231,7 @@
           "X-Dear-Preview-Code": state.accessCode,
           "X-Dear-Session": sessionId,
         },
-        body: JSON.stringify({ messages: requestHistory, language, pagePath, ...(consentEnabled ? {consentReview:true,consentToken:consentUi.token()} : {}) }),
+        body: JSON.stringify({ messages: requestHistory, language, pagePath, recentColumnIds: savedTurns.slice(-6).flatMap(turn => Array.isArray(turn.columns) ? turn.columns.map(item => item.id).filter(id => typeof id === 'string') : []).slice(-6), ...(consentEnabled ? {consentReview:true,consentToken:consentUi.token()} : {}) }),
       });
 
       const data = await response.json().catch(() => ({}));
