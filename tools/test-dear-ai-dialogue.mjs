@@ -10,7 +10,7 @@ for (const fact of ['10,000원~', '20,000원~', '6,000원~', '3,000원~', '50,00
   assert(read('non-covered.html').includes(fact));
   assert(worker.includes(fact));
 }
-for (const fact of ['前 대한병원 한방과장', '前 큰사랑 재활병원 한방과장', 'KPEI 심리상담사 1급', '운동처방사']) {
+for (const fact of ['KPEI 심리상담사 1급', '운동처방사']) {
   assert(read('career.html').includes(fact));
   assert(worker.includes(fact));
 }

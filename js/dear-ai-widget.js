@@ -15,6 +15,9 @@
   if (query.get('dear-ai-test') === '1') storage.set('dear-ai-test', '1');
   if (!PUBLIC_WIDGET_ENABLED && storage.get('dear-ai-test') !== '1') return;
   const lang = (document.documentElement.lang || 'ko').slice(0, 2);
+  const isColumnArticle = /^\/columns\/[a-z0-9-]+\.html$/.test(location.pathname);
+  const isColumnPage = isColumnArticle || /^\/(?:en\/|ja\/|zh-cn\/)?columns\.html$/.test(location.pathname);
+  const columnGreetingKey = 'dear-ai-column-greeted:' + location.pathname;
   const copy = {
     ko: ['궁금한 거 있어요?\n제가 도와드릴게요 :)', '디숭이와 이야기하기', '닫기', '테스트 종료'],
     en: ['Questions? I’m here to help :)', 'Chat with Disoongi', 'Close', 'End test'],
@@ -75,12 +78,29 @@
   shadow.querySelector('.end').textContent = copy[3];
   greeting.textContent = copy[0];
   const isHome = /^\/(?:en\/|ja\/|zh-cn\/)?(?:index\.html)?$/.test(location.pathname);
-  if (!isHome) greeting.textContent += '\n' + ({
+  if (!isHome && !isColumnPage) greeting.textContent += '\n' + ({
     ko: '작게 접어두거나\n원하는 곳으로 옮길 수 있어요 :)',
     en: 'You can minimize me\nor drag me to another spot :)',
     ja: '小さくたたんだり、\n好きな場所に移動できます :)',
     zh: '可以把我收起来，\n也可以拖到喜欢的位置 :)'
   }[lang] || 'You can minimize me or drag me to another spot :)');
+  if (isColumnPage) {
+    const invitations = {
+      ko: ['어떤 주제가 궁금하세요?\n같이 읽을 글을 찾아드릴게요 :)', '저랑 같이 읽어보실래요?\n궁금한 부분은 쉽게 풀어드릴게요 :)'],
+      en: ['What interests you?\nLet’s find an article to read :)', 'Shall we read together?\nI can help explain this article :)'],
+      ja: ['気になるテーマはありますか？\n一緒に読む記事を探しましょう :)', '一緒に読んでみませんか？\n気になる部分をわかりやすく説明します :)'],
+      zh: ['您对什么主题感兴趣？\n我来帮您找篇文章一起读 :)', '要和我一起读吗？\n不明白的地方，我来解释 :)']
+    };
+    greeting.textContent = (invitations[lang] || invitations.en)[isColumnArticle ? 1 : 0];
+    greeting.setAttribute('role', 'button');
+    greeting.tabIndex = 0;
+    greeting.style.pointerEvents = 'auto';
+    greeting.style.cursor = 'pointer';
+    greeting.addEventListener('click', () => toggle(true));
+    greeting.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(true); }
+    });
+  }
   let frame, closeTimer, openFrame, position = null;
   let drag = null, suppressClick = false;
   const clamp = (value, min, max) => Math.min(Math.max(min, max), Math.max(min, value));
@@ -139,7 +159,7 @@
     if (open && !frame) {
       frame = document.createElement('iframe');
       frame.title = copy[1];
-      frame.src = '/preview/dear-ai.html?embedded=1&lang=' + encodeURIComponent(lang) + (PUBLIC_WIDGET_ENABLED ? '&public=1' : '') + (query.get('consent-review') === '1' ? '&consent-review=1' : '');
+      frame.src = '/preview/dear-ai.html?embedded=1&lang=' + encodeURIComponent(lang) + '&page=' + encodeURIComponent(location.pathname) + (PUBLIC_WIDGET_ENABLED ? '&public=1' : '') + (query.get('consent-review') === '1' ? '&consent-review=1' : '');
       panel.appendChild(frame);
     }
     greeting.hidden = true;
@@ -230,6 +250,13 @@
   }
   function greetingCycle() {
     if (!host.isConnected) return;
+    if (isColumnPage) {
+      if (!storage.get(columnGreetingKey) && !document.hidden && panel.hidden && !compact && !drag) {
+        showGreeting();
+        storage.set(columnGreetingKey, '1');
+      }
+      return;
+    }
     showGreeting();
     greetingTimer = setTimeout(greetingCycle, 18000);
   }

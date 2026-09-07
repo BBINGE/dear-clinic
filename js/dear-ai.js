@@ -5,6 +5,9 @@
   const embedded = options.get('embedded') === '1';
   if (embedded) document.documentElement.classList.add('embedded');
   const language = ['ko', 'en', 'ja', 'zh'].includes(options.get('lang')) ? options.get('lang') : 'ko';
+  const pagePath = /^\/[a-z0-9/.-]{0,199}$/.test(options.get('page') || '') ? options.get('page') : '/';
+  const isColumnArticle = /^\/columns\/[a-z0-9-]+\.html$/.test(pagePath);
+  const isColumnPage = isColumnArticle || /^\/(?:en\/|ja\/|zh-cn\/)?columns\.html$/.test(pagePath);
   document.documentElement.lang = language;
   const privacyInfo = {
     ko: ['/privacy.html#ai-guide', 'AI 대화의 전송·보관 안내'],
@@ -117,6 +120,25 @@
     messagesElement.setAttribute("aria-busy", String(busy));
   }
 
+  function addColumnActions(items) {
+    if (!Array.isArray(items)) return;
+    const actions = document.createElement('div');
+    actions.className = 'dear-chat__booking dear-chat__columns';
+    for (const item of items.slice(0, 2)) {
+      if (!item || typeof item.url !== 'string' || !/^\/columns\/[a-z0-9-]+\.html$/.test(item.url) || typeof item.title !== 'string') continue;
+      const link = document.createElement('a');
+      link.href = item.url;
+      link.target = '_top';
+      const title = document.createElement('strong');
+      title.textContent = item.title.slice(0, 200);
+      const reason = document.createElement('small');
+      reason.textContent = typeof item.reason === 'string' ? item.reason.slice(0, 160) : '';
+      link.append(title, reason);
+      actions.appendChild(link);
+    }
+    if (actions.children.length) { messagesElement.appendChild(actions); scrollToLatest(); }
+  }
+
   function showFailure(status = 0) {
     failureMessage?.remove();
     failureMessage = addMessage("assistant", failureCopy[status === 429 ? 2 : 0]);
@@ -173,7 +195,7 @@
           "X-Dear-Preview-Code": state.accessCode,
           "X-Dear-Session": sessionId,
         },
-        body: JSON.stringify({ messages: requestHistory, language, ...(consentEnabled ? {consentReview:true,consentToken:consentUi.token()} : {}) }),
+        body: JSON.stringify({ messages: requestHistory, language, pagePath, ...(consentEnabled ? {consentReview:true,consentToken:consentUi.token()} : {}) }),
       });
 
       const data = await response.json().catch(() => ({}));
@@ -195,10 +217,11 @@
       if (!reply) throw new Error("답변이 비어 있어요.");
       savedTurns.forEach(turn => { delete turn.pending; });
       state.history.push({ role: "assistant", content: reply });
-      savedTurns.push({ role: 'assistant', content: reply, action: data.action, route: data.booking_route });
+      savedTurns.push({ role: 'assistant', content: reply, action: data.action, route: data.booking_route, columns: data.recommended_columns });
       saveSession();
       loading.remove();
       addMessage("assistant", reply);
+      addColumnActions(data.recommended_columns);
       if (data.action === "offer_booking") addBookingActions(data.booking_route || (language === 'ko' ? 'domestic' : 'international'));
       if (data.action === "urgent_help") {
         const urgent = document.createElement("div");
@@ -285,6 +308,7 @@
           if (!['user', 'assistant'].includes(turn.role) || typeof turn.content !== 'string') continue;
           state.history.push({ role: turn.role, content: turn.content.slice(0, 1200) });
           savedTurns.push(turn); addMessage(turn.role, turn.content.slice(0, 1200));
+          if (turn.role === 'assistant') addColumnActions(turn.columns);
           if (turn.action === 'offer_booking') addBookingActions(turn.route || (language === 'ko' ? 'domestic' : 'international'));
         }
         suggestionsElement.hidden = savedTurns.length > 0;
@@ -292,6 +316,19 @@
       } else { sessionStorage.removeItem('dear-ai-chat'); }
     } catch {}
     window.addEventListener('keydown', event => { if (event.key === 'Escape') parent.postMessage('dear-ai-close', location.origin); });
+  }
+  if (isColumnPage) {
+    const columnUi = {
+      ko: ['저랑 같이 읽어보실래요? 저희 대표원장님의 글에서 궁금한 부분을 쉽게 풀어드릴게요 :)', '어떤 주제가 궁금하세요? 저희 칼럼 중에서 같이 읽을 글을 찾아드릴게요 :)', ['이 글 핵심 알려줘', '어려운 부분 설명해줘'], ['체중 관리에 관한 칼럼 추천해줘', '수면에 관한 칼럼 추천해줘']],
+      en: ['Shall we read together? I can explain our director’s article :)', 'What interests you? Let’s find an article from our clinic :)', ['Summarize this article', 'Help me understand this article'], ['Recommend articles about weight management', 'Recommend articles about sleep']],
+      ja: ['一緒に読んでみませんか？当院の院長の記事をわかりやすく説明します :)', '気になるテーマはありますか？当院の記事から一緒に読むものを探しましょう :)', ['この記事の要点を教えて', 'この記事をわかりやすく説明して'], ['体重管理の記事をおすすめして', '睡眠の記事をおすすめして']],
+      zh: ['要一起读吗？我来解释我们院长文章中的内容 :)', '您对什么主题感兴趣？一起找篇我们诊所的文章读吧 :)', ['告诉我这篇文章的重点', '帮我理解这篇文章'], ['推荐体重管理的文章', '推荐睡眠相关文章']]
+    }[language];
+    if (!savedTurns.length) messagesElement.querySelector('.chat-message__body').textContent = columnUi[isColumnArticle ? 0 : 1];
+    suggestionsElement.replaceChildren(...columnUi[isColumnArticle ? 2 : 3].map(label => {
+      const button = document.createElement('button'); button.type = 'button'; button.textContent = label; return button;
+    }));
+    suggestionsElement.hidden = false;
   }
   gateInput.focus();
   if(consentEnabled&&gate.hidden)consentUi.show();

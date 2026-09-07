@@ -1,0 +1,25 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
+const decode=s=>s.replace(/&#(x[0-9a-f]+|\d+);/gi,(_,n)=>String.fromCodePoint(n[0].toLowerCase()==='x'?parseInt(n.slice(1),16):Number(n))).replace(/&(amp|lt|gt|quot|apos|nbsp);/g,(_,n)=>({amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:' '})[n]);
+const text=s=>decode(s.replace(/<!--[\s\S]*?-->/g,'').replace(/<(script|style|svg|nav|footer)\b[^>]*>[\s\S]*?<\/\1>/gi,'').replace(/<[^>]+>/g,' ')).replace(/\s+/g,' ').trim();
+const sitemap=fs.readFileSync(path.join(root,'sitemap.xml'),'utf8');
+const paths=[...sitemap.matchAll(/<loc>https:\/\/dearhani\.com(\/columns\/[a-z0-9-]+\.html)<\/loc>/g)].map(m=>m[1]);
+const articles=paths.map(url=>{
+ const html=fs.readFileSync(path.join(root,url.slice(1)),'utf8');
+ if(/<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i.test(html))throw Error('Unpublished column: '+url);
+ const main=html.match(/<main\b[^>]*>([\s\S]*)<\/main>/i)?.[1];
+ if(!main)throw Error('Missing main: '+url);
+ const title=text(html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1]||html.match(/<title>(.*?)<\/title>/i)?.[1]||'');
+ const description=decode(html.match(/<meta\s+name="description"\s+content="([^"]*)"/i)?.[1]||'');
+ const body=text(main);
+ if(!title||body.length<100||body.length>30000)throw Error('Column text outside supported size: '+url);
+ return {id:path.basename(url,'.html'),url,title,description,text:body};
+});
+if(!articles.length||articles.length>100||new Set(paths).size!==paths.length)throw Error('Invalid column inventory');
+const target=path.join(root,'assets/data/dear-ai-columns.json');
+const output=JSON.stringify({version:1,articles},null,2)+'\n';
+if(Buffer.byteLength(output)>1000000)throw Error('Column corpus exceeds Worker limit');
+fs.writeFileSync(target,output);
+console.log(`디숭이 칼럼 자료 생성: ${articles.length}개, ${fs.statSync(target).size} bytes, 최대 본문 ${Math.max(...articles.map(a=>a.text.length))}자`);
