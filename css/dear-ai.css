@@ -98,15 +98,17 @@ button { color: inherit; }
   border-radius: 50%;
 }
 
-.dear-chat__profile { width: 46px; height: 46px; }
-.chat-message__avatar { width: 34px; height: 34px; }
+.dear-chat__profile { width: 58px; height: 58px; }
+.chat-message__avatar { width: 42px; height: 42px; }
 
 .dear-chat__profile img,
 .chat-message__avatar img {
-  width: 115%;
-  height: 115%;
+  display: block;
+  width: 140%;
+  height: 140%;
+  max-width: none;
   object-fit: cover;
-  transform: translate(-6.52%, -6.52%);
+  transform: translate(-12%, -10%);
 }
 
 .dear-chat__top h1 {
