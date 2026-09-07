@@ -44,7 +44,9 @@ for (const pageUrl of sitemapUrls) {
   if (relativePath === "international-appointment.html") {
     assert.match(html, /js\/international-appointment\.js\?v=20260903-2/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
   } else {
-    assert.match(html, new RegExp(`(?:\\.\\.\\/|)js\\/main\\.js\\?v=${sharedMainVersion}`), `공통 JS 캐시 버전이 다릅니다: ${relativePath}`);
+    // 홈의 팝업 지연 로딩 마크업은 새 JS와 함께 갱신한다. 다른 페이지의 캐시는 유지한다.
+    const mainVersion = relativePath === "index.html" ? "20260907-3" : sharedMainVersion;
+    assert.match(html, new RegExp(`(?:\\.\\.\\/|)js\\/main\\.js\\?v=${mainVersion}`), `공통 JS 캐시 버전이 다릅니다: ${relativePath}`);
   }
   for (const match of html.matchAll(/\b(?:src|href)="([^"]+)"/gi)) {
     const reference = match[1].replaceAll("&amp;", "&");

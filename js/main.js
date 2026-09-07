@@ -868,10 +868,21 @@ if (noticePopups) {
     }
   };
 
+  const mobilePopups = window.matchMedia("(max-width: 900px)");
+  const loadPopupImage = (card, priority = "auto") => {
+    const image = card?.querySelector("img[data-src]");
+    if (!image) return;
+    image.fetchPriority = priority;
+    if (!image.hasAttribute("src")) image.src = image.dataset.src;
+  };
+
   const refreshPopupVisibility = () => {
     const visibleCards = popupCards.filter((card) => !card.hidden);
     const shouldShow = visibleCards.length > 0;
     noticePopups.hidden = !shouldShow;
+    if (weatherPreviewActive) return;
+    const foregroundCards = mobilePopups.matches ? visibleCards.slice(0, 1) : visibleCards;
+    foregroundCards.forEach((card) => loadPopupImage(card));
   };
 
   popupCards.forEach((card) => {
@@ -891,7 +902,41 @@ if (noticePopups) {
     noticePopups.hidden = true;
   } else {
     refreshPopupVisibility();
+    mobilePopups.addEventListener("change", refreshPopupVisibility);
+    // 다음 안내는 첫 이미지 뒤 준비한다. 닫기/화면 확대 시에는 즉시 요청한다.
+    const firstImage = popupCards.find((card) => !card.hidden)?.querySelector("img");
+    const prepareRemaining = () => {
+      const prepare = () => {
+        if (!mobilePopups.matches) return;
+        popupCards.filter((card) => !card.hidden).slice(1).forEach((card) => loadPopupImage(card, "low"));
+      };
+      if ("requestIdleCallback" in window) window.requestIdleCallback(prepare, { timeout: 1500 });
+      else window.setTimeout(prepare, 0);
+    };
+    if (firstImage?.complete && firstImage.naturalWidth) prepareRemaining();
+    else if (firstImage) {
+      firstImage.addEventListener("load", prepareRemaining, { once: true });
+      firstImage.addEventListener("error", prepareRemaining, { once: true });
+    }
   }
+}
+
+// SVG 지도는 화면 가까이 스크롤했을 때 원본과 같은 화질의 무손실 이미지를 읽는다.
+const deferredImages = [...document.querySelectorAll("[data-deferred-src]")];
+const loadDeferredImage = (image) => {
+  image.setAttribute("href", image.dataset.deferredSrc);
+  delete image.dataset.deferredSrc;
+};
+if ("IntersectionObserver" in window) {
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.filter((entry) => entry.isIntersecting).forEach((entry) => {
+      loadDeferredImage(entry.target);
+      imageObserver.unobserve(entry.target);
+    });
+  }, { rootMargin: "500px" });
+  deferredImages.forEach((image) => imageObserver.observe(image));
+} else {
+  deferredImages.forEach(loadDeferredImage);
 }
 
 // 메인 DEAR HEALTH SYSTEM: 진료 체계의 세 축을 탭으로 전환한다.

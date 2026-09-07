@@ -35,6 +35,30 @@
 <meta name="twitter:image" content="https://dearhani.com/assets/images/director.jpg?v=20260810">
 <meta name="twitter:image:alt" content="환자의 상태를 설명하는 디어한의원 김민지 대표원장">
 
+<!-- 공통 CSS의 글꼴 import를 CSS 다운로드와 동시에 미리 요청한다. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700&amp;family=Nanum+Pen+Script&amp;display=swap">
+<!-- 보일 안내만 조기 요청한다. 실제 표시·닫기·기존 기록 이전은 main.js가 담당한다. -->
+<script>
+(() => {
+  if (new URLSearchParams(location.search).has("weather-preview")) return;
+  const ids = ["gongjindan-new-year", "treatment-guide", "gongjindan-packaging"];
+  const activeIds = ids.filter((id) => {
+    try {
+      return localStorage.getItem(`dear-popup-dismissed-${id}`) !== "dismissed"
+        && !localStorage.getItem(`dear-popup-${id}`);
+    } catch { return true; }
+  });
+  const visibleIds = matchMedia("(max-width: 900px)").matches ? activeIds.slice(0, 1) : activeIds;
+  visibleIds.forEach((id) => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = `assets/images/popups/popup-${id}.webp`;
+    document.head.append(link);
+  });
+})();
+</script>
+
 <!-- Pretendard -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
 
@@ -194,21 +218,21 @@
 <aside class="notice-popups" id="noticePopups" aria-label="디어한의원 주요 안내" hidden>
   <div class="notice-popups__list">
       <article class="notice-popup" data-popup-id="gongjindan-new-year">
-        <img src="assets/images/popups/popup-gongjindan-new-year.webp" alt="새해를 맞아 몸과 마음의 기운을 되돌리는 디어한의원 공진단 안내">
+        <img data-src="assets/images/popups/popup-gongjindan-new-year.webp" alt="새해를 맞아 몸과 마음의 기운을 되돌리는 디어한의원 공진단 안내">
         <div class="notice-popup__controls">
           <span class="notice-popup__dismiss-note">닫으면 다시 표시되지 않습니다</span>
           <button type="button" data-popup-close>닫기</button>
         </div>
       </article>
       <article class="notice-popup" data-popup-id="treatment-guide">
-        <img src="assets/images/popups/popup-treatment-guide.webp" alt="먹잘알의 다이어트, 공진단과 한약, 체질개선, 피부 미용, 내과 질환, 교통사고 후유증, 통증 치료 안내">
+        <img data-src="assets/images/popups/popup-treatment-guide.webp" alt="먹잘알의 다이어트, 공진단과 한약, 체질개선, 피부 미용, 내과 질환, 교통사고 후유증, 통증 치료 안내">
         <div class="notice-popup__controls">
           <span class="notice-popup__dismiss-note">닫으면 다시 표시되지 않습니다</span>
           <button type="button" data-popup-close>닫기</button>
         </div>
       </article>
       <article class="notice-popup" data-popup-id="gongjindan-packaging">
-        <img src="assets/images/popups/popup-gongjindan-packaging.webp" alt="강남역, 교대역, 양재역에서 만날 수 있는 디어한의원 공진단 한 방울 안내">
+        <img data-src="assets/images/popups/popup-gongjindan-packaging.webp" alt="강남역, 교대역, 양재역에서 만날 수 있는 디어한의원 공진단 한 방울 안내">
         <div class="notice-popup__controls">
           <span class="notice-popup__dismiss-note">닫으면 다시 표시되지 않습니다</span>
           <button type="button" data-popup-close>닫기</button>
@@ -626,7 +650,7 @@
           </g>
 
           <g class="gongjindan-map__scene gongjindan-map__scene--world">
-            <image class="gongjindan-map__world-outline" href="assets/images/world-map-outline.png" x="25" y="135" width="470" height="253" preserveAspectRatio="xMidYMid meet"></image>
+            <image class="gongjindan-map__world-outline" data-deferred-src="assets/images/world-map-outline.webp" x="25" y="135" width="470" height="253" preserveAspectRatio="xMidYMid meet"></image>
             <g class="gongjindan-map__world-routes gongjindan-map__routes">
               <path id="dear-world-europe" style="--route-delay:0s" d="M426 233Q345 150 260 205"></path>
               <path id="dear-world-seasia" style="--route-delay:.6s" d="M426 233Q418 246 399 263"></path>
@@ -830,7 +854,7 @@
   </a>
 </nav>
 
-<script src="js/main.js?v=20260906-2"></script>
+<script src="js/main.js?v=20260907-3"></script>
 <script src="js/weather-scene.js?v=20260904-1"></script>
 <script src="js/weather-canvas.js?v=20260805-1"></script>
 <script src="js/click-tracking.js?v=20260728"></script>
