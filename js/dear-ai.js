@@ -37,8 +37,15 @@
   const state = { history: [], accessCode: "", busy: false, publicMode: false, generation: 0, controller: null };
   let consentEnabled = options.get('consent-review') === '1';
   const savedTurns = [];
+  let failureMessage = null;
+  const failureCopy = {
+    ko: ['답변을 받지 못했어요. 방금 적어주신 말은 이 대화에 남아 있어요. 다시 시도하거나 이어서 말씀해주세요.', '다시 시도', '지금은 요청을 처리할 수 없어요. 나중에 다시 시도해주세요. 적어주신 말은 남아 있어요.'],
+    en: ['I couldn’t get a reply. Your message is still in this chat. You can retry or continue writing.', 'Try again', 'Requests are temporarily limited. Please try again later. Your message is still here.'],
+    ja: ['回答を受け取れませんでした。送っていただいた内容はこの会話に残っています。再試行するか、続けてお話しください。', '再試行', '現在リクエストが制限されています。しばらくしてから再試行してください。内容は残っています。'],
+    zh: ['暂时未能收到回复。您刚才的消息仍保留在本次对话中，可以重试或继续补充。', '重试', '请求暂时受到限制，请稍后重试。您的消息仍然保留。']
+  }[language];
   const consentUi = window.createDearConsent({endpoint,language,getAccessCode:()=>state.accessCode,onReady:()=>input.focus(),onStop:()=>{
-    state.generation++;state.controller?.abort();state.history=[];savedTurns.length=0;
+    state.generation++;state.controller?.abort();state.history=[];savedTurns.length=0;failureMessage=null;
     while(messagesElement.children.length>1)messagesElement.lastElementChild.remove();
     suggestionsElement.hidden=false;input.value='';setBusy(false);
     try{sessionStorage.removeItem('dear-ai-chat');}catch{}
@@ -110,7 +117,23 @@
     messagesElement.setAttribute("aria-busy", String(busy));
   }
 
-  async function sendMessage(text) {
+  function showFailure(status = 0) {
+    failureMessage?.remove();
+    failureMessage = addMessage("assistant", failureCopy[status === 429 ? 2 : 0]);
+    failureMessage.setAttribute("role", "status");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "dear-chat__retry";
+    button.dataset.chatRetry = "";
+    button.textContent = failureCopy[1];
+    button.addEventListener("click", () => {
+      const last = state.history.at(-1);
+      if (last?.role === "user") sendMessage(last.content, true);
+    });
+    failureMessage.querySelector(".chat-message__body").appendChild(button);
+  }
+
+  async function sendMessage(text, retry = false) {
     if (state.busy || !text.trim() || !gate.hidden || (!state.publicMode && !state.accessCode)) return;
     if (consentEnabled && !consentUi.token()) {consentUi.show();return;}
     if (!endpoint || endpoint.includes("__DEAR_AI_ENDPOINT__")) {
@@ -119,13 +142,17 @@
     }
 
     const userText = text.trim().slice(0, 1200);
-    state.history.push({ role: "user", content: userText });
-    savedTurns.push({ role: 'user', content: userText });
+    failureMessage?.remove();
+    failureMessage = null;
+    if (!retry) {
+      state.history.push({ role: "user", content: userText });
+      savedTurns.push({ role: 'user', content: userText, pending: true });
+      addMessage("user", userText);
+      input.value = "";
+      input.style.height = "auto";
+    }
     saveSession();
-    addMessage("user", userText);
     suggestionsElement.hidden = true;
-    input.value = "";
-    input.style.height = "auto";
     setBusy(true);
     const loading = addLoading();
     // Keep the newest complete context within the server's 9,000-character limit.
@@ -159,11 +186,14 @@
           gateError.textContent = "테스트 암호를 다시 확인해주세요.";
           gateInput.focus();
         }
-        throw new Error(data.error || "응답을 불러오지 못했어요.");
+        const error = new Error("chat-request-failed");
+        error.status = response.status;
+        throw error;
       }
 
       const reply = typeof data.reply === "string" ? data.reply.trim() : "";
       if (!reply) throw new Error("답변이 비어 있어요.");
+      savedTurns.forEach(turn => { delete turn.pending; });
       state.history.push({ role: "assistant", content: reply });
       savedTurns.push({ role: 'assistant', content: reply, action: data.action, route: data.booking_route });
       saveSession();
@@ -180,10 +210,8 @@
     } catch (error) {
       if(generation!==state.generation)return;
       loading.remove();
-      state.history.pop();
-      savedTurns.pop();
       saveSession();
-      addMessage("assistant", `${error.message || "잠시 연결이 불안정해요."}\n\n급한 예약은 02-3486-1777로 전화해주시면 바로 도와드릴게요.`);
+      showFailure(error.status);
     } finally {
       clearTimeout(timeout);
       if(generation!==state.generation)return;
@@ -260,6 +288,7 @@
           if (turn.action === 'offer_booking') addBookingActions(turn.route || (language === 'ko' ? 'domestic' : 'international'));
         }
         suggestionsElement.hidden = savedTurns.length > 0;
+        if (savedTurns.at(-1)?.pending) showFailure();
       } else { sessionStorage.removeItem('dear-ai-chat'); }
     } catch {}
     window.addEventListener('keydown', event => { if (event.key === 'Escape') parent.postMessage('dear-ai-close', location.origin); });
