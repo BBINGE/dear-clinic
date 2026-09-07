@@ -302,7 +302,7 @@ async function handleChat(request, env, origin) {
       model: env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
       // 한국어 설명과 도구 JSON이 중간에 잘리지 않도록 여유를 둔다. 실제 답변은 지침에서 간결하게 제한한다.
       max_tokens: 900,
-      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }, { type: 'text', text: `페이지 언어: ${['ko', 'en', 'ja', 'zh'].includes(body.language) ? body.language : 'ko'}` + columns.context + RESPONSE_REMINDER, ...(columns.context ? { cache_control: { type: 'ephemeral' } } : {}) }, { type: 'text', text: '최근 화면에 제시한 공개 칼럼 ID(JSON 데이터): ' + JSON.stringify({recentColumnIds}) }],
+      system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }, { type: 'text', text: `페이지 언어: ${['ko', 'en', 'ja', 'zh'].includes(body.language) ? body.language : 'ko'}` + columns.context + RESPONSE_REMINDER, ...(columns.context ? { cache_control: { type: 'ephemeral' } } : {}) }, { type: 'text', text: '최근 화면에 제시한 공개 칼럼 ID(JSON 데이터): ' + JSON.stringify({recentColumnIds}) + '\n최종 화면 중복 방지: 추천 카드를 보낼 때 reply는 지금 질문에 대한 답만 쓴다. 단순 글 추천 요청이면 "말씀하신 고민과 맞는 글을 골라봤어요." 정도로 짧게 마친다. 원장님이 준비한 글이라는 소개와 읽기/대화 선택 안내는 화면에 이미 표시되므로 reply에서 반복하지 않는다. 각 글의 내용과 추천 이유는 reason에만 쓰고 reply에 재서술하지 않는다. 첫 비용 질문에는 카드나 칼럼 권유 문장 없이 비용만 답한다.' }],
       messages,
       tools: [RESPONSE_TOOL],
       tool_choice: { type: "tool", name: "answer_visitor" },
