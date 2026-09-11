@@ -13,6 +13,35 @@ const CATEGORY_MAP = {
   Shape: { label: "체중·리듬", display: "SHAPE", relatedPath: "/be-deer.html" },
 };
 
+function publicationRunDate() {
+  const forcedDate = process.env.DEAR_PUBLISH_DATE;
+  if (forcedDate) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(forcedDate)) throw new Error("DEAR_PUBLISH_DATE는 YYYY-MM-DD 형식이어야 합니다.");
+    return forcedDate;
+  }
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Seoul",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
+}
+
+function refreshSearchHubLastmods(source, date = publicationRunDate()) {
+  for (const url of [`${BASE_URL}/`, `${BASE_URL}/columns.html`]) {
+    const escapedUrl = url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const entryPattern = new RegExp(`(<loc>${escapedUrl}<\\/loc>)([\\s\\S]*?)(?=<\\/url>)`);
+    if (!entryPattern.test(source)) throw new Error(`sitemap.xml에서 검색 허브를 찾지 못했습니다: ${url}`);
+    source = source.replace(entryPattern, (whole, loc, tail) => {
+      if (/<lastmod>[^<]*<\/lastmod>/.test(tail)) {
+        return `${loc}${tail.replace(/<lastmod>[^<]*<\/lastmod>/, `<lastmod>${date}</lastmod>`)}`;
+      }
+      return `${loc}\n    <lastmod>${date}</lastmod>${tail}`;
+    });
+  }
+  return source;
+}
+
 function parseArgs(argv) {
   const args = {};
   for (let index = 0; index < argv.length; index += 1) {
@@ -991,6 +1020,7 @@ ${end}`;
     if (!source.includes(marker)) throw new Error("sitemap.xml에서 URL 삽입 위치를 찾지 못했습니다.");
     source = source.replace(marker, `${entry}\n${marker}`);
   }
+  source = refreshSearchHubLastmods(source);
   fs.writeFileSync(filePath, source, "utf8");
 }
 
@@ -1052,7 +1082,7 @@ function removeGeneratedColumn(siteRoot, slug) {
   const mapStart = `  <!-- COLUMN_SITEMAP:${slug}:START -->`;
   const mapEnd = `  <!-- COLUMN_SITEMAP:${slug}:END -->`;
   const mapPattern = new RegExp(`${mapStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${mapEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);
-  sitemap = sitemap.replace(mapPattern, "");
+  sitemap = refreshSearchHubLastmods(sitemap.replace(mapPattern, ""));
   fs.writeFileSync(sitemapPath, sitemap, "utf8");
 
   const rssPath = path.join(siteRoot, "rss.xml");
@@ -1080,6 +1110,8 @@ function main() {
     fs.writeFileSync(indexPath, refreshedIndex, "utf8");
     syncLatestColumnMenuData(siteRoot, refreshedIndex);
     fs.writeFileSync(rssPath, refreshRss(fs.readFileSync(rssPath, "utf8")), "utf8");
+    const sitemapPath = path.join(siteRoot, "sitemap.xml");
+    fs.writeFileSync(sitemapPath, refreshSearchHubLastmods(fs.readFileSync(sitemapPath, "utf8")), "utf8");
     process.stdout.write("칼럼 목록·번호·오늘의 글·RSS 정렬 갱신 완료\n");
     return;
   }

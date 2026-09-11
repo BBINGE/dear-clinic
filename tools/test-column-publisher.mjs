@@ -18,7 +18,7 @@ function publish(content = contentPath, mode = "publish") {
     "--media-root", siteRoot,
     "--site-root", testRoot,
     "--mode", mode,
-  ], { encoding: "utf8" });
+  ], { encoding: "utf8", env: { ...process.env, DEAR_PUBLISH_DATE: "2026-09-11" } });
 }
 
 try {
@@ -156,6 +156,8 @@ try {
   assert.equal(collectionSchemaText.mainEntity.numberOfItems, 29);
   assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/autonomic-stress.html");
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
+  assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
+  assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/columns\.html<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
   assert.match(rss, /<lastBuildDate>Thu, 10 Sep 2026 15:00:00 GMT<\/lastBuildDate>/);
   assert.equal(

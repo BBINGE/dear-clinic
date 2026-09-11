@@ -22,6 +22,21 @@ const sitemap = read("sitemap.xml");
 const sitemapUrls = [...sitemap.matchAll(/<loc>(https:\/\/dearhani\.com[^<]*)<\/loc>/g)].map((match) => match[1]);
 assert.ok(sitemapUrls.length > 0, "사이트맵 URL을 찾지 못했습니다.");
 assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, "사이트맵에 중복 URL이 있습니다.");
+const sitemapEntries = new Map([...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((match) => {
+  const url = match[1].match(/<loc>([^<]+)<\/loc>/)?.[1] || "";
+  const lastmod = match[1].match(/<lastmod>([^<]+)<\/lastmod>/)?.[1] || "";
+  return [url, lastmod];
+}));
+const sitemapLastmod = (url) => sitemapEntries.get(url) || "";
+const newestColumnLastmod = sitemapUrls
+  .filter((url) => url.startsWith(`${baseUrl}/columns/`))
+  .map((url) => sitemapLastmod(url))
+  .filter(Boolean)
+  .sort()
+  .at(-1);
+assert.ok(newestColumnLastmod, "최신 칼럼 수정일을 찾지 못했습니다.");
+assert.ok(sitemapLastmod(`${baseUrl}/`) >= newestColumnLastmod, "홈 검색 허브의 lastmod가 최신 칼럼보다 오래됐습니다.");
+assert.ok(sitemapLastmod(`${baseUrl}/columns.html`) >= newestColumnLastmod, "Columns 허브의 lastmod가 최신 칼럼보다 오래됐습니다.");
 
 const canonicalOwners = new Map();
 const sharedCssVersion = "20260904-1";
