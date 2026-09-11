@@ -1,5 +1,16 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
+## 0. 2026-09-11 현재 작업 스냅샷 — 집/회사 Codex 공통 시작점
+
+- **현재 기준:** `master`의 `d32dda6`까지 `origin/master`와 일치한다. 이 아래의 날짜별 기록은 상세 작업 이력이며, 새 작업자는 먼저 이 스냅샷을 읽고 필요한 항목만 추적한다.
+- **방금 완료한 범위 1:** `columns/autonomic-stress.html`의 깨진 공통 내비게이션·NAP·푸터를 복구하고, 하단 CTA를 칼럼 규격에 맞는 선택형 전환 UI로 재설계했다. 원고와 근거 문헌은 건드리지 않았다. 커밋은 `ddf373c`, `b9a8626`; Pages 실행 `34589334597` 성공.
+- **방금 완료한 범위 2:** 전체 sitemap과 공개 칼럼을 대상으로 SEO/AEO/GEO 배선을 전수 점검했다. 현재 sitemap은 **81 URL**, 공개 칼럼은 **28편**이며, 81/81 운영 URL에서 200 응답·canonical 일치·sitemap 내부 noindex 없음이 확인됐다. 칼럼 외부 근거 링크 120개 중 확정 404/410은 0개였고, 14개는 DOI·CDC·BMJ·NEJM 측 접근 제한 때문에 차단/미확정으로 분리했다.
+- **이번 보강:** 홈과 `columns.html`의 sitemap `lastmod`가 오래된 채 남던 배선을 고쳤다. `tools/publish-column.mjs`의 발행·삭제·`--refresh-index` 경로가 두 허브의 `lastmod`를 한국시간 실행일로 갱신하며, 회귀 검사가 이를 고정한다. 커밋 `d32dda6`; Pages 실행 `34590625920` 성공. 운영 sitemap에서도 두 허브가 `2026-09-11`로 확인됐다.
+- **검증 상태:** `test-column-publisher`, `test-columns-serp`, `test-seo-surfaces`, `test-medical-editorial-trust`, `test-dear-ai-columns`, `test-naver-tracking`이 모두 통과했다. 기술 배선에서 과거 기준(77 URL·25칼럼) 대비 약화된 지점은 발견되지 않았다. 다만 이는 사이트 구현·운영 크롤 기준이며, 현재 Google Search Console/GA4의 실제 노출·클릭·순위는 이번 작업에서 인증 조회하지 않았다.
+- **남은 판단:** 당장 추가 구현이 필요한 확정 결함은 없다. 다음 SEO 작업은 Search Console/GA4 최신 수치를 실제로 확인할 수 있을 때 노출·색인·검색어 변화를 구현 상태와 분리해 판단한다. Google이 요구하지 않는 별도 GEO 스키마나 `llms.txt`를 근거 없이 추가하지 않는다.
+- **새 작업 시작 순서:** 저장소의 `AGENTS.md` 지침을 확인한 뒤 `CLAUDE.md` → `HANDOFF.md` → `COLLABORATOR_BRIEF.md`를 처음부터 끝까지 읽고, `git fetch origin` → `git status --short --branch` → `git log -10 --oneline`으로 현재 상태를 다시 확인한다. 기준보다 뒤처졌고 작업 트리가 안전할 때만 `git pull --ff-only origin master`를 사용한다.
+- **보존 대상:** 로컬의 `assets/images/dear-favicon.ico`와 `다국어-오역-일괄수정.patch`는 사용자 소유 미추적 파일이다. 요청 없이 수정·삭제·스테이징·커밋하지 않는다. `git add .`를 사용하지 않는다.
+
 ## 2026-09-09 다이어트 한약 중단 칼럼 이미지·타이포그래피 정렬 보정
 
 - `columns/diet-herbal-medicine-stop.html`의 정사각형 대표 이미지를 본문 축에 맞춘 760px 최대 폭으로 중앙 정렬하고, 화면 오른쪽에 떠 있던 캡션을 이미지 아래 중앙으로 옮겼다. 원본 이미지와 원고는 변경하지 않았다.
