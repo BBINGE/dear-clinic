@@ -127,9 +127,9 @@ const autonomicStress = read("columns/autonomic-stress.html");
 assert.match(autonomicStress, /<body class="autonomic-stress-page">/, "자율신경 칼럼의 페이지 범위 클래스가 없습니다.");
 assert.match(autonomicStress, /<nav class="nav" id="top">[\s\S]*id="navToggle"[\s\S]*id="navMenu"/, "자율신경 칼럼의 공통 내비게이션이 없습니다.");
 assert.doesNotMatch(autonomicStress, /class="nav"[^>]*display\s*:\s*none|<header class="mast">/, "자율신경 칼럼에 숨김 또는 별도 내비게이션이 남아 있습니다.");
-assert.match(autonomicStress, /css\/autonomic-stress\.css\?v=20260911-2/, "자율신경 칼럼 전용 CSS 캐시 버전이 갱신되지 않았습니다.");
-assert.match(autonomicStress, /class="column-consult"[\s\S]*href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "자율신경 칼럼의 공통 상담 CTA가 없습니다.");
-assert.match(autonomicStress, /class="column-nap"[\s\S]*서울 서초구 사임당로 143 3층 309호, 310호[\s\S]*href="tel:02-3486-1777"[\s\S]*href="https:\/\/map\.naver\.com\/p\/search\//, "자율신경 칼럼의 NAP 또는 위치 CTA가 없습니다.");
+assert.match(autonomicStress, /css\/autonomic-stress\.css\?v=20260911-3/, "자율신경 칼럼 전용 CSS 캐시 버전이 갱신되지 않았습니다.");
+assert.match(autonomicStress, /class="[^"]*column-consult[^"]*"[\s\S]*class="autonomic-primary-cta"[\s\S]*href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "자율신경 칼럼의 주 예약 CTA가 없습니다.");
+assert.match(autonomicStress, /class="[^"]*column-nap[^"]*"[\s\S]*서울 서초구 사임당로 143[\s\S]*3층 309호, 310호[\s\S]*href="tel:02-3486-1777"[\s\S]*href="https:\/\/map\.naver\.com\/p\/search\//, "자율신경 칼럼의 NAP 또는 연락 CTA가 없습니다.");
 assert.equal((autonomicStress.match(/\bid="contact"/g) || []).length, 1, "자율신경 칼럼의 contact ID는 공통 푸터에만 있어야 합니다.");
 
 const home = read("index.html");

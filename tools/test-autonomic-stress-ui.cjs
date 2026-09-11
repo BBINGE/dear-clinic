@@ -28,8 +28,11 @@ if (screenshotDir) fs.mkdirSync(screenshotDir, { recursive: true });
       const metrics = await page.evaluate(() => {
         const nav = document.querySelector('nav.nav#top');
         const h1 = document.querySelector('h1');
+        const references = document.querySelector('.references ol');
+        const primaryCta = document.querySelector('.autonomic-primary-cta');
         const navRect = nav?.getBoundingClientRect();
         const h1Rect = h1?.getBoundingClientRect();
+        const primaryCtaRect = primaryCta?.getBoundingClientRect();
         const duplicateIds = [...document.querySelectorAll('[id]')]
           .map((element) => element.id)
           .filter((id, index, ids) => ids.indexOf(id) !== index);
@@ -50,6 +53,14 @@ if (screenshotDir) fs.mkdirSync(screenshotDir, { recursive: true });
           quickmenu: document.querySelectorAll('nav.quickmenu').length,
           consult: document.querySelectorAll('.column-consult').length,
           nap: document.querySelectorAll('.column-nap').length,
+          referenceCards: document.querySelectorAll('.references li').length,
+          referenceColumns: references ? getComputedStyle(references).gridTemplateColumns.split(' ').length : 0,
+          primaryCta: document.querySelectorAll('.autonomic-primary-cta').length,
+          primaryCtaText: primaryCta?.textContent.replace(/\s+/g, ' ').trim() || '',
+          primaryCtaHeight: primaryCtaRect?.height || 0,
+          primaryCtaWidth: primaryCtaRect?.width || 0,
+          primaryCtaBackground: primaryCta ? getComputedStyle(primaryCta).backgroundColor : 'missing',
+          actionLinks: document.querySelectorAll('.autonomic-action-links a').length,
           bookingLinks: document.querySelectorAll('a[href="https://m.booking.naver.com/booking/13/bizes/729883"]').length,
           phoneLinks: document.querySelectorAll('a[href="tel:02-3486-1777"]').length,
           mapLinks: document.querySelectorAll('.column-nap a[href^="https://map.naver.com/p/search/"]').length,
@@ -81,6 +92,14 @@ if (screenshotDir) fs.mkdirSync(screenshotDir, { recursive: true });
       assert.equal(metrics.quickmenu, 1, `${viewport.name}: 빠른 메뉴가 생성되지 않았습니다.`);
       assert.equal(metrics.consult, 1, `${viewport.name}: 상담 CTA가 정확히 하나여야 합니다.`);
       assert.equal(metrics.nap, 1, `${viewport.name}: NAP 카드가 정확히 하나여야 합니다.`);
+      assert.equal(metrics.referenceCards, 4, `${viewport.name}: 참고문헌 카드 수가 다릅니다.`);
+      assert.equal(metrics.referenceColumns, viewport.width > 820 ? 2 : 1, `${viewport.name}: 참고문헌 반응형 열 수가 다릅니다.`);
+      assert.equal(metrics.primaryCta, 1, `${viewport.name}: 주 예약 버튼이 정확히 하나여야 합니다.`);
+      assert.match(metrics.primaryCtaText, /네이버로 예약하기/, `${viewport.name}: 주 예약 버튼의 행동명이 명확하지 않습니다.`);
+      assert.ok(metrics.primaryCtaHeight >= 64, `${viewport.name}: 주 예약 버튼의 터치 높이가 부족합니다.`);
+      assert.ok(metrics.primaryCtaWidth >= 300, `${viewport.name}: 주 예약 버튼의 시각적 면적이 부족합니다.`);
+      assert.equal(metrics.primaryCtaBackground, 'rgb(255, 255, 255)', `${viewport.name}: 주 예약 버튼이 카드에서 분리되어 보이지 않습니다.`);
+      assert.equal(metrics.actionLinks, 2, `${viewport.name}: 전화·위치 보조 행동이 정리되지 않았습니다.`);
       assert.ok(metrics.bookingLinks >= 3, `${viewport.name}: 예약 CTA가 충분히 연결되지 않았습니다.`);
       assert.ok(metrics.phoneLinks >= 3, `${viewport.name}: 전화 CTA가 충분히 연결되지 않았습니다.`);
       assert.equal(metrics.mapLinks, 1, `${viewport.name}: 위치 보기 CTA가 없습니다.`);
@@ -90,6 +109,14 @@ if (screenshotDir) fs.mkdirSync(screenshotDir, { recursive: true });
       assert.match(metrics.footerNap, /서울 서초구 사임당로 143 3층 309호, 310호/);
       assert.deepEqual(metrics.duplicateIds, [], `${viewport.name}: 중복 ID가 있습니다.`);
       assert.deepEqual(pageErrors, [], `${viewport.name}: 브라우저 JS 오류가 있습니다.`);
+
+      const primaryCta = page.locator('.autonomic-primary-cta');
+      await primaryCta.scrollIntoViewIfNeeded();
+      const primaryCtaHitTarget = await primaryCta.evaluate((element) => {
+        const rect = element.getBoundingClientRect();
+        return element.contains(document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2));
+      });
+      assert.equal(primaryCtaHitTarget, true, `${viewport.name}: 주 예약 버튼의 중심이 다른 고정 UI에 가려집니다.`);
 
       if (viewport.width <= 768) {
         const toggle = page.locator('#navToggle');
@@ -117,17 +144,41 @@ if (screenshotDir) fs.mkdirSync(screenshotDir, { recursive: true });
             await page.screenshot({ path: path.join(screenshotDir, `${viewport.name}-${label}.png`) });
           }
         }
-        await page.locator('.autonomic-clinic-shell').scrollIntoViewIfNeeded();
+        await page.locator('.references').scrollIntoViewIfNeeded();
+        await page.screenshot({ path: path.join(screenshotDir, `${viewport.name}-references.png`) });
+        await page.locator('.autonomic-action-grid').evaluate((element) => element.scrollIntoView({ block: 'center' }));
+        await page.waitForTimeout(100);
         await page.screenshot({ path: path.join(screenshotDir, `${viewport.name}-cta-nap.png`) });
+        await page.locator('.autonomic-action-grid').screenshot({ path: path.join(screenshotDir, `${viewport.name}-cta-nap-card.png`) });
         await page.locator('footer.footer').scrollIntoViewIfNeeded();
         await page.screenshot({ path: path.join(screenshotDir, `${viewport.name}-footer.png`) });
+      }
+
+      if (viewport.name === 'desktop') {
+        await page.evaluate(() => scrollTo(0, 0));
+        await page.emulateMedia({ reducedMotion: 'no-preference' });
+        await page.reload({ waitUntil: 'networkidle' });
+        const actionZone = page.locator('.autonomic-action-zone');
+        assert.ok(await actionZone.evaluate((element) => element.classList.contains('reveal-pending')), 'desktop: 전환 구역의 스크롤 진입 상태가 없습니다.');
+        await actionZone.evaluate((element) => element.scrollIntoView({ block: 'center' }));
+        await page.waitForFunction(() => {
+          const element = document.querySelector('.autonomic-action-zone');
+          return element?.classList.contains('is-visible') && Number(getComputedStyle(element).opacity) > 0.99;
+        }, { timeout: 4000 });
+        const motionState = await actionZone.evaluate((element) => ({
+          className: element.className,
+          opacity: getComputedStyle(element).opacity,
+          rect: element.getBoundingClientRect().toJSON(),
+          viewportHeight: innerHeight,
+        }));
+        assert.ok(motionState.className.includes('is-visible') && Number(motionState.opacity) > 0.99, `desktop: 전환 구역의 스크롤 진입 모션이 완료되지 않습니다. ${JSON.stringify(motionState)}`);
       }
       await context.close();
     }
   } finally {
     await browser.close();
   }
-  process.stdout.write('자율신경 칼럼 UI 검사 통과: PC·노트북·태블릿·모바일 내비/CTA/NAP/푸터/가로폭\n');
+  process.stdout.write('자율신경 칼럼 UI 검사 통과: PC·노트북·태블릿·모바일 내비/References/CTA/NAP/푸터/가로폭\n');
 })().catch((error) => {
   console.error(error);
   process.exitCode = 1;
