@@ -22,7 +22,7 @@ const articles = [...source.matchAll(/<a class="column-card[^>]*href="([^"]+)"[^
   summary: match[7].replace(/<[^>]+>/g, ''),
 }));
 
-assert.equal(articles.length, 27, '공개 칼럼 27편을 검색 색인에서 읽어야 합니다.');
+assert.equal(articles.length, 28, '공개 칼럼 28편을 검색 색인에서 읽어야 합니다.');
 
 const chemotherapyPain = engine.searchArticles('항암치료 후 손발 저림과 통증', articles);
 assert.equal(chemotherapyPain.categories[0], 'Relief');
