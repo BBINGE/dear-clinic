@@ -148,18 +148,18 @@ try {
   assert.equal(articleSchema["@graph"].find((item) => item["@type"] === "Article").relatedLink, "https://dearhani.com/services.html#deer-balance");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
   assert.match(index, /data-column-slug="publisher-test-column"[^>]*data-category="Calm"[^>]*data-search="[^"]*수면[^"]*생활 리듬/);
-  assert.match(index, /class="column-featured js-reveal" href="columns\/autonomic-stress\.html" data-journal-number="29"/);
+  assert.match(index, /class="column-featured js-reveal" href="columns\/chronic-headache-lying-down\.html" data-journal-number="30"/);
   assert.match(index, /data-column-slug="publisher-test-column"[\s\S]*?data-journal-number="03"/);
   const collectionSchemaText = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((match) => JSON.parse(match[1]))
     .find((entry) => entry["@type"] === "CollectionPage");
-  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 29);
-  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/autonomic-stress.html");
+  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 30);
+  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/chronic-headache-lying-down.html");
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/columns\.html<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
-  assert.match(rss, /<lastBuildDate>Thu, 10 Sep 2026 15:00:00 GMT<\/lastBuildDate>/);
+  assert.match(rss, /<lastBuildDate>Mon, 14 Sep 2026 15:00:00 GMT<\/lastBuildDate>/);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
     true,
@@ -173,9 +173,9 @@ try {
     true,
   );
   const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
-  assert.equal(latestColumnMenu.slug, "autonomic-stress");
-  assert.equal(latestColumnMenu.href, "/columns/autonomic-stress.html");
-  assert.equal(latestColumnMenu.image, "/assets/images/columns/autonomic-stress/cover.webp");
+  assert.equal(latestColumnMenu.slug, "chronic-headache-lying-down");
+  assert.equal(latestColumnMenu.href, "/columns/chronic-headache-lying-down.html");
+  assert.equal(latestColumnMenu.image, "/assets/images/columns/chronic-headache-lying-down/cover.png");
   assert.equal(latestColumnMenu.imagePosition, "50% 30%");
   assert.ok(latestColumnMenu.alt.trim());
 
@@ -184,8 +184,8 @@ try {
   assert.equal(fs.existsSync(articlePath), false);
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
-  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/autonomic-stress\.html" data-journal-number="28"/);
-  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "autonomic-stress");
+  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/chronic-headache-lying-down\.html" data-journal-number="29"/);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "chronic-headache-lying-down");
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 

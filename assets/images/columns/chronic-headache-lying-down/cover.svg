@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">누우면 좋아지는 두통의 자세별 변화를 표현한 그래픽</title>
+  <desc id="desc">앉아 있는 사람과 누워 있는 사람의 머리 주변 압박선을 비교하고, 자세가 바뀐 뒤 통증이 달라지는 시간을 표시한 디어한의원 칼럼 표지</desc>
+  <rect width="1200" height="900" fill="#f8f8f6"/>
+  <path d="M0 650C240 585 380 705 600 648S960 555 1200 640V900H0Z" fill="#e8e4e2" opacity=".7"/>
+  <g fill="none" stroke="#247860" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="352" cy="300" r="104" stroke-width="7"/>
+    <path d="M307 384c-6 42-2 76 20 111M397 386c-3 50 8 82 34 109M326 495h200M526 495v180M478 495v180M292 676h285" stroke-width="7"/>
+    <path d="M236 265c-33 14-49 38-51 72M226 221c-51 17-81 58-86 112M468 265c33 14 49 38 51 72M478 221c51 17 81 58 86 112" stroke-width="5" opacity=".52"/>
+    <path d="M674 620h344M694 604c29-70 88-108 176-112 54-3 91 12 113 42M721 603c49 3 89 3 120 0M841 603c50-64 99-94 147-90" stroke-width="7"/>
+    <circle cx="738" cy="523" r="70" stroke-width="7"/>
+    <path d="M678 489c-25 14-39 34-43 61M798 489c25 14 39 34 43 61" stroke-width="4" opacity=".35"/>
+  </g>
+  <g font-family="Pretendard,Arial,sans-serif" fill="#3c605a">
+    <text x="112" y="92" font-size="24" letter-spacing="8">DEAR HEADACHE</text>
+    <text x="112" y="154" font-size="50" font-weight="700">자세가 바뀐 뒤,</text>
+    <text x="112" y="215" font-size="50" font-weight="700">통증은 언제 달라질까요?</text>
+    <text x="282" y="766" font-size="22" text-anchor="middle">앉거나 서 있을 때</text>
+    <text x="836" y="766" font-size="22" text-anchor="middle">수평으로 누웠을 때</text>
+    <text x="599" y="824" font-size="19" text-anchor="middle" letter-spacing="2">POSITION · TIME · ASSOCIATED SYMPTOMS</text>
+  </g>
+  <path d="M548 428h98" stroke="#5a96a2" stroke-width="3"/>
+  <path d="m632 416 14 12-14 12" fill="none" stroke="#5a96a2" stroke-width="3"/>
+</svg>
