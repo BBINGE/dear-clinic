@@ -175,7 +175,7 @@ try {
   const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
   assert.equal(latestColumnMenu.slug, "chronic-headache-lying-down");
   assert.equal(latestColumnMenu.href, "/columns/chronic-headache-lying-down.html");
-  assert.equal(latestColumnMenu.image, "/assets/images/columns/chronic-headache-lying-down/cover.png");
+  assert.equal(latestColumnMenu.image, "/assets/images/columns/chronic-headache-lying-down/cover.webp");
   assert.equal(latestColumnMenu.imagePosition, "50% 30%");
   assert.ok(latestColumnMenu.alt.trim());
 
