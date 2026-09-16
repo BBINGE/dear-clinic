@@ -402,7 +402,7 @@ if (nav && navMenu && !document.body.classList.contains("error-page")) {
     "index.html", "about.html", "director.html", "career.html",
     "philosophy.html", "care.html", "services.html", "columns.html",
     "privacy.html", "terms.html", "non-covered.html", "patient-rights.html",
-    "dear-gongjindan.html", "be-deer.html",
+    "dear-gongjindan.html", "be-deer.html", "be-deer-cases.html",
   ]);
   const hasLocalizedEquivalent = localizedPages.has(currentPage);
   const pagePath = currentPage === "index.html" ? "" : currentPage;

@@ -19,10 +19,67 @@
     { age: "40대", sex: "여성", weight: [73.0, 64.4], fat: [29.6, 22.7], visceral: [13, 10] },
   ];
 
+  // 카드 문구는 페이지 언어에 따라 고른다. 측정 수치와 카드 구조는 언어와 무관하다.
+  const DEAR_CASE_I18N = {
+    ko: {
+      age: { 20: "20대", 30: "30대", 40: "40대", 50: "50대" },
+      sex: { f: "여성", m: "남성" },
+      caseOf: (a, x) => a + " " + x + " 사례",
+      metricsLabel: (a, x) => a + " " + x + " 사례 체성분 수치 변화",
+      detailLabel: (a, x) => a + " " + x + " 사례 자세히 보기",
+      detail: "자세히 보기",
+      weight: "체중", fat: "체지방량", visceral: "내장지방레벨", level: "레벨",
+    },
+    en: {
+      age: { 20: "20s", 30: "30s", 40: "40s", 50: "50s" },
+      sex: { f: "female", m: "male" },
+      caseOf: (a, x) => "Case · " + x + " in " + a,
+      metricsLabel: (a, x) => "Body composition change for the case of a " + x + " in " + a,
+      detailLabel: (a, x) => "View details of the case of a " + x + " in " + a,
+      detail: "View details",
+      weight: "Weight", fat: "Body fat mass", visceral: "Visceral fat level", level: "level",
+    },
+    ja: {
+      age: { 20: "20代", 30: "30代", 40: "40代", 50: "50代" },
+      sex: { f: "女性", m: "男性" },
+      caseOf: (a, x) => a + x + "の事例",
+      metricsLabel: (a, x) => a + x + "の事例の体成分の変化",
+      detailLabel: (a, x) => a + x + "の事例を詳しく見る",
+      detail: "詳しく見る",
+      weight: "体重", fat: "体脂肪量", visceral: "内臓脂肪レベル", level: "レベル",
+    },
+    zh: {
+      age: { 20: "20多岁", 30: "30多岁", 40: "40多岁", 50: "50多岁" },
+      sex: { f: "女性", m: "男性" },
+      caseOf: (a, x) => a + x + "案例",
+      metricsLabel: (a, x) => a + x + "案例的体成分变化",
+      detailLabel: (a, x) => "查看" + a + x + "案例详情",
+      detail: "查看详情",
+      weight: "体重", fat: "体脂肪量", visceral: "内脏脂肪等级", level: "级",
+    },
+  };
+
+  // 경로를 먼저 보고, 없으면 lang 속성으로 판별한다. 브라우저 번역 확장의 개입을 피하기 위함이다.
+  const pageLang = (() => {
+    const path = window.location.pathname.toLowerCase();
+    if (path.startsWith("/en/")) return "en";
+    if (path.startsWith("/ja/")) return "ja";
+    if (path.startsWith("/zh-cn/")) return "zh";
+    const declared = (document.documentElement.getAttribute("lang") || "ko").toLowerCase();
+    if (declared.indexOf("en") === 0) return "en";
+    if (declared.indexOf("ja") === 0) return "ja";
+    if (declared.indexOf("zh") === 0) return "zh";
+    return "ko";
+  })();
+
+  const T = DEAR_CASE_I18N[pageLang] || DEAR_CASE_I18N.ko;
+  const ageOf = (value) => T.age[Number(String(value).replace(/[^0-9]/g, ""))] || value;
+  const sexOf = (value) => (value === "남성" ? T.sex.m : T.sex.f);
+
   const metricsToShow = [
-    { key: "weight", label: "체중", unit: "kg", decimals: 1 },
-    { key: "fat", label: "체지방량", unit: "kg", decimals: 1 },
-    { key: "visceral", label: "내장지방레벨", unit: "레벨", decimals: 0 },
+    { key: "weight", label: T.weight, unit: "kg", decimals: 1 },
+    { key: "fat", label: T.fat, unit: "kg", decimals: 1 },
+    { key: "visceral", label: T.visceral, unit: T.level, decimals: 0 },
   ];
 
   const format = (value, decimals) => value.toFixed(decimals);
@@ -36,12 +93,15 @@
     const data = cases[index];
     if (!data) return;
 
+    const age = ageOf(data.age);
+    const sex = sexOf(data.sex);
+
     const title = card.querySelector("h2");
-    if (title) title.textContent = `${data.age} ${data.sex} 사례`;
+    if (title) title.textContent = T.caseOf(age, sex);
 
     const metrics = document.createElement("dl");
     metrics.className = "case-record__metrics";
-    metrics.setAttribute("aria-label", `${data.age} ${data.sex} 사례 체성분 수치 변화`);
+    metrics.setAttribute("aria-label", T.metricsLabel(age, sex));
 
     metricsToShow.forEach(({ key, label, unit, decimals }) => {
       const [start, current] = data[key];
@@ -58,7 +118,7 @@
     const actions = document.createElement("div");
     actions.className = "case-record__actions";
     const caseNumber = String(index + 1).padStart(2, "0");
-    actions.innerHTML = `<a href="be-deer-case.html?case=${caseNumber}" aria-label="${data.age} ${data.sex} 사례 자세히 보기">자세히 보기 <span aria-hidden="true">→</span></a>`;
+    actions.innerHTML = `<a href="be-deer-case.html?case=${caseNumber}" aria-label="${T.detailLabel(age, sex)}">${T.detail} <span aria-hidden="true">→</span></a>`;
 
     card.append(metrics, actions);
   });
