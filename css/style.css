@@ -7878,6 +7878,25 @@ img, video {
   text-decoration: underline;
 }
 
+.footer__lang-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.footer__lang-links a {
+  color: var(--warm-gray);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.footer__lang-links a:hover {
+  color: var(--white);
+  text-decoration: underline;
+}
+
 .footer__copyright {
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.74);

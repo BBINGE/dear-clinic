@@ -8,40 +8,43 @@
   </url>
   <url>
     <loc>https://dearhani.com/en/</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dearhani.com/ja/</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dearhani.com/zh-cn/</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  <url><loc>https://dearhani.com/en/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/en/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/en/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://dearhani.com/en/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/en/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/en/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/en/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://dearhani.com/ja/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/ja/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/ja/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://dearhani.com/ja/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/ja/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/ja/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/ja/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/about.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/director.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/career.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/philosophy.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/care.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/services.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://dearhani.com/zh-cn/columns.html</loc><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/en/about.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/director.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/career.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/en/philosophy.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/care.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/services.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/en/columns.html</loc><lastmod>2026-09-07</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/ja/about.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/director.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/career.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/ja/philosophy.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/care.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/services.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/ja/columns.html</loc><lastmod>2026-09-07</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/about.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/director.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/career.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/philosophy.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/care.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/services.html</loc><lastmod>2026-09-07</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://dearhani.com/zh-cn/columns.html</loc><lastmod>2026-09-07</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
   <!-- COLUMN_SITEMAP:depression-no-hope:START -->
   <url><loc>https://dearhani.com/columns/depression-no-hope.html</loc><lastmod>2026-08-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:depression-no-hope:END -->

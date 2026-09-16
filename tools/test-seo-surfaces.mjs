@@ -39,7 +39,7 @@ assert.ok(sitemapLastmod(`${baseUrl}/`) >= newestColumnLastmod, "홈 검색 허�
 assert.ok(sitemapLastmod(`${baseUrl}/columns.html`) >= newestColumnLastmod, "Columns 허브의 lastmod가 최신 칼럼보다 오래됐습니다.");
 
 const canonicalOwners = new Map();
-const sharedCssVersion = "20260904-1";
+const sharedCssVersion = "20260917-1";
 const sharedMainVersion = "20260907-5";
 const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
 const homeFooter = read("index.html").match(footerPattern)?.[0];
