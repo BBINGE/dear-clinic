@@ -1063,7 +1063,7 @@ img { display: block; width: 100%; }
   .observe { padding: 88px 20px; }
   .section-heading { grid-template-columns: 1fr; gap: 30px; margin-bottom: 60px; }
   .section-heading h2 { font-size: clamp(33px, 9.3vw, 44px); }
-  .observe__grid { grid-template-columns: 1fr 1fr; }
+  .observe__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .observe-card { min-height: 430px; padding: 30px 28px 34px; }
   .observe-card h3 { margin-top: 34px; font-size: 27px; }
   .observe-card__question { font-size: 17px; }
@@ -1221,7 +1221,7 @@ img { display: block; width: 100%; }
   .observe,
   .process,
   .voices { padding-top: 76px; padding-bottom: 84px; }
-  .observe__grid { grid-template-columns: 1fr; }
+  .observe__grid { grid-template-columns: minmax(0, 1fr); }
   .observe-card { min-height: 0; padding: 30px 24px 34px; }
   .observe-card h3 { margin-top: 30px; }
   .observe__summary p { font-size: 16px; }
@@ -1259,3 +1259,5 @@ img { display: block; width: 100%; }
   .result-metric__delta-wrap svg path { stroke-dashoffset: 0; }
   .result-metric__delta-wrap.is-circled svg path { animation: none; }
 }
+
+.observe-card__question, .observe-card__body { overflow-wrap: anywhere; }
