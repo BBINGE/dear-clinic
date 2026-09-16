@@ -252,4 +252,22 @@
     <priority>0.8</priority>
   </url>
   <!-- COLUMN_SITEMAP:child-growth-herbal-medicine:END -->
+  <url>
+    <loc>https://dearhani.com/en/dear-gongjindan.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dearhani.com/ja/dear-gongjindan.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://dearhani.com/zh-cn/dear-gongjindan.html</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
