@@ -1,5 +1,31 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
+## 2026-09-17 진료 서비스·Care 구조화 데이터 엔티티 추가
+
+- 배경: AEO/GEO 관점에서 사이트를 점검한 결과, `index.html`의 `MedicalClinic` 엔티티(areaServed·knowsAbout·sameAs·publishingPrinciples·founder 연결)와 `be-deer.html`의 `Service` 엔티티는 잘 갖춰져 있었으나, 나머지 진료 서비스와 Care 다섯 영역에는 각각의 엔티티가 없었다. "디어한의원이 무엇을 진료하는가"가 `knowsAbout` 문자열에만 걸려 있어 지역+진료 질의에서 붙잡을 엔티티가 없는 상태였다.
+- `services.html`에 `Service` 3개를 추가했다. 디어 공진단(`#dear-gongjindan`), 원내탕전 체질한약(`#herbal-decoction`), 디어밸런스(`#deer-balance`)이며 각각 `provider`로 `#clinic`, `areaServed`로 서울 서초구·서초동·강남역·교대역을 갖는다. BE DEER는 기존 `be-deer.html#service`를 재사용하고 새로 만들지 않았다. 페이지 자체는 `CollectionPage` + `ItemList`(4건)로 묶었다.
+- `care.html`에 `Service` 5개를 추가했다. FOCUS·CALM·RESTORE·RELIEF·SHAPE이며 `@id`는 기존 패널 앵커(`#care-panel-<키>`)를 그대로 쓴다. 기존 `MedicalWebPage`와 `author`(대표원장) 연결은 유지하고 `ItemList`(5건)를 `mainEntity`로 걸었다.
+- `index.html`의 `MedicalClinic`에 `availableService` 9건을 추가해 한의원 엔티티와 위 서비스들을 직접 연결했다.
+- 모든 `description`은 각 페이지에 이미 확정된 한국어 카피를 그대로 옮겼다. 구조화 데이터를 위해 새로 쓴 문장은 없다.
+- **의도적으로 제외한 항목과 이유:**
+  - `medicalSpecialty`: schema.org의 `MedicalSpecialty` 열거값에 한의학에 해당하는 항목이 없다. 맞지 않는 값을 넣는 것이 비워두는 것보다 나쁘므로 넣지 않는다.
+  - `priceRange`: 검색결과에 가격대가 노출될 수 있어 대표원장 판단 사항이다.
+  - Care의 "관련 상태"를 `MedicalCondition`으로 연결하는 구성: 스키마상 해당 진료가 그 질환을 치료한다는 의미가 되어 효과를 단정하는 표현이 된다. 의료광고 기준에 따라 넣지 않는다. 이후 작업에서도 같은 기준을 유지한다.
+- 변경은 세 파일의 `<head>` 안 JSON-LD 한 줄씩이며 화면에 보이는 요소는 바뀌지 않는다. 변경 줄 위치가 `<body>` 앞임을 확인했다(index 105/215, services 18/22, care 18/22).
+- 검증: JSON-LD 4개 블록 파싱 오류 0건, 회귀 검사 6종(`test-seo-surfaces`, `test-columns-serp`, `test-medical-editorial-trust`, `test-column-publisher`, `test-dear-ai-columns`, `test-naver-tracking`) 통과, `git diff --check` 오류 없음.
+
+### 확인했으나 손대지 않기로 한 것
+
+- `columns/dear-column-20260729-1907.html`과 `columns/gangnam-depression-bdnf.html`의 `<title>`이 둘 다 `강남역 한의원 우울증 진료`로 겹친다. 다만 본문(13,753자 / 44,466자)·H1·description은 서로 다른 글이므로 중복 콘텐츠가 아니며 검색 불이익 사유가 아니다. 같은 질의에서 두 글이 경쟁해 신호가 갈리는 정도의 영향이라 급한 작업이 아니다. 고칠 때는 화면에 보이는 확정 카피이므로 승인을 받고 바꾼다.
+- `dear-column-20260729-1907`은 발행기 임시 이름이 그대로 URL이 된 경우다. 그러나 이미 색인·RSS·사이트맵에 올라간 공개 URL이고 GitHub Pages 정적 배포에서는 301 리다이렉트를 걸 수 없어, 슬러그를 바꾸면 기존 색인과 유입이 끊긴다. **URL은 바꾸지 않는다.**
+
+### 남은 판단 — 실제 노출 측정
+
+- 현재 사이트가 검색·생성형 AI 답변에서 실제로 얼마나 노출되는지는 확인되지 않았다. 이번 작업에서 시도한 경로는 모두 막혔다: 내장 웹검색은 미국 인덱스 전용이라 한국어 로컬 질의 판단에 쓸 수 없고(브랜드명 검색에 무관한 의원이 나옴), Perplexity는 익명 검색을 막고 로그인을 요구하며, Google은 봇 감지 페이지를 띄웠고, Bing은 `site:` 결과가 깨져서 반환됐으며, Naver는 도구의 안전 제한으로 접근할 수 없다.
+- 따라서 "검색에 안 뜬다"는 아직 근거가 확인되지 않은 추정이다. 구현 점검 결과만으로 노출 상태를 단정하지 않는다.
+- 실측 방법은 세 가지다. ① 박성호(삥이)의 실제 크롬 세션으로 ChatGPT·Gemini·Perplexity에 직접 질의해 인용 여부를 기록한다. ② Google Search Console과 Naver Search Advisor의 실제 노출·클릭·순위를 확인한다(속성 소유 계정 필요). ③ 직접 질의한 결과를 전달받아 분석한다.
+- robots.txt는 `User-agent: * / Allow: /`이며 GPTBot·ClaudeBot·PerplexityBot·Google-Extended를 포함해 차단하는 크롤러가 없다. 전 페이지가 정적 HTML 서버 렌더라 JS 실행 없이 본문을 읽을 수 있다. 크롤링 측 장애 요인은 없는 상태다.
+
 ## 2026-09-16 우울 칼럼 대표 이미지를 디숭이로 교체
 
 - `columns/depression-no-hope.html`의 대표·본문 이미지를 디숭이로 교체했다. 회색 담요를 두르고 무릎을 끌어안은 채 웅크려 앉은 모습이며, 표정은 울고 있는 쪽이 아니라 소진돼 비어 있는 쪽으로 잡았다. 칼럼이 다루는 것이 슬픔이 아니라 희망이 보이지 않는 상태이기 때문이다.
