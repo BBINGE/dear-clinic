@@ -1,5 +1,31 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
+## 2026-09-17 다국어 페이지 배선 점검과 링크·엔티티 보정
+
+- 배경: 외국인 환자 유입을 목표로 다국어 페이지의 실제 기능을 전수 점검했다. ChatGPT 임시 채팅(메모리 미사용)으로 실측한 결과, 한국어 질의 `서초동 다이어트 한의원`에서는 디어한의원이 1순위로 인용되지만, 영어 질의 `Korean medicine clinic near Gangnam for foreign patients`에서는 전혀 나오지 않았고, `Korean herbal weight loss clinic`에서는 4위로 언급되나 최종 추천에서 제외됐다. 제외 사유로 ChatGPT가 명시한 것은 "영어 사이트는 쓸 만하지만 실제 진료를 영어로 받을 수 있다는 문장을 찾지 못했다"였다. 경쟁 병원은 Medical Korea·강남구 의료관광센터 등록과 진료 가능 언어 명시를 갖추고 있었다.
+
+### 점검 과정에서 정정한 잘못된 판단
+
+- **디숭이 위젯은 다국어 페이지에 이미 실려 있다.** HTML에서 `dear-ai` 문자열만 찾아 "다국어 0건"으로 판단했으나 이는 오류였다. `js/main.js` 최상단이 `/js/dear-ai-widget.js`를 절대 경로로 주입하고, 다국어 39페이지 전부가 `main.js`를 로드한다. `dear-ai-widget.js`는 `document.documentElement.lang`을 읽어 언어를 정하며 각 페이지의 `lang` 속성은 `en`·`ja`·`zh-CN`으로 올바르다. 라이브에서도 `/en/`의 `main.js` 로드와 위젯 파일 200 응답을 확인했다. **추가 작업이 필요 없다.**
+- **다국어 페이지는 고아 상태가 아니다.** 한국어 화면에 언어 전환 링크가 없는 것은 사실이나, hreflang이 39페이지 전부 정상이고 sitemap에 36개 다국어 URL이 모두 있어 검색엔진과 AI 크롤러는 정상적으로 도달한다. 실제로 ChatGPT가 "DEAR has a full English website"라고 확인했다. 한국어 내비게이션에 언어 선택 메뉴를 넣는 방안은 한국인 사용자에게 불필요한 UI이므로 폐기했다.
+- **다국어 푸터에 남은 한글 NAP는 번역 누락이 아니다.** 2026-08-03 기록대로 외국인 환자의 현지 길찾기와 법적 식별을 위해 유지하는 설계다. 구조화 데이터의 `PostalAddress`도 전 언어에서 한국어 표기를 쓰고 있어 같은 관례를 따른다.
+
+### 이번에 수정한 것
+
+- 다국어 법률 페이지가 자기 언어 번역본을 두고 한국어 페이지로 보내던 링크 15건을 고쳤다. `en`·`ja`·`zh-cn` 각각의 `non-covered`·`patient-rights`·`privacy`·`privacy-20260903`·`terms`에서 `../<파일>` 링크를 같은 언어 폴더 안의 파일로 바꿨다. 번역본이 없는 대상(`international-appointment.html`, `columns/seocho-diet-clinic.html`, 공통 자산)은 그대로 두었다.
+- `en`·`ja`·`zh-cn`의 `index.html` `MedicalClinic`에 한국어판에만 있던 엔티티 연결을 이식했다. `founder`·`employee`(대표원장 Person `@id`), `areaServed`, `availableService` 9건, `publishingPrinciples`이며, 기존 필드는 값까지 그대로 유지됨을 이전 커밋과 대조해 확인했다.
+- `founder`·`employee`·`availableService`는 한국어 페이지에 정의된 `@id`를 그대로 참조한다. `@id`는 언어 중립 식별자이므로 언어판마다 별도 엔티티를 만들지 않고 하나로 통합하는 쪽이 맞다. 다국어 `director.html`에는 별도 Person `@id`가 없어 엔티티 분리 문제도 없다.
+- `knowsAbout`은 이식하지 않았다. 언어별로 새 의료 용어 번역이 필요하며 이는 확정 카피 작성에 해당한다. 검수된 용어가 준비되면 추가한다.
+- 검증: 다국어 JSON-LD 6블록 파싱 오류 0건, 잘못된 언어 링크 재검사 0건, hreflang 자기참조·x-default·canonical 일치 전수 통과, 회귀 검사 6종 통과, `git diff --check` 오류 없음.
+
+### 다국어에 남은 실제 결함
+
+- **주력 페이지의 다국어판이 없다.** `be-deer.html`, `be-deer-cases.html`, `be-deer-case.html`, `dear-gongjindan.html`, `international-appointment.html`, `medical-information-policy.html`, `404.html`이 세 언어 모두 없다. ChatGPT가 영어 답변에서 `BE DEER weight-care program`을 언급했음에도 그 페이지의 영어판이 존재하지 않는다. 외국인 유입의 핵심 주제가 다이어트인 만큼 우선순위가 가장 높다.
+- **번역된 칼럼이 0편이다.** 한국어에서 1순위 인용을 만든 근거가 칼럼 29편인데 영어·일본어·중국어에는 인용될 본문이 없다. 전편 번역이 아니라 BE DEER 다이어트 2~3편의 검수 번역부터 시작하는 편이 현실적이다.
+- **`en/columns.html`이 한국어 칼럼 1편만 링크한다.** 영어 사용자가 Columns를 눌러도 한국어 글로 이동한다.
+- **진료 가능 언어를 명시한 문장이 없다.** ChatGPT가 추천에서 제외한 직접적 사유다. 실제 영어 진료 가능 범위와 통역 운영 방식은 김민지 대표원장만 확정할 수 있으므로 임의로 작성하지 않는다. 사실과 다르게 적으면 내원한 외국인 환자와 분쟁이 생긴다.
+- 브라우저 언어에 따른 자동 리다이렉트는 도입하지 않기로 했다. GitHub Pages는 정적 호스팅이라 `Accept-Language`를 처리할 수 없어 클라이언트 스크립트로만 가능하고, Googlebot이 주로 미국 IP·영어 설정으로 크롤링하므로 한국어 루트 색인이 손상될 위험이 있다. 현재 한국어 검색 성과가 사이트의 최대 자산이므로 이를 흔드는 선택은 하지 않는다. 필요하다면 강제 이동이 아닌 해제 가능한 안내 배너 방식을 쓴다.
+
 ## 2026-09-17 진료 서비스·Care 구조화 데이터 엔티티 추가
 
 - 배경: AEO/GEO 관점에서 사이트를 점검한 결과, `index.html`의 `MedicalClinic` 엔티티(areaServed·knowsAbout·sameAs·publishingPrinciples·founder 연결)와 `be-deer.html`의 `Service` 엔티티는 잘 갖춰져 있었으나, 나머지 진료 서비스와 Care 다섯 영역에는 각각의 엔티티가 없었다. "디어한의원이 무엇을 진료하는가"가 `knowsAbout` 문자열에만 걸려 있어 지역+진료 질의에서 붙잡을 엔티티가 없는 상태였다.
