@@ -43,6 +43,8 @@ async function handleConsent(request, env, origin) {
     const coordinator = consentCoordinator(env, body.token);
     if (!coordinator) return json({error:'요청 형식을 확인해주세요.'},400,origin);
     await coordinator.consent('withdraw',body.token,CONSENT_VERSION);
+    // 동의를 철회하면 서버에 보관한 해당 대화 내용도 함께 지운다.
+    await deleteChatLog(env, await logSessionKey(body.token));
     return json({withdrawn:true},200,origin);
   }
   if (!validConsent(body?.consent)) return json({error:'각 항목을 확인해주세요.'},428,origin);
@@ -265,6 +267,20 @@ async function logSessionKey(consentToken, sessionId) {
   return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, '0')).join('').slice(0, 16);
 }
 
+// 동의 철회 시 해당 대화만 지운다. 실패해도 철회 응답은 그대로 보낸다.
+async function deleteChatLog(env, session) {
+  if (!env.CHAT_LOG || !session) return;
+  try { await env.CHAT_LOG.prepare('DELETE FROM chat_log WHERE session = ?1').bind(session).run(); } catch {}
+}
+
+// 보관 기간(12개월)이 지난 대화를 지운다. wrangler.jsonc의 cron 트리거가 매일 호출한다.
+async function purgeExpiredChatLog(env) {
+  if (!env.CHAT_LOG) return;
+  const cutoff = new Date(Date.now() + 9 * 3600000);
+  cutoff.setUTCMonth(cutoff.getUTCMonth() - 12);
+  try { await env.CHAT_LOG.prepare('DELETE FROM chat_log WHERE ts < ?1').bind(cutoff.toISOString().replace('Z', '+09:00')).run(); } catch {}
+}
+
 // 로그 실패가 방문자 답변을 막지 않는다.
 async function logChat(env, entry) {
   if (!env.CHAT_LOG || !entry.session) return;
@@ -408,6 +424,9 @@ async function handleChat(request, env, origin, ctx) {
 }
 
 export default {
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(purgeExpiredChatLog(env));
+  },
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const origin = allowedOrigin(request, env);

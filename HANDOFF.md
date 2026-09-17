@@ -26,12 +26,24 @@
 - **어느 턴에서 떠났나**는 세션별 최대 턴 분포이고, **무슨 얘기를 하나**는 주제 분포이며 잡담 비율을 함께 표시한다. 주제를 누르면 해당 대화만 걸러 본다.
 - 칼럼 발행기 상단에 `대화 로그` 링크를 넣었다.
 
+### 법적 조치 (개인정보 보호법 기준으로 맞춘 것)
+
+- **보유기간 고지와 실제 파기가 일치한다.** 방침에 12개월이라고 적기만 하고 지우는 장치가 없으면 위반이다. `wrangler.jsonc`의 cron(`0 18 * * *`, 매일 03:00 KST)이 워커의 `scheduled()`를 호출해 `purgeExpiredChatLog()`가 12개월 지난 행을 지운다.
+- **동의 철회 시 해당 대화를 즉시 삭제한다.** `/consent`의 `withdraw` 분기가 동의 기록을 지운 뒤 `deleteChatLog()`로 같은 세션 해시의 `chat_log` 행을 지운다. 세션 해시는 동의 토큰에서 만들므로 철회 요청의 토큰만으로 정확히 그 대화를 찾는다.
+- **동의 받을 때 보유기간을 고지한다.** 제15조가 요구하는 목적·항목·기간·거부권 중 기간이 동의 화면에 없었다. `js/dear-ai-consent.js` 안내 문장 끝에 "12개월간 보관하고, 동의를 철회하면 삭제해요"를 네 언어로 붙였다. 확정 카피를 건드린 유일한 곳이며 법적 필요에 따른 최소 추가다.
+- **방침 본문을 실제 처리와 맞췄다.** 네 언어판 모두: 처리 업체 표에 `디어한의원 (Cloudflare D1 저장소)` 행(항목·목적·12개월·철회 시 삭제), 국외 전송 문단에 D1은 아시아·태평양 우선 지정이나 한국 내 보관을 보장하지 않는다는 문장, 철회 문단에 서버 보관 대화도 함께 삭제한다는 문장, 제3조에 대화 내용 12개월 보유 항목, 제14조 공고·시행일 2026-09-17, 변경 이력에 9월 17일 항목.
+- **개정 전 방침을 보관본으로 남겼다.** `privacy-20260907.html`(네 언어)은 변경 직전 커밋 `1d8ec05`의 내용에 `noindex, follow`와 "현재 방침 보기" 안내만 붙인 것이다. 변경 이력에서 링크하며 sitemap에는 넣지 않는다. 앞으로 방침을 고칠 때도 같은 방식으로 직전 시행일 이름의 보관본을 만든다.
+- 기존 동의 승계 차단(동의 버전 상향)은 위 "동의와 방침" 항목과 같다.
+- 확정하지 않은 값: **보관 기간 12개월**은 작업자가 정한 기본값이다. 바꾸면 방침 네 언어판, 동의 화면 네 언어, `purgeExpiredChatLog()`의 `-12`를 함께 바꾼다.
+
 ### 배포 전 남은 일 (코드로 끝나지 않는다)
 
-1. `npx wrangler d1 create dear-chat-log`
+1. `npx wrangler d1 create dear-chat-log --location=apac` — 방침에 아시아·태평양 우선 지정이라고 적었으므로 `--location=apac`을 빼면 안 된다.
 2. 나온 `database_id`를 **`worker/dear-ai/wrangler.jsonc`와 `admin-app/wrangler.jsonc` 두 곳**의 `PUT-DATABASE-ID-HERE`에 넣는다.
 3. `npx wrangler d1 execute dear-chat-log --remote --file=worker/dear-ai/schema.sql`
-4. 워커와 admin-app을 각각 배포한다.
+4. **워커를 먼저 배포**한다. cron 트리거는 배포 시 함께 등록된다.
+5. 그다음 공개 저장소를 push한다. 순서를 바꾸면 클라이언트가 보내는 새 동의 버전을 워커가 거절해 디숭이가 열리지 않는다.
+6. admin-app을 배포한다.
 
 - 검증: `test-dear-ai`·`test-dear-ai-public`·`test-dear-ai-columns`·`test-dear-ai-dialogue`·`test-seo-surfaces`·`test-naver-tracking`·`test-medical-editorial-trust`·`test-column-publisher`·`test-columns-serp` 통과, `admin-app` 빌드 통과(`/logs` 동적 라우트 등록), `git diff --check` 오류 없음. 마스킹은 전화·이메일·주민번호·카드번호·차트번호 표본으로 확인했다.
 - **`tools/test-dear-ai-budget-runtime.mjs`는 이 작업 이전부터 실패한다.** `git stash` 상태에서도 같은 오류가 나며, 테스트가 `consent()`에 유효하지 않은 `'test-version'`을 넘겨 `accept`가 `null`을 반환하는 문제다. 이번 변경과 무관하고 고치지 않았다.
