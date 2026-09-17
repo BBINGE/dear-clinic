@@ -273,12 +273,19 @@ async function deleteChatLog(env, session) {
   try { await env.CHAT_LOG.prepare('DELETE FROM chat_log WHERE session = ?1').bind(session).run(); } catch {}
 }
 
-// 보관 기간(12개월)이 지난 대화를 지운다. wrangler.jsonc의 cron 트리거가 매일 호출한다.
+// 목적별로 최소한만 남긴다. 대화 원문은 6개월, 주제·턴 등 이용 통계는 24개월이 지나면 지운다.
+// wrangler.jsonc의 cron 트리거가 매일 호출한다.
 async function purgeExpiredChatLog(env) {
   if (!env.CHAT_LOG) return;
-  const cutoff = new Date(Date.now() + 9 * 3600000);
-  cutoff.setUTCMonth(cutoff.getUTCMonth() - 12);
-  try { await env.CHAT_LOG.prepare('DELETE FROM chat_log WHERE ts < ?1').bind(cutoff.toISOString().replace('Z', '+09:00')).run(); } catch {}
+  const before = months => {
+    const at = new Date(Date.now() + 9 * 3600000);
+    at.setUTCMonth(at.getUTCMonth() - months);
+    return at.toISOString().replace('Z', '+09:00');
+  };
+  try {
+    await env.CHAT_LOG.prepare('UPDATE chat_log SET user_text = NULL, reply_text = NULL WHERE ts < ?1 AND user_text IS NOT NULL').bind(before(6)).run();
+    await env.CHAT_LOG.prepare('DELETE FROM chat_log WHERE ts < ?1').bind(before(24)).run();
+  } catch {}
 }
 
 // 로그 실패가 방문자 답변을 막지 않는다.

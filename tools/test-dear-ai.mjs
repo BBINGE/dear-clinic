@@ -38,7 +38,7 @@ assert.match(consentUi, /all.addEventListener\('change'/);
 assert.match(consentUi, /all.indeterminate/);
 assert.doesNotMatch(consentUi, /type="checkbox"[^>]*\schecked(?:[\s=>])/);
 assert.match(consentUi, /안녕하세요, 디숭이예요/);
-assert.match(consentUi, /12개월간 보관/);
+assert.match(consentUi, /6개월, 이용 통계는 24개월 보관/);
 assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
 assert.match(widget, /white-space:pre-line;word-break:keep-all/);
 assert.match(widget, /font-family:"Pretendard",sans-serif/);
@@ -82,7 +82,8 @@ for (const folder of ['', 'en/', 'ja/', 'zh-cn/']) {
   assert.equal((aiPolicy.match(/<h3>/g) || []).length, 3);
   assert.equal((aiPolicy.match(/<th scope="row">/g) || []).length, 3);
   assert.match(aiPolicy, /Cloudflare D1/);
-  assert.match(aiPolicy, /12개월|12 months|12か月|12个月/);
+  assert.match(aiPolicy, /6개월|6 months|6か月|6个月/);
+  assert.match(aiPolicy, /24개월|24 months|24か月|24个月/);
   assert.match(aiPolicy, /14/);
   assert.match(aiPolicy, /30/);
   assert.match(aiPolicy, /href="#privacy-article-1[12]"/);
@@ -90,7 +91,7 @@ for (const folder of ['', 'en/', 'ja/', 'zh-cn/']) {
   assert.match(policy, /privacy-20260907\.html/);
   assert.match(archived, /noindex, follow/);
   assert.match(archived, /href="privacy\.html"/);
-  assert.doesNotMatch(archived, /12개월|12 months|12か月|12个月/);
+  assert.doesNotMatch(archived, /6개월|6 months|6か月|6个月/);
   assert.match(previous, /noindex, follow/);
   assert.doesNotMatch(previous, /id="ai-guide"/);
   assert.ok(client.includes('/' + folder + 'privacy.html#ai-guide'));
