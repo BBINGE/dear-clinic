@@ -2,8 +2,9 @@ export { ChatBudget } from './budget.js';
 const ANTHROPIC_API_URL = "https://api.anthropic.com/v1/messages";
 const BOOKING_URL = "https://m.booking.naver.com/booking/13/bizes/729883";
 const TALK_URL = "https://talk.naver.com/ct/w5zr5u";
-const CONSENT_VERSION = '20260907-persistent-1';
-const LEGACY_CONSENT_VERSION = '20260906-public-1'; // Cached clients retain their original short session during rollout.
+const CONSENT_VERSION = '20260917-chatlog-1';
+// 대화 보관 범위가 바뀌었으므로 이전 동의는 승계하지 않는다. 모든 방문자가 새 안내를 다시 확인한다.
+const LEGACY_CONSENT_VERSION = CONSENT_VERSION;
 
 function validConsent(consent) {
   // The server timestamps acceptance; an incorrectly set visitor clock must not block access.
@@ -141,6 +142,8 @@ booking_route는 국내 일반 예약이면 domestic(네이버 예약·톡톡·�
 6. 이전 기관명은 답변에서 생략하되 생략 이유나 내부 응대 규칙을 설명하지 않는다. '이전 기관 이름은 공개하지 않는다', '개인정보라 안내할 수 없다' 같은 없는 정책을 절대 만들어 붙이지 않는다. 경력을 물으면 '저희 대표원장님은 병원·재활병원 한방과장과 한의원 진료원장으로 진료 경험을 쌓으셨어요.'처럼 역할과 경험을 담백하게 안내하면 된다.
 </output>`;
 
+const LOG_TOPICS = ['다이어트', '마음', '수면', '소화', '통증', '성장', '산후', '공진단', '피부', '진료안내', '비용', '예약', '잡담', '기타'];
+
 const RESPONSE_TOOL = {
   name: "answer_visitor",
   description: "방문자에게 보낼 답변과 다음 화면 행동을 결정한다.",
@@ -153,12 +156,13 @@ const RESPONSE_TOOL = {
       booking_route: { type: "string", enum: ["domestic", "domestic_alternative", "international"] },
       recommendation_intent: { type: 'string', enum: ['none', 'requested', 'contextual'] },
       recommended_columns: { type: 'array', maxItems: 2, items: { type: 'object', additionalProperties: false, properties: { id: { type: 'string', maxLength: 120 }, reason: { type: 'string', maxLength: 160 } }, required: ['id', 'reason'] } },
+      topic: { type: 'string', enum: LOG_TOPICS },
     },
     required: ["reply", "action", "booking_route", "recommendation_intent"],
   },
 };
 
-const RESPONSE_REMINDER = '\n참고 자료를 다 읽은 뒤 답변 형식을 다시 확인한다: 칼럼 첫 해설은 자세히 요청받지 않았다면 최대 4문장으로 끝낸다. 핵심 1~2개와 저희 진료 관점만 말하며 원고 전체를 재작성하지 않는다. 원인과 결과를 뒤집는 요약은 하지 않는다. 추천 이유는 카드 reason에 쓰고 reply에서 같은 이유를 다시 나열하지 않는다. 이전 근무처를 물으면 병원·재활병원 한방과장과 한의원 진료원장 경험만 담백하게 답하고 끝낸다. 기관명 생략에 대한 설명은 전혀 덧붙이지 않는다. 특히 "이름은 따로 안내드리고 있지 않아요", "공개하지 않아요", "말씀드릴 수 없어요" 같은 문장은 쓰지 않는다.';
+const RESPONSE_REMINDER = '\n참고 자료를 다 읽은 뒤 답변 형식을 다시 확인한다: 칼럼 첫 해설은 자세히 요청받지 않았다면 최대 4문장으로 끝낸다. 핵심 1~2개와 저희 진료 관점만 말하며 원고 전체를 재작성하지 않는다. 원인과 결과를 뒤집는 요약은 하지 않는다. 추천 이유는 카드 reason에 쓰고 reply에서 같은 이유를 다시 나열하지 않는다. 이전 근무처를 물으면 병원·재활병원 한방과장과 한의원 진료원장 경험만 담백하게 답하고 끝낸다. 기관명 생략에 대한 설명은 전혀 덧붙이지 않는다. 특히 "이름은 따로 안내드리고 있지 않아요", "공개하지 않아요", "말씀드릴 수 없어요" 같은 문장은 쓰지 않는다. topic에는 이번 방문자 발화의 주제를 목록에서 하나 고른다. 진료와 무관한 장난·시험·잡담은 잡담이다. topic은 화면에 보이지 않으며 답변 내용에 영향을 주지 않는다.';
 
 async function columnContext(pagePath) {
   if (typeof pagePath !== 'string') return { articles: [], context: '' };
@@ -241,7 +245,42 @@ function validateMessages(value) {
   return messages;
 }
 
-async function handleChat(request, env, origin) {
+// 저장 전에 식별 가능한 패턴을 가린다. 순서를 바꾸면 전화번호 규칙이 주민·카드번호를 먼저 잘라먹는다.
+function maskSensitive(text) {
+  if (typeof text !== 'string') return null;
+  return text
+    .replace(/[\w.+-]+@[\w-]+\.[\w.-]+/g, '[이메일]')
+    .replace(/\b\d{6}\s?[-\u2013]\s?[1-4]\d{6}\b/g, '[주민번호]')
+    .replace(/\b(?:\d{4}[-\s]?){3}\d{4}\b/g, '[카드번호]')
+    .replace(/\b0\d{1,2}[-.\s]?\d{3,4}[-.\s]?\d{4}\b/g, '[전화번호]')
+    .replace(/\b\d{8,}\b/g, '[숫자]')
+    .slice(0, 4000);
+}
+
+// 방문자를 식별하지 않고 같은 대화의 턴만 묶기 위한 값이다.
+async function logSessionKey(consentToken, sessionId) {
+  const source = (typeof consentToken === 'string' && consentToken) || sessionId || '';
+  if (!source) return null;
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('dear-log:' + source));
+  return Array.from(new Uint8Array(digest)).map(v => v.toString(16).padStart(2, '0')).join('').slice(0, 16);
+}
+
+// 로그 실패가 방문자 답변을 막지 않는다.
+async function logChat(env, entry) {
+  if (!env.CHAT_LOG || !entry.session) return;
+  try {
+    await env.CHAT_LOG.prepare(
+      'INSERT INTO chat_log (session, turn, ts, lang, page, user_text, reply_text, action, booking_route, topic, recommended) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11)'
+    ).bind(
+      entry.session, entry.turn, entry.ts, entry.lang, entry.page,
+      entry.userText, entry.replyText, entry.action, entry.bookingRoute, entry.topic, entry.recommended
+    ).run();
+  } catch {
+    // D1 장애나 스키마 미적용 시에도 대화는 그대로 진행한다.
+  }
+}
+
+async function handleChat(request, env, origin, ctx) {
   const publicMode = env.PUBLIC_CHAT_ENABLED === 'true';
   const protectedMode = publicMode || env.CHAT_PROTECTIONS_ENABLED === 'true';
   if (!publicMode && !(await authorizedPreview(request, env))) {
@@ -350,11 +389,26 @@ async function handleChat(request, env, origin) {
     const thumbnail = typeof article.thumbnail === 'string' && /^\/assets\/images\/(?:[a-zA-Z0-9_-]+\/)*[a-zA-Z0-9_-]+\.(?:webp|png|jpe?g)(?:\?v=[0-9-]+)?$/.test(article.thumbnail) ? article.thumbnail : undefined;
     return [{ id: article.id, url: article.url, title: article.title, reason: item.reason.slice(0, 160), ...(thumbnail ? {thumbnail} : {}) }];
   }).slice(0, intent === 'requested' ? 2 : 1);
+  const pagePath = typeof body.pagePath === 'string' && /^\/[a-z0-9\/.-]{0,199}$/.test(body.pagePath) ? body.pagePath : null;
+  const write = logChat(env, {
+    session: await logSessionKey(body?.consentToken, sessionId),
+    turn: messages.filter(message => message.role === 'user').length,
+    ts: new Date(Date.now() + 9 * 3600000).toISOString().replace('Z', '+09:00'),
+    lang: ['ko', 'en', 'ja', 'zh'].includes(body.language) ? body.language : 'ko',
+    page: pagePath,
+    userText: maskSensitive(messages.at(-1).content),
+    replyText: maskSensitive(plainReply),
+    action,
+    bookingRoute: booking_route ?? null,
+    topic: LOG_TOPICS.includes(toolUse?.input?.topic) ? toolUse.input.topic : null,
+    recommended: recommended_columns.length ? JSON.stringify(recommended_columns.map(item => item.id)) : null,
+  });
+  if (ctx?.waitUntil) ctx.waitUntil(write); else await write;
   return json({ reply: plainReply.slice(0, 1200), action, booking_route, ...(recommended_columns.length ? { recommended_columns } : {}) }, 200, origin);
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const origin = allowedOrigin(request, env);
 
@@ -378,7 +432,7 @@ export default {
 
     try {
       if (url.pathname === '/consent') return await handleConsent(request, env, origin);
-      return await handleChat(request, env, origin);
+      return await handleChat(request, env, origin, ctx);
     } catch {
       return json({ error: "잠시 연결이 불안정해요." }, 500, origin);
     }

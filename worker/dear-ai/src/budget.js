@@ -1,7 +1,8 @@
 import { DurableObject } from 'cloudflare:workers';
 
-const persistentVersion = '20260907-persistent-1';
-const legacyVersion = '20260906-public-1';
+const persistentVersion = '20260917-chatlog-1';
+// 이전 버전 동의 기록은 아래 정리 구문에서 함께 삭제된다.
+const legacyVersion = persistentVersion;
 const persistentExpiry = Number.MAX_SAFE_INTEGER;
 // One coordinator per clinic/month; aggregate counts and consent receipts, never chat or IP.
 export class ChatBudget extends DurableObject {

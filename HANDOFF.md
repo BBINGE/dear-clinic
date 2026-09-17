@@ -1,5 +1,40 @@
 # 디어한의원 홈페이지 — 공용 인수인계
 
+## 2026-09-17 디숭이 대화 로그 저장과 관리자 조회 화면
+
+- 배경: 디숭이가 전 페이지에 열려 있고 예약 제안까지 하는데, **누가 얼마나 쓰는지, 어디서 대화를 그만두는지, 무슨 얘기를 하는지 아무 기록이 없었다.** 위젯은 GA4 이벤트를 하나도 보내지 않고, 워커에는 `console.*`이 0건이라 원문도 남지 않았다. 남은 건 `CHAT_BUDGET`의 월별 호출 수뿐이었다.
+- 결정: **대화 원문을 자동 마스킹한 뒤 D1에 보관한다.** 메타데이터만 남기는 안도 검토했으나 "실제로 뭐라고 쓰는지"와 "장난감 취급인지"를 판별할 수 없어 채택하지 않았다.
+
+### 저장 내용
+
+- 새 D1 `dear-chat-log`의 `chat_log` 테이블. 스키마는 `worker/dear-ai/schema.sql`.
+- 컬럼: `session` `turn` `ts` `lang` `page` `user_text` `reply_text` `action` `booking_route` `topic` `recommended`.
+- `session`은 동의 토큰(없으면 세션 헤더)의 SHA-256 앞 16자다. **방문자를 식별하지 않고 같은 대화의 턴만 묶는다.**
+- `maskSensitive()`가 저장 전에 이메일·주민등록번호·카드번호·전화번호·8자리 이상 연속 숫자를 가린다. **순서를 바꾸면 전화번호 규칙이 주민·카드번호를 먼저 잘라먹으므로 순서를 유지한다.**
+- `topic`은 응답 도구의 선택 필드다. 목록은 `LOG_TOPICS` 한 곳에만 두고 스키마가 이를 참조하므로 두 곳이 어긋나지 않는다. 화면에 보이지 않고 답변 내용에 영향을 주지 않는다.
+- 로그 적재는 `ctx.waitUntil`로 응답 뒤에 처리하며, D1 장애나 스키마 미적용 시에도 `try/catch`로 대화를 막지 않는다.
+
+### 동의와 방침
+
+- **`privacy.html`의 "대화 원문을 자체 서버에 저장하지 않습니다"가 더 이상 사실이 아니므로 한국어·영어·일본어·중국어 네 판을 모두 고쳤다.** 보관 기간은 **12개월**로 적었다.
+- 보관 범위가 바뀌었으므로 **동의 버전을 `20260917-chatlog-1`로 올리고 이전 동의를 승계하지 않는다.** `LEGACY_CONSENT_VERSION = CONSENT_VERSION`이며 `budget.js`의 `legacyVersion`도 같다. 기존 동의 기록은 `consent_sessions` 정리 구문에서 함께 삭제되고 모든 방문자가 새 안내를 다시 확인한다.
+- 동의 화면의 확정 문구는 바꾸지 않았다. 항목에 이미 개인정보·건강정보 처리 동의가 있고 보관 내용은 방침 링크로 이어진다.
+
+### 조회
+
+- `admin-app`의 `/logs`(관리자 로그인 필요). 상단 요약은 대화 수·턴 수·예약 제안 도달률·한 턴에 끝난 비율이다.
+- **어느 턴에서 떠났나**는 세션별 최대 턴 분포이고, **무슨 얘기를 하나**는 주제 분포이며 잡담 비율을 함께 표시한다. 주제를 누르면 해당 대화만 걸러 본다.
+- 칼럼 발행기 상단에 `대화 로그` 링크를 넣었다.
+
+### 배포 전 남은 일 (코드로 끝나지 않는다)
+
+1. `npx wrangler d1 create dear-chat-log`
+2. 나온 `database_id`를 **`worker/dear-ai/wrangler.jsonc`와 `admin-app/wrangler.jsonc` 두 곳**의 `PUT-DATABASE-ID-HERE`에 넣는다.
+3. `npx wrangler d1 execute dear-chat-log --remote --file=worker/dear-ai/schema.sql`
+4. 워커와 admin-app을 각각 배포한다.
+
+- 검증: `test-dear-ai`·`test-dear-ai-public`·`test-dear-ai-columns`·`test-dear-ai-dialogue`·`test-seo-surfaces`·`test-naver-tracking`·`test-medical-editorial-trust`·`test-column-publisher`·`test-columns-serp` 통과, `admin-app` 빌드 통과(`/logs` 동적 라우트 등록), `git diff --check` 오류 없음. 마스킹은 전화·이메일·주민번호·카드번호·차트번호 표본으로 확인했다.
+- **`tools/test-dear-ai-budget-runtime.mjs`는 이 작업 이전부터 실패한다.** `git stash` 상태에서도 같은 오류가 나며, 테스트가 `consent()`에 유효하지 않은 `'test-version'`을 넘겨 `accept`가 `null`을 반환하는 문제다. 이번 변경과 무관하고 고치지 않았다.
 ## 2026-09-17 다국어 실측 — GA4·Search Console 확인과 외국인 페이지 제목 개선
 
 - 배경: 다국어 페이지를 한국어 원본의 현재 구조로 다시 맞출지 판단하기 위해 실제 수치를 확인했다. **결론은 맞추지 않는다** 이며, 근거는 아래와 같다.
