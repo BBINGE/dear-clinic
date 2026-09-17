@@ -1110,12 +1110,45 @@
   }
 
   .gjd-hero h1 {
-    font-size: clamp(2.65rem, 8vw, 4.2rem);
+    font-size: clamp(2.3rem, 6.6vw, 3.3rem);
+  }
+
+  /* 사진과 글자를 같은 칸에 겹쳐 첫 화면에 함께 담는다. 전에는 사진이
+     order:-1로 한 화면을 통째로 차지해 제목과 설명이 스크롤 아래로
+     밀려 있었다. 파워링크로 들어온 사람이 첫 화면에서 아무 설명도
+     못 보고 나가던 구간이다. 자동 슬라이드는 그대로 뒤에서 넘어간다. */
+  .gjd-hero {
+    display: grid;
+    grid-template-areas: "gjd-stack";
+    min-height: calc(100svh - 80px);
+  }
+
+  .gjd-hero > .gjd-hero__copy,
+  .gjd-hero > .gjd-film {
+    grid-area: gjd-stack;
+    min-width: 0;
   }
 
   .gjd-film {
-    min-height: calc(100svh - 80px);
-    order: -1;
+    order: 0;
+    min-height: 0;
+  }
+
+  .gjd-hero__copy {
+    z-index: 2;
+    justify-content: flex-start;
+    padding: 7.5rem 28px 12rem;
+    background: linear-gradient(to bottom, rgba(9, 34, 29, 0.82) 0%, rgba(9, 34, 29, 0.6) 42%, rgba(9, 34, 29, 0.12) 72%, rgba(9, 34, 29, 0) 100%);
+    text-shadow: 0 1px 12px rgba(9, 34, 29, 0.45);
+  }
+
+  /* 겹친 뒤에는 칸을 나누던 세로선이 사진 위에 뜬금없이 남는다. */
+  .gjd-hero__copy::after {
+    display: none;
+  }
+
+  .gjd-hero__body {
+    color: rgba(255, 255, 255, 0.86);
   }
 
   .gjd-film__frame {
