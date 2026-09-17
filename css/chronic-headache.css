@@ -84,3 +84,53 @@
 .preview-benefits { padding-block: 0; }
 .preview-benefits li { min-height: 0; }
 .preview-benefits li b { margin-bottom: .7rem; }
+
+/* 2026-09-18 CTA를 CTA답게. 버튼 높이 68px에 글자가 16px이라 배경에 비해
+   작아 보였다. 글자를 키우고, 눌리는 느낌이 나도록 hover/active 모션과
+   키보드 포커스 표시를 붙인다. 모션 최소화 설정은 존중한다. */
+.headache-action__button {
+  min-height: 72px;
+  padding: .9rem 1.1rem .9rem 1.6rem;
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.headache-action__button b {
+  width: 46px;
+  height: 46px;
+  transition: transform .22s ease, background-color .22s ease;
+}
+
+.headache-action__button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(9, 38, 31, .28);
+}
+
+.headache-action__button:hover b {
+  transform: translate(3px, -3px);
+  background: #c8e6da;
+}
+
+.headache-action__button:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 14px rgba(9, 38, 31, .22);
+}
+
+.headache-action__button:focus-visible {
+  outline: 3px solid #9ddbc5;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headache-action__button,
+  .headache-action__button b {
+    transition: none;
+  }
+
+  .headache-action__button:hover,
+  .headache-action__button:hover b {
+    transform: none;
+  }
+}
