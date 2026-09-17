@@ -19,7 +19,7 @@
     {
       "binding": "CHAT_LOG",
       "database_name": "dear-chat-log",
-      "database_id": "dd3c39d9-a53f-414e-b26f-8bf9f3536bf3"
+      "database_id": "675eb547-301e-430f-89d2-59cf978e4e47"
     }
   ],
   "migrations": [{ "tag": "chat-budget-v1", "new_sqlite_classes": ["ChatBudget"] }],
