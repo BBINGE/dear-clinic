@@ -8005,6 +8005,14 @@ img, video {
   transition: background-color 0.2s ease;
 }
 
+/* 칼럼 전용 CSS가 `.어떤-페이지 a { color: inherit }` 같은 넓은 선택자를 쓰면
+   우선순위가 더 높아 퀵메뉴 아이콘 색이 본문 글자색으로 바뀐다. 라벨은 자기 색
+   규칙이 있어 흰색으로 남고 아이콘만 어두워져 짙은 배경에 묻힌다. 2026-09-18
+   두통 칼럼에서 실제로 그렇게 깨졌다. 전역 컴포넌트가 지지 않도록 붙잡는다. */
+.quickmenu .quickmenu__btn {
+  color: var(--white);
+}
+
 .quickmenu__btn svg {
   width: 24px;
   height: 24px;
