@@ -794,12 +794,19 @@
   pointer-events: none;
 }
 
+/* 팝업 수는 그때그때 달라진다. 칸을 3개로 고정하면 2개일 때 빈 칸이 남아
+   왼쪽으로 쏠린다. 몇 개든 가운데 모이도록 flex로 둔다. */
 .notice-popups__list {
   width: min(1180px, 100%);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: clamp(0.65rem, 1.4vw, 1rem);
   align-items: start;
+}
+
+.notice-popups__list > .notice-popup {
+  flex: 0 1 clamp(260px, 30vw, 380px);
 }
 
 .notice-popup {
@@ -851,6 +858,48 @@
   .notice-popup__link:hover img {
     transform: none;
   }
+
+  .notice-popup__cta-arrow {
+    transition: none;
+  }
+
+  .notice-popup__link:hover .notice-popup__cta-arrow {
+    transform: none;
+  }
+}
+
+/* 팝업이 어디로 가는 안내인지 이미지만으로는 모른다. 링크 안에 CTA 줄을 둬
+   이미지와 함께 눌리게 한다. 닫기는 아래 controls에 따로 있다. */
+.notice-popup__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.85rem 0.6rem 0.85rem 1rem;
+  background: var(--green-deep);
+  color: var(--white);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.notice-popup__cta-arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 0.9rem;
+  transition: transform 0.22s ease, background-color 0.22s ease;
+}
+
+.notice-popup__link:hover .notice-popup__cta-arrow {
+  transform: translateX(3px);
+  background: rgba(255, 255, 255, 0.32);
 }
 
 .notice-popup__controls {
