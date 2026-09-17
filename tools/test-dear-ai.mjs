@@ -38,6 +38,12 @@ assert.match(consentUi, /all.addEventListener\('change'/);
 assert.match(consentUi, /all.indeterminate/);
 assert.doesNotMatch(consentUi, /type="checkbox"[^>]*\schecked(?:[\s=>])/);
 assert.match(consentUi, /안녕하세요, 디숭이예요/);
+// 동의 화면 이탈률을 보려면 표시와 동의가 둘 다 집계돼야 한다. 한쪽만 남으면 비율을 못 낸다.
+assert.ok(consentUi.includes("track('dear_ai_consent_shown')"));
+assert.ok(consentUi.includes("track('dear_ai_consent_agreed')"));
+assert.ok(consentUi.includes('announced = true'));
+// 집계는 화면 표시와 동의만 센다. 방문자가 적은 내용은 절대 보내지 않는다.
+assert.ok(!consentUi.includes('user_text'));
 assert.match(consentUi, /6개월, 이용 통계는 24개월 보관/);
 assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
 assert.match(widget, /white-space:pre-line;word-break:keep-all/);

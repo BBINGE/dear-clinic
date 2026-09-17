@@ -72,10 +72,21 @@
       if (!response.ok) throw new Error(t[12]);
       return response.json();
     }
+    // 동의 화면에서 몇 명이 돌아서는지 보기 위한 집계다. 대화 내용은 보내지 않고 화면 표시와 동의만 센다.
+    let announced = false;
+    function track(name) {
+      const payload = { event: name, page_path: window.location.pathname, chat_language: language };
+      try {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push(payload);
+        if (typeof window.gtag === 'function') window.gtag('event', name, payload);
+      } catch {}
+    }
     function setCovered(covered) {for(const child of root.parentElement.children)if(child!==root)child.inert=covered;}
     function show() {
       if (receipt) { root.hidden=true;setCovered(false);renderReceipt();return; }
       root.hidden=false;setCovered(true);controls.hidden=true;form.querySelector('input').focus();
+      if (!announced) { announced = true; track('dear_ai_consent_shown'); }
     }
     form.addEventListener('submit', async event => {
       event.preventDefault(); if(pending || !form.reportValidity())return;
@@ -87,6 +98,7 @@
         if(!validReceipt(data.receipt))throw new Error(t[12]);
         receipt=data.receipt;saveReceipt();renderReceipt();
         root.hidden=true;setCovered(false);controls.hidden=false;
+        track('dear_ai_consent_agreed');
         onReady();
       } catch { status.textContent=t[12]; }
       finally {pending=false;form.querySelector('button').disabled=false;}
