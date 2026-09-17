@@ -38,7 +38,21 @@
 - 2단계로 나누면서 **동의 버전은 `20260917-chatlog-1`에서 올리지 않았다.** 12개월로 적은 판이 한 번도 배포된 적이 없어 그 문구로 동의한 방문자가 없기 때문이다. 배포한 뒤에 기간을 또 바꾸면 그때는 동의 버전을 올린다.
 - 알려진 빈틈: `admin-app`의 `/logs`는 원문이 비워진 6개월 초과 행에서 `방문자`·`디숭이` 라벨만 남고 내용이 빈 줄로 보인다. 오류는 나지 않으며 첫 6개월 동안은 나타나지 않는다. 운영 중 눈에 거슬리면 "보관 기간이 지나 원문을 지웠습니다" 안내로 바꾼다.
 
-### 배포 전 남은 일 (코드로 끝나지 않는다)
+### 배포 결과 (2026-09-17 완료)
+
+- **디어한의원 Cloudflare는 계정이 두 개로 나뉘어 있다. 이게 이번 작업에서 가장 오래 걸린 함정이다.**
+  - 디숭이 워커 `dear-ai-preview`: **Towamk@naver.com 계정** (`96d973cc…`). 주소는 `dear-ai-preview.dearhani-ai.workers.dev`.
+  - 칼럼 관리자 `dear-column-admin`과 `dear-column-admin-db`: **sho36036@gmail.com 계정** (`40474d6f…`).
+  - **D1은 같은 계정 안에서만 바인딩된다.** 작업 전에 `npx wrangler whoami`로 계정을 먼저 확인한다. `wrangler login` 승인 화면에는 계정 선택 칸이 있고 기본값이 본인 계정이라, 그냥 Allow를 누르면 엉뚱한 계정에 붙는다. 실제로 이번에 sho36036 계정에 D1을 잘못 만들었다.
+- `dear-chat-log`는 **Towamk 계정**에 만들었다(`675eb547-301e-430f-89d2-59cf978e4e47`, `running_in_region: APAC` 확인). 원격에 `schema.sql`을 적용해 `chat_log`와 `session`·`topic`·`ts` 인덱스를 확인했다.
+- 워커 배포 완료. `CHAT_LOG` 바인딩과 cron `0 18 * * *`이 등록된 것을 배포 출력에서 확인했다. 공개 저장소 push 완료.
+- 배포 후 실측: `/consent`가 `20260917-chatlog-1` 영수증을 발급하고(200), `/chat` 한 턴이 `chat_log`에 세션 해시·턴·언어·주제(`진료안내`)·원문·KST 시각으로 기록되는 것을 확인한 뒤 **테스트 행을 삭제했다**(현재 0행). 로그 적재는 `try/catch`로 조용히 실패하므로 배포 때마다 이 실측을 한다.
+- **`admin-app`은 아직 배포하지 않았다.** 계정이 달라 `dear-chat-log`를 바인딩할 수 없다. 설정의 `CHAT_LOG`는 Towamk 계정의 ID로 맞춰뒀으므로 지금 배포하면 **오류로 실패한다.** 빈 화면이 조용히 뜨는 것보다 낫다고 보고 일부러 이렇게 뒀다.
+- 정해야 할 것: **계정을 합칠지**. 권장은 admin-app을 Towamk 계정으로 옮겨 디어한의원 자산을 한 계정에 모으는 것이며, 칼럼 DB 이전이 따르므로 별도 작업으로 잡는다. 대안은 admin-app을 지금 자리에 두고 워커에 인증된 조회 통로를 만드는 것이다.
+- sho36036 계정에 잘못 만든 빈 `dear-chat-log`(`dd3c39d9…`)가 남아 있다. 지워도 되고 두어도 요금은 없다.
+- `admin-app` 폴더는 `.gitignore` 대상이라 공개 저장소에 없다. 거기 넣은 database_id는 이 컴퓨터에만 있으므로 다른 컴퓨터에서 배포하려면 다시 넣는다.
+
+### 배포 전 남은 일 (기록용 — 위 "배포 결과"가 실제로 한 일이다)
 
 1. `npx wrangler d1 create dear-chat-log --location=apac` — 방침에 아시아·태평양 우선 지정이라고 적었으므로 `--location=apac`을 빼면 안 된다.
 2. 나온 `database_id`를 **`worker/dear-ai/wrangler.jsonc`와 `admin-app/wrangler.jsonc` 두 곳**의 `PUT-DATABASE-ID-HERE`에 넣는다.
