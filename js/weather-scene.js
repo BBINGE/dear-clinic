@@ -284,7 +284,11 @@
     }
   }
 
-  applyWeather({ state: "cloudy", source: "날씨 갱신 중" });
+  // 첫 호출은 아직 실제 날씨를 모른다. 낮으로 가정하면 밤에 들어온 방문자가
+  // 낮 배경까지 내려받아 배경 사진 한 장이 통째로 헛되이 전송된다.
+  // 한국 시각으로 낮/밤을 먼저 어림잡아 한 장만 받게 한다.
+  const initialKoreaHour = new Date(Date.now() + 9 * 3600000).getUTCHours();
+  applyWeather({ state: "cloudy", source: "날씨 갱신 중", isDay: initialKoreaHour >= 6 && initialKoreaHour < 18 });
   refreshWeather();
   window.setInterval(refreshWeather, WEATHER_REFRESH_INTERVAL);
 })();
