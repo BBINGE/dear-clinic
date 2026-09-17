@@ -41,6 +41,14 @@ assert.ok(sitemapLastmod(`${baseUrl}/columns.html`) >= newestColumnLastmod, "Col
 const canonicalOwners = new Map();
 const sharedCssVersion = "20260917-2";
 const sharedMainVersion = "20260917-4";
+const sharedStyleVersion = "20260917-2";
+// 칼럼 발행기가 박는 캐시 버전이 사이트와 어긋나면, 새로 발행한 칼럼만 옛 CSS와 옛 main.js를
+// 부른다. 실제로 그렇게 어긋난 채 방치된 적이 있어 여기서 함께 검사한다.
+{
+  const publisher = fs.readFileSync(path.join(toolsDir, "publish-column.mjs"), "utf8");
+  assert.ok(publisher.includes(`main.js?v=${sharedMainVersion}`), "칼럼 발행기의 main.js 캐시 버전이 사이트와 다릅니다");
+  assert.ok(publisher.includes(`style.css?v=${sharedStyleVersion}`), "칼럼 발행기의 style.css 캐시 버전이 사이트와 다릅니다");
+}
 const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
 const homeFooter = read("index.html").match(footerPattern)?.[0];
 assert.ok(homeFooter, "메인 공통 푸터가 없습니다.");
