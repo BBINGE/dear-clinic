@@ -134,3 +134,62 @@
     transform: none;
   }
 }
+
+/* 2026-09-18 CTA가 가만히 있어도 "누르세요" 하고 알리게 한다.
+   마우스를 올려야만 반응하면 누를 수 있는 것인지조차 모르고 지나간다.
+   병원 톤을 지키려고 폭은 3~5px, 주기는 3.6~4.2초로 억제했다. 주 버튼이
+   가장 크게, 연락 두 줄은 시차를 두고 작게 움직여 파도처럼 이어진다.
+   마우스를 올리면 떠다님을 멈추고 hover 동작으로 넘어간다. */
+
+@keyframes headache-cta-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes headache-cta-drift {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.headache-action__button {
+  animation: headache-cta-float 3.6s ease-in-out infinite;
+}
+
+.headache-action__button:hover,
+.headache-action__button:focus-visible,
+.headache-action__button:active {
+  animation: none;
+}
+
+.headache-action__links a {
+  animation: headache-cta-drift 4.2s ease-in-out infinite;
+  transition: transform .2s ease, background-color .2s ease, border-color .2s ease;
+}
+
+.headache-action__links a:nth-of-type(1) { animation-delay: .45s; }
+.headache-action__links a:nth-of-type(2) { animation-delay: .9s; }
+
+.headache-action__links a:hover,
+.headache-action__links a:focus-visible {
+  animation: none;
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, .55);
+  background: rgba(255, 255, 255, .1);
+}
+
+.headache-action__links a:focus-visible {
+  outline: 3px solid #9ddbc5;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .headache-action__button,
+  .headache-action__links a {
+    animation: none;
+  }
+
+  .headache-action__links a:hover,
+  .headache-action__links a:focus-visible {
+    transform: none;
+  }
+}
