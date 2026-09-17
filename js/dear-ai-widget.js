@@ -221,7 +221,17 @@
   });
   close.addEventListener('click', () => toggle(false));
   window.addEventListener('message', event => {
-    if (event.origin === location.origin && event.source === frame?.contentWindow && event.data === 'dear-ai-close') toggle(false);
+    if (event.origin !== location.origin || event.source !== frame?.contentWindow) return;
+    if (event.data === 'dear-ai-close') { toggle(false); return; }
+    // 동의 화면 이탈률 집계. 정해둔 두 이름만 통과시키고 대화 내용은 받지 않는다.
+    const track = event.data;
+    if (!track || track.type !== 'dear-ai-track') return;
+    if (track.name !== 'dear_ai_consent_shown' && track.name !== 'dear_ai_consent_agreed') return;
+    const payload = { event: track.name, page_path: location.pathname };
+    if (typeof track.lang === 'string' && /^[a-z]{2}(-[a-z]{2})?$/.test(track.lang)) payload.chat_language = track.lang;
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(payload);
+    if (typeof window.gtag === 'function') window.gtag('event', track.name, payload);
   });
   shadow.addEventListener('keydown', event => { if (event.key === 'Escape') toggle(false); });
   shadow.querySelector('.end').addEventListener('click', () => {

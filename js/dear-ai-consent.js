@@ -80,6 +80,8 @@
         window.dataLayer = window.dataLayer || [];
         window.dataLayer.push(payload);
         if (typeof window.gtag === 'function') window.gtag('event', name, payload);
+        // 디숭이는 iframe 안에서 돌고 GA4는 바깥 페이지에만 있다. 바깥으로 넘겨야 실제로 집계된다.
+        if (window.parent !== window) window.parent.postMessage({ type: 'dear-ai-track', name, lang: language }, location.origin);
       } catch {}
     }
     function setCovered(covered) {for(const child of root.parentElement.children)if(child!==root)child.inert=covered;}

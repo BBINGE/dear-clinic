@@ -44,6 +44,11 @@ assert.ok(consentUi.includes("track('dear_ai_consent_agreed')"));
 assert.ok(consentUi.includes('announced = true'));
 // 집계는 화면 표시와 동의만 센다. 방문자가 적은 내용은 절대 보내지 않는다.
 assert.ok(!consentUi.includes('user_text'));
+// 디숭이는 iframe 안에서 돌고 GA4는 바깥에만 있다. 넘기는 단계가 빠지면 집계가 통째로 사라진다.
+assert.ok(consentUi.includes("type: 'dear-ai-track'"));
+assert.ok(widget.includes("dear-ai-track"));
+assert.ok(widget.includes("dear_ai_consent_shown") && widget.includes("dear_ai_consent_agreed"));
+assert.ok(widget.includes('event.origin !== location.origin'));
 assert.match(consentUi, /6개월, 이용 통계는 24개월 보관/);
 assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
 assert.match(widget, /white-space:pre-line;word-break:keep-all/);
