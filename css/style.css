@@ -825,6 +825,34 @@
   object-fit: cover;
 }
 
+/* 팝업 이미지 전체가 링크다. 닫기 버튼은 아래 controls에 따로 있어 겹치지 않는다. */
+.notice-popup__link {
+  display: block;
+}
+
+.notice-popup__link img {
+  transition: transform .3s ease;
+}
+
+.notice-popup__link:hover img {
+  transform: scale(1.03);
+}
+
+.notice-popup__link:focus-visible {
+  outline: 3px solid var(--teal-soft);
+  outline-offset: -3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notice-popup__link img {
+    transition: none;
+  }
+
+  .notice-popup__link:hover img {
+    transform: none;
+  }
+}
+
 .notice-popup__controls {
   display: flex;
   min-height: 42px;
