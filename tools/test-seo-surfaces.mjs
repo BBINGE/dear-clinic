@@ -40,7 +40,7 @@ assert.ok(sitemapLastmod(`${baseUrl}/columns.html`) >= newestColumnLastmod, "Col
 
 const canonicalOwners = new Map();
 const sharedCssVersion = "20260917-2";
-const sharedMainVersion = "20260907-5";
+const sharedMainVersion = "20260917-3";
 const footerPattern = /<footer class="footer" id="contact">[\s\S]*?<\/footer>/;
 const homeFooter = read("index.html").match(footerPattern)?.[0];
 assert.ok(homeFooter, "메인 공통 푸터가 없습니다.");
