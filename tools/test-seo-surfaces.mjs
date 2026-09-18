@@ -40,7 +40,7 @@ assert.ok(sitemapLastmod(`${baseUrl}/columns.html`) >= newestColumnLastmod, "Col
 
 const canonicalOwners = new Map();
 const sharedCssVersion = "20260918-2";
-const sharedMainVersion = "20260918-1";
+const sharedMainVersion = "20260917-4";
 // 칼럼 발행기가 박는 캐시 버전이 사이트와 어긋나면, 새로 발행한 칼럼만 옛 CSS와 옛 main.js를
 // 부른다. 실제로 그렇게 어긋난 채 방치된 적이 있어 여기서 함께 검사한다.
 {
