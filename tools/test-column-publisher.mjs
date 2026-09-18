@@ -159,7 +159,7 @@ try {
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/columns\.html<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
-  assert.match(rss, /<lastBuildDate>Mon, 14 Sep 2026 15:00:00 GMT<\/lastBuildDate>/);
+  assert.match(rss, /<lastBuildDate>Fri, 18 Sep 2026 01:00:00 GMT<\/lastBuildDate>/);
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
     true,
