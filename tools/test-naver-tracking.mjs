@@ -84,10 +84,15 @@ const dispatchClick = (href) =>
   });
 dispatchClick("https://m.booking.naver.com/booking/13/bizes/729883");
 dispatchClick("tel:02-3486-1777");
+dispatchClick("https://talk.naver.com/ct/w5zr5u");
+dispatchClick("https://www.instagram.com/dearhani__/");
+dispatchClick("https://blog.naver.com/thisisdear");
 assert.deepEqual(production.calls.slice(3), [
   ["conversion", "custom001", "s_3fd3c8db3a1b"],
   ["conversion", "custom002", "s_3fd3c8db3a1b"],
-]);
+  ["conversion", "custom003", "s_3fd3c8db3a1b"],
+  ["conversion", "custom004", "s_3fd3c8db3a1b"],
+], "예약·전화·톡톡·인스타 DM만 전환으로 보고하고 블로그 링크는 보고하지 않아야 합니다.");
 assert.equal(production.context.window.wcs_add.wa, "1ac7bf67a05a6c0", "전환 후 NAVER Analytics ID를 복원해야 합니다.");
 
 for (const [hostname, pathname] of [["127.0.0.1", "/"], ["dearhani.com", "/preview/example.html"]]) {

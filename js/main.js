@@ -101,6 +101,16 @@
     }
     if (href.includes("m.booking.naver.com/booking/13/bizes/729883")) {
       sendAdvertisingConversion("custom001");
+      return;
+    }
+    // 톡톡과 인스타그램 DM도 실제 문의 경로다. 여기서 보고하지 않으면
+    // 그 클릭이 광고에는 이탈로 잡혀 잘 되는 키워드를 끄는 판단을 하게 된다.
+    if (href.includes("talk.naver.com/ct/w5zr5u")) {
+      sendAdvertisingConversion("custom003");
+      return;
+    }
+    if (href.includes("instagram.com/dearhani__")) {
+      sendAdvertisingConversion("custom004");
     }
   });
 })();
