@@ -23,11 +23,18 @@
 - **`wrangler.jsonc`에 `account_id`를 못박았다**(`96d973cc…`). 앞으로 이 앱은 계정을 잘못 골라 배포될 수 없다. 워커 `worker/dear-ai`도 같은 계정이다.
 - `d1 create` 뒤에 wrangler가 "설정에 바인딩을 넣어줄까?"라고 묻는다. **거절한다.** 이미 `DB` 바인딩이 있어서 수락하면 같은 DB에 이름만 다른 중복 항목이 생긴다.
 
-### 아직 남은 정리
+### 정리 완료 (2026-09-18)
 
-- **삥이님 계정(`40474d6f…`)의 옛 자산**: 워커 `dear-column-admin`, 옛 칼럼 DB `a7885429…`, 2026-09-17에 잘못 만든 빈 `dear-chat-log`(`dd3c39d9…`). 새 쪽이 안정적으로 도는 것을 며칠 확인한 뒤 지운다. 되돌릴 수 없으므로 지우기 전에 확인한다.
-- 이관에 쓴 `dear-column-admin-db.sql`(초안 원문 포함)은 백업본이다. 정리가 끝나면 지운다. **Git에 넣지 않는다.**
-- `admin-app`은 `.gitignore` 대상이라 공개 저장소에 없다. 위 새 DB id와 `account_id`는 이 PC의 `admin-app/wrangler.jsonc`에만 있다. 다른 PC에서 배포하려면 이 항목의 값을 다시 넣는다.
+- **삥이님 계정(`40474d6f…`)에서 디어한의원 자산을 모두 지웠다.** 옛 워커 `dear-column-admin`, 옛 칼럼 DB `a7885429…`, 잘못 만든 빈 `dear-chat-log`(`dd3c39d9…`) 세 건이다. 확인 결과 그 계정에는 `bbinge-fc-goat`(다른 프로젝트)만 남았다.
+- 이관에 쓴 `dear-column-admin-db.sql` 백업본도 지웠다. 새 DB는 Cloudflare Time Travel로 30일 시점 복구가 가능하다.
+- **`dear-chat-log`는 이름이 양쪽 계정에 같아서 삭제 확인 화면의 id를 반드시 본다.** 지워야 할 것은 `dd3c39d9…`이고 `675eb547…`은 운영 중인 대화 로그다.
+- **삭제 명령은 `admin-app` 폴더 밖에서 실행한다.** `wrangler.jsonc`에 `account_id`를 못박아 둬서, 그 폴더 안에서는 `CLOUDFLARE_ACCOUNT_ID` 환경변수가 무시되고 새 계정이 잡힌다. 조회도 마찬가지라 계정별 확인은 홈 폴더에서 한다.
+- **부끄님 계정을 칼럼 관리자에 추가했다.** 아이디는 Cloudflare 계정과 같은 `towamk@naver.com`이다. 로그인과 대화 로그 화면 접근을 확인했다. 초안은 `owner_email` 기준이라 부끄님 화면의 초안 목록은 비어 있는 것이 정상이다.
+- 비밀번호 생성 파일은 등록 후 지웠다. **계정을 더 추가하거나 비밀번호를 바꾸려면 두 계정 모두 다시 만들어 `ADMIN_CREDENTIALS`를 통째로 다시 등록한다.** 한 사람 것만 바꾸는 방법은 없다.
+
+### 아직 남은 것
+
+- **`GITHUB_CONTENT_TOKEN`이 비어 있어 발행 기능이 동작하지 않는다.** 로그인·초안·대화 로그는 정상이다. 새 토큰을 발급해 `wrangler secret put GITHUB_CONTENT_TOKEN`으로 넣으면 해결된다. 두 사람 모두 Codex로 칼럼을 올리고 있어 급하지 않다.
 
 ## 2026-09-18 탁상행정적 법률 판단 금지 — 후기 섹션은 유지한다
 
