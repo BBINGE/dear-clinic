@@ -226,9 +226,12 @@
     // 동의 화면 이탈률 집계. 정해둔 두 이름만 통과시키고 대화 내용은 받지 않는다.
     const track = event.data;
     if (!track || track.type !== 'dear-ai-track') return;
-    if (track.name !== 'dear_ai_consent_shown' && track.name !== 'dear_ai_consent_agreed') return;
+    const allowed = ['dear_ai_consent_shown', 'dear_ai_consent_agreed', 'dear_ai_booking_click'];
+    if (!allowed.includes(track.name)) return;
     const payload = { event: track.name, page_path: location.pathname };
     if (typeof track.lang === 'string' && /^[a-z]{2}(-[a-z]{2})?$/.test(track.lang)) payload.chat_language = track.lang;
+    // 예약 경로도 정해둔 이름만 통과시킨다. 대화 내용은 어떤 경우에도 받지 않는다.
+    if (track.name === 'dear_ai_booking_click' && ['naver_booking', 'naver_talk', 'phone', 'instagram', 'international'].includes(track.channel)) payload.cta_action = track.channel;
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push(payload);
     if (typeof window.gtag === 'function') window.gtag('event', track.name, payload);

@@ -49,6 +49,13 @@ assert.ok(consentUi.includes("type: 'dear-ai-track'"));
 assert.ok(widget.includes("dear-ai-track"));
 assert.ok(widget.includes("dear_ai_consent_shown") && widget.includes("dear_ai_consent_agreed"));
 assert.ok(widget.includes('event.origin !== location.origin'));
+// 디숭이 안에서 누른 예약도 iframe 밖으로 넘겨야 GA4에 남는다. 빠지면 디숭이를 거친
+// 예약이 통째로 집계되지 않는다.
+assert.ok(client.includes("name: 'dear_ai_booking_click'"), "디숭이 예약 클릭을 바깥으로 넘겨야 합니다");
+assert.ok(widget.includes('dear_ai_booking_click'), "위젯이 예약 클릭 이벤트를 통과시켜야 합니다");
+// 넘어가는 것은 어느 경로를 눌렀는지뿐이다. 대화 내용이나 입력한 글은 넘기지 않는다.
+assert.ok(!/postMessage\([^)]*(user_text|input\.value|message)/.test(client), "예약 집계에 대화 내용을 섞으면 안 됩니다");
+assert.ok(widget.includes("['naver_booking', 'naver_talk', 'phone', 'instagram', 'international'].includes(track.channel)"), "정해둔 경로 이름만 통과시켜야 합니다");
 assert.match(consentUi, /6개월, 이용 통계는 24개월 보관/);
 assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
 assert.match(widget, /white-space:pre-line;word-break:keep-all/);

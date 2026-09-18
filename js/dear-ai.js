@@ -109,6 +109,23 @@
         : [[bookingLinks.booking, labels[0]], [bookingLinks.talk, labels[1]]];
     links.push(['tel:+82234861777', labels[2]]);
     actions.innerHTML = links.map(([url, label]) => `<a href="${url}" target="_blank" rel="noopener">${escapeText(label)} <span>→</span></a>`).join('');
+    // 디숭이는 iframe 안에서 돌고 GA4는 바깥 페이지에만 있다. 여기서 누른 예약은
+    // 바깥으로 넘기지 않으면 어디에도 기록되지 않는다. 넘기는 것은 어느 경로를
+    // 눌렀는지뿐이며 대화 내용과 입력한 글은 넘기지 않는다.
+    actions.addEventListener('click', event => {
+      const link = event.target.closest('a[href]');
+      if (!link) return;
+      const href = link.getAttribute('href') || '';
+      const channel = href.startsWith('tel:') ? 'phone'
+        : href.includes('m.booking.naver.com') ? 'naver_booking'
+          : href.includes('talk.naver.com') ? 'naver_talk'
+            : href.includes('instagram.com') ? 'instagram'
+              : href.includes('international-appointment') ? 'international' : '';
+      if (!channel || window.parent === window) return;
+      try {
+        window.parent.postMessage({ type: 'dear-ai-track', name: 'dear_ai_booking_click', channel, lang: language }, location.origin);
+      } catch {}
+    });
     messagesElement.appendChild(actions);
     scrollToLatest();
   }
