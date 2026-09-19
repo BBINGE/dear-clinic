@@ -53,7 +53,7 @@
 - 본문 폰트는 **Pretendard Variable 동적 서브셋**(`variable/pretendardvariable-dynamic-subset.css`)이다. 새 페이지를 만들 때 옛 `static/pretendard.css`를 붙여넣지 않는다.
 - 칼럼 30편 · 사이트맵 92개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
 - 칼럼 30편 전부에 네이버 예약·전화·주소가 있다. 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
-- 검사는 `node tools/test-*.mjs` 6종. 변경 뒤 전부 통과시킨다.
+- **검사의 기준은 `.github/workflows/deploy-pages.yml`이다.** 여기서 돌리는 9종을 변경 뒤 전부 통과시킨다: `test-column-publisher` `test-columns-serp` `test-seo-surfaces` `test-medical-editorial-trust` `test-naver-tracking` `test-dear-ai` `test-dear-ai-public` `test-dear-ai-dialogue` `test-dear-ai-columns` (앞서 `node tools/build-dear-ai-columns.mjs`도 돈다). 이 자리에 적힌 목록이 아니라 **워크플로 파일을 직접 보고 맞춘다.** 2026-09-19에 이 칸이 `6종`으로 낡아 있어 배포가 한 번 멈췄다.
 
 ---
 
@@ -73,7 +73,9 @@
 ### 함께 바로잡은 것
 
 - 이 블록의 고정값이 `sharedMainVersion = 20260917-4`로 적혀 있었으나 실제 코드는 `20260918-2`였다. **고정값을 적는 자리와 코드가 어긋나면 다음 사람이 낡은 값을 그대로 박는다.** 이번에 둘 다 `20260919-1`로 맞췄다.
-- 집 데스크톱에는 `playwright`가 없어 `tools/test-*.cjs` 4종이 실행되지 않는다. 필수인 `.mjs` 6종은 전부 통과했다.
+- 집 데스크톱에는 `playwright`가 없어 `tools/test-*.cjs` 4종이 실행되지 않는다. 배포 워크플로가 돌리는 `.mjs` 9종은 전부 통과했다.
+- **첫 배포는 실패했다.** `tools/test-dear-ai.mjs`가 디숭이 위젯의 `font-family`를 옛 값으로 고정 검사하고 있었다. 폰트를 바꾸면 **위젯 검사까지 함께 본다.** 이 블록의 검사 목록이 `6종`으로 낡아 있어 빠뜨린 것이 원인이었고, 그래서 위에서 워크플로 파일을 기준으로 바꿨다.
+- 생성물 `assets/data/dear-ai-columns.json`이 공진단 칼럼 설명 수정 뒤 다시 생성되지 않아 저장소 값이 낡아 있었다. **칼럼 본문이나 설명을 고치면 `node tools/build-dear-ai-columns.mjs`를 함께 돌린다.**
 
 ---
 
