@@ -15,7 +15,7 @@ body {
   margin: 0;
   color: var(--text);
   background: var(--base);
-  font-family: Pretendard, Arial, sans-serif;
+  font-family: "Pretendard Variable", Pretendard, Arial, sans-serif;
   word-break: keep-all;
 }
 a { color: inherit; text-decoration: none; }
@@ -497,7 +497,7 @@ img { display: block; width: 100%; }
   box-shadow: 0 10px 28px rgba(23,63,55,.055);
 }
 .result-panel__metrics dt { color: #49534f; font-size: clamp(12px, .9vw, 14px); font-weight: 600; letter-spacing: -.02em; }
-.result-panel__metrics dd { margin: 11px 0 0; color: var(--green); font-family: Pretendard, Arial, sans-serif; font-size: clamp(32px, 2.6vw, 42px); font-weight: 720; line-height: 1; letter-spacing: -.045em; }
+.result-panel__metrics dd { margin: 11px 0 0; color: var(--green); font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; font-size: clamp(32px, 2.6vw, 42px); font-weight: 720; line-height: 1; letter-spacing: -.045em; }
 .result-metric__number { display: inline-block; transform-origin: 50% 100%; font-variant-numeric: tabular-nums; }
 .result-metric__number.is-counted { animation: result-metric-pop 340ms cubic-bezier(.2,.9,.25,1.35); }
 @keyframes result-metric-pop {
@@ -633,7 +633,7 @@ img { display: block; width: 100%; }
   letter-spacing: -.06em;
 }
 .voices__intro h2 span,
-.voices__intro h2 strong { font-family: Pretendard, Arial, sans-serif; font-style: normal; }
+.voices__intro h2 strong { font-family: "Pretendard Variable", Pretendard, Arial, sans-serif; font-style: normal; }
 .voices__intro h2 span { font-weight: 300; }
 .voices__intro h2 strong { color: var(--green); font-weight: 700; }
 .voices__intro > p:last-child { grid-column: 2; margin: 28px 0 0; color: var(--secondary); line-height: 1.75; font-size: 13px; }

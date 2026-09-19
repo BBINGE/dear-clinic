@@ -745,7 +745,7 @@
 .gjd-gallery__item figcaption em {
   margin-left: auto;
   color: var(--text-secondary);
-  font-family: "Pretendard", sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", sans-serif;
   font-size: 0.76rem;
   font-style: normal;
   font-weight: 500;

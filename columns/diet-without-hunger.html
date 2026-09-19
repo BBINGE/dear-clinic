@@ -150,8 +150,8 @@
   }
   </script>
   <link rel="icon" href="../assets/images/dear-favicon.png" type="image/png">
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260918-2">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="../css/style.css?v=20260919-1">
   <style>
     :root{--diet-green:#247860;--diet-deep:#194f42;--diet-teal:#006c78;--diet-mint:#e8f3ef;--diet-cream:#f8f8f6;--diet-coral:#b9654e;--diet-ink:#202825;--diet-muted:#666b68;--diet-line:#d9e2de}
     html{scroll-behavior:smooth}.diet-preview{background:#fff;color:var(--diet-ink)}
@@ -323,7 +323,7 @@
     <p class="footer__copyright">COPYRIGHT &copy; 2022 DEAR CLINIC. ALL RIGHTS RESERVED.</p>
   </div>
 </footer>
-  <script src="../js/main.js?v=20260918-2"></script>
+  <script src="../js/main.js?v=20260919-1"></script>
   <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');o.unobserve(x.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('is-visible'))}</script>
   <script>(()=>{const links=[...document.querySelectorAll('.toc a[href^="#"]')],items=links.map(link=>({link,target:document.querySelector(link.getAttribute('href'))})).filter(item=>item.target);let queued=false;const update=()=>{queued=false;const line=innerHeight*.34;let current=items[0];for(const item of items){if(item.target.getBoundingClientRect().top<=line)current=item;else break}links.forEach(link=>{const active=link===current.link;link.classList.toggle('is-active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})};addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(update)}},{passive:true});addEventListener('resize',update);update()})()</script>
 </body>

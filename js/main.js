@@ -6,7 +6,7 @@
   if (!enabled) return;
   const load = () => {
     const script = document.createElement('script');
-    script.src = '/js/dear-ai-widget.js?v=20260918-1';
+    script.src = '/js/dear-ai-widget.js?v=20260919-1';
     document.head.appendChild(script);
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load, { once: true });
@@ -881,6 +881,8 @@ if (noticePopups) {
     const visibleCards = popupCards.filter((card) => !card.hidden);
     const shouldShow = visibleCards.length > 0;
     noticePopups.hidden = !shouldShow;
+    // 팝업이 떠 있는 동안에는 디숭이를 감춘다. 모바일에서 디숭이가 닫기 버튼 위를 덮어 닫을 수 없었다.
+    document.body.classList.toggle("has-notice-popup", shouldShow);
     if (weatherPreviewActive) return;
     const foregroundCards = mobilePopups.matches ? visibleCards.slice(0, 1) : visibleCards;
     foregroundCards.forEach((card) => loadPopupImage(card));
@@ -901,6 +903,7 @@ if (noticePopups) {
 
   if (weatherPreviewActive) {
     noticePopups.hidden = true;
+    document.body.classList.remove("has-notice-popup");
   } else {
     refreshPopupVisibility();
     mobilePopups.addEventListener("change", refreshPopupVisibility);

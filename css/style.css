@@ -11,7 +11,7 @@
   --text-secondary: #555550; /* 서브 페이지 등 본문 텍스트 */
   --white: #ffffff;
   --gap: clamp(1.5rem, 4vw, 4rem);
-  --font-en: "Manrope", "Pretendard", Arial, sans-serif;
+  --font-en: "Manrope", "Pretendard Variable", "Pretendard", Arial, sans-serif;
 }
 
 /* ============ 공통 영문 타이포그래피 ============ */
@@ -914,6 +914,28 @@
   font-size: 0.72rem;
 }
 
+/* 팝업이 떠 있는 동안 디숭이를 감춘다.
+   디숭이 위젯(#dear-ai-widget)은 z-index 9998로 팝업(1000)보다 위에 있어,
+   모바일에서 팝업 닫기 버튼을 완전히 덮어 닫기를 누를 수 없었다.
+   마지막 팝업을 닫으면 다시 나타난다. */
+body.has-notice-popup #dear-ai-widget {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+#dear-ai-widget {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #dear-ai-widget {
+    transition: none;
+  }
+}
+
 .notice-popup__dismiss-note {
   color: #666b67;
   line-height: 1.35;
@@ -926,7 +948,12 @@
   font: inherit;
   cursor: pointer;
   flex: none;
-  padding: 0.35rem 0.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.35rem 0.5rem;
   font-size: 0.72rem;
 }
 
@@ -6185,7 +6212,7 @@ html {
 }
 
 body {
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--teal-dark);
   background: var(--white);
   line-height: 1.7;
@@ -6515,7 +6542,7 @@ img, video {
 }
 
 .about__title strong {
-  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 700;
 }
 
@@ -7375,7 +7402,7 @@ img, video {
 .gongjindan-map__destination text,
 .gongjindan-map__origin text {
   fill: var(--teal-dark);
-  font-family: "Pretendard", sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", sans-serif;
   font-size: 13px;
   font-weight: 700;
 }

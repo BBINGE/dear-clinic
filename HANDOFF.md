@@ -49,10 +49,31 @@
 
 ### 고정값
 
-- `sharedCssVersion = 20260918-2` · `sharedMainVersion = 20260917-4`. **`css/style.css`나 `js/main.js`를 고치면 105개 HTML의 `?v=`와 `tools/publish-column.mjs`까지 함께 올린다.**
+- `sharedCssVersion = 20260919-1` · `sharedMainVersion = 20260919-1`. **`css/style.css`나 `js/main.js`를 고치면 106개 HTML의 `?v=`와 `tools/publish-column.mjs`까지 함께 올린다.**
+- 본문 폰트는 **Pretendard Variable 동적 서브셋**(`variable/pretendardvariable-dynamic-subset.css`)이다. 새 페이지를 만들 때 옛 `static/pretendard.css`를 붙여넣지 않는다.
 - 칼럼 30편 · 사이트맵 92개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
 - 칼럼 30편 전부에 네이버 예약·전화·주소가 있다. 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
 - 검사는 `node tools/test-*.mjs` 6종. 변경 뒤 전부 통과시킨다.
+
+---
+
+## 2026-09-19 집 데스크톱에 묶여 있던 작업을 원격과 합쳤다
+
+- 배경: 집 데스크톱의 저장소가 **원격보다 19개 커밋 뒤처진 채, 커밋되지 않은 변경 122개 파일을 들고 있었다.** 두 쪽이 같은 캐시 버전 줄을 각자 올려 그대로 당기면 105개 파일이 충돌하는 상태였다. **회사 PC·집 데스크톱을 오갈 때는 시작 전에 `git status`와 `git log --oneline master..origin/master`를 먼저 본다.**
+- 처리 순서: 커밋되지 않은 작업을 `backup/20260919-local-work` 브랜치로 먼저 묶고, `master`를 `origin/master`에 맞춘 뒤, 기능 변경만 다시 얹었다. **캐시 버전 줄은 충돌을 푸는 대신 양쪽보다 새 값(`20260919-1`)으로 다시 깔았다.** 되돌린 원격 작업은 없다.
+- 백업 브랜치는 합친 결과를 확인한 뒤 지워도 된다. 로컬에만 있고 원격에 올리지 않았다.
+
+### 함께 살린 작업 세 가지
+
+- **팝업이 떠 있는 동안 디숭이를 감춘다.** 디숭이 위젯은 `z-index:9998`이고 팝업은 `1000`이라 **모바일에서 디숭이가 팝업 닫기 버튼을 통째로 덮어 팝업을 닫을 수 없었다.** `body.has-notice-popup`으로 감추고 마지막 팝업을 닫으면 돌아온다(`css/style.css`·`js/main.js`). 375px에서 닫기 버튼이 가려지지 않는 것과, 두 팝업을 다 닫으면 디숭이가 다시 보이는 것을 확인했다.
+- **팝업 닫기 버튼을 44×44px로 키웠다.** 글자 크기는 그대로고 누를 수 있는 면적만 넓혔다.
+- **본문 폰트를 Pretendard Variable 동적 서브셋으로 바꿨다.** 106개 HTML과 발행기의 링크, `css/style.css`·`css/dear-gongjindan.css`·`js/dear-ai-widget.js`의 `font-family`에 `"Pretendard Variable"`를 앞에 세웠다. 이름이 다른 폰트이므로 **링크만 바꾸고 `font-family`를 두면 글꼴이 적용되지 않는다.**
+- 홈 팝업 프리로드 목록이 `data-popup-id`로 파일명을 짜맞추고 있어 **본문의 `data-src`와 어긋나면 엉뚱한 파일을 미리 받았다.** id와 파일명을 한 쌍으로 적게 고치고 `tools/test-home-loading.cjs`도 본문의 `data-src`를 읽도록 맞췄다.
+
+### 함께 바로잡은 것
+
+- 이 블록의 고정값이 `sharedMainVersion = 20260917-4`로 적혀 있었으나 실제 코드는 `20260918-2`였다. **고정값을 적는 자리와 코드가 어긋나면 다음 사람이 낡은 값을 그대로 박는다.** 이번에 둘 다 `20260919-1`로 맞췄다.
+- 집 데스크톱에는 `playwright`가 없어 `tools/test-*.cjs` 4종이 실행되지 않는다. 필수인 `.mjs` 6종은 전부 통과했다.
 
 ---
 

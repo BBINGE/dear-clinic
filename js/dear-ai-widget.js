@@ -35,7 +35,7 @@
   host.id = 'dear-ai-widget';
   const shadow = host.attachShadow({ mode: 'open' });
   shadow.innerHTML = `<style>
-    :host{position:fixed;right:156px;bottom:20px;z-index:9998;font-family:"Pretendard",sans-serif;pointer-events:none}
+    :host{position:fixed;right:156px;bottom:20px;z-index:9998;font-family:"Pretendard Variable","Pretendard",sans-serif;pointer-events:none}
     *{box-sizing:border-box}button{font:inherit;cursor:pointer;pointer-events:auto} [hidden]{display:none!important}.panel:not([hidden])~.launcher,.panel:not([hidden])~.fold{visibility:hidden}
     .launcher{display:block;width:144px;height:214px;padding:0;border:0;border-radius:0;overflow:visible;background:transparent;box-shadow:none;transform-origin:50% 95%;transition:transform .2s}
     .launcher img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 3px #18332d24)}
@@ -44,13 +44,13 @@
     .launcher span{display:none}
     :host([data-compact]) .launcher{width:76px;height:36px;background:#fffefa;border:1px solid #c8d9d1;border-radius:18px;color:#174f43;box-shadow:0 2px 8px #18332d18}
     :host([data-compact]) .launcher img,:host([data-compact]) .fold{display:none}
-    :host([data-compact]) .launcher span{display:block;font-family:"Pretendard",sans-serif;font-size:13px;font-weight:600}
+    :host([data-compact]) .launcher span{display:block;font-family:"Pretendard Variable","Pretendard",sans-serif;font-size:13px;font-weight:600}
     .fold{position:absolute;right:-3px;top:-12px;width:26px;height:26px;padding:0;border:1px solid #dce5df;border-radius:50%;background:#fffefa;color:#536b62;font-size:18px;line-height:22px}
     .launcher:focus-visible{outline:2px solid #247860;outline-offset:5px;border-radius:12px}
     .launcher:hover{transform:translateY(-4px) rotate(-5deg)}
     .hello{animation:hello 1.4s ease-in-out 1}
     @keyframes hello{0%,100%{transform:rotate(0)}25%{transform:translateY(-6px) rotate(-9deg)}60%{transform:translateY(-3px) rotate(7deg)}}
-    .greeting{position:fixed;width:min(232px,calc(100vw - 32px));padding:12px 16px;color:#174f43;background:#fffefa;border:1px solid #dce5df;border-radius:17px 17px 3px 17px;font-family:"Pretendard",sans-serif;font-size:14px;font-weight:500;line-height:1.6;white-space:pre-line;word-break:keep-all;overflow-wrap:normal;box-shadow:0 4px 16px #18332d12}
+    .greeting{position:fixed;width:min(232px,calc(100vw - 32px));padding:12px 16px;color:#174f43;background:#fffefa;border:1px solid #dce5df;border-radius:17px 17px 3px 17px;font-family:"Pretendard Variable","Pretendard",sans-serif;font-size:14px;font-weight:500;line-height:1.6;white-space:pre-line;word-break:keep-all;overflow-wrap:normal;box-shadow:0 4px 16px #18332d12}
     .panel{position:fixed;width:min(440px,calc(100vw - 32px));height:min(740px,calc(100dvh - 40px));background:#fffefa;border-radius:20px;overflow:hidden;box-shadow:0 12px 55px #18332d40;display:flex;flex-direction:column;pointer-events:none;opacity:0;transform:translateY(14px) scale(.97);transform-origin:bottom center;transition:opacity 220ms ease,transform 220ms cubic-bezier(.2,.8,.2,1)}
     .panel.is-open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
     .bar{display:flex;justify-content:space-between;padding:5px 10px;background:#f5f2ec;flex-shrink:0}

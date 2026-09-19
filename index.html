@@ -41,28 +41,32 @@
 <script>
 (() => {
   if (new URLSearchParams(location.search).has("weather-preview")) return;
-  const ids = ["gongjindan-new-year", "treatment-guide", "gongjindan-packaging"];
-  const activeIds = ids.filter((id) => {
+  // 본문 data-popup-id·data-src와 반드시 같아야 한다. 안내를 바꾸면 여기도 함께 고친다.
+  const notices = [
+    { id: "be-deer-review-20260918", image: "popup-be-deer-review.webp" },
+    { id: "gongjindan-care-20260918", image: "popup-gongjindan-care.webp" }
+  ];
+  const active = notices.filter(({ id }) => {
     try {
       return localStorage.getItem(`dear-popup-dismissed-${id}`) !== "dismissed"
         && !localStorage.getItem(`dear-popup-${id}`);
     } catch { return true; }
   });
-  const visibleIds = matchMedia("(max-width: 900px)").matches ? activeIds.slice(0, 1) : activeIds;
-  visibleIds.forEach((id) => {
+  const visible = matchMedia("(max-width: 900px)").matches ? active.slice(0, 1) : active;
+  visible.forEach(({ image }) => {
     const link = document.createElement("link");
     link.rel = "preload";
     link.as = "image";
-    link.href = `assets/images/popups/popup-${id}.webp`;
+    link.href = `assets/images/popups/${image}`;
     document.head.append(link);
   });
 })();
 </script>
 
 <!-- Pretendard -->
-<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
 
-<link rel="stylesheet" href="css/style.css?v=20260918-2">
+<link rel="stylesheet" href="css/style.css?v=20260919-1">
 
 <!-- JSON-LD: Website, MedicalClinic, Director -->
 <script type="application/ld+json">
@@ -861,7 +865,7 @@
   </a>
 </nav>
 
-<script src="js/main.js?v=20260918-2"></script>
+<script src="js/main.js?v=20260919-1"></script>
 <script src="js/weather-scene.js?v=20260918-1"></script>
 <script src="js/weather-canvas.js?v=20260805-1"></script>
 <script src="js/click-tracking.js?v=20260728"></script>

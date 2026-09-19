@@ -775,8 +775,8 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="twitter:description" content="${escapeHtml(content.description)}">
   <meta name="twitter:image" content="${imageUrl}">
   <meta name="twitter:image:alt" content="${escapeHtml(content.coverAlt)}">
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260918-2">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
+  <link rel="stylesheet" href="../css/style.css?v=20260919-1">
   <script type="application/ld+json">${schema}</script>
 </head>
 <body class="column-article-body column-${content.slug}${preview ? " is-preview" : ""}">
@@ -866,7 +866,7 @@ ${content.slug === "weight-inattentional-blindness" ? `<script>
   figure.after(metricList);
 })();
 </script>` : ""}
-<script src="../js/main.js?v=20260918-2"></script>
+<script src="../js/main.js?v=20260919-1"></script>
 </body>
 </html>
 `;

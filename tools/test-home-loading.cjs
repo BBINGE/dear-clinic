@@ -6,8 +6,10 @@ const vm = require('node:vm');
 const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
 const bootstrap = html.match(/<script>\s*\(\(\) => \{[\s\S]*?<\/script>/)[0]
   .replace(/<\/?script>/g, '');
-const ids = [...html.matchAll(/data-popup-id="([^"]+)"/g)].map(match => match[1]);
-const image = id => `assets/images/popups/popup-${id}.webp`;
+const cards = [...html.matchAll(/data-popup-id="([^"]+)"[\s\S]*?data-src="([^"]+)"/g)];
+const ids = cards.map(match => match[1]);
+const images = cards.map(match => match[2]);
+const image = id => images[ids.indexOf(id)];
 
 function run(width, stored = {}, query = '', blocked = false) {
   const links = [];
