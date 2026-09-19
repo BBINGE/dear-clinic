@@ -59,7 +59,7 @@ assert.ok(widget.includes("['naver_booking', 'naver_talk', 'phone', 'instagram',
 assert.match(consentUi, /6개월, 이용 통계는 24개월 보관/);
 assert.ok(widget.includes('궁금한 거 있어요?\\n제가 도와드릴게요 :)'));
 assert.match(widget, /white-space:pre-line;word-break:keep-all/);
-assert.match(widget, /font-family:"Pretendard",sans-serif/);
+assert.match(widget, /font-family:"Pretendard Variable","Pretendard",sans-serif/);
 assert.match(widget, /transition:opacity 220ms/);
 assert.match(widget, /panel\.inert = true/);
 assert.match(widget, /setPointerCapture/);
