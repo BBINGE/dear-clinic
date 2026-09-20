@@ -67,6 +67,8 @@
 | 카카오톡 채널 개설 | 운영 계획이 없다 |
 | `blanchard2552` 명의·복구 | 정리가 끝난 항목이다. 복구 가능 여부를 다시 확인하거나 묻지 않는다 |
 | 공진단 칼럼의 진료 사례(CASE) 카드 | 현재 형태로 두기로 결정했다 |
+| `robots.txt`에 AI 크롤러를 이름으로 나열 | `User-agent: *`가 이미 전부 허용이라 효과가 0이다. 이름 그룹을 만들면 그 봇이 `*` 그룹의 `Disallow: /preview/`를 무시한다 |
+| 경쟁사 물량형 칼럼 따라가기 | 설명한의원 방식이며 우리 체급에 맞지 않는다 |
 
 ### 고정값
 
@@ -75,6 +77,29 @@
 - 칼럼 30편 · 사이트맵 92개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
 - 칼럼 30편 전부에 네이버 예약·전화·주소가 있다. 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
 - **검사의 기준은 `.github/workflows/deploy-pages.yml`이다.** 여기서 돌리는 9종을 변경 뒤 전부 통과시킨다: `test-column-publisher` `test-columns-serp` `test-seo-surfaces` `test-medical-editorial-trust` `test-naver-tracking` `test-dear-ai` `test-dear-ai-public` `test-dear-ai-dialogue` `test-dear-ai-columns` (앞서 `node tools/build-dear-ai-columns.mjs`도 돈다). 이 자리에 적힌 목록이 아니라 **워크플로 파일을 직접 보고 맞춘다.** 2026-09-19에 이 칸이 `6종`으로 낡아 있어 배포가 한 번 멈췄다.
+
+---
+
+## 2026-09-20 원장 면허번호를 밝히고, 스키마를 화면에 맞췄다
+
+- 경쟁사 `seolmyungclinic.com`(설명한의원, 8지점 체인) 점검에서 출발했다. 사이트맵 **5,932개 중 칼럼이 4,637편**이고 **138일간 하루 20편씩** 쌓였다. 지점 × 증상 × 지역 키워드 행렬을 자동 생성하는 방식이며, `/care/` 아래 같은 글의 지점별 복제본이 11~12개씩 있다. **물량은 우리가 따라갈 축이 아니다.** 구글의 대량 생산 콘텐츠 남용(scaled content abuse) 조항과 정면으로 부딪히는 형태이기도 하다.
+- 저쪽에서 가져올 만한 것으로 두 가지를 꼽았으나 **확인해 보니 하나는 효과가 없고 하나는 이미 있었다.**
+  - `robots.txt`의 AI 크롤러 명시 허용은 **효과가 0이다.** `User-agent: *`가 이미 전부 허용이고, 오히려 이름 그룹을 만들면 크롤러가 자기 그룹만 읽는 규칙 때문에 `Disallow: /preview/`가 풀린다. 위 표에 넣었다.
+  - `reviewedBy`는 **칼럼 30편에 이미 있다.** 우리는 `@id`로 `director.html#kim-minji` 한 노드를 참조하고 저쪽은 글마다 Person을 복붙하므로, 구조는 우리 쪽이 낫다. 실제로 빠져 있던 것은 `hasCredential` 하나뿐이었다.
+- **한의사 면허 제28063호를 공개했다.** `career.html` 자격 목록 첫 줄에 넣었고 **en·ja·zh-cn 세 판도 같이 넣었다.** 면허번호는 NAP과 같은 확정 사실이므로 네 판이 어긋나면 안 된다.
+- `hasCredential`(보건복지부 발급 `license`)은 `career.html`의 Person 노드에만 적었다. `director.html`에는 넣지 않았다.
+
+### 스키마는 그 페이지 화면에 보이는 사실만 적는다
+
+- 이번에 기준을 세웠다. **마크업에만 있고 화면에 없는 사실은 그 페이지에 적지 않는다.**
+- 그 기준으로 보니 `memberOf`(학회 5곳)가 반대로 붙어 있었다. **학회가 눈에 보이는 페이지는 `career.html`인데 마크업은 `director.html`에 있었다.** `career.html`로 옮기고 `director.html`에서는 덜어냈다. `honorificSuffix: 한의사`도 면허가 보이게 된 `career.html`에 적었다.
+- `knowsAbout`은 칼럼 주제를 싣는 `director.html`에 그대로 두었다.
+- **두 페이지의 Person은 `@id`가 같아 병합된다. 한쪽에 적으면 충분하므로 양쪽에 복붙하지 않는다.** 다음 사람이 "`director.html`에 학회가 없다"고 보고 다시 넣지 않도록 여기 적어 둔다.
+
+### 남은 것
+
+- `en/career.html`·`ja/career.html`·`zh-cn/career.html`에는 **JSON-LD Person 노드가 아예 없다.** 한국어판에만 있다. 이번 작업 범위 밖이라 두었다.
+- 배포 검사 `.mjs` 9종 전부 통과. CSS·JS를 건드리지 않아 캐시 버전은 올리지 않았다.
 
 ---
 
