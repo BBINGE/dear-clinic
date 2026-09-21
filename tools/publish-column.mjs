@@ -874,7 +874,7 @@ ${content.slug === "weight-inattentional-blindness" ? `<script>
 
 function updateColumnsIndex(siteRoot, content, coverPath) {
   const filePath = path.join(siteRoot, "columns.html");
-  let source = fs.readFileSync(filePath, "utf8");
+  let source = normalizeCardMarkers(fs.readFileSync(filePath, "utf8"));
   const category = CATEGORY_MAP[content.category];
   const start = `        <!-- COLUMN_CARD:${content.slug}:START -->`;
   const end = `        <!-- COLUMN_CARD:${content.slug}:END -->`;
@@ -919,7 +919,14 @@ function parseColumnCard(block) {
   return { block, anchorAttributes: anchor[1], body: anchor[2], date: time[1], displayDate: time[2], href, imageSrc, imageAlt, meta, slug, summary, title };
 }
 
+// 발행기를 거치지 않고 손으로 넣은 카드는 주석 들여쓰기가 다를 수 있다.
+// 들여쓰기를 8칸으로 맞춰야 아래의 슬러그별 교체·삭제와 목록 정렬이 같은 카드를 본다.
+function normalizeCardMarkers(source) {
+  return source.replace(/^[ 	]*(<!-- COLUMN_CARD:[^:]+:(?:START|END) -->)/gm, "        $1");
+}
+
 function readColumnCards(source) {
+  source = normalizeCardMarkers(source);
   const cardsStart = "        <!-- COLUMN_CARDS_START -->";
   const cardsEnd = "        <!-- COLUMN_CARDS_END -->";
   const regionPattern = new RegExp(`${cardsStart}[\\s\\S]*?${cardsEnd}`);
@@ -928,6 +935,10 @@ function readColumnCards(source) {
   const blockPattern = /        <!-- COLUMN_CARD:([^:]+):START -->[\s\S]*?        <!-- COLUMN_CARD:\1:END -->/g;
   const cards = [...region.matchAll(blockPattern)].map((match, originalIndex) => ({ ...parseColumnCard(match[0]), originalIndex }));
   if (!cards.length) throw new Error("columns.html에서 칼럼 카드를 찾지 못했습니다.");
+  const markerCount = (region.match(/<!-- COLUMN_CARD:[^:]+:START -->/g) || []).length;
+  if (markerCount !== cards.length) {
+    throw new Error(`columns.html 카드 ${markerCount}개 중 ${cards.length}개만 읽었습니다. 목록을 다시 쓰면 카드가 사라지므로 멈춥니다.`);
+  }
   return { cards, cardsStart, cardsEnd, regionPattern };
 }
 
@@ -940,12 +951,17 @@ function syncLatestColumnMenuData(siteRoot, source) {
     throw new Error(`최신 칼럼 대표 이미지가 칼럼 이미지 경로가 아닙니다: ${latest.imageSrc}`);
   }
   const dataPath = path.join(siteRoot, "assets", "data", "latest-column.json");
+  let imagePosition = "50% 30%";
+  try {
+    const previous = JSON.parse(fs.readFileSync(dataPath, "utf8"));
+    if (previous.slug === latest.slug && previous.imagePosition) imagePosition = previous.imagePosition;
+  } catch {}
   fs.mkdirSync(path.dirname(dataPath), { recursive: true });
   fs.writeFileSync(dataPath, `${JSON.stringify({
     slug: latest.slug,
     href: `/${latest.href}`,
     image,
-    imagePosition: "50% 30%",
+    imagePosition,
     alt: latest.imageAlt || stripHtml(latest.title),
   }, null, 2)}\n`, "utf8");
 }
@@ -970,6 +986,7 @@ function refreshCollectionSchema(source, cards) {
 }
 
 function refreshColumnsPresentation(source) {
+  source = normalizeCardMarkers(source);
   const { cards, cardsStart, cardsEnd, regionPattern } = readColumnCards(source);
   cards.sort((a, b) => b.date.localeCompare(a.date) || a.originalIndex - b.originalIndex);
   const total = cards.length;
@@ -1068,7 +1085,7 @@ function removeGeneratedColumn(siteRoot, slug) {
   }
 
   const indexPath = path.join(siteRoot, "columns.html");
-  let index = fs.readFileSync(indexPath, "utf8");
+  let index = normalizeCardMarkers(fs.readFileSync(indexPath, "utf8"));
   const cardStart = `        <!-- COLUMN_CARD:${slug}:START -->`;
   const cardEnd = `        <!-- COLUMN_CARD:${slug}:END -->`;
   const cardPattern = new RegExp(`${cardStart.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[\\s\\S]*?${cardEnd.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\r?\\n?`);

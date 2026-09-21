@@ -11,6 +11,16 @@ const siteRoot = path.resolve(toolsDir, "..");
 const testRoot = fs.mkdtempSync(path.join(os.tmpdir(), "dear-column-publisher-test-"));
 const contentPath = path.join(toolsDir, "fixtures", "column-publisher-test.json");
 
+// 오늘의 글과 번호는 실제 목록의 최신 칼럼을 기준으로 검사한다.
+// 특정 칼럼을 박아두면 칼럼이 늘 때마다 검사가 옛 상태를 정답으로 붙든다.
+const siteColumns = fs.readFileSync(path.join(siteRoot, "columns.html"), "utf8");
+const siteCardCount = (siteColumns.match(/<!-- COLUMN_CARD:[^:]+:START -->/g) || []).length;
+const siteNewest = [...siteColumns.matchAll(/<a class="column-card[^>]*href="([^"]+)"[^>]*data-column-slug="([^"]+)"[\s\S]*?<img[^>]*src="([^"]+)"[\s\S]*?<time datetime="([^"]+)"/g)]
+  .map((match) => ({ href: match[1], slug: match[2], image: match[3], date: match[4] }))
+  .sort((a, b) => b.date.localeCompare(a.date))[0];
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const featuredPattern = (number) => new RegExp(`class="column-featured js-reveal" href="${escapeRegExp(siteNewest.href)}" data-journal-number="${number}"`);
+
 function publish(content = contentPath, mode = "publish") {
   return spawnSync(process.execPath, [
     path.join(toolsDir, "publish-column.mjs"),
@@ -148,13 +158,13 @@ try {
   assert.equal(articleSchema["@graph"].find((item) => item["@type"] === "Article").relatedLink, "https://dearhani.com/services.html#deer-balance");
   assert.equal((index.match(/data-column-slug="publisher-test-column"/g) || []).length, 1);
   assert.match(index, /data-column-slug="publisher-test-column"[^>]*data-category="Calm"[^>]*data-search="[^"]*수면[^"]*생활 리듬/);
-  assert.match(index, /class="column-featured js-reveal" href="columns\/chronic-headache-lying-down\.html" data-journal-number="30"/);
+  assert.match(index, featuredPattern(siteCardCount + 1));
   assert.match(index, /data-column-slug="publisher-test-column"[\s\S]*?data-journal-number="03"/);
   const collectionSchemaText = [...index.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
     .map((match) => JSON.parse(match[1]))
     .find((entry) => entry["@type"] === "CollectionPage");
-  assert.equal(collectionSchemaText.mainEntity.numberOfItems, 30);
-  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, "https://dearhani.com/columns/chronic-headache-lying-down.html");
+  assert.equal(collectionSchemaText.mainEntity.numberOfItems, siteCardCount + 1);
+  assert.equal(collectionSchemaText.mainEntity.itemListElement[0].url, `https://dearhani.com/${siteNewest.href}`);
   assert.equal((sitemap.match(/\/columns\/publisher-test-column\.html/g) || []).length, 1);
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/columns\.html<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
@@ -173,9 +183,9 @@ try {
     true,
   );
   const latestColumnMenu = JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8"));
-  assert.equal(latestColumnMenu.slug, "chronic-headache-lying-down");
-  assert.equal(latestColumnMenu.href, "/columns/chronic-headache-lying-down.html");
-  assert.equal(latestColumnMenu.image, "/assets/images/columns/chronic-headache-lying-down/cover.webp");
+  assert.equal(latestColumnMenu.slug, siteNewest.slug);
+  assert.equal(latestColumnMenu.href, `/${siteNewest.href}`);
+  assert.equal(latestColumnMenu.image, `/${siteNewest.image}`);
   assert.equal(latestColumnMenu.imagePosition, "50% 30%");
   assert.ok(latestColumnMenu.alt.trim());
 
@@ -184,8 +194,8 @@ try {
   assert.equal(fs.existsSync(articlePath), false);
   assert.equal(fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column")), false);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /data-column-slug="publisher-test-column"/);
-  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), /class="column-featured js-reveal" href="columns\/chronic-headache-lying-down\.html" data-journal-number="29"/);
-  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, "chronic-headache-lying-down");
+  assert.match(fs.readFileSync(path.join(testRoot, "columns.html"), "utf8"), featuredPattern(siteCardCount));
+  assert.equal(JSON.parse(fs.readFileSync(path.join(testRoot, "assets", "data", "latest-column.json"), "utf8")).slug, siteNewest.slug);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "sitemap.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
   assert.doesNotMatch(fs.readFileSync(path.join(testRoot, "rss.xml"), "utf8"), /\/columns\/publisher-test-column\.html/);
 
@@ -197,6 +207,20 @@ try {
   ], { encoding: "utf8" });
   assert.notEqual(blockedDraft.status, 0);
   assert.match(blockedDraft.stderr, /발행 준비 완료/);
+
+  // 손으로 넣은 카드는 주석 들여쓰기가 다를 수 있다. 예전 발행기는 이런 카드를 못 읽고
+  // 목록을 다시 쓰면서 지워버렸고, 오늘의 글도 옛 칼럼에 멈춰 있었다.
+  const refreshIndexPath = path.join(testRoot, "columns.html");
+  const unindented = fs.readFileSync(refreshIndexPath, "utf8").replace(/^[ \t]*(<!-- COLUMN_CARD:[^:]+:(?:START|END) -->)/gm, "$1");
+  const cardCountBefore = (unindented.match(/<!-- COLUMN_CARD:[^:]+:START -->/g) || []).length;
+  fs.writeFileSync(refreshIndexPath, unindented, "utf8");
+  const refresh = spawnSync(process.execPath, [path.join(toolsDir, "publish-column.mjs"), "--refresh-index", "--site-root", testRoot], { encoding: "utf8" });
+  assert.equal(refresh.status, 0, refresh.stderr);
+  const refreshedIndex = fs.readFileSync(refreshIndexPath, "utf8");
+  assert.equal((refreshedIndex.match(/<!-- COLUMN_CARD:[^:]+:START -->/g) || []).length, cardCountBefore, "목록 정렬 중 칼럼 카드가 사라졌습니다.");
+  const newestCard = [...refreshedIndex.matchAll(/<a class="column-card[^>]*href="([^"]+)"[\s\S]*?<time datetime="([^"]+)"/g)].sort((a, b) => b[2].localeCompare(a[2]))[0];
+  const refreshedFeatured = refreshedIndex.match(/class="column-featured[^"]*" href="([^"]+)"/)?.[1];
+  assert.equal(refreshedFeatured, newestCard[1], "오늘의 글이 가장 최근 칼럼이 아닙니다.");
 
   process.stdout.write("칼럼 발행기 테스트 통과\n");
 } finally {

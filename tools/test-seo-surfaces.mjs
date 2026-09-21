@@ -115,6 +115,13 @@ assert.ok(fs.existsSync(path.join(siteRoot, latest.image.replace(/^\//, ""))), "
 const columns = read("columns.html");
 const directCardLinks = [...columns.matchAll(/<a\s+class="column-card[^>]+href="([^"]+)"/g)].map((match) => match[1]);
 assert.ok(directCardLinks.length > 0, "칼럼 카드 링크를 찾지 못했습니다.");
+{
+  // 칼럼 목록 상단의 오늘의 글은 가장 최근에 발행한 칼럼이어야 한다. 배포 때 목록 정렬을 다시 돌린다.
+  const newest = [...columns.matchAll(/<a class="column-card[^>]*href="([^"]+)"[\s\S]*?<time datetime="([^"]+)"/g)].sort((a, b) => b[2].localeCompare(a[2]))[0];
+  const featuredHref = columns.match(/class="column-featured[^"]*" href="([^"]+)"/)?.[1];
+  assert.equal(featuredHref, newest[1], `오늘의 글이 최신 칼럼(${newest[1]})이 아닙니다: ${featuredHref}`);
+  assert.equal(latest.href, `/${newest[1]}`, "메뉴의 최신 칼럼이 목록의 최신 칼럼과 다릅니다.");
+}
 const rss = read("rss.xml");
 const rssItemLinks = [...rss.matchAll(/<item>[\s\S]*?<link>(https:\/\/dearhani\.com\/columns\/[^<]+)<\/link>[\s\S]*?<\/item>/g)].map((match) => match[1]);
 assert.equal(new Set(rssItemLinks).size, rssItemLinks.length, "RSS에 중복 칼럼이 있습니다.");
