@@ -153,10 +153,12 @@
 .sg-toc a:hover { color: var(--sg-green); }
 
 .sg-article { min-width: 0; }
+/* style.css가 모든 section에 위아래 110px을 준다. 본문 절 사이 간격은 소제목 여백만으로 잡는다. */
+.sg-article > section:not(.sg-refs) { padding: 0; }
 .sg-article section[id] { scroll-margin-top: 110px; }
 
 .sg-article h2 {
-  margin: 4.2rem 0 1.4rem;
+  margin: 3.6rem 0 1.3rem;
   color: var(--sg-deep);
   font-size: clamp(1.45rem, 2.6vw, 1.95rem);
   font-weight: 680;
@@ -269,7 +271,7 @@
 .sg-recap b { display: block; margin-bottom: .3rem; color: var(--sg-green); font-size: 1.05rem; }
 
 /* FAQ */
-.sg-faq { margin-top: 4.2rem; }
+.sg-faq { margin-top: 3.6rem; }
 .sg-faq details { border-top: 1px solid var(--sg-line); }
 .sg-faq details:last-child { border-bottom: 1px solid var(--sg-line); }
 .sg-faq summary { position: relative; padding: 1.2rem 2.2rem 1.2rem 0; color: var(--sg-deep); font-size: 1rem; font-weight: 680; line-height: 1.55; cursor: pointer; list-style: none; word-break: keep-all; }
