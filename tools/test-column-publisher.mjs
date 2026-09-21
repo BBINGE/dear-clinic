@@ -169,7 +169,9 @@ try {
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.match(sitemap, /<loc>https:\/\/dearhani\.com\/columns\.html<\/loc>\s*<lastmod>2026-09-11<\/lastmod>/);
   assert.equal((rss.match(/\/columns\/publisher-test-column\.html/g) || []).length, 2);
-  assert.match(rss, /<lastBuildDate>Mon, 21 Sep 2026 00:00:00 GMT<\/lastBuildDate>/);
+  // RSS 갱신 시각은 가장 최근 항목의 발행 시각을 따른다. 특정 날짜를 박아두면 칼럼이 늘 때마다 깨진다.
+  const newestPubDate = [...rss.matchAll(/<pubDate>([^<]+)<\/pubDate>/g)].map((match) => Date.parse(match[1])).sort((a, b) => b - a)[0];
+  assert.match(rss, new RegExp(`<lastBuildDate>${new Date(newestPubDate).toUTCString()}<\\/lastBuildDate>`));
   assert.equal(
     fs.existsSync(path.join(testRoot, "assets", "images", "columns", "publisher-test-column", "cover.webp")),
     true,
