@@ -460,3 +460,8 @@
 .ta-gallery > small { grid-column: 1 / -1; color: #7a847f; font-size: .74rem; }
 .ta-faq details p a { color: var(--sg-green); text-decoration: underline; text-underline-offset: 3px; }
 .ta-faq details p .ta-faq__link { display: table; margin-top: .7rem; font-weight: 680; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+.ta-br-m { display: none; }
+@media (max-width: 600px) {
+  .ta-br-m { display: inline; }
+  .ta-hours { grid-template-columns: 1fr; }
+}
