@@ -258,6 +258,15 @@ body {
 .toc a:hover,
 .toc a:focus-visible { color: #247860; }
 
+.toc a.is-active,
+.toc a[aria-current="location"] {
+  color: #176d57;
+  font-weight: 800;
+  transform: translateX(3px);
+}
+
+.toc a { position: relative; transition: color .2s ease, transform .2s ease; }
+
 .article { min-width: 0; }
 
 .answer {
