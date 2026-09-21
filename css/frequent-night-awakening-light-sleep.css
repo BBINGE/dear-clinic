@@ -541,6 +541,26 @@ body {
   font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif;
 }
 
+.sleep-action {
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 250px);
+  grid-template-areas: "primary map" "info info";
+}
+
+.sleep-action__primary { grid-area: primary; min-width: 0; }
+.sleep-action .sleep-action__info { grid-area: info; }
+
+.sleep-action__map {
+  grid-area: map;
+  min-height: 260px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .08);
+  box-shadow: 0 1rem 2.2rem rgba(4, 37, 29, .22);
+}
+
+.sleep-action__map iframe { display: block; width: 100%; height: 100%; min-height: 260px; border: 0; }
+
 .sleep-action::before {
   content: "";
   position: absolute;
@@ -655,6 +675,8 @@ body {
 .sleep-action__links a:hover { border-color: rgba(255, 255, 255, .45); background: rgba(255, 255, 255, .12); }
 
 @media (max-width: 900px) {
+  .sleep-action { grid-template-columns: 1fr; grid-template-areas: "primary" "map" "info"; }
+  .sleep-action__map, .sleep-action__map iframe { min-height: 230px; }
   .sleep-action .sleep-action__info { grid-template-columns: 1fr; grid-template-areas: "label" "name" "addr" "links"; }
   .sleep-action .sleep-action__links { margin-top: 1.4rem; }
 }
