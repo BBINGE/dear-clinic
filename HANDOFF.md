@@ -61,7 +61,7 @@
 | 메인 첫 화면 구성 | 대표원장 컨펌. 폐기안을 다시 올리지 않는다 |
 | `be-deer.html` 후기 섹션과 관련 확정 카피 | 검토 후 유지 결정. 의료광고 위험으로 재분류하지 않는다 |
 | 의료광고 심의번호 표기 | 자체 홈페이지는 심의 대상 매체가 아니다. 철회된 판단이다 |
-| 칼럼 간 관련글 자동 배선 | 칼럼 30편에 이미 CTA가 있다. 점수가 낮다는 이유로 다시 꺼내지 않는다 |
+| 칼럼 간 관련글 자동 배선 | 칼럼 31편에 이미 CTA가 있다. 점수가 낮다는 이유로 다시 꺼내지 않는다 |
 | 구글맵스 주소 표기 | 구글 지오코더가 저장을 막는다. 층·호는 순위 요인이 아니다 |
 | 네이버 플레이스 `0507` 안심번호 | 의도적으로 켠 설정이다. NAP 불일치로 보고하지 않는다 |
 | 카카오톡 채널 개설 | 운영 계획이 없다 |
@@ -74,11 +74,18 @@
 
 - `sharedCssVersion = 20260919-1` · `sharedMainVersion = 20260919-1`. **`css/style.css`나 `js/main.js`를 고치면 106개 HTML의 `?v=`와 `tools/publish-column.mjs`까지 함께 올린다.**
 - 본문 폰트는 **Pretendard Variable 동적 서브셋**(`variable/pretendardvariable-dynamic-subset.css`)이다. 새 페이지를 만들 때 옛 `static/pretendard.css`를 붙여넣지 않는다.
-- 칼럼 30편 · 사이트맵 92개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
-- 칼럼 30편 전부에 네이버 예약·전화·주소가 있다. 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
+- 칼럼 31편 · 사이트맵 93개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
+- 칼럼 31편 전부에 네이버 예약·전화·주소가 있다. 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
 - **검사의 기준은 `.github/workflows/deploy-pages.yml`이다.** 여기서 돌리는 9종을 변경 뒤 전부 통과시킨다: `test-column-publisher` `test-columns-serp` `test-seo-surfaces` `test-medical-editorial-trust` `test-naver-tracking` `test-dear-ai` `test-dear-ai-public` `test-dear-ai-dialogue` `test-dear-ai-columns` (앞서 `node tools/build-dear-ai-columns.mjs`도 돈다). 이 자리에 적힌 목록이 아니라 **워크플로 파일을 직접 보고 맞춘다.** 2026-09-19에 이 칸이 `6종`으로 낡아 있어 배포가 한 번 멈췄다.
 
 ---
+
+## 2026-09-21 선잠·야간 각성 칼럼 발행
+
+- `columns/frequent-night-awakening-light-sleep.html`을 수제 저널형 칼럼으로 발행했다. 분류 `Calm`, 저널 번호 31, 주소는 `https://dearhani.com/columns/frequent-night-awakening-light-sleep.html`이다.
+- 대표 이미지는 사용자가 제공한 확장자 없는 1254×1254 PNG `디숭이수면`을 `assets/images/columns/frequent-night-awakening-light-sleep/cover.png`로 저장했다. 밤중에 잠에서 깬 디숭이 일러스트이며 Columns 카드와 OG 이미지, 최신 칼럼 카드에 함께 연결했다.
+- CASE 1은 2개월 뒤 편안한 입면과 새벽 각성 주 1회 정도로의 감소, 스트레스가 심할 때 침 치료 뒤 다시 잠이 잘 이어진 경과를 담았다. CASE 2는 3개월 뒤 열감·홍조·발한이 거의 없어지고 수면과 새벽 손가락 부종·관절통이 함께 호전된 경과를 담았다.
+- `columns.html`·`sitemap.xml`·`rss.xml`·`assets/data/latest-column.json`을 갱신했고 공개 칼럼 수 고정값을 31편으로 올렸다. 전용 CSS는 `css/frequent-night-awakening-light-sleep.css`다.
 
 ## 2026-09-20 원장 면허번호를 밝히고, 스키마를 화면에 맞췄다
 

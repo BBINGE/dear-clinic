@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dearhani.com/</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -109,6 +109,7 @@
   <url><loc>https://dearhani.com/columns/autonomic-stress.html</loc><lastmod>2026-09-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:autonomic-stress:END -->
   <!-- COLUMN_SITEMAP:chronic-headache-lying-down:START -->
+  <url><loc>https://dearhani.com/columns/frequent-night-awakening-light-sleep.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://dearhani.com/columns/gongjindan-effect.html</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://dearhani.com/columns/chronic-headache-lying-down.html</loc><lastmod>2026-09-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- COLUMN_SITEMAP:chronic-headache-lying-down:END -->
@@ -177,7 +178,7 @@
   </url>
   <url>
     <loc>https://dearhani.com/columns.html</loc>
-    <lastmod>2026-09-18</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
