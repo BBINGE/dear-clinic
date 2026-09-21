@@ -519,3 +519,9 @@
 @media (max-width: 600px) {
   .sd-review { max-width: 260px; }
 }
+.sd-article > section.column-related { box-sizing: border-box; width: 100%; max-width: none; margin: 1.6rem 0 0; padding: 1.6rem 1.8rem 1.8rem; border: 1px solid var(--sg-line); border-radius: 22px; background: #fff; }
+.sd-article .column-related > p { margin: 0 0 .4rem; color: var(--sg-green); font-size: .66rem; font-weight: 800; letter-spacing: .16em; }
+.sd-article .column-related h2 { margin: 0 0 1.1rem; padding: 0; font-size: 1.15rem; line-height: 1.45; }
+@media (max-width: 600px) {
+  .sd-article > section.column-related { padding: 1.3rem 1.1rem 1.4rem; }
+}
