@@ -193,6 +193,28 @@
   word-break: keep-all;
 }
 
+/* 공진단 명칭 안내 — 대표원장 원고 */
+.sg-name-note {
+  margin: 2.2rem 0;
+  padding: clamp(1.4rem, 3.5vw, 2rem);
+  border: 1px solid var(--sg-line);
+  border-left: 3px solid var(--sg-green);
+  border-radius: 0 18px 18px 0;
+  background: var(--sg-paper);
+}
+
+.sg-name-note h3 { margin: 0 0 1rem; color: var(--sg-deep); font-size: 1.18rem; font-weight: 700; line-height: 1.5; letter-spacing: -.035em; word-break: keep-all; }
+.sg-name-note p { margin-bottom: .9rem; font-size: .98rem; }
+.sg-name-note p:last-child { margin-bottom: 0; }
+.sg-name-list { display: flex; flex-wrap: wrap; gap: .5rem; margin: .2rem 0 1rem; padding: 0; list-style: none; }
+.sg-name-list li { padding: .45rem .85rem; border: 1px dashed #b9c6c0; border-radius: 999px; background: #fff; color: #6b746f; font-size: .88rem; }
+
+/* 원내 조제 사진 */
+.sg-photo { margin: 2.4rem 0; }
+.sg-photo img { display: block; width: 100%; max-width: 560px; height: auto; margin: 0 auto; border-radius: 22px; }
+.sg-photo figcaption { max-width: 560px; margin: 1rem auto 0; color: var(--sg-deep); font-size: .98rem; font-weight: 600; line-height: 1.7; text-align: center; word-break: keep-all; }
+.sg-photo figcaption span { display: block; margin-top: .3rem; color: #7a847f; font-size: .74rem; font-weight: 500; }
+
 /* 도표 공통 */
 .sg-figure {
   margin: 2.6rem 0;
