@@ -280,4 +280,55 @@ for (const absolutePath of koreanHtml) {
   assert.doesNotMatch(html, /href="(?:\.\.\/)?be-deer\.html\?v=/, `BE DEER 내부 링크에 캐시용 쿼리가 남아 있습니다: ${path.relative(siteRoot, absolutePath)}`);
 }
 
+// 폰트를 불러오는 경로가 아예 없던 칼럼이 일곱 편 있었다. preload만 있고 @font-face가 없어
+// 2MB를 내려받고 한 글자도 쓰지 않은 페이지도 있었다. preload는 내려받으라는 지시일 뿐
+// 글꼴로 등록하지 않는다. 눈으로 볼 때까지 아무도 몰랐으므로 여기서 함께 검사한다.
+{
+  const fontPages = [];
+  for (const directory of ["", "columns", "en", "ja", "zh-cn"]) {
+    const absoluteDir = path.join(siteRoot, directory);
+    for (const name of fs.readdirSync(absoluteDir)) {
+      if (!name.endsWith(".html")) continue;
+      fontPages.push(path.join(directory, name));
+    }
+  }
+  assert.ok(fontPages.length > 100, `폰트 검사 대상 페이지가 너무 적습니다: ${fontPages.length}`);
+
+  const cssHasPretendardFace = new Map();
+  const cssDeclaresPretendard = (cssRelativePath) => {
+    if (!cssHasPretendardFace.has(cssRelativePath)) {
+      const absolute = path.join(siteRoot, cssRelativePath);
+      const css = fs.existsSync(absolute) ? fs.readFileSync(absolute, "utf8") : "";
+      cssHasPretendardFace.set(cssRelativePath, /@font-face[^}]*Pretendard/i.test(css));
+    }
+    return cssHasPretendardFace.get(cssRelativePath);
+  };
+
+  for (const pageRelativePath of fontPages) {
+    const html = fs.readFileSync(path.join(siteRoot, pageRelativePath), "utf8");
+    const pageDir = path.dirname(path.join(siteRoot, pageRelativePath));
+
+    const viaCdn = html.includes("pretendardvariable-dynamic-subset");
+    const viaInlineFace = /@font-face[^}]*Pretendard/i.test(html);
+    const viaLinkedCss = [...html.matchAll(/<link[^>]+href="([^"]+\.css)(?:\?[^"]*)?"/gi)]
+      .map((match) => match[1])
+      .filter((href) => !/^https?:/i.test(href))
+      .some((href) => cssDeclaresPretendard(path.relative(siteRoot, path.resolve(pageDir, href))));
+
+    assert.ok(
+      viaCdn || viaInlineFace || viaLinkedCss,
+      `Pretendard를 불러오는 경로가 없습니다: ${pageRelativePath}`,
+    );
+
+    // 글꼴로 등록되지 않는 preload는 매 방문마다 2MB를 버린다.
+    if (/<link[^>]+rel="preload"[^>]+PretendardVariable\.woff2/i.test(html)) {
+      assert.ok(
+        viaInlineFace || viaLinkedCss,
+        `@font-face 없이 폰트를 preload만 합니다(내려받고 쓰지 않습니다): ${pageRelativePath}`,
+      );
+    }
+  }
+  process.stdout.write(`폰트 검증 통과: ${fontPages.length}개 페이지\n`);
+}
+
 process.stdout.write(`SEO 표면 검증 통과: 사이트맵 ${sitemapUrls.length}개, 칼럼 ${directCardLinks.length}개\n`);
