@@ -529,3 +529,81 @@
 @media (max-width: 600px) {
   .ch-photo img { max-width: 300px; }
 }
+
+/* 추석 칼럼 전용: 머리 · 도판 */
+.ch-header { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 56px; align-items: center; max-width: 1120px; padding: 88px 28px 48px; text-align: left; }
+.ch-header .column-breadcrumb { justify-content: flex-start; }
+.ch-header h1 { margin: 0; font-size: clamp(2rem, 4vw, 3.4rem); }
+.ch-header .ch-lead { max-width: 520px; margin: 26px 0 26px; text-align: left; line-height: 1.85; }
+.ch-header .ch-byline { justify-content: flex-start; }
+.ch-header__photo { position: relative; margin: 0; }
+.ch-header__photo::before { content: ""; position: absolute; top: -26px; right: -26px; width: 132px; height: 132px; border-radius: 50%; background: var(--sg-warm); z-index: 0; }
+.ch-header__photo img { position: relative; z-index: 1; display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 26px; }
+
+.ch-article .ch-dropcap::first-letter { float: left; margin: .12em .14em 0 0; color: var(--sg-green); font-size: 3.4em; font-weight: 700; line-height: .82; }
+
+.ch-calc { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin: 2.2rem 0; }
+.ch-calc > div { padding: 1.4rem 1.5rem; border: 1px solid var(--sg-line); border-radius: 20px; background: #fff; }
+.ch-calc > div.is-key { border-color: var(--sg-deep); background: var(--sg-deep); color: #fff; }
+.ch-calc small { display: block; color: var(--sg-green); font-size: .74rem; font-weight: 800; letter-spacing: .04em; }
+.ch-calc .is-key small { color: #bfe0d4; }
+.ch-calc strong { display: block; margin: .4rem 0 .5rem; font-size: 2.1rem; font-weight: 800; letter-spacing: -.04em; line-height: 1.1; }
+.ch-calc strong span { margin-left: .2rem; font-size: .9rem; font-weight: 700; }
+.ch-article .ch-calc p { margin: 0; font-size: .84rem; line-height: 1.6; color: inherit; opacity: .85; }
+.ch-calc > i { color: var(--sg-muted); font-size: .9rem; font-style: normal; font-weight: 800; white-space: nowrap; }
+
+.ch-peel { margin: 2.4rem 0; padding: 1.8rem 1.8rem 1.4rem; border-radius: 24px; background: var(--sg-soft); }
+.ch-peel figcaption span { display: block; margin-bottom: .45rem; color: var(--sg-green); font-size: .66rem; font-weight: 800; letter-spacing: .16em; }
+.ch-peel figcaption strong { display: block; margin-bottom: 1.4rem; color: var(--sg-deep); font-size: 1.15rem; letter-spacing: -.03em; }
+.ch-peel ol { margin: 0; padding: 0; list-style: none; display: grid; gap: .7rem; }
+.ch-peel li { display: grid; grid-template-columns: 130px 1fr; gap: 1rem; align-items: center; }
+.ch-peel li > b { color: var(--sg-deep); font-size: .82rem; font-weight: 700; }
+.ch-peel__bar { display: flex; height: 38px; border-radius: 10px; overflow: hidden; }
+.ch-peel__bar i { display: flex; align-items: center; justify-content: center; padding: 0 .4rem; color: #fff; font-size: .72rem; font-style: normal; font-weight: 700; white-space: nowrap; overflow: hidden; }
+.ch-peel__bar .is-gut { flex: 0 0 22%; background: #b9b2ae; }
+.ch-peel__bar .is-glyco { flex: 0 0 33%; background: #5a96a2; }
+.ch-peel__bar .is-salt { flex: 0 0 30%; background: #006c78; }
+.ch-peel__bar .is-fat { flex: 0 0 15%; background: #247860; }
+.ch-peel > small { display: block; margin-top: 1.2rem; color: #6b746f; font-size: .74rem; line-height: 1.7; word-break: keep-all; }
+
+.ch-studies { display: grid; grid-template-columns: 1fr 1fr; gap: .9rem; margin: 2rem 0; }
+.ch-studies article { padding: 1.4rem 1.4rem 1.2rem; border-top: 3px solid var(--sg-green); border-radius: 0 0 18px 18px; background: #fff; box-shadow: 0 1px 0 var(--sg-line) inset, 1px 0 0 var(--sg-line) inset, -1px 0 0 var(--sg-line) inset, 0 -1px 0 var(--sg-line) inset; }
+.ch-studies small { display: block; color: var(--sg-green); font-size: .72rem; font-weight: 800; letter-spacing: .04em; }
+.ch-studies strong { display: block; margin: .5rem 0 .6rem; color: var(--sg-deep); font-size: 1.02rem; line-height: 1.45; word-break: keep-all; }
+.ch-article .ch-studies p { margin: 0; font-size: .86rem; line-height: 1.7; }
+
+.ch-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .5rem; margin: 2.2rem 0; padding: 0; list-style: none; }
+.ch-week li { display: flex; flex-direction: column; gap: .4rem; padding: 1rem .8rem; border: 1px solid var(--sg-line); border-radius: 16px; background: #fff; }
+.ch-week li.is-key { border-color: var(--sg-deep); background: var(--sg-deep); color: #fff; }
+.ch-week b { color: var(--sg-green); font-size: .74rem; font-weight: 800; letter-spacing: .06em; }
+.ch-week li.is-key b { color: #bfe0d4; }
+.ch-week strong { font-size: .86rem; line-height: 1.4; word-break: keep-all; }
+.ch-week span { color: #5d6661; font-size: .74rem; line-height: 1.55; word-break: keep-all; }
+.ch-week li.is-key span { color: #dbe9e3; }
+
+.ch-sheet { margin: 2.4rem 0; display: grid; grid-template-columns: 220px 1fr; gap: 1.4rem; align-items: center; }
+.ch-sheet img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2.2; object-fit: cover; object-position: 50% 20%; border-radius: 16px; border: 1px solid var(--sg-line); }
+.ch-sheet figcaption { color: var(--sg-deep); font-size: .9rem; font-weight: 600; line-height: 1.7; word-break: keep-all; }
+.ch-sheet figcaption span { display: block; margin-top: .4rem; color: #7a847f; font-size: .76rem; font-weight: 500; }
+
+@media (max-width: 900px) {
+  .ch-header { grid-template-columns: 1fr; gap: 32px; padding-top: 64px; }
+  .ch-header__photo { max-width: 360px; }
+  .ch-week { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .ch-header { padding: 48px 20px 32px; }
+  .ch-header__photo { max-width: none; }
+  .ch-header__photo::before { width: 90px; height: 90px; top: -16px; right: -10px; }
+  .ch-header__photo img { aspect-ratio: 4 / 3; object-position: 50% 30%; }
+  .ch-calc { grid-template-columns: 1fr; }
+  .ch-calc > i { text-align: center; }
+  .ch-peel { padding: 1.3rem 1rem 1.1rem; }
+  .ch-peel li { grid-template-columns: 1fr; gap: .35rem; }
+  .ch-peel__bar i { font-size: .62rem; padding: 0 .2rem; }
+  .ch-studies { grid-template-columns: 1fr; }
+  .ch-week { grid-template-columns: 1fr; }
+  .ch-week li { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: .7rem; }
+  .ch-week span { flex-basis: 100%; }
+  .ch-sheet { grid-template-columns: 1fr; }
+}

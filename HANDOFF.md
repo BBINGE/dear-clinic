@@ -101,7 +101,8 @@
 ## 2026-09-22 추석 명절 살 칼럼 발행
 
 - `columns/chuseok-holiday-weight.html`, `css/chuseok-holiday-weight.css`(`ch-`). 34호, Shape. 「추석 뒤 2kg, 명절 살은 사흘이면 빠질까요?」 연휴 뒤 검색에 걸리도록 추석(9/25) 전에 미리 올렸다.
-- 뼈대: 체중계의 2kg을 물(글리코겐·염분, Olsson & Saltin 1970) / 지방(연말 연휴 평균 0.37kg이지만 되돌아가지 않음, Yanovski 2000 NEJM) / 리듬(이틀 수면 제한에 허기 24%·고탄수 식욕 33~45%↑, Spiegel 2004)으로 가르고, 연휴 뒤 첫 일주일 순서 → 체성분으로 가르는 BE DEER로 잇는다. 「몸은 시계보다 반복을 기억합니다」는 BE DEER 확정 문장이다.
+- 같은 날 **박성호가 "원고가 짧고 템플릿이다"라고 지적해 다시 썼다.** 앞선 교통사고·다이어트 한약 칼럼과 같은 틀(어두운 카드 4장 히어로 → 흐름도 → 행동 블록)에 내용만 바꿔 끼운 것이 문제였다. **칼럼마다 그 글의 논리에 맞는 도판을 새로 만든다.** 이 글은 제목·사진을 나란히 둔 머리, 2kg×7,700kcal 어림셈 상자, 체중계를 네 번 올려 한 겹씩 덜어 내는 막대 개념도, 연구 카드 2장, D+1~D+7 일주일 띠, 결과지의 ICW/ECW 칸으로 구성했다. 본문 약 7,300자, 참고문헌 6편(Hall 2008, Olsson & Saltin 1970, Yanovski 2000, Helander 2016, Spiegel 2004, Roenneberg 2012). Helander 2016은 NEJM 서신이라 원문을 열 수 없어 요약으로 확인한 범위(2,924명, 미·독·일, 골든위크에도 증가, 연휴 뒤 곧 빠진 몫은 절반 정도)만 썼다. 첫 판에 `~보다 ~쪽에 가깝다`를 세 번 써서 모두 걷어냈다.
+- 「몸은 시계보다 반복을 기억합니다」는 BE DEER 확정 문장이다.
 - 대표 이미지는 BE DEER 생활 사진 `daily-rhythm-evening.webp`를 `assets/images/columns/chuseok-holiday-weight/cover.webp`로 복사한 것이다. **최신 칼럼 대표 이미지는 `assets/images/columns/` 아래에 있어야 발행기가 받는다.**
 - FAQ에 2026 추석 단축 진료 시간(24·26일 10–15시, 25일 14–20시)을 넣었다. 외국인 예약 달력(`js/international-appointment.js`의 `special`)도 같은 시간으로 바꿨고, 이제 `special` 항목에 `hours`를 넣으면 그날 시간이 덮어써진다.
 
