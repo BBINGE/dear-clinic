@@ -83,3 +83,13 @@
   .dear-reads.dear-reads--in-column { margin-top: 2.2rem; padding: 1.3rem 1rem 1.2rem; }
   .dear-reads.dear-reads--in-column .dear-reads__head h2 { font-size: 1.15rem; }
 }
+
+/* 칼럼 안에서는 칼럼마다 다른 section 규칙이 상자 여백을 지우기도 한다. 상자 모양은 여기서 고정한다. */
+.dear-reads.dear-reads--in-column { width: 100% !important; max-width: 760px !important; margin: 3rem auto 0 !important; padding: 1.8rem 1.8rem 1.6rem !important; border: 0 !important; border-radius: 24px !important; background: #e8e4e2 !important; box-shadow: none !important; }
+.dear-reads.dear-reads--in-column .dear-reads__head { margin: 0 0 1.3rem !important; padding: 0 0 1.1rem !important; }
+.dear-reads.dear-reads--in-column .dear-reads__grid { margin: 0 !important; padding: 0 !important; list-style: none !important; }
+.dear-reads.dear-reads--in-column .dear-reads__grid li::before { content: none !important; }
+.dc-dock + .dear-reads--related { margin-top: 1.2rem !important; }
+@media (max-width: 600px) {
+  .dear-reads.dear-reads--in-column { padding: 1.3rem 1rem 1.2rem !important; }
+}

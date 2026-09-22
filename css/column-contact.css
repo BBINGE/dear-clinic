@@ -1,85 +1,90 @@
-/* 칼럼 상단 원장 카드(.dc-hello)와 하단 안내 도크(.dc-dock). js/column-contact.js가 칼럼에 넣는다.
-   기준: 귀엽고 앙증맞되 깔끔하게, 11pt 이하 작은 글씨, 절제된 여백, 글만 늘어놓지 않기. (2026-09-22 박성호) */
-.dc-hello, .dc-dock { box-sizing: border-box; font-family: inherit; color: #2d312f; text-align: left; }
+/* 칼럼 CTA: 상단 원장 카드(.dc-hello, js/column-contact.js)와 하단 오시는 길 도크(.dc-dock, 배포 때 HTML에 새김).
+   칼럼의 CTA는 이 둘로 통일한다(박성호, 2026-09-22).
+   기준: 귀엽고 앙증맞되 깔끔하게, 11pt 이하 작은 글씨, 절제된 여백, 글만 늘어놓지 않기.
+   칼럼마다 section·p·h2에 강한 규칙이 있어(예: `.ch-article > section:not(.ch-refs) { padding: 0 }`)
+   상자 테두리·여백·배경은 !important로 고정한다. 이 파일 밖의 규칙이 모양을 바꾸지 못하게 하기 위해서다. */
+.dc-hello, .dc-dock { box-sizing: border-box !important; font-family: inherit; color: #2d312f; text-align: left; }
 .dc-hello *, .dc-dock * { box-sizing: border-box; }
+.dc-hello p, .dc-dock p, .dc-hello ul, .dc-dock ul, .dc-hello li, .dc-dock li { padding: 0; }
+.dc-hello li::before, .dc-dock li::before { content: none !important; }
 
 /* ---------- 상단 원장 카드 ---------- */
-.dc-hello { display: flex; gap: 14px; align-items: flex-start; width: min(100%, 780px); margin: 0 auto 28px; padding: 14px 16px; border: 1px solid #e8e4e2; border-radius: 18px; background: #fff; box-shadow: 0 6px 18px rgba(60, 96, 90, .06); }
-.dc-hello__face { flex: 0 0 50px; width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background: #e8e4e2; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(36, 120, 96, .25); }
-.dc-hello__face img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-.dc-hello__body { min-width: 0; flex: 1; }
-.dc-hello__who { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 4px; font-size: 11px; color: #555550; }
+.dc-hello {
+  display: grid !important;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas: "face body" "face side";
+  column-gap: 14px; row-gap: 10px; align-items: start;
+  width: min(100%, 780px); max-width: none !important;
+  margin: 0 auto 28px !important; padding: 14px 16px !important;
+  border: 1px solid #e8e4e2 !important; border-radius: 18px !important;
+  background: #fff !important; box-shadow: 0 6px 18px rgba(60, 96, 90, .06) !important;
+}
+.dc-hello__face { grid-area: face; display: block; width: 50px; height: 50px; border-radius: 50%; overflow: hidden; background: #f8f8f6; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(36, 120, 96, .25); }
+.dc-hello__face img { display: block; width: 100%; height: 100%; margin: 0; object-fit: cover; object-position: 50% 50%; }
+.dc-hello__body { grid-area: body; min-width: 0; }
+.dc-hello__side { grid-area: side; min-width: 0; }
+.dc-hello .dc-hello__who { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 4px !important; color: #555550; font-size: 11px !important; line-height: 1.5; }
 .dc-hello__who a { color: #247860; font-weight: 800; text-decoration: none; }
 .dc-hello__who span { padding: 1px 6px; border-radius: 999px; background: #f1f6f3; color: #3c605a; font-size: 10px; font-weight: 700; }
-.dc-hello__quote { margin: 0; color: #173f37; font-size: 13.5px; font-weight: 700; line-height: 1.55; letter-spacing: -.02em; word-break: keep-all; }
-.dc-hello__ask { margin: 3px 0 10px; color: #555550; font-size: 12.5px; line-height: 1.55; word-break: keep-all; }
+.dc-hello .dc-hello__quote { margin: 0 !important; color: #173f37; font-size: 13.5px !important; font-weight: 700; line-height: 1.55 !important; letter-spacing: -.02em; word-break: keep-all; }
+.dc-hello .dc-hello__ask { margin: 3px 0 0 !important; color: #555550; font-size: 12.5px !important; line-height: 1.55 !important; word-break: keep-all; }
 .dc-hello__actions { display: flex; flex-wrap: wrap; gap: 6px; }
-.dc-chip { display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 11px; border-radius: 999px; border: 1px solid #dce9e3; background: #f5faf7; color: #247860; font-size: 12px; font-weight: 800; text-decoration: none; white-space: nowrap; transition: transform .18s ease, background .18s ease; }
+.dc-chip { display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 11px; border-radius: 999px; border: 1px solid #dce9e3; background: #f5faf7; color: #247860; font-size: 12px; font-weight: 800; line-height: 1; text-decoration: none !important; white-space: nowrap; transition: transform .18s ease, background .18s ease; }
 .dc-chip svg { width: 14px; height: 14px; flex: none; }
-.dc-chip:hover, .dc-chip:focus-visible { transform: translateY(-1px); background: #e6f1ec; }
-.dc-chip--solid { border-color: #247860; background: #247860; color: #fff; }
-.dc-chip--solid:hover, .dc-chip--solid:focus-visible { background: #1d6650; }
-.dc-hours { display: flex; flex-wrap: wrap; gap: 4px; margin: 10px 0 0; padding: 0; list-style: none; }
-.dc-hours li { margin: 0; padding: 2px 7px; border-radius: 6px; background: #f8f8f6; color: #555550; font-size: 10.5px; line-height: 1.6; white-space: nowrap; }
-.dc-hours li::before { content: none; }
-.dc-hours b { color: #3c605a; font-weight: 800; margin-right: 3px; }
+.dc-chip:hover, .dc-chip:focus-visible { transform: translateY(-1px); }
+.dc-hours { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 0 !important; padding: 0 !important; list-style: none !important; }
+.dc-hours li { margin: 0 !important; padding: 2px 7px !important; border-radius: 6px; background: #f8f8f6; color: #555550; font-size: 10.5px !important; line-height: 1.6 !important; white-space: nowrap; }
+.dc-hours b { margin-right: 3px; color: #3c605a; font-weight: 800; }
 
-/* ---------- 하단 안내 도크 ---------- */
-.dc-dock { width: 100%; margin: 40px 0 0; padding: 16px; border-radius: 22px; background: #e8e4e2; }
-.dc-dock__head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 12px; }
-.dc-dock__head p { margin: 0; color: #247860; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; }
-.dc-dock__head strong { color: #173f37; font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+/* PC: "목차 + 본문" 줄과 폭을 맞추면 한 줄로 펼친다. 사진·글씨를 키워 빈 여백을 줄인다. */
+.dc-hello.dc-hello--wide {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas: "face body side";
+  column-gap: 20px; align-items: center;
+  padding: 18px 24px !important; border-radius: 20px !important;
+}
+.dc-hello--wide .dc-hello__face { width: 68px; height: 68px; }
+.dc-hello--wide .dc-hello__who { font-size: 11.5px !important; }
+.dc-hello--wide .dc-hello__who span { font-size: 10.5px; }
+.dc-hello--wide .dc-hello__quote { font-size: 14.5px !important; }
+.dc-hello--wide .dc-hello__ask { font-size: 13px !important; }
+.dc-hello--wide .dc-hello__side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.dc-hello--wide .dc-chip { height: 34px; padding: 0 14px; font-size: 12.5px; }
+.dc-hello--wide .dc-hours { justify-content: flex-end; max-width: 330px; margin: 0 !important; }
+
+/* ---------- 하단 오시는 길 도크 ---------- */
+.dc-dock {
+  width: 100% !important; max-width: 760px !important;
+  margin: 40px auto 0 !important; padding: 16px !important;
+  border: 0 !important; border-radius: 22px !important;
+  background: #e8e4e2 !important; box-shadow: none !important;
+}
+.dc-dock .dc-dock__head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 12px !important; padding: 0 2px !important; border: 0 !important; }
+.dc-dock .dc-dock__head p { margin: 0 !important; color: #247860; font-size: 10.5px !important; font-weight: 800; line-height: 1.4 !important; letter-spacing: .14em; }
+.dc-dock .dc-dock__head strong { color: #173f37; font-size: 15px !important; font-weight: 800; line-height: 1.4; letter-spacing: -.02em; }
 .dc-dock__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 10px; }
 .dc-dock__map { position: relative; min-height: 196px; overflow: hidden; border-radius: 16px; background: #f8f8f6; }
-.dc-dock__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.dc-dock__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; border: 0; }
 .dc-dock__side { display: flex; flex-direction: column; gap: 8px; }
 .dc-dock__info { padding: 11px 12px; border-radius: 14px; background: #fff; }
 .dc-dock__info strong { display: block; margin: 0 0 3px; color: #173f37; font-size: 13px; font-weight: 800; }
-.dc-dock__info address { margin: 0; color: #555550; font-size: 11.5px; font-style: normal; line-height: 1.55; word-break: keep-all; }
+.dc-dock .dc-dock__info address { margin: 0 !important; color: #555550; font-size: 11.5px !important; font-style: normal; line-height: 1.55 !important; word-break: keep-all; }
 .dc-dock__info address a { color: #247860; font-weight: 800; text-decoration: none; }
-.dc-dock__info .dc-hours { margin-top: 7px; }
-.dc-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
-.dc-tiles li { margin: 0; padding: 0; }
-.dc-tiles li::before { content: none; }
-.dc-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; height: 64px; border-radius: 14px; background: #fff; color: #3c605a; font-size: 11px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 10px rgba(60, 96, 90, .08); animation: dc-float 3.2s ease-in-out infinite; }
+.dc-dock__info .dc-hours { margin-top: 7px !important; }
+.dc-tiles { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0 !important; padding: 0 !important; list-style: none !important; }
+.dc-tiles li { margin: 0 !important; padding: 0 !important; }
+.dc-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; height: 64px; border-radius: 14px; background: #fff; color: #3c605a; font-size: 11px; font-weight: 800; line-height: 1.2; text-decoration: none !important; box-shadow: 0 4px 10px rgba(60, 96, 90, .08); animation: dc-float 3.2s ease-in-out infinite; }
 .dc-tiles li:nth-child(2) .dc-tile { animation-delay: .4s; }
 .dc-tiles li:nth-child(3) .dc-tile { animation-delay: .8s; }
 .dc-tiles li:nth-child(4) .dc-tile { animation-delay: 1.2s; }
 .dc-tile i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 10px; background: #f1f6f3; color: #247860; }
 .dc-tile svg { width: 16px; height: 16px; }
-.dc-tile--main { background: #247860; color: #fff; }
-.dc-tile--main i { background: rgba(255, 255, 255, .16); color: #fff; }
 .dc-tile:hover, .dc-tile:focus-visible { animation-play-state: paused; transform: translateY(-3px); }
 @keyframes dc-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
-@media (max-width: 640px) {
-  .dc-hello { gap: 11px; padding: 12px 13px; border-radius: 16px; }
-  .dc-hello__face { flex-basis: 42px; width: 42px; height: 42px; }
-  .dc-hello__quote { font-size: 13px; }
-  .dc-hello__ask { font-size: 12px; }
-  .dc-dock { padding: 13px; border-radius: 18px; }
-  .dc-dock__grid { grid-template-columns: 1fr; }
-  .dc-dock__map { min-height: 160px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .dc-tile { animation: none; }
-  .dc-chip, .dc-tile { transition: none; }
-}
-
-/* 칼럼 본문의 section·p·address 규칙이 덮어쓰지 않도록 다시 고정한다. */
-.dc-dock.dc-dock { margin: 40px 0 0; padding: 16px; border: 0; border-radius: 22px; background: #e8e4e2; }
-.dc-dock.dc-dock .dc-dock__head { margin: 0 0 12px; padding: 0 2px; border: 0; }
-.dc-dock.dc-dock .dc-dock__head p { margin: 0; padding: 0; font-size: 10.5px; line-height: 1.4; }
-.dc-dock.dc-dock .dc-dock__head strong { font-size: 15px; line-height: 1.4; }
-.dc-dock.dc-dock address { margin: 0; font-size: 11.5px; line-height: 1.55; }
-.dc-hello.dc-hello p { padding: 0; }
-.dc-hello.dc-hello .dc-hello__quote { margin: 0; font-size: 13.5px; line-height: 1.55; }
-.dc-hello.dc-hello .dc-hello__ask { margin: 3px 0 10px; font-size: 12.5px; line-height: 1.55; }
-@media (max-width: 640px) {
-  .dc-dock.dc-dock { padding: 13px; border-radius: 18px; }
-  .dc-hello.dc-hello .dc-hello__quote { font-size: 13px; }
-  .dc-hello.dc-hello .dc-hello__ask { font-size: 12px; }
-}
+/* 칼럼에 지도가 따로 남아 있을 때: 도크 지도 없이 정보와 타일을 가로로 둔다. */
+.dc-dock--no-map .dc-dock__grid { grid-template-columns: 1fr; }
+.dc-dock--no-map .dc-dock__side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 8px; align-items: stretch; }
 
 /* 채널 색: 네이버(예약·톡톡)는 네이버 초록, 전화는 디어 초록, 인스타는 인스타 색.
    확정 팔레트 밖의 색은 외부 서비스로 가는 버튼을 알아보게 하는 용도로만 쓴다(박성호, 2026-09-22). */
@@ -91,13 +96,18 @@
 .dc-chip.dc-chip--naver { border-color: #03c75a; background: #03c75a; color: #fff; }
 .dc-chip.dc-chip--naver:hover, .dc-chip.dc-chip--naver:focus-visible { background: #02b350; }
 .dc-chip.dc-chip--phone { border-color: #cfe3da; background: #fff; color: #247860; }
-.dc-chip.dc-chip--phone svg { color: #247860; }
 
-/* 칼럼에 이미 지도가 있을 때: 지도 없이 정보와 타일을 가로로 둔다. */
-.dc-dock--no-map .dc-dock__grid { grid-template-columns: 1fr; }
-.dc-dock--no-map .dc-dock__side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 8px; align-items: stretch; }
 @media (max-width: 640px) {
+  .dc-hello { column-gap: 11px; padding: 12px 13px !important; border-radius: 16px !important; }
+  .dc-hello__face { width: 42px; height: 42px; }
+  .dc-hello .dc-hello__quote { font-size: 13px !important; }
+  .dc-hello .dc-hello__ask { font-size: 12px !important; }
+  .dc-dock { padding: 13px !important; border-radius: 18px !important; }
+  .dc-dock__grid { grid-template-columns: 1fr; }
+  .dc-dock__map { min-height: 160px; }
   .dc-dock--no-map .dc-dock__side { grid-template-columns: 1fr; }
 }
-/* 칼럼마다 다른 본문 폭 안에서 도크가 지나치게 넓어지지 않게 한다. */
-.dc-dock.dc-dock { max-width: 760px; margin-left: auto; margin-right: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .dc-tile { animation: none; }
+  .dc-chip, .dc-tile { transition: none; }
+}

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
+import { CONTACT_DOCK } from "./refresh-column-cards.mjs";
 
 const BASE_URL = "https://dearhani.com";
 const PUBLISHER_MARKER = "<!-- GENERATED_BY_DEAR_COLUMN_PUBLISHER -->";
@@ -775,8 +776,8 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="twitter:image:alt" content="${escapeHtml(content.coverAlt)}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
   <link rel="stylesheet" href="../css/style.css?v=20260919-1">
-  <link rel="stylesheet" href="../css/dear-reads.css?v=20260922-3">
-  <link rel="stylesheet" href="../css/column-contact.css?v=20260922-7">
+  <link rel="stylesheet" href="../css/dear-reads.css?v=20260922-4">
+  <link rel="stylesheet" href="../css/column-contact.css?v=20260922-8">
   <script type="application/ld+json">${schema}</script>
 </head>
 <body class="column-article-body column-${content.slug}${preview ? " is-preview" : ""}">
@@ -806,10 +807,9 @@ ${previewNotice}
     <div class="column-article__content">
       ${answerHtml}
       ${body}
-      <section class="column-consult"><p class="column-section-label">CONSULTATION</p><h2>현재의 상태를<br>함께 살펴보고 싶다면</h2><p>불편함과 생활의 변화를 편하게 이야기해 주세요.<br>진찰을 통해 확인이 필요한 부분과 가능한 방향을 설명해 드립니다.</p><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">네이버 진료 예약 <span aria-hidden="true">→</span></a></section>
       ${faq.html}
       ${sources}
-      <section class="column-nap" aria-labelledby="clinic-info"><p class="column-section-label">DEAR KOREAN MEDICINE CLINIC</p><h2 id="clinic-info">디어한의원</h2><address>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address><div><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">네이버 예약</a><a href="https://map.naver.com/p/search/%EB%94%94%EC%96%B4%ED%95%9C%EC%9D%98%EC%9B%90" target="_blank" rel="noopener">위치 보기</a></div></section>
+      <!-- CONTACT_DOCK:START -->${CONTACT_DOCK}<!-- CONTACT_DOCK:END -->
       <!-- RELATED_COLUMNS:START --><!-- RELATED_COLUMNS:END -->
     </div>
   </div>
@@ -867,7 +867,7 @@ ${content.slug === "weight-inattentional-blindness" ? `<script>
 })();
 </script>` : ""}
 <script src="../js/main.js?v=20260922-1"></script>
-<script src="../js/column-contact.js?v=20260922-7"></script>
+<script src="../js/column-contact.js?v=20260922-13"></script>
 </body>
 </html>
 `;

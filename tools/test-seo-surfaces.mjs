@@ -145,9 +145,9 @@ const dietPrice = read("columns/diet-herbal-medicine-price.html");
 assert.match(dietPrice, /class="column-table-scroll"[^>]*tabindex="0"[\s\S]*?<table>/, "다이어트 한약 가격표의 모바일 스크롤 래퍼가 없습니다.");
 
 const insomnia = read("columns/insomnia-without-sleeping-pills.html");
-assert.match(insomnia, /class="column-nap"/, "불면증 칼럼의 NAP 카드가 없습니다.");
+assert.match(insomnia, /class="dc-dock"/, "불면증 칼럼의 오시는 길 도크가 없습니다.");
 assert.match(insomnia, /href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "불면증 칼럼의 네이버 예약 링크가 없습니다.");
-assert.match(insomnia, /href="https:\/\/map\.naver\.com\/p\/search\//, "불면증 칼럼의 위치 보기 링크가 없습니다.");
+assert.match(insomnia, /href="https:\/\/map\.naver\.com\/p\/entry\/place\/1989406480"/, "불면증 칼럼의 네이버 지도 링크가 없습니다.");
 assert.doesNotMatch(insomnia, /<footer class="footer-card"/, "불면증 칼럼에 간이 푸터가 남아 있습니다.");
 assert.match(insomnia, /\.faq\{margin-top:clamp\(2\.4rem,4vw,3\.5rem\);padding:0\}/, "불면증 칼럼 FAQ에 사이트 전역 section 패딩이 다시 적용될 수 있습니다.");
 assert.match(insomnia, /\.sources\{margin-top:clamp\(2\.4rem,4vw,3\.5rem\);padding:2rem 0 0\}/, "불면증 칼럼 참고자료의 하단 패딩이 다른 칼럼 기준과 다릅니다.");
@@ -157,8 +157,7 @@ assert.match(autonomicStress, /<body class="autonomic-stress-page">/, "자율신
 assert.match(autonomicStress, /<nav class="nav" id="top">[\s\S]*id="navToggle"[\s\S]*id="navMenu"/, "자율신경 칼럼의 공통 내비게이션이 없습니다.");
 assert.doesNotMatch(autonomicStress, /class="nav"[^>]*display\s*:\s*none|<header class="mast">/, "자율신경 칼럼에 숨김 또는 별도 내비게이션이 남아 있습니다.");
 assert.match(autonomicStress, /css\/autonomic-stress\.css\?v=20260919-1/, "자율신경 칼럼 전용 CSS 캐시 버전이 갱신되지 않았습니다.");
-assert.match(autonomicStress, /class="[^"]*column-consult[^"]*"[\s\S]*class="autonomic-primary-cta"[\s\S]*href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "자율신경 칼럼의 주 예약 CTA가 없습니다.");
-assert.match(autonomicStress, /class="[^"]*column-nap[^"]*"[\s\S]*서울 서초구 사임당로 143[\s\S]*3층 309호, 310호[\s\S]*href="tel:02-3486-1777"[\s\S]*href="https:\/\/map\.naver\.com\/p\/search\//, "자율신경 칼럼의 NAP 또는 연락 CTA가 없습니다.");
+assert.match(autonomicStress, /class="dc-dock"[\s\S]*서울 서초구 사임당로 143 3층 309호, 310호[\s\S]*href="tel:02-3486-1777"[\s\S]*href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "자율신경 칼럼의 오시는 길 도크(주소·전화·예약)가 없습니다.");
 assert.equal((autonomicStress.match(/\bid="contact"/g) || []).length, 1, "자율신경 칼럼의 contact ID는 공통 푸터에만 있어야 합니다.");
 
 const home = read("index.html");
@@ -271,11 +270,10 @@ const mapContentStart = mapTerritory.indexOf('<div class="column-article__conten
 const mapArticleEnd = mapTerritory.indexOf("</article>", mapContentStart);
 assert.ok(mapContentStart >= 0 && mapArticleEnd > mapContentStart, "지도와 영토 칼럼의 본문 구조를 찾지 못했습니다.");
 const mapContent = mapTerritory.slice(mapContentStart, mapArticleEnd);
-assert.match(mapContent, /class="column-consult"/, "지도와 영토 칼럼의 하단 상담 CTA가 본문 안에 없습니다.");
-assert.match(mapContent, /class="column-nap"/, "지도와 영토 칼럼의 NAP이 본문 안에 없습니다.");
+assert.match(mapContent, /class="dc-dock"/, "지도와 영토 칼럼의 오시는 길 도크가 본문 안에 없습니다.");
 assert.match(mapContent, /href="https:\/\/m\.booking\.naver\.com\/booking\/13\/bizes\/729883"/, "지도와 영토 칼럼의 네이버 예약 링크가 없습니다.");
 assert.match(mapContent, /href="tel:02-3486-1777"/, "지도와 영토 칼럼의 전화 링크가 없습니다.");
-assert.match(mapContent, /href="https:\/\/map\.naver\.com\/p\/search\//, "지도와 영토 칼럼의 위치 보기 링크가 없습니다.");
+assert.match(mapContent, /href="https:\/\/map\.naver\.com\/p\/entry\/place\/1989406480"/, "지도와 영토 칼럼의 네이버 지도 링크가 없습니다.");
 
 const koreanHtml = [
   ...fs.readdirSync(siteRoot).filter((name) => name.endsWith(".html")).map((name) => path.join(siteRoot, name)),
@@ -365,6 +363,10 @@ for (const name of fs.readdirSync(path.join(siteRoot, "columns")).filter((file) 
   assert.match(html, /js\/column-contact\.js\?v=/, `칼럼에 원장 상담 카드 스크립트가 없습니다: ${name}`);
   assert.match(html, /css\/column-contact\.css\?v=/, `칼럼에 원장 상담 카드 스타일이 없습니다: ${name}`);
   assert.ok(html.includes("<!-- RELATED_COLUMNS:START -->"), `칼럼에 함께 읽을 글 자리가 없습니다: ${name}`);
+  // 칼럼 CTA는 오시는 길 도크 하나로 통일했다. 주소·전화·예약이 HTML에 새겨져 있어야 하고, 옛 상담·병원정보 상자는 없어야 한다.
+  const dock = html.match(/<section class="dc-dock"[\s\S]*?<\/section>/)?.[0] || "";
+  assert.ok(dock.includes("서울 서초구 사임당로 143 3층 309호, 310호") && dock.includes('href="tel:02-3486-1777"') && dock.includes("m.booking.naver.com/booking/13/bizes/729883"), `칼럼 오시는 길 도크에 주소·전화·예약이 없습니다: ${name}`);
+  assert.doesNotMatch(html, /class="column-consult"|class="column-nap"/, `칼럼에 옛 상담·병원정보 상자가 남아 있습니다: ${name}`);
 }
 {
   const publisher = read("tools/publish-column.mjs");

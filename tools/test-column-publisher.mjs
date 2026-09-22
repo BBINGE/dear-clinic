@@ -133,8 +133,12 @@ try {
   assert.match(article, /href="#생활-리듬에서-확인하는-것"/);
   assert.match(article, /href="#제목-3도-칼럼-소제목으로-표시됩니다"/);
   assert.doesNotMatch(article, /의료진/);
-  const napCard = article.match(/<section class="column-nap"[\s\S]*?<\/section>/)?.[0];
-  assert.ok(napCard, "컬럼 NAP 카드를 찾지 못했습니다.");
+  // 칼럼 CTA는 오시는 길 도크 하나로 통일했다. 주소·전화·예약은 발행 때부터 HTML에 있어야 한다.
+  const napCard = article.match(/<section class="dc-dock"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(napCard, "칼럼 오시는 길 도크를 찾지 못했습니다.");
+  assert.match(napCard, /m\.booking\.naver\.com\/booking\/13\/bizes\/729883/);
+  assert.match(napCard, /tel:02-3486-1777/);
+  assert.doesNotMatch(article, /class="column-consult"|class="column-nap"/);
   assert.doesNotMatch(napCard, /사업자등록번호/);
   assert.match(napCard, /서울 서초구 사임당로 143/);
   assert.match(article, /class="column-rich-section"><h2>제목 3도 칼럼 소제목으로 표시됩니다<\/h2>/);

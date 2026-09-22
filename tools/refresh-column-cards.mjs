@@ -52,6 +52,18 @@ function fillMarker(html, name, content, file) {
   return html.replace(pattern, (all, start, end) => `${start}${content}${end}`);
 }
 
+// 칼럼 CTA는 이 도크 하나로 통일한다(박성호, 2026-09-22). 모양은 css/column-contact.css, 위쪽 원장 카드는 js/column-contact.js.
+// 진료시간·주소·전화는 CLAUDE.md의 확정값을 줄이지 않고 옮긴다.
+const SVG = {
+  talk: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 1 3.3 6.4L4 20l1.2-3.6A7.9 7.9 0 0 1 4 12z"/><path d="M9 11.5h.01M12 11.5h.01M15 11.5h.01"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 4.5h-3a1 1 0 0 0-1 1c0 8.3 6.7 15 15 15a1 1 0 0 0 1-1v-3a1 1 0 0 0-.8-1l-3.3-.7a1 1 0 0 0-1 .3l-1.2 1.4a12.4 12.4 0 0 1-5.7-5.7l1.4-1.2a1 1 0 0 0 .3-1L9.5 5.3a1 1 0 0 0-1-.8z"/></svg>',
+  booking: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M4 9.5h16M8 3.5v3M16 3.5v3M9 14l2 2 4-4"/></svg>',
+  instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><path d="M16.6 7.4h.01"/></svg>',
+};
+const HOURS = '<ul class="dc-hours" aria-label="진료시간"><li><b>월·화·수·금</b>10:00–20:00</li><li><b>점심</b>13:00–14:00</li><li><b>목</b>14:00–20:00</li><li><b>토</b>10:00–15:00</li><li><b>일</b>정기휴무</li></ul>';
+const EXT = 'target="_blank" rel="noopener"';
+export const CONTACT_DOCK = `<section class="dc-dock" aria-labelledby="dc-dock-title"><div class="dc-dock__head"><strong id="dc-dock-title">디어한의원 오시는 길</strong><p>DEAR KOREAN MEDICINE CLINIC</p></div><div class="dc-dock__grid"><div class="dc-dock__map"><iframe src="https://maps.google.com/maps?q=37.4918829,127.0252346&amp;z=16&amp;output=embed" title="디어한의원 위치 지도 (서울 서초구 사임당로 143)" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="dc-dock__side"><div class="dc-dock__info"><strong>디어한의원</strong><address>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock">02-3486-1777</a> · <a href="https://map.naver.com/p/entry/place/1989406480" ${EXT} data-track-action="naver_map" data-track-location="column_dock">네이버 지도</a></address>${HOURS}</div><ul class="dc-tiles"><li><a class="dc-tile dc-tile--naver" href="https://m.booking.naver.com/booking/13/bizes/729883" ${EXT} data-track-action="naver_booking" data-track-location="column_dock"><i>${SVG.booking}</i>네이버 예약</a></li><li><a class="dc-tile dc-tile--talk" href="https://talk.naver.com/ct/w5zr5u" ${EXT} data-track-action="naver_talk" data-track-location="column_dock"><i>${SVG.talk}</i>톡톡 상담</a></li><li><a class="dc-tile dc-tile--phone" href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock"><i>${SVG.phone}</i>전화</a></li><li><a class="dc-tile dc-tile--insta" href="https://www.instagram.com/dearhani__/" ${EXT} data-track-action="instagram" data-track-location="column_dock"><i>${SVG.instagram}</i>인스타그램</a></li></ul></div></div></section>`;
+
 // 수험생 상자는 관련 자산이라 수능이 지나도 숨기지 않는다(박성호, 2026-09-22). 칼럼이 하나도 없을 때만 비운다.
 export function examSeason(cards) {
   const column = cards.find(isExamGongjindan);
@@ -109,6 +121,11 @@ export function refreshAll(files, cards) {
       next = fillMarker(next, name, content, file);
     }
     out[file] = next;
+  }
+  // 칼럼 하단 오시는 길 도크. 주소·전화·예약이 검색엔진이 읽는 HTML에 남도록 스크립트가 아니라 여기서 새긴다.
+  for (const [file, html] of Object.entries(out)) {
+    if (!file.startsWith("columns/") || !html.includes("<!-- CONTACT_DOCK:START -->")) continue;
+    out[file] = fillMarker(html, "CONTACT_DOCK", CONTACT_DOCK, file);
   }
   // 칼럼 하단 "함께 읽으면 좋은 글": 같은 분류의 최신 3편(읽고 있는 글 제외).
   for (const [file, html] of Object.entries(out)) {

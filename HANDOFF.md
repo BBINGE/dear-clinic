@@ -151,6 +151,10 @@
     - 수험생 상자 `EXAM_SEASON:*`(공진단 페이지, 칼럼 `gongjindan`·`gongjindan-effect`·`student-herbal-medicine`의 상자, `cheongdam-gongjindan`의 링크): 가장 최근 "수험생 공진단" 칼럼으로 연결한다. **수능이 지나도 숨기지 않는다**(박성호: 관련 자산이다). "수능을 앞둔 아이가 있다면"은 연중 맞는 조건문이라 그대로 둔다. 내년 수험생 칼럼을 올리면 다섯 곳 링크가 저절로 새 칼럼으로 옮겨진다.
     - 카드의 분류·제목·요약·그림은 모두 `columns.html`의 칼럼 카드 값이다. 한 장짜리 상자에는 번호 표시를 달지 않는다.
     - 칼럼 하단 `RELATED_COLUMNS`: 같은 분류 최신 3편(읽고 있는 글 제외). 자리 표시가 있는 칼럼은 폴더에서 저절로 찾는다.
+- **칼럼 CTA는 상단 원장 카드와 하단 오시는 길 도크 두 가지로 통일했다(2026-09-22 박성호: "앞으로 모든 CTA는 이걸로").** 34편 글 끝에 있던 옛 상담 카드·지도·병원정보 상자를 모두 걷어냈다. 걷어낸 것은 `column-consult`·`column-nap`·`ch-action` 같은 `*-action` 묶음·`clinic`·`clinic-cta`·`gjd-cta`·`post-clinic`·`post-map`·`journal-map`·`dear-journal__map`·`dear-fd__cta`·`cg-final`·`consult`이고, 그 자리에 도크와 함께 읽을 글이 있다. 칼럼별 상담 문구도 함께 사라졌다.
+  - **도크는 배포 때 HTML에 새긴다**(`CONTACT_DOCK` 자리, `tools/refresh-column-cards.mjs`의 `CONTACT_DOCK` 틀). 발행기도 발행 때 같은 틀을 새긴다. 스크립트로 그리면 원본 HTML에서 주소·전화·예약이 빠지기 때문이다. 원장 카드는 `js/column-contact.js`가 그린다.
+  - 원장 카드는 PC에서 목차 왼쪽 끝과 본문 오른쪽 끝에 맞춰 한 줄로 펼친다(사진 68px, 글씨 조금 키움). 목차가 없거나 화면에 떠 있는 칼럼 8편은 가운데 780px로 둔다. 칼럼 CSS가 상자 여백을 지우는 일이 있어(`.ch-article > section:not(.ch-refs) { padding: 0 }`) 상자 모양은 `!important`로 고정했다.
+  - **아직 남은 글 중간 버튼**: 청담 공진단(첫 화면 등 5곳), 서초 다이어트 6가지 이유(1), 산후 다이어트(1), 강남 칼럼 3편(각 1)의 본문 속 예약·전화 버튼은 박성호 결정 대기다.
 - **칼럼 상단 원장 카드·하단 오시는 길 도크를 칼럼 34편 전체와 발행기에 넣었다(2026-09-22, 박성호 모바일 확인 후).** 처음에는 `diet-herbal-medicine-price.html` 한 편에 시범으로 넣었다. `tools/test-seo-surfaces.mjs`가 모든 칼럼과 발행기에 스크립트·스타일·`RELATED_COLUMNS` 자리가 있는지 지킨다.
   - 자리 잡는 규칙(`js/column-contact.js`): 카드는 제목 영역 바로 아래에 둔다. 집필 안내 줄이 제목 뒤에 붙어 있으면 그 아래다(글 끝에 있는 칼럼이 있다). 도크는 `.column-nap` 자리에 두되, 그 상자가 2열 칸 안에 있으면 칸 밖 본문 흐름에 둔다. 칼럼에 이미 지도가 있으면 도크는 지도 없이 나온다. 함께 읽을 글은 늘 도크 바로 아래다.
   - 손으로 골라 둔 "함께 읽으면 좋은 글" 상자는 자동 카드로 바뀌었다. 디어저널(티스토리) 카드는 그대로다. 발행기의 `relatedLinks` 입력은 더 이상 화면에 쓰이지 않는다. `js/column-contact.js` + `css/column-contact.css`.
