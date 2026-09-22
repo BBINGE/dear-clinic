@@ -339,3 +339,11 @@ for (const absolutePath of koreanHtml) {
 }
 
 process.stdout.write(`SEO 표면 검증 통과: 사이트맵 ${sitemapUrls.length}개, 칼럼 ${directCardLinks.length}개\n`);
+
+// Care 패널 칼럼 카드는 배포 때 tools/refresh-care-columns.mjs가 분류별 최신 칼럼으로 채운다.
+{
+  const care = read("care.html");
+  for (const category of ["Focus", "Calm", "Restore", "Relief", "Shape"]) {
+    assert.match(care, new RegExp(`<!-- CARE_COLUMN:${category}:START --><li><a href="columns/[^"]+\\.html">[\\s\\S]*?<!-- CARE_COLUMN:${category}:END -->`), `Care ${category} 칼럼 카드 자리가 없습니다.`);
+  }
+}

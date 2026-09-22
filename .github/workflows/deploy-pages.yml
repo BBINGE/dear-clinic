@@ -29,6 +29,8 @@ jobs:
           node-version: '24'
       - name: 칼럼 목록과 오늘의 글을 최신순으로 정렬
         run: node tools/publish-column.mjs --refresh-index
+      - name: Care 칼럼 카드를 분류별 최신 칼럼으로 갱신
+        run: node tools/refresh-care-columns.mjs
       - name: 공개 칼럼 AI 참고 자료 생성
         run: node tools/build-dear-ai-columns.mjs
       - name: 공개 회귀 테스트
