@@ -67,3 +67,19 @@
   .dear-reads__grid a { transition: none; }
   .dear-reads__grid a:hover { transform: none; }
 }
+
+/* 칼럼 본문 안에 들어갈 때. 칼럼마다 section·p·h2 규칙이 달라 모양이 깨지므로 여기서 다시 고정한다. */
+.dear-reads.dear-reads--in-column { box-sizing: border-box; width: 100%; max-width: 760px; margin: 3rem auto 0; padding: 1.8rem 1.8rem 1.6rem; border: 0; border-radius: 24px; background: #e8e4e2; box-shadow: none; }
+.dear-reads.dear-reads--in-column .dear-reads__head { margin: 0 0 1.3rem; padding: 0 0 1.1rem; border: 0; border-bottom: 1px solid rgba(60, 96, 90, .22); }
+.dear-reads.dear-reads--in-column .dear-reads__head p { margin: 0 0 .5rem; padding: 0; color: #247860; font-size: .66rem; font-weight: 800; line-height: 1.4; letter-spacing: .16em; text-transform: none; }
+.dear-reads.dear-reads--in-column .dear-reads__head h2 { margin: 0; padding: 0; border: 0; color: #173f37; font-size: 1.35rem; font-weight: 750; line-height: 1.35; letter-spacing: -.035em; }
+.dear-reads.dear-reads--in-column .dear-reads__head h2::before, .dear-reads.dear-reads--in-column .dear-reads__head h2::after { content: none; }
+.dear-reads.dear-reads--in-column .dear-reads__grid { margin: 0; padding: 0; }
+.dear-reads.dear-reads--in-column .dear-reads__grid li { margin: 0; padding: 0; font-size: 1rem; line-height: 1.5; }
+.dear-reads.dear-reads--in-column .dear-reads__grid a { border: 0; text-decoration: none; }
+.dear-reads.dear-reads--in-column .dear-reads__grid img { margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+.dear-reads.dear-reads--in-column .dear-reads__grid a > div > span { margin: 0; font-size: .78rem; }
+@media (max-width: 600px) {
+  .dear-reads.dear-reads--in-column { margin-top: 2.2rem; padding: 1.3rem 1rem 1.2rem; }
+  .dear-reads.dear-reads--in-column .dear-reads__head h2 { font-size: 1.15rem; }
+}

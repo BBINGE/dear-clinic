@@ -5,12 +5,10 @@
 //   care.html        CARE_COLUMN:분류           그 분류(Focus·Calm·Restore·Relief·Shape)의 가장 최근 칼럼 1편
 //   be-deer.html     AUTO_COLUMNS:be-deer       다이어트·비만 칼럼(Shape 중 소아성장 제외) 최근 6편
 //   director.html    AUTO_COLUMNS:director      전체 칼럼 최근 4편
-//   EXAM_SEASON:*    (공진단 페이지·칼럼 4편)    가장 최근 "수험생 공진단" 칼럼. 그 칼럼에 적힌
-//                                               "BEFORE THE EXAM · YYYY.MM.DD"(수능일)가 지나면 상자를 숨긴다.
+//   EXAM_SEASON:*    (공진단 페이지·칼럼 4편)    가장 최근 "수험생 공진단" 칼럼. 수능이 지나도 늘 둔다.
 //
 //   node tools/refresh-column-cards.mjs          파일을 갱신한다
 //   node tools/refresh-column-cards.mjs --check  갱신이 필요하면 실패한다(파일은 바꾸지 않는다)
-//   DEAR_TODAY=2026-11-20 node ...               날짜를 바꿔 시험해 본다
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -43,8 +41,9 @@ export function readColumnCards(columnsHtml) {
 const isDiet = (c) => c.category === "Shape" && /다이어트|비만/.test(c.search) && !/성장/.test(c.search);
 const isExamGongjindan = (c) => /수험생/.test(`${c.title} ${c.search}`) && /공진단/.test(`${c.title} ${c.search}`);
 
-function li(card, { badge, prefix = "" }) {
-  return `<li><a href="${prefix}columns/${card.slug}.html"><figure><img${card.contain ? ' class="is-contain"' : ""} src="${prefix}${card.src}" alt="${card.alt}" loading="lazy">${badge ? `<b>${badge}</b>` : ""}</figure><div><small>${card.meta}</small><strong>${card.title}</strong>${card.excerpt ? `<span>${card.excerpt}</span>` : ""}<em>칼럼 읽기 <i aria-hidden="true">→</i></em></div></a></li>`;
+// inColumn: 칼럼 폴더(columns/) 안의 페이지에 넣을 때. 링크는 같은 폴더, 그림은 한 단계 위를 가리킨다.
+function li(card, { badge, inColumn = false }) {
+  return `<li><a href="${inColumn ? "" : "columns/"}${card.slug}.html"><figure><img${card.contain ? ' class="is-contain"' : ""} src="${inColumn ? "../" : ""}${card.src}" alt="${card.alt}" loading="lazy">${badge ? `<b>${badge}</b>` : ""}</figure><div><small>${card.meta}</small><strong>${card.title}</strong>${card.excerpt ? `<span>${card.excerpt}</span>` : ""}<em>칼럼 읽기 <i aria-hidden="true">→</i></em></div></a></li>`;
 }
 
 function fillMarker(html, name, content, file) {
@@ -53,17 +52,13 @@ function fillMarker(html, name, content, file) {
   return html.replace(pattern, (all, start, end) => `${start}${content}${end}`);
 }
 
-export function examSeason(cards, readColumn, today) {
+// 수험생 상자는 관련 자산이라 수능이 지나도 숨기지 않는다(박성호, 2026-09-22). 칼럼이 하나도 없을 때만 비운다.
+export function examSeason(cards) {
   const column = cards.find(isExamGongjindan);
-  if (!column) return null;
-  const body = readColumn(column.slug) || "";
-  const stamp = body.match(/BEFORE THE EXAM · (\d{4})\.(\d{2})\.(\d{2})/);
-  // 수능일을 찾지 못하면 발행한 해의 11월 말까지만 보인다.
-  const examDate = stamp ? `${stamp[1]}-${stamp[2]}-${stamp[3]}` : `${(column.date || today).slice(0, 4)}-11-30`;
-  return { column, examDate, open: today <= examDate };
+  return column ? { column, open: true } : null;
 }
 
-export function refreshAll(files, cards, today, readColumn) {
+export function refreshAll(files, cards) {
   const out = { ...files };
   const need = (file) => { if (out[file] === undefined) throw new Error(`${file} 파일이 없습니다.`); };
 
@@ -87,7 +82,7 @@ export function refreshAll(files, cards, today, readColumn) {
   const recent = cards.slice(0, 4);
   out["director.html"] = fillMarker(out["director.html"], "AUTO_COLUMNS:director", `\n${recent.map((c, i) => `          ${li(c, { badge: String(i + 1).padStart(2, "0") })}`).join("\n")}\n        `, "director.html");
 
-  const season = examSeason(cards, readColumn, today);
+  const season = examSeason(cards);
   for (const [file, html] of Object.entries(out)) {
     if (!html.includes("<!-- EXAM_SEASON:")) continue;
     let next = html;
@@ -105,7 +100,8 @@ export function refreshAll(files, cards, today, readColumn) {
       </ul>
     </section>\n    `;
         } else if (kind === "column-related") {
-          content = `<section class="column-related" aria-labelledby="exam-season-title"><p>FOR EXAM SEASON</p><h2 id="exam-season-title">수능을 앞둔 아이가 있다면</h2><div class="column-related__grid" style="grid-template-columns:1fr"><a href="${c.slug}.html"><small>수험생 공진단 · 시험을 앞둔 가족에게</small><strong>${c.title}</strong></a></div></section>`;
+          // 칼럼 본문 스타일을 받지 않도록 공진단 페이지와 같은 디어저널 카드로 넣는다.
+          content = `<section class="dear-reads dear-reads--1 dear-reads--in-column" aria-labelledby="exam-season-title"><div class="dear-reads__head"><div><p>FOR EXAM SEASON</p><h2 id="exam-season-title">수능을 앞둔 아이가 있다면</h2></div></div><ul class="dear-reads__grid">${li(c, { inColumn: true })}</ul></section>`;
         } else {
           content = `<a href="${c.slug}.html">수험생 공진단 고르는 법 →</a>`;
         }
@@ -128,20 +124,13 @@ export const AUTO_FILES = [
   "columns/cheongdam-gongjindan.html",
 ];
 
-export function koreaToday() {
-  if (process.env.DEAR_TODAY) return process.env.DEAR_TODAY;
-  return new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10);
-}
-
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const read = (file) => fs.readFileSync(path.join(siteRoot, file), "utf8");
   const files = Object.fromEntries(AUTO_FILES.map((file) => [file, read(file)]));
   const cards = readColumnCards(read("columns.html"));
-  const readColumn = (slug) => { try { return read(`columns/${slug}.html`); } catch { return ""; } };
-  const today = koreaToday();
-  const { out, season } = refreshAll(files, cards, today, readColumn);
+  const { out, season } = refreshAll(files, cards);
   const changed = AUTO_FILES.filter((file) => out[file] !== files[file]);
-  const seasonNote = season ? `수험생 칼럼 ${season.column.slug} · 수능 ${season.examDate} · ${season.open ? "표시" : "숨김"}` : "수험생 칼럼 없음 · 숨김";
+  const seasonNote = season ? `수험생 칼럼 ${season.column.slug}` : "수험생 칼럼 없음";
   if (process.argv.includes("--check")) {
     if (changed.length) {
       console.error(`칼럼 카드가 최신이 아닙니다: ${changed.join(", ")} — node tools/refresh-column-cards.mjs 를 실행하세요.`);
