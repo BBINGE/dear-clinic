@@ -110,6 +110,16 @@ export function refreshAll(files, cards) {
     }
     out[file] = next;
   }
+  // 칼럼 하단 "함께 읽으면 좋은 글": 같은 분류의 최신 3편(읽고 있는 글 제외).
+  for (const [file, html] of Object.entries(out)) {
+    if (!file.startsWith("columns/") || !html.includes("<!-- RELATED_COLUMNS:START -->")) continue;
+    const slug = path.basename(file, ".html");
+    const self = cards.find((c) => c.slug === slug);
+    const pool = cards.filter((c) => c.slug !== slug && (!self || c.category === self.category));
+    const picks = (pool.length >= 3 ? pool : cards.filter((c) => c.slug !== slug)).slice(0, 3);
+    const content = `<section class="dear-reads dear-reads--in-column dear-reads--related" aria-labelledby="related-columns-title"><div class="dear-reads__head"><div><p>CONTINUE READING</p><h2 id="related-columns-title">함께 읽으면 좋은 글</h2></div></div><ul class="dear-reads__grid">${picks.map((c, i) => li(c, { badge: String(i + 1).padStart(2, "0"), inColumn: true })).join("")}</ul><div class="dear-reads__foot"><a class="dear-reads__all" href="../columns.html">칼럼 전체 보기 <span aria-hidden="true">→</span></a></div></section>`;
+    out[file] = fillMarker(html, "RELATED_COLUMNS", content, file);
+  }
   return { out, season };
 }
 
@@ -126,10 +136,16 @@ export const AUTO_FILES = [
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const read = (file) => fs.readFileSync(path.join(siteRoot, file), "utf8");
-  const files = Object.fromEntries(AUTO_FILES.map((file) => [file, read(file)]));
+  // 칼럼 하단 자리 표시가 있는 칼럼은 목록을 따로 적지 않고 폴더에서 찾는다.
+  const relatedFiles = fs.readdirSync(path.join(siteRoot, "columns"))
+    .filter((name) => name.endsWith(".html"))
+    .map((name) => `columns/${name}`)
+    .filter((file) => !AUTO_FILES.includes(file) && read(file).includes("<!-- RELATED_COLUMNS:START -->"));
+  const targets = [...AUTO_FILES, ...relatedFiles];
+  const files = Object.fromEntries(targets.map((file) => [file, read(file)]));
   const cards = readColumnCards(read("columns.html"));
   const { out, season } = refreshAll(files, cards);
-  const changed = AUTO_FILES.filter((file) => out[file] !== files[file]);
+  const changed = targets.filter((file) => out[file] !== files[file]);
   const seasonNote = season ? `수험생 칼럼 ${season.column.slug}` : "수험생 칼럼 없음";
   if (process.argv.includes("--check")) {
     if (changed.length) {

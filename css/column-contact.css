@@ -1,0 +1,82 @@
+/* 칼럼 상단 원장 카드(.dc-hello)와 하단 안내 도크(.dc-dock). js/column-contact.js가 칼럼에 넣는다.
+   기준: 귀엽고 앙증맞되 깔끔하게, 11pt 이하 작은 글씨, 절제된 여백, 글만 늘어놓지 않기. (2026-09-22 박성호) */
+.dc-hello, .dc-dock { box-sizing: border-box; font-family: inherit; color: #2d312f; text-align: left; }
+.dc-hello *, .dc-dock * { box-sizing: border-box; }
+
+/* ---------- 상단 원장 카드 ---------- */
+.dc-hello { display: flex; gap: 14px; align-items: flex-start; width: min(100%, 780px); margin: 0 auto 28px; padding: 14px 16px; border: 1px solid #e8e4e2; border-radius: 18px; background: #fff; box-shadow: 0 6px 18px rgba(60, 96, 90, .06); }
+.dc-hello__face { flex: 0 0 46px; width: 46px; height: 46px; border-radius: 50%; overflow: hidden; background: #e8e4e2; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(36, 120, 96, .25); }
+.dc-hello__face img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+.dc-hello__body { min-width: 0; flex: 1; }
+.dc-hello__who { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 4px; font-size: 11px; color: #555550; }
+.dc-hello__who a { color: #247860; font-weight: 800; text-decoration: none; }
+.dc-hello__who span { padding: 1px 6px; border-radius: 999px; background: #f1f6f3; color: #3c605a; font-size: 10px; font-weight: 700; }
+.dc-hello__quote { margin: 0; color: #173f37; font-size: 13.5px; font-weight: 700; line-height: 1.55; letter-spacing: -.02em; word-break: keep-all; }
+.dc-hello__ask { margin: 3px 0 10px; color: #555550; font-size: 12.5px; line-height: 1.55; word-break: keep-all; }
+.dc-hello__actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.dc-chip { display: inline-flex; align-items: center; gap: 5px; height: 30px; padding: 0 11px; border-radius: 999px; border: 1px solid #dce9e3; background: #f5faf7; color: #247860; font-size: 12px; font-weight: 800; text-decoration: none; white-space: nowrap; transition: transform .18s ease, background .18s ease; }
+.dc-chip svg { width: 14px; height: 14px; flex: none; }
+.dc-chip:hover, .dc-chip:focus-visible { transform: translateY(-1px); background: #e6f1ec; }
+.dc-chip--solid { border-color: #247860; background: #247860; color: #fff; }
+.dc-chip--solid:hover, .dc-chip--solid:focus-visible { background: #1d6650; }
+.dc-hours { display: flex; flex-wrap: wrap; gap: 4px; margin: 10px 0 0; padding: 0; list-style: none; }
+.dc-hours li { margin: 0; padding: 2px 7px; border-radius: 6px; background: #f8f8f6; color: #555550; font-size: 10.5px; line-height: 1.6; white-space: nowrap; }
+.dc-hours li::before { content: none; }
+.dc-hours b { color: #3c605a; font-weight: 800; margin-right: 3px; }
+
+/* ---------- 하단 안내 도크 ---------- */
+.dc-dock { width: 100%; margin: 40px 0 0; padding: 16px; border-radius: 22px; background: #e8e4e2; }
+.dc-dock__head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin: 0 0 12px; }
+.dc-dock__head p { margin: 0; color: #247860; font-size: 10.5px; font-weight: 800; letter-spacing: .14em; }
+.dc-dock__head strong { color: #173f37; font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+.dc-dock__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 10px; }
+.dc-dock__map { position: relative; min-height: 196px; overflow: hidden; border-radius: 16px; background: #f8f8f6; }
+.dc-dock__map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.dc-dock__side { display: flex; flex-direction: column; gap: 8px; }
+.dc-dock__info { padding: 11px 12px; border-radius: 14px; background: #fff; }
+.dc-dock__info strong { display: block; margin: 0 0 3px; color: #173f37; font-size: 13px; font-weight: 800; }
+.dc-dock__info address { margin: 0; color: #555550; font-size: 11.5px; font-style: normal; line-height: 1.55; word-break: keep-all; }
+.dc-dock__info address a { color: #247860; font-weight: 800; text-decoration: none; }
+.dc-dock__info .dc-hours { margin-top: 7px; }
+.dc-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.dc-tiles li { margin: 0; padding: 0; }
+.dc-tiles li::before { content: none; }
+.dc-tile { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; height: 64px; border-radius: 14px; background: #fff; color: #3c605a; font-size: 11px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 10px rgba(60, 96, 90, .08); animation: dc-float 3.2s ease-in-out infinite; }
+.dc-tiles li:nth-child(2) .dc-tile { animation-delay: .4s; }
+.dc-tiles li:nth-child(3) .dc-tile { animation-delay: .8s; }
+.dc-tiles li:nth-child(4) .dc-tile { animation-delay: 1.2s; }
+.dc-tile i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 10px; background: #f1f6f3; color: #247860; }
+.dc-tile svg { width: 16px; height: 16px; }
+.dc-tile--main { background: #247860; color: #fff; }
+.dc-tile--main i { background: rgba(255, 255, 255, .16); color: #fff; }
+.dc-tile:hover, .dc-tile:focus-visible { animation-play-state: paused; transform: translateY(-3px); }
+@keyframes dc-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+
+@media (max-width: 640px) {
+  .dc-hello { gap: 11px; padding: 12px 13px; border-radius: 16px; }
+  .dc-hello__face { flex-basis: 38px; width: 38px; height: 38px; }
+  .dc-hello__quote { font-size: 13px; }
+  .dc-hello__ask { font-size: 12px; }
+  .dc-dock { padding: 13px; border-radius: 18px; }
+  .dc-dock__grid { grid-template-columns: 1fr; }
+  .dc-dock__map { min-height: 160px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dc-tile { animation: none; }
+  .dc-chip, .dc-tile { transition: none; }
+}
+
+/* 칼럼 본문의 section·p·address 규칙이 덮어쓰지 않도록 다시 고정한다. */
+.dc-dock.dc-dock { margin: 40px 0 0; padding: 16px; border: 0; border-radius: 22px; background: #e8e4e2; }
+.dc-dock.dc-dock .dc-dock__head { margin: 0 0 12px; padding: 0 2px; border: 0; }
+.dc-dock.dc-dock .dc-dock__head p { margin: 0; padding: 0; font-size: 10.5px; line-height: 1.4; }
+.dc-dock.dc-dock .dc-dock__head strong { font-size: 15px; line-height: 1.4; }
+.dc-dock.dc-dock address { margin: 0; font-size: 11.5px; line-height: 1.55; }
+.dc-hello.dc-hello p { padding: 0; }
+.dc-hello.dc-hello .dc-hello__quote { margin: 0; font-size: 13.5px; line-height: 1.55; }
+.dc-hello.dc-hello .dc-hello__ask { margin: 3px 0 10px; font-size: 12.5px; line-height: 1.55; }
+@media (max-width: 640px) {
+  .dc-dock.dc-dock { padding: 13px; border-radius: 18px; }
+  .dc-hello.dc-hello .dc-hello__quote { font-size: 13px; }
+  .dc-hello.dc-hello .dc-hello__ask { font-size: 12px; }
+}
