@@ -3,7 +3,8 @@
 .dear-reads { box-sizing: border-box; width: 100%; margin: 2rem 0 0; padding: 1.8rem 1.8rem 1.6rem; border-radius: 24px; background: #e8e4e2; text-align: left; }
 .dear-reads__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.4rem; margin-bottom: 1.3rem; padding-bottom: 1.1rem; border-bottom: 1px solid rgba(60, 96, 90, .22); }
 .dear-reads__head p { margin: 0 0 .5rem; color: #247860; font-size: .66rem; font-weight: 800; letter-spacing: .16em; }
-.dear-reads__head h2 { margin: 0; padding: 0; color: #173f37; font-size: 1.35rem; font-weight: 750; line-height: 1.35; letter-spacing: -.035em; }
+.dear-reads__head h2 { margin: 0; padding: 0; color: #173f37; font-size: 1.35rem; font-weight: 750; line-height: 1.35; letter-spacing: -.035em; word-break: keep-all; }
+.dear-reads__head > span { max-width: 320px; color: #555550; font-size: .8rem; line-height: 1.7; word-break: keep-all; }
 .dear-reads__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; margin: 0; padding: 0; list-style: none; }
 .dear-reads--4 .dear-reads__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .dear-reads--1 .dear-reads__grid { grid-template-columns: 1fr; }
@@ -12,8 +13,7 @@
 .dear-reads__grid a { display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: 18px; background: #fff; color: inherit; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
 .dear-reads__grid a:hover, .dear-reads__grid a:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(23, 63, 55, .12); }
 .dear-reads__grid figure { position: relative; margin: 0; }
-.dear-reads__grid img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: #f8f8f6; }
-.dear-reads--4 .dear-reads__grid img { aspect-ratio: 1 / 1; }
+.dear-reads__grid img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; background: #f8f8f6; }
 .dear-reads__grid img.is-contain { object-fit: contain; }
 .dear-reads__grid figure b { position: absolute; top: .7rem; left: .7rem; padding: .2rem .55rem; border-radius: 999px; background: rgba(248, 248, 246, .92); color: #247860; font-size: .7rem; font-weight: 800; letter-spacing: .06em; }
 .dear-reads__grid a > div { display: flex; flex: 1; flex-direction: column; gap: .35rem; padding: 1rem 1.05rem 1.05rem; }
@@ -28,6 +28,11 @@
 .dear-reads__foot { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; margin-top: 1.1rem; }
 .dear-reads__all { display: inline-flex; align-items: center; gap: .45rem; padding: .7rem 1.15rem; border-radius: 999px; background: #fff; color: #3c605a; font-size: .8rem; font-weight: 750; text-decoration: none; transition: background .2s ease, color .2s ease; }
 .dear-reads__all:hover, .dear-reads__all:focus-visible { background: #247860; color: #fff; }
+
+/* 페이지 한가운데 섹션으로 놓일 때(BE DEER·원장 소개)는 본문 폭을 넘지 않게 가운데 둔다. */
+.dear-reads--wide { max-width: 1080px; margin: 0 auto; padding: 2.2rem 2.2rem 2rem; }
+.dear-reads--wide .dear-reads__head h2 { font-size: clamp(1.35rem, 2vw, 1.7rem); }
+.dear-reads--wide .dear-reads__head > span { font-size: .88rem; }
 
 /* 섹션 사이에 홀로 놓일 때(공진단 페이지)는 본문 폭에 맞춰 가운데 둔다. */
 .dear-reads--standalone { width: calc(100% - 40px); max-width: 880px; margin: clamp(56px, 7vw, 96px) auto; }
