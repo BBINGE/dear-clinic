@@ -1,0 +1,64 @@
+/* 칼럼으로 이어 읽기 카드. 추석 칼럼의 디어저널 카드(column-journal)와 같은 모양이다.
+   BE DEER·원장 소개·Care·공진단 페이지 하단의 칼럼 링크에 쓴다. (2026-09-22) */
+.dear-reads { box-sizing: border-box; width: 100%; margin: 2rem 0 0; padding: 1.8rem 1.8rem 1.6rem; border-radius: 24px; background: #e8e4e2; text-align: left; }
+.dear-reads__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.4rem; margin-bottom: 1.3rem; padding-bottom: 1.1rem; border-bottom: 1px solid rgba(60, 96, 90, .22); }
+.dear-reads__head p { margin: 0 0 .5rem; color: #247860; font-size: .66rem; font-weight: 800; letter-spacing: .16em; }
+.dear-reads__head h2 { margin: 0; padding: 0; color: #173f37; font-size: 1.35rem; font-weight: 750; line-height: 1.35; letter-spacing: -.035em; }
+.dear-reads__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; margin: 0; padding: 0; list-style: none; }
+.dear-reads--4 .dear-reads__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.dear-reads--1 .dear-reads__grid { grid-template-columns: 1fr; }
+.dear-reads__grid li { margin: 0; padding: 0; }
+.dear-reads__grid li::before { content: none; }
+.dear-reads__grid a { display: flex; flex-direction: column; height: 100%; overflow: hidden; border-radius: 18px; background: #fff; color: inherit; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+.dear-reads__grid a:hover, .dear-reads__grid a:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(23, 63, 55, .12); }
+.dear-reads__grid figure { position: relative; margin: 0; }
+.dear-reads__grid img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: #f8f8f6; }
+.dear-reads--4 .dear-reads__grid img { aspect-ratio: 1 / 1; }
+.dear-reads__grid img.is-contain { object-fit: contain; }
+.dear-reads__grid figure b { position: absolute; top: .7rem; left: .7rem; padding: .2rem .55rem; border-radius: 999px; background: rgba(248, 248, 246, .92); color: #247860; font-size: .7rem; font-weight: 800; letter-spacing: .06em; }
+.dear-reads__grid a > div { display: flex; flex: 1; flex-direction: column; gap: .35rem; padding: 1rem 1.05rem 1.05rem; }
+.dear-reads__grid small { color: #247860; font-size: .7rem; font-weight: 800; }
+.dear-reads__grid strong { color: #173f37; font-size: .95rem; font-weight: 750; line-height: 1.45; letter-spacing: -.02em; word-break: keep-all; }
+.dear-reads__grid a > div > span { display: -webkit-box; overflow: hidden; -webkit-line-clamp: 3; -webkit-box-orient: vertical; color: #555550; font-size: .78rem; line-height: 1.55; word-break: keep-all; }
+.dear-reads__grid em { display: flex; justify-content: space-between; margin-top: auto; padding-top: .8rem; border-top: 1px solid #eee9e6; color: #3c605a; font-size: .78rem; font-style: normal; font-weight: 700; }
+.dear-reads__grid em i { color: #247860; font-style: normal; }
+.dear-reads--1 .dear-reads__grid a { flex-direction: row; }
+.dear-reads--1 .dear-reads__grid figure { flex: 0 0 38%; max-width: 220px; }
+.dear-reads--1 .dear-reads__grid img { height: 100%; }
+.dear-reads__foot { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; margin-top: 1.1rem; }
+.dear-reads__all { display: inline-flex; align-items: center; gap: .45rem; padding: .7rem 1.15rem; border-radius: 999px; background: #fff; color: #3c605a; font-size: .8rem; font-weight: 750; text-decoration: none; transition: background .2s ease, color .2s ease; }
+.dear-reads__all:hover, .dear-reads__all:focus-visible { background: #247860; color: #fff; }
+
+/* 섹션 사이에 홀로 놓일 때(공진단 페이지)는 본문 폭에 맞춰 가운데 둔다. */
+.dear-reads--standalone { width: calc(100% - 40px); max-width: 880px; margin: clamp(56px, 7vw, 96px) auto; }
+
+/* Care 패널 안에서는 좁은 칸에 한 장만 둔다. */
+.dear-reads--compact { margin-top: 1.4rem; padding: 1rem; border-radius: 20px; }
+.dear-reads--compact .dear-reads__grid figure { flex-basis: 34%; max-width: 150px; }
+.dear-reads--compact .dear-reads__grid a > div { padding: .85rem .95rem; }
+.dear-reads--compact .dear-reads__grid strong { font-size: .9rem; }
+.dear-reads--compact .dear-reads__foot { margin-top: .8rem; }
+
+@media (max-width: 900px) {
+  .dear-reads--4 .dear-reads__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .dear-reads { padding: 1.3rem 1rem 1.2rem; }
+  .dear-reads__head { flex-direction: column; align-items: flex-start; gap: .6rem; }
+  .dear-reads__head h2 { font-size: 1.15rem; }
+  .dear-reads__grid, .dear-reads--4 .dear-reads__grid { grid-template-columns: 1fr; gap: .6rem; }
+  .dear-reads__grid a { flex-direction: row; }
+  .dear-reads__grid figure, .dear-reads--1 .dear-reads__grid figure, .dear-reads--compact .dear-reads__grid figure { flex: 0 0 104px; max-width: 104px; }
+  .dear-reads__grid img { height: 100%; }
+  .dear-reads__grid figure b { top: .45rem; left: .45rem; font-size: .62rem; }
+  .dear-reads__grid a > div { padding: .8rem .9rem .85rem; }
+  .dear-reads__grid strong { font-size: .88rem; }
+  .dear-reads__grid a > div > span { -webkit-line-clamp: 2; }
+  .dear-reads__grid em { padding-top: .5rem; }
+  .dear-reads__foot { justify-content: stretch; }
+  .dear-reads__all { flex: 1; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dear-reads__grid a { transition: none; }
+  .dear-reads__grid a:hover { transform: none; }
+}

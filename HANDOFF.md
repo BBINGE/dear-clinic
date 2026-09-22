@@ -132,6 +132,9 @@
   - 이제 외국어판과 한국어판의 구조 차이는 **칼럼으로 가는 링크 블록뿐이다.** Care의 칼럼 링크, 원장 소개의 '작성·검수한 칼럼', 공진단의 수험생 칼럼 박스가 여기에 해당한다. 번역 칼럼이 생기면 그때 붙인다.
   - **검색 제목·설명**: 홈과 비급여 중심 7개 페이지(services·be-deer·be-deer-cases·dear-gongjindan·care·non-covered·director)의 `title`·description·og·twitter를 외국인이 쓰는 검색어로 바꿨다(예: "Korean Herbal Weight Loss Program in Seoul", "Gongjindan in Seoul", "English-Speaking"). h1과 본문은 그대로다. about·philosophy·career는 손대지 않았다.
   - 새로 쓴 번역 문장은 원어민 검수 전이다(`열려 있는 일`의 다국어 번역문 확정 항목).
+- **한국어 페이지의 칼럼 링크를 디어저널 카드 모양으로 바꿨다.** 박성호 요청: 추석 칼럼 하단 `DEAR DIET JOURNAL · 이어 읽기` 카드처럼 보이게. 공용 스타일은 `css/dear-reads.css`(`.dear-reads`)이고 이 네 페이지만 불러온다.
+  - BE DEER 6장, 원장 소개 4장(`dear-reads--4`), 공진단 수험생 칼럼 1장(`--1 --standalone`), Care 다섯 패널마다 그 분류의 **가장 최근 칼럼** 1장(`--1 --compact`)과 `○○ 관련 칼럼 보기 →` 버튼.
+  - 카드의 분류·제목은 각 페이지에 있던 문구를 그대로 썼다. 그림·요약문은 `columns.html` 칼럼 카드에 있는 대표 이미지와 요약을 가져왔다. **Care 카드는 새 칼럼을 발행해도 자동으로 바뀌지 않는다.** 분류별 최신 칼럼이 바뀌면 손으로 바꾼다.
 
 ### 법적으로 정리된 것 (다시 꺼내지 않는다)
 
