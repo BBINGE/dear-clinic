@@ -359,4 +359,17 @@ for (const absolutePath of koreanHtml) {
   }
 }
 
+// 모든 칼럼에 원장 상담 카드·오시는 길 도크(js/column-contact.js)와 "함께 읽으면 좋은 글" 자리가 있어야 한다.
+for (const name of fs.readdirSync(path.join(siteRoot, "columns")).filter((file) => file.endsWith(".html"))) {
+  const html = read(`columns/${name}`);
+  assert.match(html, /js\/column-contact\.js\?v=/, `칼럼에 원장 상담 카드 스크립트가 없습니다: ${name}`);
+  assert.match(html, /css\/column-contact\.css\?v=/, `칼럼에 원장 상담 카드 스타일이 없습니다: ${name}`);
+  assert.ok(html.includes("<!-- RELATED_COLUMNS:START -->"), `칼럼에 함께 읽을 글 자리가 없습니다: ${name}`);
+}
+{
+  const publisher = read("tools/publish-column.mjs");
+  assert.match(publisher, /js\/column-contact\.js\?v=/, "칼럼 발행기에 원장 상담 카드 스크립트가 없습니다.");
+  assert.ok(publisher.includes("<!-- RELATED_COLUMNS:START -->"), "칼럼 발행기에 함께 읽을 글 자리가 없습니다.");
+}
+
 process.stdout.write(`SEO 표면 검증 통과: 사이트맵 ${sitemapUrls.length}개, 칼럼 ${directCardLinks.length}개\n`);

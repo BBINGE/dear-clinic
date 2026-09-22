@@ -152,6 +152,8 @@
   <link rel="icon" href="../assets/images/dear-favicon.png" type="image/png">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
   <link rel="stylesheet" href="../css/style.css?v=20260919-1">
+  <link rel="stylesheet" href="../css/dear-reads.css?v=20260922-3">
+  <link rel="stylesheet" href="../css/column-contact.css?v=20260922-7">
   <style>
     :root{--diet-green:#247860;--diet-deep:#194f42;--diet-teal:#006c78;--diet-mint:#e8f3ef;--diet-cream:#f8f8f6;--diet-coral:#b9654e;--diet-ink:#202825;--diet-muted:#666b68;--diet-line:#d9e2de}
     html{scroll-behavior:smooth}.diet-preview{background:#fff;color:var(--diet-ink)}
@@ -280,7 +282,8 @@
         <section class="clinic-card" id="clinic-info"><span class="eyebrow" style="color:#bce2d5">DEAR KOREAN MEDICINE CLINIC</span><h2>디어한의원</h2><address>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777">02-3486-1777</a></address><div class="clinic-links"><a href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener">네이버 예약</a><a href="https://map.naver.com/p/search/%EB%94%94%EC%96%B4%ED%95%9C%EC%9D%98%EC%9B%90" target="_blank" rel="noopener">위치 보기</a></div></section>
       </article>
     </div>
-  </main>
+  <!-- RELATED_COLUMNS:START --><section class="dear-reads dear-reads--in-column dear-reads--related" aria-labelledby="related-columns-title"><div class="dear-reads__head"><div><p>CONTINUE READING</p><h2 id="related-columns-title">함께 읽으면 좋은 글</h2></div></div><ul class="dear-reads__grid"><li><a href="chuseok-holiday-weight.html"><figure><img class="is-contain" src="../assets/images/columns/chuseok-holiday-weight/cover.webp" alt="한복을 입고 체중계에 올라 놀란 표정을 짓는 디숭이, 옆에 송편과 복주머니" loading="lazy"><b>01</b></figure><div><small>SHAPE · 변화</small><strong>추석 뒤 2kg, 명절 살은 사흘이면 빠질까요?</strong><span>연휴 끝 체중계의 2kg에는 물과 지방, 흐트러진 리듬이 섞여 있습니다. 셋을 가르고, 연휴 뒤 첫 일주일을 되돌리는 순서.</span><em>칼럼 읽기 <i aria-hidden="true">→</i></em></div></a></li><li><a href="diet-herbal-medicine-stop.html"><figure><img src="../assets/images/columns/diet-herbal-medicine-stop/cover.webp" alt="" loading="lazy"><b>02</b></figure><div><small>SHAPE · 체중·리듬</small><strong>다이어트 한약 중단 후 식욕과 요요</strong><span>다이어트 한약 중단 이후를 준비하는 치료 과정. 입맛 변화와 소화·흡수·대사의 차이, 복용 종료 기준을 디어한의원이 설명합니다.</span><em>칼럼 읽기 <i aria-hidden="true">→</i></em></div></a></li><li><a href="weight-inattentional-blindness.html"><figure><img src="../assets/images/columns/weight-inattentional-blindness/cover.webp" alt="" loading="lazy"><b>03</b></figure><div><small>SHAPE · 체중·리듬</small><strong>체중을 보는 동안, 보이지 않았던 것들</strong><span>체중이라는 한 가지 숫자에 집중하는 동안 놓치기 쉬운 체지방, 제지방, 체수분과 생활의 변화를 함께 살펴봅니다.</span><em>칼럼 읽기 <i aria-hidden="true">→</i></em></div></a></li></ul><div class="dear-reads__foot"><a class="dear-reads__all" href="../columns.html">칼럼 전체 보기 <span aria-hidden="true">→</span></a></div></section><!-- RELATED_COLUMNS:END -->
+</main>
   <footer class="footer" id="contact">
   <div class="footer__inner">
     <div class="footer__top">
@@ -324,6 +327,7 @@
   </div>
 </footer>
   <script src="../js/main.js?v=20260922-1"></script>
+<script src="../js/column-contact.js?v=20260922-7"></script>
   <script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches){const o=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('is-visible');o.unobserve(x.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>o.observe(el))}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('is-visible'))}</script>
   <script>(()=>{const links=[...document.querySelectorAll('.toc a[href^="#"]')],items=links.map(link=>({link,target:document.querySelector(link.getAttribute('href'))})).filter(item=>item.target);let queued=false;const update=()=>{queued=false;const line=innerHeight*.34;let current=items[0];for(const item of items){if(item.target.getBoundingClientRect().top<=line)current=item;else break}links.forEach(link=>{const active=link===current.link;link.classList.toggle('is-active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')})};addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(update)}},{passive:true});addEventListener('resize',update);update()})()</script>
 </body>

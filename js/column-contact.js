@@ -43,8 +43,14 @@
       </div>
       ${hours}
     </div>`;
-  // 대표 그림이 커서 그 아래에 두면 한참 내려야 보인다. 제목(과 집필 안내) 바로 아래, 그림 위에 둔다.
-  const anchor = article.querySelector(".column-editorial-note") || article.querySelector("header");
+  // 대표 그림이 커서 그 아래에 두면 한참 내려야 보인다. 제목 영역 바로 아래, 그림 위에 둔다.
+  // 집필 안내 줄이 제목 영역 바로 뒤에 있으면 그 아래, 글 끝에 있는 칼럼이면 제목 영역 아래에 둔다.
+  const h1 = article.querySelector("h1") || document.querySelector("h1");
+  const titleBlock = h1 && (h1.closest("header, section, [class*='hero'], [class*='header']") || h1);
+  const note = article.querySelector(".column-editorial-note");
+  const firstHeading = article.querySelector("h2");
+  const noteNearTitle = note && (!firstHeading || (note.compareDocumentPosition(firstHeading) & Node.DOCUMENT_POSITION_FOLLOWING));
+  const anchor = (noteNearTitle && note) || titleBlock || article.querySelector("header");
   if (anchor) anchor.insertAdjacentElement("afterend", hello);
 
   // ---------- 하단 안내 도크 ----------
@@ -69,8 +75,35 @@
         </ul>
       </div>
     </div>`;
-  // 칼럼마다 있던 병원 정보 상자(주소·전화·지도)는 이 도크가 대신한다. 칼럼별 상담 문구(column-consult)는 그대로 둔다.
+  // 칼럼 상담 영역에 이미 지도가 있으면 지도가 두 번 나오지 않게 도크에서는 뺀다.
+  if (article.querySelector("iframe[src*='maps']")) {
+    dock.querySelector(".dc-dock__map").remove();
+    dock.classList.add("dc-dock--no-map");
+  }
+  // 칼럼마다 있던 병원 정보 상자(주소·전화)는 이 도크가 대신한다. 칼럼별 상담 문구는 그대로 둔다.
+  // 순서는 도크 → "함께 읽으면 좋은 글"(배포 때 채워지는 dear-reads--related)이다.
+  // 병원 정보 상자가 2열(grid·flex) 칸 안에 있는 칼럼이 있다. 도크는 그 칸 밖, 본문 흐름에 둔다.
+  const flowSpot = (el) => {
+    let child = el;
+    let parent = el.parentElement;
+    while (parent && parent !== document.body) {
+      if (!/grid|flex/.test(getComputedStyle(parent).display)) return child;
+      child = parent;
+      parent = parent.parentElement;
+    }
+    return child;
+  };
   const oldNap = article.querySelector(".column-nap");
-  if (oldNap) oldNap.replaceWith(dock);
-  else (article.querySelector(".column-article__content") || article).append(dock);
+  const related = article.querySelector(".dear-reads--related");
+  if (oldNap) {
+    const spot = flowSpot(oldNap);
+    if (spot === oldNap) oldNap.replaceWith(dock);
+    else { spot.insertAdjacentElement("afterend", dock); oldNap.remove(); }
+  } else if (related) {
+    flowSpot(related).insertAdjacentElement("beforebegin", dock);
+  } else {
+    (article.querySelector(".column-article__content") || article).append(dock);
+  }
+  // 함께 읽을 글은 어디에 있었든 도크 바로 아래로 모은다.
+  if (related) dock.insertAdjacentElement("afterend", related);
 })();

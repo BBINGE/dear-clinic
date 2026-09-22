@@ -92,3 +92,12 @@
 .dc-chip.dc-chip--naver:hover, .dc-chip.dc-chip--naver:focus-visible { background: #02b350; }
 .dc-chip.dc-chip--phone { border-color: #cfe3da; background: #fff; color: #247860; }
 .dc-chip.dc-chip--phone svg { color: #247860; }
+
+/* 칼럼에 이미 지도가 있을 때: 지도 없이 정보와 타일을 가로로 둔다. */
+.dc-dock--no-map .dc-dock__grid { grid-template-columns: 1fr; }
+.dc-dock--no-map .dc-dock__side { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 8px; align-items: stretch; }
+@media (max-width: 640px) {
+  .dc-dock--no-map .dc-dock__side { grid-template-columns: 1fr; }
+}
+/* 칼럼마다 다른 본문 폭 안에서 도크가 지나치게 넓어지지 않게 한다. */
+.dc-dock.dc-dock { max-width: 760px; margin-left: auto; margin-right: auto; }
