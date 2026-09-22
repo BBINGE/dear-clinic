@@ -278,7 +278,7 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   const copy = {
     ko: { label: "다이어트 저널", aria: "디어한의원 다이어트 저널" },
     en: { label: "Diet Journal", aria: "DEAR Diet Journal" },
-    ja: { label: "ダイエット誌", aria: "ディア韓医院ダイエットジャーナル" },
+    ja: { label: "ジャーナル", aria: "ディア韓医院ダイエットジャーナル" },
     zh: { label: "减重专刊", aria: "DEAR韩医院减重专刊" },
   }[language];
   const href = "https://dearmydiet.tistory.com/";
@@ -510,7 +510,7 @@ const navCopy = {
   ko: null,
   en: {
     labels: ["About DEAR", "Clinical journal", "Care begins with your current condition", "Care and prescriptions", "Connect with DEAR"],
-    about: [["About DEAR", "about.html", "Our space and standards"], ["Care philosophy", "philosophy.html", "How we listen and decide together"], ["Director Kim Minji", "director.html", "Director and approach to care"], ["Career", "career.html", "Education, career, and research"]],
+    about: [["About DEAR", "about.html", "Our space and standards"], ["Care philosophy", "philosophy.html", "How we listen and decide together"], ["Director Minji Kim", "director.html", "Director and approach to care"], ["Career", "career.html", "Education, career, and research"]],
     columns: [["All columns", "columns.html", "Translated clinical columns"]],
     care: [["Focus", "care.html?care=Focus", "Cognition and concentration"], ["Calm", "care.html?care=Calm", "Tension and sleep"], ["Restore", "care.html?care=Restore", "Fatigue and recovery"], ["Relief", "care.html?care=Relief", "Pain and discomfort"], ["Shape", "care.html?care=Shape", "Weight and daily rhythm"]],
     services: [["BE DEER", "services.html#be-deer", "Weight and daily rhythm"], ["DEAR GONGJINDAN", "services.html#dear-gongjindan", "Energy and recovery"], ["KOREAN HERBAL MEDICINE", "services.html#herbal-decoction", "Personalized herbal medicine"], ["DEER BALANCE", "services.html#deer-balance", "Sleep and emotional balance"], ["View all services", "services.html", "DEAR SERVICES"]],
@@ -518,7 +518,7 @@ const navCopy = {
   },
   ja: {
     labels: ["DEARについて", "健康コラム", "現在の状態から診ます", "診療と処方", "DEARへのお問い合わせ"],
-    about: [["DEARについて", "about.html", "空間と診療の基準"], ["診療哲学", "philosophy.html", "ともに考え、選ぶ診療"], ["代表院長 Kim Minji", "director.html", "院長と診療方針"], ["経歴", "career.html", "学歴・経歴・研究活動"]],
+    about: [["DEARについて", "about.html", "空間と診療の基準"], ["診療哲学", "philosophy.html", "ともに考え、選ぶ診療"], ["代表院長 キム・ミンジ", "director.html", "院長と診療方針"], ["経歴", "career.html", "学歴・経歴・研究活動"]],
     columns: [["コラム一覧", "columns.html", "翻訳された健康コラム"]],
     care: [["Focus", "care.html?care=Focus", "認知機能と集中力"], ["Calm", "care.html?care=Calm", "緊張反応と睡眠"], ["Restore", "care.html?care=Restore", "疲労と回復力"], ["Relief", "care.html?care=Relief", "痛みと身体的不調"], ["Shape", "care.html?care=Shape", "体重と生活リズム"]],
     services: [["BE DEER", "services.html#be-deer", "体重と生活リズム"], ["DEAR GONGJINDAN", "services.html#dear-gongjindan", "気力と回復"], ["KOREAN HERBAL MEDICINE", "services.html#herbal-decoction", "体質に合わせた韓薬"], ["DEER BALANCE", "services.html#deer-balance", "睡眠と心のバランス"], ["診療一覧", "services.html", "DEAR SERVICES"]],
@@ -526,7 +526,7 @@ const navCopy = {
   },
   zh: {
     labels: ["关于DEAR", "健康专栏", "从当前状态开始", "诊疗与处方", "联系DEAR"],
-    about: [["关于DEAR", "about.html", "诊疗空间与标准"], ["诊疗理念", "philosophy.html", "共同沟通、共同选择"], ["代表院长 Kim Minji", "director.html", "院长与诊疗方向"], ["履历", "career.html", "教育、职业与研究经历"]],
+    about: [["关于DEAR", "about.html", "诊疗空间与标准"], ["诊疗理念", "philosophy.html", "共同沟通、共同选择"], ["代表院长 金敏智", "director.html", "院长与诊疗方向"], ["履历", "career.html", "教育、职业与研究经历"]],
     columns: [["全部专栏", "columns.html", "已翻译的健康专栏"]],
     care: [["Focus", "care.html?care=Focus", "认知功能与注意力"], ["Calm", "care.html?care=Calm", "紧张反应与睡眠"], ["Restore", "care.html?care=Restore", "疲劳与恢复力"], ["Relief", "care.html?care=Relief", "疼痛与身体不适"], ["Shape", "care.html?care=Shape", "体重与生活节律"]],
     services: [["BE DEER", "services.html#be-deer", "体重与生活节律"], ["DEAR GONGJINDAN", "services.html#dear-gongjindan", "精力与恢复"], ["KOREAN HERBAL MEDICINE", "services.html#herbal-decoction", "个体化韩药"], ["DEER BALANCE", "services.html#deer-balance", "睡眠与情绪平衡"], ["查看全部诊疗", "services.html", "DEAR SERVICES"]],
@@ -707,7 +707,7 @@ document.querySelectorAll(".nav__link").forEach((link) => {
     ja: {
       sequence: ["お話を伺う", "状態を評価", "一緒に計画"],
       flowEyebrow: "HOW WE BEGIN", flowTitle: "これまでの経過を確認し、\n現在の状態を評価します。", flowBody: "同じ症状でも背景は異なります。発症からの経過、伴う変化、日常生活をつなげて確認してから診療方針をご説明します。",
-      viewerTitle: "5つのCareは、\n診療で確認する5つの視点です。", viewerBody: "自己診断の分類ではありません。診察で一緒に確認する内容を示しています。", columnsLink: "関連コラムを読む",
+      viewerTitle: "5つのCareは、\n診療で確認する5つの視点です。", viewerBody: "ご自身で当てはめるための分類ではなく、診察で一緒に確認していく内容です。", columnsLink: "関連コラムを読む",
       principleTitle: "治療方法を\n先に決めることはありません。", principleBody: "何が変わり、何が続き、日常生活で何が重要かを確認することから始めます。そのうえで選択肢をご説明し、一緒に決めます。", principleSteps: ["伺う", "評価する", "説明する", "一緒に決める"],
       serviceCtas: ["体重管理を見る", "拱辰丹を見る", "体質韓薬を見る", "睡眠・心のケアを見る"], serviceDetail: "詳しく見る",
       directorArticles: "キム・ミンジ代表院長が執筆・監修したコラム", directorCard: "翻訳されたDEAR健康コラム", directorAll: "翻訳コラムを見る →",
