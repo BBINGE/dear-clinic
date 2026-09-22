@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dearhani.com/</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -109,6 +109,9 @@
   <url><loc>https://dearhani.com/columns/autonomic-stress.html</loc><lastmod>2026-09-11</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <!-- COLUMN_SITEMAP:autonomic-stress:END -->
   <!-- COLUMN_SITEMAP:chronic-headache-lying-down:START -->
+  <!-- COLUMN_SITEMAP:chuseok-holiday-weight:START -->
+  <url><loc>https://dearhani.com/columns/chuseok-holiday-weight.html</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <!-- COLUMN_SITEMAP:chuseok-holiday-weight:END -->
   <!-- COLUMN_SITEMAP:traffic-accident-korean-medicine:START -->
   <url><loc>https://dearhani.com/columns/traffic-accident-korean-medicine.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- COLUMN_SITEMAP:traffic-accident-korean-medicine:END -->
@@ -184,7 +187,7 @@
   </url>
   <url>
     <loc>https://dearhani.com/columns.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-09-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

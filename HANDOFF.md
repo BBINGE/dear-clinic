@@ -98,6 +98,13 @@
 - **이 칼럼은 2026학년도(수능 2026.11.19) 판이다. 날짜를 고쳐 재활용하지 않는다.** 박성호 방침: 이듬해에는 수험생 공진단 칼럼을 새로 쓴다. 새 칼럼을 올리면 공진단·수험생 페이지 다섯 곳(수험생 보약, 공진단 효능, 공진단 조제, 청담 공진단, 디어 공진단 서비스)의 링크를 새 칼럼으로 옮긴다. 링크 박스 문구에는 날짜가 없으므로 주소만 바꾸면 된다. 이 칼럼은 지난 판으로 그대로 둔다.
 - 발행기 검사에 RSS `lastBuildDate`가 `21 Sep 2026 00:00`으로 박혀 있어 새 칼럼이 들어오자 깨졌다. 가장 최근 항목의 발행 시각을 기준으로 보게 바꿨다. `tools/test-columns-serp.mjs`의 칼럼 수는 32로 올렸다.
 
+## 2026-09-22 추석 명절 살 칼럼 발행
+
+- `columns/chuseok-holiday-weight.html`, `css/chuseok-holiday-weight.css`(`ch-`). 34호, Shape. 「추석 뒤 2kg, 명절 살은 사흘이면 빠질까요?」 연휴 뒤 검색에 걸리도록 추석(9/25) 전에 미리 올렸다.
+- 뼈대: 체중계의 2kg을 물(글리코겐·염분, Olsson & Saltin 1970) / 지방(연말 연휴 평균 0.37kg이지만 되돌아가지 않음, Yanovski 2000 NEJM) / 리듬(이틀 수면 제한에 허기 24%·고탄수 식욕 33~45%↑, Spiegel 2004)으로 가르고, 연휴 뒤 첫 일주일 순서 → 체성분으로 가르는 BE DEER로 잇는다. 「몸은 시계보다 반복을 기억합니다」는 BE DEER 확정 문장이다.
+- 대표 이미지는 BE DEER 생활 사진 `daily-rhythm-evening.webp`를 `assets/images/columns/chuseok-holiday-weight/cover.webp`로 복사한 것이다. **최신 칼럼 대표 이미지는 `assets/images/columns/` 아래에 있어야 발행기가 받는다.**
+- FAQ에 2026 추석 단축 진료 시간(24·26일 10–15시, 25일 14–20시)을 넣었다. 외국인 예약 달력(`js/international-appointment.js`의 `special`)도 같은 시간으로 바꿨고, 이제 `special` 항목에 `hours`를 넣으면 그날 시간이 덮어써진다.
+
 ## 2026-09-21 서초동 다이어트 한약 칼럼을 파는 글로 다시 썼다
 
 - `columns/seocho-diet-herbal-medicine.html`은 네이버 「서초동 다이어트 한약」 검색 1위 글이다. **주소와 발행일(2026-07-27)은 그대로 두고** 본문 전체를 새로 썼다. 제목은 「서초동 다이어트 한약, 체중보다 먼저 몸을 봅니다」로, 검색어와 '체중보다 먼저'는 남겼다. 전용 CSS는 `css/seocho-diet-herbal-medicine.css`(`sd-` 접두어)다.
