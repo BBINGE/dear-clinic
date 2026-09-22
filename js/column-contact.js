@@ -32,7 +32,7 @@
   hello.className = "dc-hello";
   hello.setAttribute("aria-label", "김민지 대표원장 상담 안내");
   hello.innerHTML = `
-    <a class="dc-hello__face" href="../director.html" aria-label="김민지 대표원장 소개"><img src="../assets/images/director-face.png" alt="" width="50" height="50" loading="lazy"></a>
+    <a class="dc-hello__face" href="../director.html" aria-label="김민지 대표원장 소개"><img src="../assets/images/director-face.png?v=20260922-2" alt="" width="50" height="50" loading="lazy"></a>
     <div class="dc-hello__body">
       <p class="dc-hello__who"><a href="../director.html">김민지 대표원장</a><span>직접 집필</span></p>
       <p class="dc-hello__quote">저에게 만큼은 조금 편하게 이야기하고, 조금 덜 걱정하실 수 있었으면 좋겠습니다.</p>
