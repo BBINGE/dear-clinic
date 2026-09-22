@@ -1488,7 +1488,8 @@
 /* 번역 문구는 한국어보다 길어 한 줄 고정이면 휴대폰에서 잘린다. 외국어판만 좁은 화면에서 줄바꿈을 허용한다. */
 @media (max-width: 600px) {
   html:not([lang="ko"]) .gjd-manifesto h2 span,
-  html:not([lang="ko"]) .gjd-manifesto h2 em {
+  html:not([lang="ko"]) .gjd-manifesto h2 em,
+  html:not([lang="ko"]) .gjd-letter__copy h2 span {
     white-space: normal;
   }
 }
