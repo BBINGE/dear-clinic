@@ -164,7 +164,7 @@ assert.equal((autonomicStress.match(/\bid="contact"/g) || []).length, 1, "자율
 const home = read("index.html");
 const sharedCss = read("css/style.css");
 assert.match(home, new RegExp(`css\\/style\\.css\\?v=${sharedCssVersion}`), "홈의 공통 CSS 캐시 버전이 다릅니다.");
-assert.match(home, /js\/weather-scene\.js\?v=20260918-1/, "날씨 장면 지연 로더의 캐시 버전이 다릅니다.");
+assert.match(home, /js\/weather-scene\.js\?v=20260922-1/, "날씨 장면 지연 로더의 캐시 버전이 다릅니다.");
 const deferredWeatherScenes = [...home.matchAll(/<img\b[^>]*class="[^"]*weather-lens__scene[^"]*"[^>]*data-src="([^"]+)"[^>]*>/g)];
 assert.equal(deferredWeatherScenes.length, 4, "날씨 배경 네 장이 필요할 때만 로드되도록 설정되지 않았습니다.");
 for (const match of deferredWeatherScenes) {

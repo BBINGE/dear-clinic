@@ -123,6 +123,88 @@
     },
   };
 
+  // 외국어 홈도 같은 날씨 카드를 쓴다. 한국어 문구는 위 WEATHER가 원본이고, 외국어는 그 뜻을 옮긴 것이다.
+  const pageLang = (document.documentElement.lang || "ko").toLowerCase();
+  const LOCALE = pageLang.startsWith("ja") ? "ja" : pageLang.startsWith("zh") ? "zh" : pageLang.startsWith("en") ? "en" : "ko";
+  const LOCALIZED = {
+    en: {
+      states: {
+        sunny: ["Sunny", ["Warm sunlight is falling on Seocho-dong.", "We hope your way to DEAR feels light and easy."], "Clear night", ["The night sky over Seocho-dong is clear.", "Take your time and come to DEAR safely."]],
+        "mostly-cloudy": ["Mostly cloudy", ["Plenty of clouds are drifting over Seocho-dong.", "If no rain is on the way, come as you usually would."]],
+        cloudy: ["Cloudy", ["The sky over Seocho-dong is grey, but no rain has been reported.", "Take your usual care on the way to DEAR."]],
+        rain: ["Rain", ["It is raining in Seocho-dong.", "Bring an umbrella and walk slowly on wet streets."]],
+        "heavy-rain": ["Heavy rain", ["It is raining quite hard in Seocho-dong.", "Please watch for slippery roads and passing cars."]],
+        snow: ["Snow", ["Snow is softly falling in Seocho-dong.", "The way may be slippery, so please walk slowly."]],
+        "heavy-snow": ["Heavy snow", ["Snow is piling up in Seocho-dong.", "Wear non-slip shoes and give yourself a little extra time."]],
+        "strong-wind": ["Strong wind", ["Strong winds are blowing in Seocho-dong.", "Watch your surroundings and button up your coat."]],
+        storm: ["Thunderstorm", ["There is thunder and lightning in Seocho-dong.", "Please check the weather and traffic once more before you set out."]],
+      },
+      hotNight: ["Hot night", (t) => [`Even at night, it is ${t}°C in Seocho-dong.`, "Take it slow. A cool breeze is waiting at DEAR."]],
+      veryHot: ["Very hot", (t) => [`It is ${t}°C in Seocho-dong today, with strong midday heat.`, "Bring some water and take it slow. Cool down first when you arrive."]],
+      hot: (t) => [`It is ${t}°C in Seocho-dong today, a hot day.`, "Bring some water. A cool room is waiting at DEAR."],
+      veryCold: (t) => [`It is ${t}°C in Seocho-dong today, very cold.`, "Dress warmly and come warm up inside DEAR."],
+      cold: (t) => [`It is ${t}°C in Seocho-dong today, a cold day.`, "Wrap up well. We will welcome you warmly at DEAR."],
+      source: (src, time) => `Seocho-dong · ${src}${time ? ` · as of ${time}` : ""}`,
+      sources: { kma: "Korea Meteorological Administration", openMeteo: "Open-Meteo current weather", current: "Current weather", updating: "Updating weather" },
+    },
+    ja: {
+      states: {
+        sunny: ["晴れ", ["瑞草洞に心地よい日差しが差しています。", "DEAR韓医院までの道のりも、軽やかでありますように。"], "晴れた夜", ["瑞草洞の夜空は澄んでいます。", "周りに気をつけて、ゆっくりお越しください。"]],
+        "mostly-cloudy": ["曇りがち", ["瑞草洞の空を雲がたくさん流れています。", "雨の予報がなければ、いつも通り気軽にお越しください。"]],
+        cloudy: ["くもり", ["瑞草洞の空は曇っていますが、今のところ雨は確認されていません。", "いつも通り、足元に気をつけてお越しください。"]],
+        rain: ["雨", ["瑞草洞では雨が降っています。", "傘をお持ちになり、濡れた道はゆっくり歩いてお越しください。"]],
+        "heavy-rain": ["強い雨", ["瑞草洞ではかなり強い雨が降っています。", "滑りやすい道と通行する車にご注意ください。"]],
+        snow: ["雪", ["瑞草洞に雪がしんしんと降っています。", "道が滑りやすいので、ゆっくり歩いてお越しください。"]],
+        "heavy-snow": ["大雪", ["瑞草洞では雪がたくさん積もっています。", "滑りにくい靴で、少し余裕をもってお出かけください。"]],
+        "strong-wind": ["強風", ["瑞草洞では強い風が吹いています。", "周りに気をつけ、上着をしっかり閉じてお越しください。"]],
+        storm: ["雷", ["瑞草洞で雷が発生しています。", "お出かけ前に、天気と交通状況をもう一度ご確認ください。"]],
+      },
+      hotNight: ["暑い夜", (t) => [`夜になっても瑞草洞は${t}°Cと高めです。`, "ゆっくりお越しください。DEARの涼しい風がお待ちしています。"]],
+      veryHot: ["猛暑", (t) => [`今日の瑞草洞は${t}°C、日中の暑さがとても厳しいです。`, "お水を持ってゆっくりお越しください。到着されたら、まず涼んでください。"]],
+      hot: (t) => [`今日の瑞草洞は${t}°Cの暑い日です。`, "お水をお持ちください。DEARの涼しい室内がお待ちしています。"],
+      veryCold: (t) => [`今日の瑞草洞は${t}°Cと、とても寒いです。`, "暖かくしてお越しください。DEARの室内で体を温めてください。"],
+      cold: (t) => [`今日の瑞草洞は${t}°Cの寒い日です。`, "襟元をしっかり閉じてお越しください。DEARで温かくお迎えします。"],
+      source: (src, time) => `瑞草洞 · ${src}${time ? ` · ${time}時点` : ""}`,
+      sources: { kma: "韓国気象庁", openMeteo: "Open-Meteo 現在の天気", current: "現在の天気", updating: "天気を更新中" },
+    },
+    zh: {
+      states: {
+        sunny: ["晴", ["瑞草洞阳光正好。", "愿您来DEAR韩医院的路上也轻松愉快。"], "晴朗的夜晚", ["瑞草洞的夜空很晴朗。", "来院路上请留意周围，慢慢走，注意安全。"]],
+        "mostly-cloudy": ["多云", ["瑞草洞上空云层较多。", "如果没有降雨，像平常一样放心前来即可。"]],
+        cloudy: ["阴", ["瑞草洞天色阴沉，但目前没有降雨。", "来院路上请像平常一样慢慢留意。"]],
+        rain: ["雨", ["瑞草洞正在下雨。", "请带好雨伞，雨天路滑请慢行。"]],
+        "heavy-rain": ["大雨", ["瑞草洞雨下得很大。", "来院时请注意湿滑路面和过往车辆。"]],
+        snow: ["雪", ["瑞草洞正在下雪。", "路面可能湿滑，请慢慢走。"]],
+        "heavy-snow": ["大雪", ["瑞草洞积雪较多。", "请穿防滑的鞋，稍微提前出发。"]],
+        "strong-wind": ["大风", ["瑞草洞正在刮大风。", "来院路上请留意周围，把外套裹紧。"]],
+        storm: ["雷电", ["瑞草洞出现雷电。", "出发前请再确认一下天气和交通情况。"]],
+      },
+      hotNight: ["闷热的夜晚", (t) => [`夜里瑞草洞的气温仍有${t}°C。`, "请慢慢来，DEAR的凉风在等您。"]],
+      veryHot: ["酷热", (t) => [`今天瑞草洞${t}°C，午间非常炎热。`, "带上一杯水慢慢来，到了先在院里消消暑。"]],
+      hot: (t) => [`今天瑞草洞${t}°C，是炎热的一天。`, "记得带水，DEAR凉爽的室内在等您。"],
+      veryCold: (t) => [`今天瑞草洞${t}°C，非常寒冷。`, "请穿暖和些慢慢来，到DEAR温暖的室内暖暖身子。"],
+      cold: (t) => [`今天瑞草洞${t}°C，天气寒冷。`, "请把衣领裹紧，DEAR会温暖地迎接您。"],
+      source: (src, time) => `瑞草洞 · ${src}${time ? ` · ${time}观测` : ""}`,
+      sources: { kma: "韩国气象厅", openMeteo: "Open-Meteo 实时天气", current: "实时天气", updating: "天气更新中" },
+    },
+  }[LOCALE];
+
+  if (LOCALIZED) {
+    Object.entries(LOCALIZED.states).forEach(([state, [stateLabel, stateMessage, nightLabel, nightMessage]]) => {
+      Object.assign(WEATHER[state], { label: stateLabel, message: stateMessage });
+      if (nightLabel) Object.assign(WEATHER[state], { nightLabel, nightMessage });
+    });
+  }
+
+  function localizedSource(value) {
+    if (!LOCALIZED) return value;
+    if (!value || value === "현재 날씨") return LOCALIZED.sources.current;
+    if (value.startsWith("기상청")) return LOCALIZED.sources.kma;
+    if (value.startsWith("Open-Meteo")) return LOCALIZED.sources.openMeteo;
+    if (value === "날씨 갱신 중") return LOCALIZED.sources.updating;
+    return value;
+  }
+
   function todayInKorea() {
     const parts = new Intl.DateTimeFormat("ko-KR", {
       timeZone: "Asia/Seoul",
@@ -233,6 +315,14 @@
       } else if (temperature <= 0) {
         weatherMessage = [`오늘 서초동은 ${displayTemperature}°C로 추운 날이에요.`, "옷깃을 단단히 여미고 오시면 디어에서 따뜻하게 맞이할게요."];
       }
+      if (LOCALIZED) {
+        const t = displayTemperature;
+        if (daylight === "night" && temperature >= 28) [displayLabel, weatherMessage] = [LOCALIZED.hotNight[0], LOCALIZED.hotNight[1](t)];
+        else if (daylight === "day" && temperature >= 33) [displayLabel, weatherMessage] = [LOCALIZED.veryHot[0], LOCALIZED.veryHot[1](t)];
+        else if (daylight === "day" && temperature >= 30) weatherMessage = LOCALIZED.hot(t);
+        else if (temperature <= -10) weatherMessage = LOCALIZED.veryCold(t);
+        else if (temperature <= 0) weatherMessage = LOCALIZED.cold(t);
+      }
     }
 
     loadWeatherScene(state, daylight);
@@ -245,7 +335,11 @@
     const observedLabel = observed
       ? new Intl.DateTimeFormat("ko-KR", { timeZone: "Asia/Seoul", hour: "2-digit", minute: "2-digit", hour12: false }).format(observed)
       : null;
-    if (source) source.textContent = `서초동 기준 · ${data?.source || "현재 날씨"}${observedLabel ? ` · ${observedLabel} 기준` : ""}`;
+    if (source) {
+      source.textContent = LOCALIZED
+        ? LOCALIZED.source(localizedSource(data?.source), observedLabel)
+        : `서초동 기준 · ${data?.source || "현재 날씨"}${observedLabel ? ` · ${observedLabel} 기준` : ""}`;
+    }
     const messageLines = Array.isArray(weatherMessage) ? weatherMessage : [weatherMessage];
     message.replaceChildren(...messageLines.map((line) => {
       const span = document.createElement("span");
@@ -257,7 +351,8 @@
 
   async function refreshWeather() {
     try {
-      const kmaResponse = await fetch(`weather-data.json?t=${Date.now()}`, {
+      // 외국어 홈은 /en/ 같은 하위 폴더라 사이트 루트 기준으로 부른다.
+      const kmaResponse = await fetch(`/weather-data.json?t=${Date.now()}`, {
         headers: { Accept: "application/json" },
         cache: "no-store",
       });
@@ -279,7 +374,7 @@
         applyWeather(await fetchOpenMeteo());
       } catch {
         section.dataset.weatherStatus = "fallback";
-        if (source) source.textContent = "서초동 기준 · 날씨 갱신 중";
+        if (source) source.textContent = LOCALIZED ? LOCALIZED.source(LOCALIZED.sources.updating) : "서초동 기준 · 날씨 갱신 중";
       }
     }
   }
