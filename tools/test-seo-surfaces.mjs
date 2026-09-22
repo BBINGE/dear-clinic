@@ -338,12 +338,25 @@ for (const absolutePath of koreanHtml) {
   process.stdout.write(`폰트 검증 통과: ${fontPages.length}개 페이지\n`);
 }
 
-process.stdout.write(`SEO 표면 검증 통과: 사이트맵 ${sitemapUrls.length}개, 칼럼 ${directCardLinks.length}개\n`);
-
-// Care 패널 칼럼 카드는 배포 때 tools/refresh-care-columns.mjs가 분류별 최신 칼럼으로 채운다.
+// 페이지 곳곳의 칼럼 카드는 배포 때 tools/refresh-column-cards.mjs가 최신 칼럼으로 채운다.
+// 자리 표시가 사라지면 그 자리는 더 이상 저절로 바뀌지 않으므로 여기서 지킨다.
 {
-  const care = read("care.html");
-  for (const category of ["Focus", "Calm", "Restore", "Relief", "Shape"]) {
-    assert.match(care, new RegExp(`<!-- CARE_COLUMN:${category}:START --><li><a href="columns/[^"]+\\.html">[\\s\\S]*?<!-- CARE_COLUMN:${category}:END -->`), `Care ${category} 칼럼 카드 자리가 없습니다.`);
+  const markers = {
+    "care.html": ["Focus", "Calm", "Restore", "Relief", "Shape"].map((category) => `CARE_COLUMN:${category}`),
+    "be-deer.html": ["AUTO_COLUMNS:be-deer"],
+    "director.html": ["AUTO_COLUMNS:director"],
+    "dear-gongjindan.html": ["EXAM_SEASON:dear-reads"],
+    "columns/gongjindan-effect.html": ["EXAM_SEASON:column-related"],
+    "columns/gongjindan.html": ["EXAM_SEASON:column-related"],
+    "columns/student-herbal-medicine.html": ["EXAM_SEASON:column-related"],
+    "columns/cheongdam-gongjindan.html": ["EXAM_SEASON:link"],
+  };
+  for (const [file, names] of Object.entries(markers)) {
+    const html = read(file);
+    for (const name of names) {
+      assert.ok(html.includes(`<!-- ${name}:START -->`) && html.includes(`<!-- ${name}:END -->`), `${file}에 ${name} 칼럼 카드 자리가 없습니다.`);
+    }
   }
 }
+
+process.stdout.write(`SEO 표면 검증 통과: 사이트맵 ${sitemapUrls.length}개, 칼럼 ${directCardLinks.length}개\n`);

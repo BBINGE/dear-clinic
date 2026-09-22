@@ -96,13 +96,11 @@ assert.match(read("director.html"), /href="medical-information-policy\.html"/, "
 assert.match(read("index.html"), new RegExp(`"publishingPrinciples": "${policyUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"`), "병원 엔티티에 편집·정정 원칙이 없습니다.");
 
 const beDeer = read("be-deer.html");
-const beDeerColumnSlugs = [
-  "seocho-diet-herbal-medicine", "seocho-diet-6-reasons", "diet-without-hunger",
-  "diet-herbal-medicine-price", "gyodae-diet-premenstrual-appetite", "gangnam-obesity-fatty-liver",
-];
-for (const slug of beDeerColumnSlugs) {
-  assert.match(beDeer, new RegExp(`href="columns/${slug}\\.html"`), `BE DEER 허브에 핵심 칼럼이 없습니다: ${slug}`);
-}
+// BE DEER 칼럼 카드는 배포 때 tools/refresh-column-cards.mjs가 최신 다이어트 칼럼 6편으로 채운다.
+// 고정 목록 대신, 화면의 카드와 구조화 데이터가 같은 6편을 가리키는지 본다.
+const beDeerAutoBlock = beDeer.split("<!-- AUTO_COLUMNS:be-deer:START -->")[1]?.split("<!-- AUTO_COLUMNS:be-deer:END -->")[0] || "";
+const beDeerColumnSlugs = [...beDeerAutoBlock.matchAll(/href="columns\/([^"]+)\.html"/g)].map((match) => match[1]);
+assert.equal(beDeerColumnSlugs.length, 6, `BE DEER 허브의 칼럼 카드는 6편이어야 합니다: ${beDeerColumnSlugs.length}편`);
 const beDeerNodes = schemasFrom(beDeer, "be-deer.html").flatMap((schema) => Array.isArray(schema?.["@graph"]) ? schema["@graph"] : [schema]);
 const beDeerPage = beDeerNodes.find((node) => node?.["@id"] === "https://dearhani.com/be-deer.html#webpage");
 const beDeerService = beDeerNodes.find((node) => node?.["@id"] === "https://dearhani.com/be-deer.html#service");
