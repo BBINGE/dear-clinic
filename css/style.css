@@ -9937,3 +9937,12 @@ body.director-page {
     max-width: 100%;
   }
 }
+
+/* 일본어·중국어는 띄어쓰기가 없어 keep-all이면 문장 전체가 한 단어가 되어 화면 밖으로 잘린다.
+   한국어 페이지는 그대로 두고, 이 두 언어만 글자 단위 줄바꿈으로 되돌린다(2026-09-22). */
+html:lang(ja) *,
+html:lang(zh) * {
+  word-break: normal !important;
+  line-break: strict;
+  overflow-wrap: break-word;
+}
