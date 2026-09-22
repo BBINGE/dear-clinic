@@ -64,7 +64,7 @@ for (const pageUrl of sitemapUrls) {
   assert.ok(fs.existsSync(absolutePath), `사이트맵 페이지 파일이 없습니다: ${relativePath}`);
   const html = fs.readFileSync(absolutePath, "utf8");
   if (relativePath === "international-appointment.html") {
-    assert.match(html, /js\/international-appointment\.js\?v=20260903-2/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
+    assert.match(html, /js\/international-appointment\.js\?v=20260922-1/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
   } else {
     // 홈의 팝업 지연 로딩 마크업은 새 JS와 함께 갱신한다. 다른 페이지의 캐시는 유지한다.
     const mainVersion = sharedMainVersion;
