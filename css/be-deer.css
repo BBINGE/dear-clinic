@@ -58,6 +58,14 @@ img { display: block; width: 100%; }
   font-size: clamp(18px, 1.4vw, 22px);
   line-height: 1.8;
 }
+/* 위치 한 줄. 광고 키워드(강남역·교대역)와 페이지가 같은 말을 하도록 둔다. (2026-09-22) */
+.hero__location {
+  margin: -14px 0 30px;
+  color: #247860;
+  font-size: clamp(14px, 1vw, 16px);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
 .text-link {
   display: inline-flex;
   gap: 18px;
