@@ -80,3 +80,15 @@
   .dc-hello.dc-hello .dc-hello__quote { font-size: 13px; }
   .dc-hello.dc-hello .dc-hello__ask { font-size: 12px; }
 }
+
+/* 채널 색: 네이버(예약·톡톡)는 네이버 초록, 전화는 디어 초록, 인스타는 인스타 색.
+   확정 팔레트 밖의 색은 외부 서비스로 가는 버튼을 알아보게 하는 용도로만 쓴다(박성호, 2026-09-22). */
+.dc-tile.dc-tile--naver { background: #03c75a; color: #fff; }
+.dc-tile.dc-tile--naver i { background: rgba(255, 255, 255, .2); color: #fff; }
+.dc-tile.dc-tile--talk i { background: #03c75a; color: #fff; }
+.dc-tile.dc-tile--phone i { background: #247860; color: #fff; }
+.dc-tile.dc-tile--insta i { background: linear-gradient(45deg, #f58529 0%, #dd2a7b 50%, #8134af 80%, #515bd4 100%); color: #fff; }
+.dc-chip.dc-chip--naver { border-color: #03c75a; background: #03c75a; color: #fff; }
+.dc-chip.dc-chip--naver:hover, .dc-chip.dc-chip--naver:focus-visible { background: #02b350; }
+.dc-chip.dc-chip--phone { border-color: #cfe3da; background: #fff; color: #247860; }
+.dc-chip.dc-chip--phone svg { color: #247860; }

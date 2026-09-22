@@ -38,8 +38,8 @@
       <p class="dc-hello__quote">저에게 만큼은 조금 편하게 이야기하고, 조금 덜 걱정하실 수 있었으면 좋겠습니다.</p>
       <p class="dc-hello__ask">이 글에 앞서 상담이 필요하신 분들은 네이버 톡톡이나 전화를 주세요 🙂</p>
       <div class="dc-hello__actions">
-        <a class="dc-chip dc-chip--solid" href="${TALK}" ${external} data-track-action="naver_talk" data-track-location="column_top">${icon.talk}톡톡 상담</a>
-        <a class="dc-chip" href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_top">${icon.phone}02-3486-1777</a>
+        <a class="dc-chip dc-chip--naver" href="${TALK}" ${external} data-track-action="naver_talk" data-track-location="column_top">${icon.talk}톡톡 상담</a>
+        <a class="dc-chip dc-chip--phone" href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_top">${icon.phone}02-3486-1777</a>
       </div>
       ${hours}
     </div>`;
@@ -62,10 +62,10 @@
           ${hours}
         </div>
         <ul class="dc-tiles">
-          <li><a class="dc-tile dc-tile--main" href="${BOOKING}" ${external} data-track-action="naver_booking" data-track-location="column_dock"><i>${icon.booking}</i>네이버 예약</a></li>
-          <li><a class="dc-tile" href="${TALK}" ${external} data-track-action="naver_talk" data-track-location="column_dock"><i>${icon.talk}</i>톡톡 상담</a></li>
-          <li><a class="dc-tile" href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock"><i>${icon.phone}</i>전화</a></li>
-          <li><a class="dc-tile" href="${INSTAGRAM}" ${external} data-track-action="instagram" data-track-location="column_dock"><i>${icon.instagram}</i>인스타그램</a></li>
+          <li><a class="dc-tile dc-tile--naver" href="${BOOKING}" ${external} data-track-action="naver_booking" data-track-location="column_dock"><i>${icon.booking}</i>네이버 예약</a></li>
+          <li><a class="dc-tile dc-tile--talk" href="${TALK}" ${external} data-track-action="naver_talk" data-track-location="column_dock"><i>${icon.talk}</i>톡톡 상담</a></li>
+          <li><a class="dc-tile dc-tile--phone" href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock"><i>${icon.phone}</i>전화</a></li>
+          <li><a class="dc-tile dc-tile--insta" href="${INSTAGRAM}" ${external} data-track-action="instagram" data-track-location="column_dock"><i>${icon.instagram}</i>인스타그램</a></li>
         </ul>
       </div>
     </div>`;
