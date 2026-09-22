@@ -227,7 +227,7 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   quickmenu.setAttribute("aria-label", copy.nav);
   quickmenu.innerHTML = `
     <a class="quickmenu__btn" href="tel:02-3486-1777" aria-label="${copy.phoneAria}">${icons.phone}<span class="quickmenu__label">${copy.phone}</span></a>
-    <a class="quickmenu__btn" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener" aria-label="${copy.bookingAria}">${icons.booking}<span class="quickmenu__label">${copy.booking}</span></a>
+    ${language === "ko" ? `<a class="quickmenu__btn" href="https://m.booking.naver.com/booking/13/bizes/729883" target="_blank" rel="noopener" aria-label="${copy.bookingAria}">${icons.booking}<span class="quickmenu__label">${copy.booking}</span></a>` : ""}
     <a class="quickmenu__btn" href="https://talk.naver.com/ct/w5zr5u" target="_blank" rel="noopener" aria-label="${copy.talkAria}">${icons.talk}<span class="quickmenu__label">${copy.talk}</span></a>
     <a class="quickmenu__btn" href="https://blog.naver.com/thisisdear" target="_blank" rel="noopener" aria-label="${copy.blog}">${icons.blog}<span class="quickmenu__label">${copy.blog}</span></a>
     <a class="quickmenu__btn" href="https://www.instagram.com/dearhani__/" target="_blank" rel="noopener" aria-label="${copy.instagram}">${icons.instagram}<span class="quickmenu__label">${copy.instagram}</span></a>
@@ -339,6 +339,8 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   };
   const quickmenu = document.querySelector(".quickmenu");
   if (!quickmenu) return;
+  // 외국인에게 네이버 예약은 계정 없이 쓰기 어렵다. 예약은 외국인 예약 버튼 하나로 받는다.
+  quickmenu.querySelectorAll(selectors.booking).forEach((link) => link.remove());
   Object.entries(selectors).forEach(([key, selector]) => {
     const label = quickmenu.querySelector(selector)?.querySelector(".quickmenu__label");
     if (label) {
@@ -512,7 +514,7 @@ const navCopy = {
     columns: [["All columns", "columns.html", "Translated clinical columns"]],
     care: [["Focus", "care.html?care=Focus", "Cognition and concentration"], ["Calm", "care.html?care=Calm", "Tension and sleep"], ["Restore", "care.html?care=Restore", "Fatigue and recovery"], ["Relief", "care.html?care=Relief", "Pain and discomfort"], ["Shape", "care.html?care=Shape", "Weight and daily rhythm"]],
     services: [["BE DEER", "services.html#be-deer", "Weight and daily rhythm"], ["DEAR GONGJINDAN", "services.html#dear-gongjindan", "Energy and recovery"], ["KOREAN HERBAL MEDICINE", "services.html#herbal-decoction", "Personalized herbal medicine"], ["DEER BALANCE", "services.html#deer-balance", "Sleep and emotional balance"], ["View all services", "services.html", "DEAR SERVICES"]],
-    contact: [["Call us", "tel:02-3486-1777", "02-3486-1777"], ["Naver reservation", "https://m.booking.naver.com/booking/13/bizes/729883", "Book an appointment"], ["Naver Talk", "https://talk.naver.com/ct/w5zr5u", "Send an inquiry"], ["International booking", "/international-appointment.html?lang=en", "Schedule and phone booking"], ["Directions", "index.html#info", "143 Saimdang-ro, Seocho-gu"]],
+    contact: [["Call us", "tel:02-3486-1777", "02-3486-1777"], ["International booking", "/international-appointment.html?lang=en", "Schedule, phone and DM"], ["Instagram DM", "https://www.instagram.com/dearhani__/", "@dearhani__"], ["Naver Talk", "https://talk.naver.com/ct/w5zr5u", "Send an inquiry"], ["Directions", "index.html#info", "143 Saimdang-ro, Seocho-gu"]],
   },
   ja: {
     labels: ["DEARについて", "健康コラム", "現在の状態から診ます", "診療と処方", "DEARへのお問い合わせ"],
@@ -520,7 +522,7 @@ const navCopy = {
     columns: [["コラム一覧", "columns.html", "翻訳された健康コラム"]],
     care: [["Focus", "care.html?care=Focus", "認知機能と集中力"], ["Calm", "care.html?care=Calm", "緊張反応と睡眠"], ["Restore", "care.html?care=Restore", "疲労と回復力"], ["Relief", "care.html?care=Relief", "痛みと身体的不調"], ["Shape", "care.html?care=Shape", "体重と生活リズム"]],
     services: [["BE DEER", "services.html#be-deer", "体重と生活リズム"], ["DEAR GONGJINDAN", "services.html#dear-gongjindan", "気力と回復"], ["KOREAN HERBAL MEDICINE", "services.html#herbal-decoction", "体質に合わせた韓薬"], ["DEER BALANCE", "services.html#deer-balance", "睡眠と心のバランス"], ["診療一覧", "services.html", "DEAR SERVICES"]],
-    contact: [["電話相談", "tel:02-3486-1777", "02-3486-1777"], ["Naver予約", "https://m.booking.naver.com/booking/13/bizes/729883", "診療予約"], ["Naver Talk", "https://talk.naver.com/ct/w5zr5u", "オンライン相談"], ["海外患者予約", "/international-appointment.html?lang=ja", "診療日程と電話予約"], ["アクセス", "index.html#info", "ソウル市瑞草区師任堂路143"]],
+    contact: [["電話相談", "tel:02-3486-1777", "02-3486-1777"], ["海外患者予約", "/international-appointment.html?lang=ja", "診療日程・電話・DM"], ["Instagram DM", "https://www.instagram.com/dearhani__/", "@dearhani__"], ["Naver Talk", "https://talk.naver.com/ct/w5zr5u", "オンライン相談"], ["アクセス", "index.html#info", "ソウル市瑞草区師任堂路143"]],
   },
   zh: {
     labels: ["关于DEAR", "健康专栏", "从当前状态开始", "诊疗与处方", "联系DEAR"],
@@ -528,7 +530,7 @@ const navCopy = {
     columns: [["全部专栏", "columns.html", "已翻译的健康专栏"]],
     care: [["Focus", "care.html?care=Focus", "认知功能与注意力"], ["Calm", "care.html?care=Calm", "紧张反应与睡眠"], ["Restore", "care.html?care=Restore", "疲劳与恢复力"], ["Relief", "care.html?care=Relief", "疼痛与身体不适"], ["Shape", "care.html?care=Shape", "体重与生活节律"]],
     services: [["BE DEER", "services.html#be-deer", "体重与生活节律"], ["DEAR GONGJINDAN", "services.html#dear-gongjindan", "精力与恢复"], ["KOREAN HERBAL MEDICINE", "services.html#herbal-decoction", "个体化韩药"], ["DEER BALANCE", "services.html#deer-balance", "睡眠与情绪平衡"], ["查看全部诊疗", "services.html", "DEAR SERVICES"]],
-    contact: [["电话咨询", "tel:02-3486-1777", "02-3486-1777"], ["Naver预约", "https://m.booking.naver.com/booking/13/bizes/729883", "预约诊疗"], ["Naver咨询", "https://talk.naver.com/ct/w5zr5u", "在线咨询"], ["国际患者预约", "/international-appointment.html?lang=zh", "门诊时间与电话预约"], ["来院路线", "index.html#info", "首尔市瑞草区师任堂路143"]],
+    contact: [["电话咨询", "tel:02-3486-1777", "02-3486-1777"], ["国际患者预约", "/international-appointment.html?lang=zh", "门诊时间·电话·私信"], ["Instagram 私信", "https://www.instagram.com/dearhani__/", "@dearhani__"], ["Naver咨询", "https://talk.naver.com/ct/w5zr5u", "在线咨询"], ["来院路线", "index.html#info", "首尔市瑞草区师任堂路143"]],
   },
 }[navLocale];
 

@@ -75,7 +75,7 @@
 
 ### 고정값
 
-- `sharedCssVersion = 20260919-1` · `sharedMainVersion = 20260919-1`. **`css/style.css`나 `js/main.js`를 고치면 106개 HTML의 `?v=`와 `tools/publish-column.mjs`까지 함께 올린다.**
+- `sharedCssVersion = 20260919-1` · `sharedMainVersion = 20260922-1`. **`css/style.css`나 `js/main.js`를 고치면 106개 HTML의 `?v=`와 `tools/publish-column.mjs`까지 함께 올린다.**
 - 본문 폰트는 **Pretendard Variable 동적 서브셋**(`variable/pretendardvariable-dynamic-subset.css`)이다. 새 페이지를 만들 때 옛 `static/pretendard.css`를 붙여넣지 않는다.
 - 칼럼 34편 · 사이트맵 96개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
 - 칼럼 34편 전부에 네이버 예약·전화·주소가 있다(2026-09-22 대조). 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
@@ -120,6 +120,10 @@
   - 영어 버튼: 외국인 예약 페이지로 연결
 - **외국인 예약 달력(`js/international-appointment.js`)에 추석 단축 진료를 넣었다.** 24·26일 10–15시, 25일 14–20시다. 이제 `special`에 `hours`를 넣으면 그날 시간이 덮어써지고, 범례는 `Holiday hours`로 바꿨다. JS 캐시는 `20260922-1`이다(`tools/test-seo-surfaces.mjs` 고정값 포함).
 - **구글 비즈니스 프로필을 확인했다.** 이름은 「디어한의원(DEAR KOREAN MEDICINE CLINIC)」이고 영어 소개문이 이미 잘 들어가 있다. 소개문은 할 일이 아니다.
+- **외국어 페이지의 예약 동선을 외국인 예약 페이지로 모았다.** 박성호 기준: 외국인에게 익숙한 창구는 전화와 Instagram DM이고, 네이버 예약·톡톡은 불편하다. 전화는 절대 빼지 않는다(원장님은 외국어가 되지만 접수 선생님들은 당황할 수 있어 DM을 함께 둔다).
+  - `en`·`ja`·`zh-cn` 30장의 네이버 예약 버튼 → `../international-appointment.html?lang=en|ja|zh`. 빠른메뉴의 네이버 예약 버튼은 HTML에서 지웠고, `main.js`도 외국어 페이지에서는 네이버 예약 버튼을 만들지 않고 지운다. 상단 Contact 서브메뉴는 `국제 예약 → Instagram DM → 톡톡` 순서다. **한국어 페이지는 그대로다.**
+  - 외국인 예약 페이지: 첫 화면과 맨 아래에 전화 버튼과 같은 크기의 DM 버튼을 나란히 뒀다. 연락 방법 목록은 DM·전화 2개로 줄이고 네이버 톡톡은 목록 아래 작은 한 줄로 내렸다.
+  - 캐시: `sharedMainVersion = 20260922-1`, 외국인 예약 JS `20260922-2`, CSS `20260922-1`.
 
 ### 법적으로 정리된 것 (다시 꺼내지 않는다)
 

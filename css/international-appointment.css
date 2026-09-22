@@ -13,3 +13,14 @@
 .ways-list p{margin:9px 0 0 36px;font-size:.93rem;line-height:1.7;color:var(--muted)}
 .ways-note{margin-top:20px}
 @media(max-width:600px){.ways{padding-bottom:52px}.ways h2{font-size:1.3rem;margin-bottom:22px}.ways-list p{margin-left:0}}
+.contact-actions{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
+.contact-actions .call-primary{margin-top:0}
+.dm-primary{display:inline-flex;flex-direction:column;gap:5px;padding:16.5px 22.5px;border-radius:14px;background:white;color:var(--green);border:1.5px solid var(--green);text-decoration:none;font-weight:750}
+.dm-primary small{font-weight:500;color:var(--muted)}
+.dm-primary:hover,.dm-primary:focus-visible{background:var(--mint)}
+.contact-actions--center{justify-content:center;margin:18px 0}
+.contact-actions--center .call-secondary{margin:0}
+.dm-secondary{display:inline-block;background:transparent;color:var(--deep);border:1.5px solid var(--deep);text-decoration:none;font-weight:800;border-radius:999px;padding:14.5px 26.5px}
+.dm-secondary:hover,.dm-secondary:focus-visible{background:var(--mint)}
+.ways-naver a{color:var(--green)}
+@media(max-width:600px){.contact-actions{flex-direction:column}.contact-actions .call-primary,.dm-primary{width:100%}.contact-actions--center{align-items:center}}
