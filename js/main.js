@@ -279,7 +279,7 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
     ko: { label: "다이어트 저널", aria: "디어한의원 다이어트 저널" },
     en: { label: "Diet Journal", aria: "DEAR Diet Journal" },
     ja: { label: "ジャーナル", aria: "ディア韓医院ダイエットジャーナル" },
-    zh: { label: "减重专刊", aria: "DEAR韩医院减重专刊" },
+    zh: { label: "减重笔记", aria: "DEAR韩医院减重笔记" },
   }[language];
   const href = "https://dearmydiet.tistory.com/";
   const logo = '<svg class="dear-diet-journal__logo" viewBox="0 0 100 100" aria-hidden="true"><circle cx="15" cy="16" r="13"/><circle cx="50" cy="16" r="13"/><circle cx="85" cy="16" r="13"/><circle cx="50" cy="50" r="13"/><circle cx="50" cy="84" r="13"/></svg>';
@@ -324,7 +324,7 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   const labels = {
     en: { phone: "Call", booking: "Naver Book", talk: "Naver Talk", international: "Book", blog: "Blog", instagram: "Instagram", journal: "Journal", top: "Top" },
     ja: { phone: "電話", booking: "Naver予約", talk: "Naver相談", international: "予約", blog: "ブログ", instagram: "Instagram", journal: "ジャーナル", top: "トップ" },
-    zh: { phone: "电话", booking: "Naver预约", talk: "Naver咨询", international: "预约", blog: "博客", instagram: "Instagram", journal: "减重专刊", top: "顶部" },
+    zh: { phone: "电话", booking: "Naver预约", talk: "Naver咨询", international: "预约", blog: "博客", instagram: "Instagram", journal: "减重笔记", top: "顶部" },
   }[locale];
   if (!labels) return;
   const selectors = {
@@ -525,10 +525,10 @@ const navCopy = {
     contact: [["電話相談", "tel:02-3486-1777", "02-3486-1777"], ["海外患者予約", "/international-appointment.html?lang=ja", "診療日程・電話・DM"], ["Instagram DM", "https://www.instagram.com/dearhani__/", "@dearhani__"], ["Naver Talk", "https://talk.naver.com/ct/w5zr5u", "オンライン相談"], ["アクセス", "index.html#info", "ソウル市瑞草区師任堂路143"]],
   },
   zh: {
-    labels: ["关于DEAR", "健康专栏", "从当前状态开始", "诊疗与处方", "联系DEAR"],
-    about: [["关于DEAR", "about.html", "诊疗空间与标准"], ["诊疗理念", "philosophy.html", "共同沟通、共同选择"], ["代表院长 金敏智", "director.html", "院长与诊疗方向"], ["履历", "career.html", "教育、职业与研究经历"]],
-    columns: [["全部专栏", "columns.html", "已翻译的健康专栏"]],
-    care: [["Focus", "care.html?care=Focus", "认知功能与注意力"], ["Calm", "care.html?care=Calm", "紧张反应与睡眠"], ["Restore", "care.html?care=Restore", "疲劳与恢复力"], ["Relief", "care.html?care=Relief", "疼痛与身体不适"], ["Shape", "care.html?care=Shape", "体重与生活节律"]],
+    labels: ["关于DEAR", "健康专栏", "从当下状态出发", "诊疗与处方", "联系DEAR"],
+    about: [["关于DEAR", "about.html", "诊疗空间与标准"], ["诊疗理念", "philosophy.html", "一起沟通，一起选择"], ["代表院长 金敏智", "director.html", "院长与诊疗方向"], ["履历", "career.html", "学历、职业与研究经历"]],
+    columns: [["全部专栏", "columns.html", "DEAR韩医院健康专栏"]],
+    care: [["Focus", "care.html?care=Focus", "认知与专注力"], ["Calm", "care.html?care=Calm", "紧张反应与睡眠"], ["Restore", "care.html?care=Restore", "疲劳与恢复力"], ["Relief", "care.html?care=Relief", "疼痛与身体不适"], ["Shape", "care.html?care=Shape", "体重与生活节律"]],
     services: [["BE DEER", "services.html#be-deer", "体重与生活节律"], ["DEAR GONGJINDAN", "services.html#dear-gongjindan", "精力与恢复"], ["KOREAN HERBAL MEDICINE", "services.html#herbal-decoction", "个体化韩药"], ["DEER BALANCE", "services.html#deer-balance", "睡眠与情绪平衡"], ["查看全部诊疗", "services.html", "DEAR SERVICES"]],
     contact: [["电话咨询", "tel:02-3486-1777", "02-3486-1777"], ["国际患者预约", "/international-appointment.html?lang=zh", "门诊时间·电话·私信"], ["Instagram 私信", "https://www.instagram.com/dearhani__/", "@dearhani__"], ["Naver咨询", "https://talk.naver.com/ct/w5zr5u", "在线咨询"], ["来院路线", "index.html#info", "首尔市瑞草区师任堂路143"]],
   },
@@ -716,13 +716,13 @@ document.querySelectorAll(".nav__link").forEach((link) => {
     },
     zh: {
       sequence: ["倾听", "评估", "共同制定方案"],
-      flowEyebrow: "HOW WE BEGIN", flowTitle: "确认既往经过，\n评估当前状态。", flowBody: "相同症状也可能有不同背景。我们会结合发病经过、伴随变化与日常生活，再说明诊疗方向。",
-      viewerTitle: "五项Care，\n对应诊疗中的五个关注点。", viewerBody: "这不是自我诊断分类，而是就诊时与您共同确认的内容。", columnsLink: "阅读相关专栏",
-      principleTitle: "我们不会\n预先决定治疗方法。", principleBody: "先了解发生了什么、哪些情况持续存在，以及日常生活中什么最重要；再说明可选方案，与您共同决定。", principleSteps: ["倾听", "评估", "说明", "共同决定"],
-      serviceCtas: ["了解体重管理", "了解拱辰丹", "了解体质韩药", "了解睡眠与情绪管理"], serviceDetail: "查看详情",
-      directorArticles: "金敏智代表院长撰写与审核的专栏", directorCard: "已翻译的DEAR健康专栏", directorAll: "查看翻译专栏 →",
-      journalTitle: "DEAR CLINICAL JOURNAL", journalSub: "DEAR韩医院健康专栏", search: "按症状或生活变化搜索", prompts: ["睡眠", "疲劳", "消化", "体重"],
-      beTitle: "以真实体验呈现的体重管理。", beBody: "BE DEER不只关注体重，也会结合食欲、睡眠、消化与生活节律。", beLink: "了解BE DEER", bridgeTitle: "不同的诊疗，\n都从同一个人的今天开始。", bridgeBody: "无论体重、精力还是恢复问题，都从认真倾听身体与生活开始。", bridgePrinciple: "DEAR越过疾病名称，先理解眼前的人。",
+      flowEyebrow: "HOW WE BEGIN", flowTitle: "了解发病经过，\n评估当前状态。", flowBody: "同样的症状，背后的原因也可能各不相同。我们会结合发病经过、伴随变化与日常生活，再说明诊疗方向。",
+      viewerTitle: "五项Care，\n是诊疗时着眼的五个重点。", viewerBody: "并非供您自我对照的分类，而是就诊时与您一起确认的内容。", columnsLink: "阅读相关专栏",
+      principleTitle: "不预设\n治疗方法。", principleBody: "先了解哪些发生了变化、哪些一直持续、日常生活中什么最要紧，再说明可选方案，与您一起决定。", principleSteps: ["倾听", "评估", "说明", "共同决定"],
+      serviceCtas: ["了解减重项目", "了解拱辰丹", "了解体质韩药", "了解睡眠与情绪调理"], serviceDetail: "查看详情",
+      directorArticles: "金敏智代表院长撰写、审阅的专栏", directorCard: "DEAR健康专栏", directorAll: "查看全部专栏 →",
+      journalTitle: "DEAR CLINICAL JOURNAL", journalSub: "DEAR韩医院健康专栏", search: "搜索症状或生活变化", prompts: ["睡眠", "疲劳", "消化", "体重"],
+      beTitle: "口碑见证的体重管理。", beBody: "BE DEER不只看体重数字，食欲、睡眠、消化与生活节律也一并关注。", beLink: "了解BE DEER", bridgeTitle: "诊疗名称各不相同，\n却都始于一个人的今天。", bridgeBody: "无论是为体重烦恼，还是为精力与恢复发愁，都从细心倾听您的身体与生活开始。", bridgePrinciple: "DEAR看的不只是病名，更是病名背后的那个人。",
     },
   }[locale];
 

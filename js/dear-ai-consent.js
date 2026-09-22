@@ -20,7 +20,7 @@
       ko: ['안녕하세요, 디숭이예요 😊', '진료 안내나 예약 방법이 궁금하면 편하게 물어보세요. 시작 전에 아래 내용을 확인해주세요.', '아래 내용 확인 · 전체 동의', '동의하고 이야기하기', '전화나 예약 페이지로 바로 연결할 수도 있어요.'],
       en: ['Hi, I’m Disoongi 😊', 'Ask me about DEAR or how to book. Please review the details below before we chat.', 'Review and agree to all below', 'Agree and chat', 'You can also call or open the appointment page directly.'],
       ja: ['こんにちは、ディスンイです 😊', '診療のご案内や予約方法など、気軽に聞いてください。会話の前に、以下をご確認ください。', '以下を確認してすべてに同意', '同意してお話しする', 'お電話や予約ページも直接ご利用いただけます。'],
-      zh: ['你好，我是迪崇 😊', '想了解诊疗信息或预约方法，都可以问我。开始前请确认以下内容。', '确认以下内容并全部同意', '同意并开始聊天', '也可以直接致电或打开预约页面。']
+      zh: ['您好，我是迪崇 😊', '想了解诊疗信息或预约方法，都可以问我。开始前请确认以下内容。', '确认以下内容并全部同意', '同意并开始聊天', '也可以直接致电或打开预约页面。']
     }[language] || ['Hi, I’m Disoongi 😊', 'Please review the details below before we chat.', 'Review and agree to all below', 'Agree and chat', 'You can also call or open the appointment page directly.'];
     const root = document.createElement('div');
     root.className = 'dear-chat__gate dear-consent'; root.hidden = true;

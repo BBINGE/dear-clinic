@@ -40,7 +40,7 @@ assert.ok(sitemapLastmod(`${baseUrl}/columns.html`) >= newestColumnLastmod, "Col
 
 const canonicalOwners = new Map();
 const sharedCssVersion = "20260922-1";
-const sharedMainVersion = "20260922-3";
+const sharedMainVersion = "20260922-4";
 // 칼럼 발행기가 박는 캐시 버전이 사이트와 어긋나면, 새로 발행한 칼럼만 옛 CSS와 옛 main.js를
 // 부른다. 실제로 그렇게 어긋난 채 방치된 적이 있어 여기서 함께 검사한다.
 {
@@ -64,7 +64,7 @@ for (const pageUrl of sitemapUrls) {
   assert.ok(fs.existsSync(absolutePath), `사이트맵 페이지 파일이 없습니다: ${relativePath}`);
   const html = fs.readFileSync(absolutePath, "utf8");
   if (relativePath === "international-appointment.html") {
-    assert.match(html, /js\/international-appointment\.js\?v=20260922-3/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
+    assert.match(html, /js\/international-appointment\.js\?v=20260922-4/, "외국인 예약 페이지 JS 캐시 버전이 다릅니다.");
   } else {
     // 홈의 팝업 지연 로딩 마크업은 새 JS와 함께 갱신한다. 다른 페이지의 캐시는 유지한다.
     const mainVersion = sharedMainVersion;
@@ -163,7 +163,7 @@ assert.equal((autonomicStress.match(/\bid="contact"/g) || []).length, 1, "자율
 const home = read("index.html");
 const sharedCss = read("css/style.css");
 assert.match(home, new RegExp(`css\\/style\\.css\\?v=${sharedCssVersion}`), "홈의 공통 CSS 캐시 버전이 다릅니다.");
-assert.match(home, /js\/weather-scene\.js\?v=20260922-1/, "날씨 장면 지연 로더의 캐시 버전이 다릅니다.");
+assert.match(home, /js\/weather-scene\.js\?v=20260922-2/, "날씨 장면 지연 로더의 캐시 버전이 다릅니다.");
 const deferredWeatherScenes = [...home.matchAll(/<img\b[^>]*class="[^"]*weather-lens__scene[^"]*"[^>]*data-src="([^"]+)"[^>]*>/g)];
 assert.equal(deferredWeatherScenes.length, 4, "날씨 배경 네 장이 필요할 때만 로드되도록 설정되지 않았습니다.");
 for (const match of deferredWeatherScenes) {
