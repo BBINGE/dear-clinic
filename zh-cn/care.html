@@ -39,13 +39,51 @@
 <main>
 <section aria-labelledby="care-title" class="care-hero">
 <div class="care-hero__inner">
+<div class="care-hero__copy">
 <p class="care-eyebrow js-reveal">CARE · CLINICAL ASSESSMENT</p>
 <h1 class="js-reveal" id="care-title">相同的症状<br/>可能有不同的原因</h1>
 <p class="care-hero__body js-reveal">我们会确认症状何时开始、如何反复以及伴随哪些表现，<br/>据此判断诊疗方向。</p>
-<span aria-hidden="true" class="care-hero__motif"></span>
+<p aria-label="诊疗流程" class="care-hero__sequence js-reveal">
+<span>HISTORY</span><i aria-hidden="true"></i>
+<span>ASSESS</span><i aria-hidden="true"></i>
+<span>PLAN</span>
+</p>
+</div>
+<figure class="care-hero__media js-reveal">
+<img alt="查看病历、准备诊疗的韩医师" height="1024" src="../assets/images/care/care-hero-consultation-v1.webp" width="1536"/>
+<figcaption><span>01</span> 确认病史与经过，整理诊疗所需的内容。</figcaption>
+</figure>
 </div>
 </section>
-<section aria-label="五个诊疗方向" class="care-viewer">
+<section aria-labelledby="care-flow-title" class="care-visual-flow">
+<div class="care-visual-flow__inner">
+<header class="care-visual-flow__header js-reveal">
+<p class="care-eyebrow">CLINICAL MOMENTS</p>
+<h2 id="care-flow-title">确认病史，<br>评估当前状态。</h2>
+<p>综合已确认的症状与所见，<br>确定所需的诊疗及其优先顺序。</p>
+</header>
+<div class="care-visual-flow__gallery">
+<figure class="care-moment care-moment--wide js-reveal">
+<img alt="检查肩部活动与状态的诊察场景" height="1024" loading="lazy" src="../assets/images/care/care-assessment-v1.webp" width="1536"/>
+<figcaption><span>02 · ASSESS</span><strong>确认症状的表现与功能受限情况。</strong></figcaption>
+</figure>
+<figure class="care-moment js-reveal">
+<img alt="整理并准备治疗所需物品的场景" height="1024" loading="lazy" src="../assets/images/care/care-preparation-v1.webp" width="1536"/>
+<figcaption><span>03 · PLAN</span><strong>综合已确认的所见，制定诊疗计划。</strong></figcaption>
+</figure>
+<figure class="care-moment care-moment--space js-reveal">
+<img alt="安静整洁的DEAR韩医院治疗空间" height="1280" loading="lazy" src="../assets/images/treatment-room.jpg" width="1280"/>
+<figcaption><span>04 · SPACE</span><strong>我们也把空间整理得安静有序，让身心得以安顿。</strong></figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section aria-labelledby="care-viewer-title" class="care-viewer">
+<header class="care-viewer__intro js-reveal">
+<p class="care-eyebrow">FIVE POINTS OF CARE</p>
+<h2 id="care-viewer-title">五项Care，<br>是诊疗中关注的五个重点。</h2>
+<p>一个症状也可能伴随多个问题。<br>我们从您当前最需要的部分开始确认。</p>
+</header>
 <div class="care-viewer__inner">
 <div aria-label="选择诊疗方向" aria-orientation="vertical" class="care-tabs js-reveal" role="tablist">
 <button aria-controls="care-panel-focus" aria-selected="true" class="care-tab is-active" data-care-index="0" id="care-tab-focus" role="tab" tabindex="0" type="button"><span>01</span><strong>Focus</strong><small>认知功能与注意力下降</small></button>
