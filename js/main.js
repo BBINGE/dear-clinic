@@ -322,9 +322,9 @@ document.documentElement.classList.add(`dear-locale-${dearPageLocale === "zh-CN"
   const locale = dearPageLocale === "zh-CN" ? "zh" : dearPageLocale;
   if (locale === "ko") return;
   const labels = {
-    en: { phone: "Call", booking: "Naver Book", talk: "Naver Talk", international: "Intl. Book", blog: "Blog", instagram: "Instagram", journal: "Journal", top: "Top" },
-    ja: { phone: "電話", booking: "Naver予約", talk: "Naver相談", international: "海外予約", blog: "ブログ", instagram: "Instagram", journal: "減量誌", top: "トップ" },
-    zh: { phone: "电话", booking: "Naver预约", talk: "Naver咨询", international: "国际预约", blog: "博客", instagram: "Instagram", journal: "减重专刊", top: "顶部" },
+    en: { phone: "Call", booking: "Naver Book", talk: "Naver Talk", international: "Book", blog: "Blog", instagram: "Instagram", journal: "Journal", top: "Top" },
+    ja: { phone: "電話", booking: "Naver予約", talk: "Naver相談", international: "予約", blog: "ブログ", instagram: "Instagram", journal: "ジャーナル", top: "トップ" },
+    zh: { phone: "电话", booking: "Naver预约", talk: "Naver咨询", international: "预约", blog: "博客", instagram: "Instagram", journal: "减重专刊", top: "顶部" },
   }[locale];
   if (!labels) return;
   const selectors = {

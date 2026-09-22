@@ -6,6 +6,15 @@
   const frames = film ? [...film.querySelectorAll("[data-film-frame]")] : [];
   const filmCurrent = film?.querySelector("[data-film-current]");
   const filmToggle = film?.querySelector("[data-film-toggle]");
+  // 페이지 언어에 맞춘 재생 버튼 문구(외국어판에서 한국어로 바뀌지 않게)
+  const filmLabels = {
+    ko: { pause: "일시정지", play: "자동재생" },
+    en: { pause: "Pause", play: "Play" },
+    ja: { pause: "一時停止", play: "自動再生" },
+    zh: { pause: "暂停", play: "自动播放" }
+  };
+  const pageLang = (document.documentElement.lang || "ko").slice(0, 2).toLowerCase();
+  const filmLabel = filmLabels[pageLang] || filmLabels.ko;
   const filmNext = film?.querySelector("[data-film-next]");
   const filmProgress = film?.querySelector("[data-film-progress]");
   let filmIndex = 0;
@@ -46,7 +55,7 @@
   function updateFilmToggle() {
     if (!filmToggle) return;
     filmToggle.setAttribute("aria-pressed", String(filmPlaying));
-    filmToggle.textContent = filmPlaying ? "일시정지" : "자동재생";
+    filmToggle.textContent = filmPlaying ? filmLabel.pause : filmLabel.play;
     filmProgress?.classList.toggle("is-paused", !filmPlaying);
   }
 
@@ -67,23 +76,23 @@
 
   const processData = [
     {
-      image: "assets/images/columns/gongjindan-handmade/musk-closeup.jpg",
-      alt: "공진단 조제에 사용하는 약재 용기를 확인하는 장면",
+      image: "/assets/images/columns/gongjindan-handmade/musk-closeup.jpg",
+      alt: { ko: "공진단 조제에 사용하는 약재 용기를 확인하는 장면", en: "Checking a container of herbs used for compounding Gongjindan", ja: "拱辰丹の調製に使う生薬の容器を確認する場面", zh: "确认用于调制拱辰丹的药材容器" },
       label: "SELECT",
     },
     {
-      image: "assets/images/columns/gongjindan-handmade/herbal-powders.jpg",
-      alt: "공진단 조제를 위해 준비한 여러 약재 분말",
+      image: "/assets/images/columns/gongjindan-handmade/herbal-powders.jpg",
+      alt: { ko: "공진단 조제를 위해 준비한 여러 약재 분말", en: "Herbal powders prepared for compounding Gongjindan", ja: "拱辰丹の調製のために用意した数種類の生薬の粉末", zh: "为调制拱辰丹准备的多种药材粉末" },
       label: "PREPARE",
     },
     {
-      image: "assets/images/columns/gongjindan-handmade/musk-opened.jpg",
-      alt: "약재를 절구에 넣어 준비하는 원내 조제 장면",
+      image: "/assets/images/columns/gongjindan-handmade/musk-opened.jpg",
+      alt: { ko: "약재를 절구에 넣어 준비하는 원내 조제 장면", en: "Placing herbs in a mortar during in-house compounding", ja: "生薬を乳鉢に入れて準備する院内調製の様子", zh: "将药材放入研钵、在院内调制的场景" },
       label: "COMPOUND",
     },
     {
-      image: "assets/images/gongjindan-1.jpg",
-      alt: "완성한 공진단을 개별 용기에 담는 장면",
+      image: "/assets/images/gongjindan-1.jpg",
+      alt: { ko: "완성한 공진단을 개별 용기에 담는 장면", en: "Packing finished Gongjindan into individual containers", ja: "完成した拱辰丹を個別の容器に詰める様子", zh: "将制成的拱辰丹装入独立容器" },
       label: "GUIDE",
     },
   ];
@@ -111,7 +120,7 @@
       processImage.classList.add("is-changing");
       window.setTimeout(() => {
         processImage.src = data.image;
-        processImage.alt = data.alt;
+        processImage.alt = data.alt[pageLang] || data.alt.ko;
         processImage.classList.remove("is-changing");
       }, reduceMotion ? 0 : 180);
     }
