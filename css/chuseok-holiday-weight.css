@@ -655,7 +655,7 @@
 .ch-page { position: relative; overflow-x: clip; }
 .ch-page > * { position: relative; z-index: 1; }
 .ch-header__photo::before { content: none; }
-.ch-header { padding-bottom: 170px; }
+.ch-header { padding-bottom: 72px; } /* 아래 원장 카드와 너무 떨어져 보여 170px에서 줄였다(2026-09-22). */
 .ch-sky { position: absolute; top: -160px; bottom: 0; left: 50%; z-index: -1; width: 100vw; margin-left: -50vw; overflow: hidden; pointer-events: none;
   background: radial-gradient(ellipse at 18% 18%, rgba(247, 207, 85, .18), rgba(247, 207, 85, 0) 42%), linear-gradient(180deg, #16223f 0%, #1f3354 36%, #2a4b66 56%, #6f8f9c 72%, #c9d5d6 86%, #f8f8f6 100%); }
 .ch-header .column-breadcrumb, .ch-header .column-breadcrumb a, .ch-header .column-breadcrumb span { color: rgba(248, 248, 246, .72); }
@@ -694,7 +694,7 @@
   .ch-sky__branch { display: none; }
 }
 @media (max-width: 600px) {
-  .ch-header { padding-bottom: 130px; }
+  .ch-header { padding-bottom: 56px; }
   .ch-sky__moon { top: 245px; left: auto; right: 18px; width: 78px; height: 78px; box-shadow: 0 0 30px 10px rgba(247, 207, 85, .45), 0 0 80px 30px rgba(247, 207, 85, .2); }
 }
 @media (prefers-reduced-motion: reduce) {
