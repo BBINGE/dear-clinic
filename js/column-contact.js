@@ -7,6 +7,8 @@
   if (document.querySelector(".dc-hello")) return;
   const article = document.querySelector("main article, main");
   if (!article) return;
+  // 첫 화면부터 상담 버튼이 있는 상세페이지형 칼럼(청담 공진단)은 data-dc-hello="off"로 원장 카드를 넣지 않는다.
+  const skipHello = Boolean(document.querySelector('[data-dc-hello="off"]'));
 
   const TALK = "https://talk.naver.com/ct/w5zr5u";
   const icon = {
@@ -21,7 +23,7 @@
   hello.innerHTML = `
     <a class="dc-hello__face" href="../director.html" aria-label="김민지 대표원장 소개"><img src="../assets/images/director-face.png?v=20260922-2" alt="" width="64" height="64" loading="lazy"></a>
     <div class="dc-hello__body">
-      <p class="dc-hello__who"><a href="../director.html">김민지 대표원장</a><span>직접 집필</span></p>
+      <p class="dc-hello__who"><a href="../director.html">김민지 대표원장</a><span>한의사 · 직접 집필</span></p>
       <p class="dc-hello__quote">저에게 만큼은 조금 편하게 이야기하고, 조금 덜 걱정하실 수 있었으면 좋겠습니다.</p>
       <p class="dc-hello__ask">이 글에 앞서 상담이 필요하신 분들은 네이버 톡톡이나 전화를 주세요 🙂</p>
     </div>
@@ -41,7 +43,7 @@
   const firstHeading = article.querySelector("h2");
   const noteNearTitle = note && (!firstHeading || (note.compareDocumentPosition(firstHeading) & Node.DOCUMENT_POSITION_FOLLOWING));
   const anchor = (noteNearTitle && note) || titleBlock || article.querySelector("header");
-  if (anchor) anchor.insertAdjacentElement("afterend", hello);
+  if (anchor && !skipHello) anchor.insertAdjacentElement("afterend", hello);
 
   // PC에서는 아래 "목차 + 본문" 줄과 왼쪽·오른쪽 끝을 맞춘다. 넓으면 사진·글·버튼을 한 줄로 펼친다.
   const toc = article.querySelector(".column-toc, [class$='toc'], [class*='toc ']");
@@ -76,9 +78,11 @@
     }
     hello.classList.toggle("dc-hello--wide", hello.getBoundingClientRect().width >= 860);
   };
-  align();
-  if ("ResizeObserver" in window) new ResizeObserver(align).observe(document.documentElement);
-  else window.addEventListener("resize", align);
+  if (hello.isConnected) {
+    align();
+    if ("ResizeObserver" in window) new ResizeObserver(align).observe(document.documentElement);
+    else window.addEventListener("resize", align);
+  }
 
   // ---------- 하단 도크 ----------
   // 도크와 함께 읽을 글은 HTML에 새겨져 있다. 칼럼 상담 영역에 지도가 남아 있으면 도크 지도는 뺀다.

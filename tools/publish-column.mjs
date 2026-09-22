@@ -867,7 +867,7 @@ ${content.slug === "weight-inattentional-blindness" ? `<script>
 })();
 </script>` : ""}
 <script src="../js/main.js?v=20260922-1"></script>
-<script src="../js/column-contact.js?v=20260922-13"></script>
+<script src="../js/column-contact.js?v=20260922-14"></script>
 </body>
 </html>
 `;
