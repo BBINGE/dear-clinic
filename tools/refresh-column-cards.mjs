@@ -6,6 +6,8 @@
 //   be-deer.html     AUTO_COLUMNS:be-deer       다이어트·비만 칼럼(Shape 중 소아성장 제외) 최근 6편
 //   director.html    AUTO_COLUMNS:director      전체 칼럼 최근 4편
 //   EXAM_SEASON:*    (공진단 페이지·칼럼 4편)    가장 최근 "수험생 공진단" 칼럼. 수능이 지나도 늘 둔다.
+//   columns/*        CONTACT_DOCK               오시는 길 도크(주소·전화·예약을 HTML에 새긴다)
+//   columns/*        RELATED_COLUMNS            같은 분류 최신 3편. 디어저널(티스토리) 카드가 있는 칼럼은 비운다
 //
 //   node tools/refresh-column-cards.mjs          파일을 갱신한다
 //   node tools/refresh-column-cards.mjs --check  갱신이 필요하면 실패한다(파일은 바꾸지 않는다)
@@ -130,6 +132,11 @@ export function refreshAll(files, cards) {
   // 칼럼 하단 "함께 읽으면 좋은 글": 같은 분류의 최신 3편(읽고 있는 글 제외).
   for (const [file, html] of Object.entries(out)) {
     if (!file.startsWith("columns/") || !html.includes("<!-- RELATED_COLUMNS:START -->")) continue;
+    // 디어저널(티스토리) 이어 읽기 카드가 있는 칼럼은 그것 하나만 둔다. 읽을거리 상자가 둘이면 화면만 길어진다(박성호, 2026-09-22).
+    if (html.includes('class="column-journal')) {
+      out[file] = fillMarker(html, "RELATED_COLUMNS", "", file);
+      continue;
+    }
     const slug = path.basename(file, ".html");
     const self = cards.find((c) => c.slug === slug);
     const pool = cards.filter((c) => c.slug !== slug && (!self || c.category === self.category));
