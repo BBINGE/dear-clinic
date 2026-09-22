@@ -607,3 +607,8 @@
   .ch-week span { flex-basis: 100%; }
   .ch-sheet { grid-template-columns: 1fr; }
 }
+.ch-header__photo img { aspect-ratio: 1 / 1; object-position: 50% 50%; }
+@media (max-width: 600px) {
+  .ch-header__photo { max-width: 320px; margin: 0 auto; }
+  .ch-header__photo img { aspect-ratio: 1 / 1; }
+}
