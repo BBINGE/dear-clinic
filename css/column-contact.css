@@ -6,7 +6,7 @@
 /* ---------- 상단 원장 카드 ---------- */
 .dc-hello { display: flex; gap: 14px; align-items: flex-start; width: min(100%, 780px); margin: 0 auto 28px; padding: 14px 16px; border: 1px solid #e8e4e2; border-radius: 18px; background: #fff; box-shadow: 0 6px 18px rgba(60, 96, 90, .06); }
 .dc-hello__face { flex: 0 0 46px; width: 46px; height: 46px; border-radius: 50%; overflow: hidden; background: #e8e4e2; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(36, 120, 96, .25); }
-.dc-hello__face img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
+.dc-hello__face img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; }
 .dc-hello__body { min-width: 0; flex: 1; }
 .dc-hello__who { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 4px; font-size: 11px; color: #555550; }
 .dc-hello__who a { color: #247860; font-weight: 800; text-decoration: none; }
