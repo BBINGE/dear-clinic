@@ -242,6 +242,13 @@ body {
   color: #dcece4;
 }
 
+
+/* 공용 style.css의 section { padding: clamp(4rem,10vw,8rem) var(--gap) }이
+   본문 안 section까지 잡아 위아래 128px·좌우 57.6px을 넣는다. 본문 폭과
+   어긋나므로 칼럼 본문 안에서는 지운다. */
+.nif-article > .nif-faq,
+.nif-article > .nif-refs { padding: 0; }
+
 /* FAQ */
 .nif-faq { margin: 72px 0 0; }
 .nif-faq > h2 { margin: 0 0 6px; }
@@ -285,9 +292,10 @@ body {
 /* 참고 */
 .nif-refs {
   margin: 56px 0 0;
-  padding-top: 24px;
   border-top: 1px solid var(--nif-line);
 }
+
+.nif-article > .nif-refs { padding: 24px 0 0; }
 
 .nif-refs > h2 {
   font-size: 0.9rem;
