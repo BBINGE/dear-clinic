@@ -311,7 +311,10 @@
       button.classList.toggle('is-active', active);
       button.setAttribute('aria-pressed', String(active));
     });
-    const next = new URLSearchParams();
+    // 파워링크 유입 파라미터(NaPm)까지 지우면 광고 전환이 집계되지 않는다. 기존 쿼리를 이어받고 내 것만 갈아끼운다.
+    const next = new URLSearchParams(location.search);
+    next.delete('q');
+    next.delete('category');
     if (query) next.set('q', rawQuery);
     if (!query && category !== 'all') next.set('category', category);
     history.replaceState(null, '', `${location.pathname}${next.size ? `?${next}` : ''}`);
