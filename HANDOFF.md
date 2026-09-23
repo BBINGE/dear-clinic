@@ -96,7 +96,7 @@
 - 본문 폰트는 **Pretendard Variable 동적 서브셋**(`variable/pretendardvariable-dynamic-subset.css`)이다. 새 페이지를 만들 때 옛 `static/pretendard.css`를 붙여넣지 않는다.
 - 칼럼 36편 · 사이트맵 98개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
 - 칼럼 36편 전부에 네이버 예약·전화·주소가 있다(2026-09-22 대조, 35·36호는 발행 시 포함). 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
-- **검사의 기준은 `.github/workflows/deploy-pages.yml`이다.** 여기서 돌리는 9종을 변경 뒤 전부 통과시킨다: `test-column-publisher` `test-columns-serp` `test-seo-surfaces` `test-medical-editorial-trust` `test-naver-tracking` `test-dear-ai` `test-dear-ai-public` `test-dear-ai-dialogue` `test-dear-ai-columns` (앞서 `node tools/build-dear-ai-columns.mjs`도 돈다). 이 자리에 적힌 목록이 아니라 **워크플로 파일을 직접 보고 맞춘다.** 2026-09-19에 이 칸이 `6종`으로 낡아 있어 배포가 한 번 멈췄다.
+- **검사의 기준은 `.github/workflows/deploy-pages.yml`이다.** 여기서 돌리는 9종을 변경 뒤 전부 통과시킨다: `test-column-publisher` `test-columns-serp` `test-seo-surfaces` `test-medical-editorial-trust` `test-naver-tracking` `test-dear-ai` `test-dear-ai-public` `test-dear-ai-dialogue` `test-dear-ai-columns` (앞서 `node tools/build-dear-ai-columns.mjs`도 돈다). 이 자리에 적힌 목록이 아니라 **워크플로 파일을 직접 보고 맞춘다.** **로컬에서 검사를 돌릴 때도 워크플로와 같은 순서로 돌린다: `publish-column.mjs --refresh-index` → `refresh-column-cards.mjs` → `build-dear-ai-columns.mjs` → 검사 9종.** 앞 단계가 파일을 다시 쓰기 때문이다. 2026-09-24에 로컬 검사는 통과했는데 배포가 두 번 멈췄다(카드 이미지 주소의 `?v=`를 `--refresh-index`가 `latest-column.json`으로 옮겨 SEO 검사가 파일을 못 찾음). 배포가 멈춘 동안에는 부끄님 push도 반영되지 않는다. 2026-09-19에 이 칸이 `6종`으로 낡아 있어 배포가 한 번 멈췄다.
 
 ---
 
