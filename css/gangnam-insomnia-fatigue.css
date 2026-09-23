@@ -322,3 +322,178 @@ body {
   .nif-hours dl { grid-template-columns: 1fr; gap: 2px 0; }
   .nif-hours dt { margin-top: 12px; }
 }
+
+/* ── 학술 도판 ── */
+.nif-plate {
+  margin: 38px 0;
+  padding: 26px 26px 22px;
+  background: #fff;
+  border: 1px solid var(--nif-line);
+  border-radius: 14px;
+}
+
+.nif-plate figcaption {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--nif-line);
+}
+
+.nif-plate figcaption span {
+  display: block;
+  font-size: 0.64rem;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: var(--teal-soft);
+  margin-bottom: 8px;
+}
+
+.nif-plate figcaption strong {
+  display: block;
+  font-size: 1.04rem;
+  line-height: 1.5;
+  color: var(--nif-deep);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.nif-plate__read {
+  margin: 18px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--nif-line);
+  font-size: 0.94rem;
+  line-height: 1.85;
+  color: var(--nif-green);
+  font-weight: 600;
+}
+
+.nif-plate small {
+  display: block;
+  margin-top: 14px;
+  font-size: 0.74rem;
+  line-height: 1.78;
+  color: #8a938f;
+}
+
+/* forest plot */
+.nif-forest { position: relative; }
+
+.nif-forest__row {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) 152px;
+  grid-template-areas: "label track val" "label track n";
+  align-items: center;
+  gap: 0 14px;
+  padding: 11px 0;
+  border-bottom: 1px dashed #e8eeeb;
+}
+
+.nif-forest__label {
+  grid-area: label;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--nif-green);
+}
+
+.nif-forest__track {
+  grid-area: track;
+  position: relative;
+  height: 20px;
+  background: linear-gradient(to right, transparent, transparent);
+}
+
+.nif-forest__track::before {
+  content: "";
+  position: absolute;
+  left: 90%;
+  top: -11px;
+  bottom: -11px;
+  width: 1px;
+  background: #c3cdc8;
+}
+
+.nif-forest__bar {
+  position: absolute;
+  top: 9px;
+  height: 2px;
+  background: var(--nif-mid);
+  border-radius: 2px;
+}
+
+.nif-forest__bar::before,
+.nif-forest__bar::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 10px;
+  background: var(--nif-mid);
+}
+
+.nif-forest__bar::before { left: 0; }
+.nif-forest__bar::after { right: 0; }
+
+.nif-forest__dot {
+  position: absolute;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: var(--nif-deep);
+}
+
+.nif-forest__val {
+  grid-area: val;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--nif-deep);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.nif-forest__n {
+  grid-area: n;
+  font-size: 0.7rem;
+  color: #97a09b;
+  text-align: right;
+}
+
+.nif-forest__axis {
+  position: relative;
+  height: 22px;
+  margin-left: 86px;
+  margin-right: 166px;
+}
+
+.nif-forest__axis span {
+  position: absolute;
+  top: 4px;
+  transform: translateX(-50%);
+  font-size: 0.66rem;
+  color: #97a09b;
+  font-variant-numeric: tabular-nums;
+}
+
+.nif-forest__axis span.is-zero { color: var(--nif-green); font-weight: 700; }
+
+.nif-forest__guide {
+  display: flex;
+  justify-content: space-between;
+  margin: 2px 166px 0 86px;
+  font-size: 0.68rem;
+  color: #97a09b;
+}
+
+.nif-forest__guide i { font-style: normal; }
+
+@media (max-width: 720px) {
+  .nif-plate { padding: 20px 18px 18px; }
+  .nif-forest__row {
+    grid-template-columns: 1fr auto;
+    grid-template-areas: "label val" "track track" "n n";
+    gap: 4px 10px;
+    padding: 14px 0;
+  }
+  .nif-forest__axis, .nif-forest__guide { margin-left: 0; margin-right: 0; }
+  .nif-forest__n { text-align: left; }
+}
