@@ -94,11 +94,21 @@
 
 - `sharedCssVersion = 20260924-3` · `sharedMainVersion = 20260923-1` · `dear-ai.js = 20260923-1`. **`css/style.css`나 `js/main.js`를 고치면 HTML 111장의 `?v=`와 `tools/publish-column.mjs`, `tools/test-seo-surfaces.mjs`의 고정값까지 함께 올린다.** 2026-09-23에 이 칸이 `20260922-1`로 낡아 있었고(실제는 `-4`) 같은 날 `js/main.js`를 고치고도 `?v=`를 안 올릴 뻔했다. **이 칸을 믿지 말고 `grep -roh "main.js?v=[0-9a-z-]*" --include="*.html" .`로 실제 값을 본다.**
 - 본문 폰트는 **Pretendard Variable 동적 서브셋**(`variable/pretendardvariable-dynamic-subset.css`)이다. 새 페이지를 만들 때 옛 `static/pretendard.css`를 붙여넣지 않는다.
-- 칼럼 35편 · 사이트맵 96개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
-- 칼럼 35편 전부에 네이버 예약·전화·주소가 있다(2026-09-22 대조, 35호는 발행 시 포함). 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
+- 칼럼 36편 · 사이트맵 98개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
+- 칼럼 36편 전부에 네이버 예약·전화·주소가 있다(2026-09-22 대조, 35·36호는 발행 시 포함). 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
 - **검사의 기준은 `.github/workflows/deploy-pages.yml`이다.** 여기서 돌리는 9종을 변경 뒤 전부 통과시킨다: `test-column-publisher` `test-columns-serp` `test-seo-surfaces` `test-medical-editorial-trust` `test-naver-tracking` `test-dear-ai` `test-dear-ai-public` `test-dear-ai-dialogue` `test-dear-ai-columns` (앞서 `node tools/build-dear-ai-columns.mjs`도 돈다). 이 자리에 적힌 목록이 아니라 **워크플로 파일을 직접 보고 맞춘다.** 2026-09-19에 이 칸이 `6종`으로 낡아 있어 배포가 한 번 멈췄다.
 
 ---
+
+## 2026-09-24 칼럼 36호 `chuseok-open-clinic` — 강남역·서초동 추석 문 여는 병원
+
+- **검색어 근거(네이버 키워드 도구, 박성호 조회, 최근 30일):** `추석문여는병원` 약 210 · `추석한의원` 약 30 · `추석연휴한의원` 약 15 · `추석진료한의원` 20 미만 · `명절한의원` 결과 없음. **사람들은 한의원이 아니라 "문 여는 병원"으로 찾는다.** 박성호 결정: `강남역·서초동 + 추석 문 여는 병원`으로 잡고 **이번 추석에 바로 올린다.**
+- 제목 `강남역 서초동 추석 문 여는 병원, 추석 당일에도 진료합니다`. 걸림말은 추석 당일(25일) 진료다. 분류 Relief, 36호.
+- 진료시간(24일 10–15 · 25일 14–20 · 26일 10–15 · 27일 휴진 · 28일 평소)은 외국인 예약 달력 `special`과 같은 값이다. 본문에 쓴 진료 내용은 기존 칼럼에서 확인된 것만이다: 소화불량은 침·한약(기능성 소화불량 칼럼), 허리·목은 침·약침·추나이며 추나는 원장 직접(교통사고 칼럼), 교통사고는 접수번호로 자동차보험.
+- **응급실 안내는 넣지 않았다(박성호: 그 정도로 아픈 사람은 네이버에 "추석.."을 치지 않는다).**
+- 도판: 첫 화면 날짜 띠(24~28일 다섯 칸, 25일 강조)와 한 주 진료시간 막대(10~20시 축). 커버는 **임시로 대기실 사진(`waiting-room-1`)을 1:1로 자른 것**이다. **박성호가 썸네일을 만들어 주기로 했다.** 받으면 `assets/images/columns/chuseok-open-clinic/cover.*`를 바꾸고 칼럼 목록 카드·오늘의 글·og:image·JSON-LD·`latest-column.json`의 경로를 함께 바꾼다.
+- 칼럼 목록의 CollectionPage ItemList가 34편에 멈춰 있어(35호 때 누락) 이번에 카드 36편 기준으로 다시 만들었다.
+- **연휴가 끝나면** 날짜·시간만 바꿔 설에 다시 쓴다. 그때 제목의 "추석"과 slug를 어떻게 할지는 박성호와 정한다.
 
 ## 2026-09-24 홈 지도 옆에 오시는 길 안내를 붙였다
 
