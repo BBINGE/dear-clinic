@@ -93,17 +93,15 @@ body {
 }
 
 /* ── 본문 ── */
-.nif-layout {
-  max-width: 740px;
-  margin: auto;
-  padding: 28px 28px 20px;
-}
+.nif-layout { padding: 0 28px 100px; }
+
+.nif-article > *:first-child { margin-top: 0; }
 
 .nif-article h2 {
   font-size: clamp(19px, 2.5vw, 25px);
   line-height: 1.5;
   color: var(--nif-deep);
-  margin: 62px 0 18px;
+  margin: 56px 0 18px;
   font-weight: 700;
   letter-spacing: -0.015em;
 }
@@ -245,8 +243,8 @@ body {
 }
 
 /* FAQ */
-.nif-faq { margin: 68px 0 0; }
-.nif-faq h2 { margin-bottom: 6px; }
+.nif-faq { margin: 72px 0 0; }
+.nif-faq > h2 { margin: 0 0 6px; }
 
 .nif-faq details {
   border-bottom: 1px solid var(--nif-line);
@@ -286,12 +284,12 @@ body {
 
 /* 참고 */
 .nif-refs {
-  margin: 58px 0 0;
+  margin: 56px 0 0;
   padding-top: 24px;
   border-top: 1px solid var(--nif-line);
 }
 
-.nif-refs h2 {
+.nif-refs > h2 {
   font-size: 0.9rem;
   margin: 0 0 14px;
   color: var(--nif-green);
@@ -311,8 +309,8 @@ body {
 @media (max-width: 860px) {
   .nif-header { padding: 84px 22px 12px; }
   .nif-header__cover { order: -1; }
-  .nif-layout { padding: 20px 22px 16px; }
-  .nif-article h2 { margin-top: 50px; }
+  .nif-layout { padding: 0 22px 56px; }
+  .nif-article h2 { margin-top: 46px; }
   .nif-hours dl { grid-template-columns: 1fr; gap: 2px 0; }
   .nif-hours dt { margin-top: 12px; }
 }
