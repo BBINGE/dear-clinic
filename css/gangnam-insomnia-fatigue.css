@@ -1,107 +1,160 @@
 /* 강남역 한의원 불면증·만성피로 진료 — 전용 스타일
-   저널형 칼럼. 공용 .quickmenu__btn이 지지 않도록 페이지 클래스에 a{color:inherit}을 쓰지 않는다. */
+   폭과 배경은 수면 칼럼(frequent-night-awakening-light-sleep)의 기준을 따른다.
+   전용 CSS를 쓰는 칼럼이므로 `페이지 클래스 a { color: inherit }` 형태를 쓰지 않는다. */
 
-.nif-page {
-  background: var(--bg-base);
-  padding-bottom: 0;
+:root {
+  --nif-deep: #173f37;
+  --nif-green: #244d43;
+  --nif-mid: #3c605a;
+  --nif-soft: #eef3f0;
+  --nif-warm: #faf8f3;
+  --nif-line: #d7dfdb;
 }
 
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #242824;
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", sans-serif;
+}
+
+.nif-page { overflow: clip; }
+
+/* ── 헤더 ── */
 .nif-header {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 120px 24px 0;
+  max-width: 1000px;
+  margin: auto;
+  padding: 92px 28px 20px;
+}
+
+.nif-header__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 26px;
+}
+
+/* 오른쪽 고정 퀵메뉴(폭 106px + 여백 47px)를 커버가 침범하지 않는 폭에서만 2단으로 편다. */
+@media (min-width: 1280px) {
+  .nif-header__inner {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: clamp(28px, 4vw, 56px);
+    align-items: center;
+  }
+}
+
+.nif-header__copy { min-width: 0; }
+
+.nif-eyebrow {
+  margin: 14px 0 0;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--teal-pattern);
 }
 
 .nif-header h1 {
-  font-size: clamp(28px, 5vw, 44px);
+  font-size: clamp(28px, 3.6vw, 42px);
   line-height: 1.34;
-  letter-spacing: -0.02em;
-  color: var(--green-deep);
-  margin: 18px 0 0;
-  font-weight: 600;
-}
-
-.nif-eyebrow {
-  margin: 0;
-  font-size: 12px;
-  letter-spacing: 0.14em;
-  color: var(--teal-soft);
+  letter-spacing: -0.022em;
+  color: var(--nif-deep);
+  margin: 16px 0 0;
+  font-weight: 700;
 }
 
 .nif-lede {
-  margin: 22px 0 0;
-  font-size: 17px;
-  line-height: 1.86;
-  color: var(--text-secondary);
+  margin: 20px 0 0;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #4c5551;
 }
 
+.nif-byline {
+  margin: 20px 0 0;
+  font-size: 0.82rem;
+  color: #8a938f;
+}
+
+.nif-header__cover { margin: 0; }
+
+.nif-header__cover img {
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+  display: block;
+}
+
+.nif-header__cover figcaption {
+  margin: 10px 4px 0;
+  font-size: 0.76rem;
+  line-height: 1.7;
+  color: #98a19d;
+}
+
+/* ── 본문 ── */
 .nif-layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 0 24px 96px;
-}
-
-.nif-article {
-  margin-top: 40px;
+  max-width: 740px;
+  margin: auto;
+  padding: 28px 28px 20px;
 }
 
 .nif-article h2 {
-  font-size: clamp(20px, 3.2vw, 26px);
+  font-size: clamp(19px, 2.5vw, 25px);
   line-height: 1.5;
-  color: var(--green-deep);
-  margin: 64px 0 20px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  color: var(--nif-deep);
+  margin: 62px 0 18px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
 }
 
-.nif-article p {
+.nif-article > p {
   margin: 0 0 20px;
-  font-size: 16.5px;
+  font-size: 1rem;
   line-height: 1.94;
-  color: var(--text-secondary);
+  color: #3f4844;
 }
 
-.nif-article strong {
-  color: var(--teal-dark);
-  font-weight: 600;
-}
+.nif-article strong { color: var(--nif-green); font-weight: 700; }
 
 /* 독자의 말 */
 .nif-voice {
-  margin: 28px 0;
-  padding: 22px 26px;
-  background: #fff;
-  border-left: 3px solid var(--teal-soft);
+  margin: 26px 0;
+  padding: 20px 24px;
+  background: var(--nif-warm);
+  border-left: 3px solid var(--nif-mid);
   border-radius: 2px 10px 10px 2px;
 }
 
 .nif-voice p {
   margin: 0;
-  font-size: 17px;
-  line-height: 1.8;
-  color: var(--teal-dark);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--nif-green);
+  font-weight: 600;
 }
 
 /* 근거 블록 */
 .nif-evidence {
   margin: 34px 0;
-  padding: 26px 28px;
-  background: var(--warm-gray);
-  border-radius: 12px;
+  padding: 26px 26px 24px;
+  background: var(--nif-soft);
+  border-radius: 14px;
 }
 
 .nif-evidence__label {
   margin: 0 0 12px;
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
   color: var(--teal-pattern);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .nif-evidence p {
   margin: 0 0 12px;
-  font-size: 15.5px;
-  line-height: 1.86;
+  font-size: 0.94rem;
+  line-height: 1.88;
+  color: #3f4844;
 }
 
 .nif-evidence p:last-child { margin-bottom: 0; }
@@ -109,111 +162,116 @@
 .nif-figure {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   margin: 18px 0 14px;
 }
 
-.nif-figure div {
-  flex: 1 1 200px;
+.nif-figure > div {
+  flex: 1 1 210px;
   background: #fff;
   border-radius: 10px;
   padding: 16px 18px;
+  border: 1px solid var(--nif-line);
 }
 
 .nif-figure dt {
-  font-size: 11px;
+  font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: var(--teal-soft);
-  margin-bottom: 6px;
+  color: var(--nif-mid);
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .nif-figure dd {
   margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--green-deep);
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--nif-deep);
   letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
 .nif-figure dd span {
   display: block;
-  margin-top: 6px;
-  font-size: 13px;
+  margin-top: 8px;
+  font-size: 0.8rem;
   font-weight: 400;
   line-height: 1.7;
-  color: var(--text-secondary);
+  color: #5c655f;
   letter-spacing: 0;
 }
 
 /* 진료시간 */
 .nif-hours {
-  margin: 36px 0;
+  margin: 38px 0;
   padding: 28px;
-  background: var(--green-deep);
-  border-radius: 14px;
+  background: var(--nif-green);
+  border-radius: 16px;
   color: #fff;
 }
 
 .nif-hours h3 {
-  margin: 0 0 16px;
-  font-size: 17px;
-  font-weight: 600;
+  margin: 0 0 18px;
+  font-size: 1.02rem;
+  font-weight: 700;
   letter-spacing: -0.01em;
+  color: #fff;
 }
 
 .nif-hours dl {
   margin: 0;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 10px 20px;
-  font-size: 15px;
+  gap: 12px 22px;
+  font-size: 0.95rem;
   line-height: 1.7;
 }
 
 .nif-hours dt {
-  color: #cfe3dc;
+  color: #b7d6c9;
   white-space: nowrap;
+  font-weight: 600;
 }
 
-.nif-hours dd {
-  margin: 0;
-  color: #fff;
-}
+.nif-hours dd { margin: 0; color: #fff; }
 
 .nif-hours__note {
-  margin: 18px 0 0;
-  font-size: 13.5px;
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 0.84rem;
   line-height: 1.8;
-  color: #cfe3dc;
+  color: #dcece4;
 }
 
 /* FAQ */
-.nif-faq {
-  margin: 68px 0 0;
-}
-
-.nif-faq h2 { margin-bottom: 8px; }
+.nif-faq { margin: 68px 0 0; }
+.nif-faq h2 { margin-bottom: 6px; }
 
 .nif-faq details {
-  border-bottom: 1px solid var(--warm-gray);
+  border-bottom: 1px solid var(--nif-line);
   padding: 18px 0;
 }
 
 .nif-faq summary {
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--teal-dark);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--nif-green);
   line-height: 1.6;
   list-style: none;
+  padding-right: 24px;
+  position: relative;
 }
 
 .nif-faq summary::-webkit-details-marker { display: none; }
 
 .nif-faq summary::after {
   content: "+";
-  float: right;
-  color: var(--teal-soft);
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--nif-mid);
   font-weight: 400;
 }
 
@@ -221,39 +279,40 @@
 
 .nif-faq details p {
   margin: 14px 0 0;
-  font-size: 15.5px;
+  font-size: 0.94rem;
   line-height: 1.9;
-  color: var(--text-secondary);
+  color: #4c5551;
 }
 
 /* 참고 */
 .nif-refs {
-  margin: 60px 0 0;
-  padding-top: 26px;
-  border-top: 1px solid var(--warm-gray);
+  margin: 58px 0 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--nif-line);
 }
 
 .nif-refs h2 {
-  font-size: 15px;
+  font-size: 0.9rem;
   margin: 0 0 14px;
-  color: var(--teal-dark);
+  color: var(--nif-green);
 }
 
-.nif-refs ol {
-  margin: 0;
-  padding-left: 18px;
-}
+.nif-refs ol { margin: 0; padding-left: 18px; }
 
 .nif-refs li {
-  font-size: 13.5px;
-  line-height: 1.82;
-  color: var(--text-secondary);
+  font-size: 0.8rem;
+  line-height: 1.85;
+  color: #6b736f;
   margin-bottom: 10px;
 }
 
-@media (max-width: 640px) {
-  .nif-header { padding-top: 96px; }
-  .nif-article h2 { margin-top: 52px; }
-  .nif-hours dl { grid-template-columns: 1fr; gap: 4px 0; }
-  .nif-hours dt { margin-top: 10px; }
+.nif-refs a { color: var(--nif-mid); }
+
+@media (max-width: 860px) {
+  .nif-header { padding: 84px 22px 12px; }
+  .nif-header__cover { order: -1; }
+  .nif-layout { padding: 20px 22px 16px; }
+  .nif-article h2 { margin-top: 50px; }
+  .nif-hours dl { grid-template-columns: 1fr; gap: 2px 0; }
+  .nif-hours dt { margin-top: 12px; }
 }
