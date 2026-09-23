@@ -48,7 +48,8 @@ jobs:
       - name: 공개 사이트 구성
         run: |
           mkdir _site
-          rsync -a --exclude='.git' --exclude='.github' --exclude='admin-app' --exclude='_site' --exclude='*.patch' ./ _site/
+          # 작업용 문서·도구·워커 소스는 홈페이지 주소로 열리지 않게 뺀다(2026-09-24). 검사는 위에서 저장소 전체로 이미 돌았다.
+          rsync -a --exclude='.git' --exclude='.github' --exclude='admin-app' --exclude='_site' --exclude='*.patch' --exclude='*.md' --exclude='*.cmd' --exclude='.gitignore' --exclude='.claude' --exclude='/tools' --exclude='/worker' --exclude='/docs' --exclude='/_tmp' ./ _site/
       - name: 마지막 정상 날씨 보존
         continue-on-error: true
         run: |
