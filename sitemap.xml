@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dearhani.com/</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -115,6 +115,7 @@
   <!-- COLUMN_SITEMAP:traffic-accident-korean-medicine:START -->
   <url><loc>https://dearhani.com/columns/traffic-accident-korean-medicine.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- COLUMN_SITEMAP:traffic-accident-korean-medicine:END -->
+  <url><loc>https://dearhani.com/columns/gangnam-insomnia-fatigue.html</loc><lastmod>2026-09-23</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- COLUMN_SITEMAP:student-gongjindan:START -->
   <url><loc>https://dearhani.com/columns/student-gongjindan.html</loc><lastmod>2026-09-21</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- COLUMN_SITEMAP:student-gongjindan:END -->
@@ -187,7 +188,7 @@
   </url>
   <url>
     <loc>https://dearhani.com/columns.html</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-09-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

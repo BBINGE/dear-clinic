@@ -1,0 +1,259 @@
+/* 강남역 한의원 불면증·만성피로 진료 — 전용 스타일
+   저널형 칼럼. 공용 .quickmenu__btn이 지지 않도록 페이지 클래스에 a{color:inherit}을 쓰지 않는다. */
+
+.nif-page {
+  background: var(--bg-base);
+  padding-bottom: 0;
+}
+
+.nif-header {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 120px 24px 0;
+}
+
+.nif-header h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1.34;
+  letter-spacing: -0.02em;
+  color: var(--green-deep);
+  margin: 18px 0 0;
+  font-weight: 600;
+}
+
+.nif-eyebrow {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--teal-soft);
+}
+
+.nif-lede {
+  margin: 22px 0 0;
+  font-size: 17px;
+  line-height: 1.86;
+  color: var(--text-secondary);
+}
+
+.nif-layout {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 96px;
+}
+
+.nif-article {
+  margin-top: 40px;
+}
+
+.nif-article h2 {
+  font-size: clamp(20px, 3.2vw, 26px);
+  line-height: 1.5;
+  color: var(--green-deep);
+  margin: 64px 0 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nif-article p {
+  margin: 0 0 20px;
+  font-size: 16.5px;
+  line-height: 1.94;
+  color: var(--text-secondary);
+}
+
+.nif-article strong {
+  color: var(--teal-dark);
+  font-weight: 600;
+}
+
+/* 독자의 말 */
+.nif-voice {
+  margin: 28px 0;
+  padding: 22px 26px;
+  background: #fff;
+  border-left: 3px solid var(--teal-soft);
+  border-radius: 2px 10px 10px 2px;
+}
+
+.nif-voice p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--teal-dark);
+}
+
+/* 근거 블록 */
+.nif-evidence {
+  margin: 34px 0;
+  padding: 26px 28px;
+  background: var(--warm-gray);
+  border-radius: 12px;
+}
+
+.nif-evidence__label {
+  margin: 0 0 12px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--teal-pattern);
+  font-weight: 600;
+}
+
+.nif-evidence p {
+  margin: 0 0 12px;
+  font-size: 15.5px;
+  line-height: 1.86;
+}
+
+.nif-evidence p:last-child { margin-bottom: 0; }
+
+.nif-figure {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 18px 0 14px;
+}
+
+.nif-figure div {
+  flex: 1 1 200px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.nif-figure dt {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--teal-soft);
+  margin-bottom: 6px;
+}
+
+.nif-figure dd {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green-deep);
+  letter-spacing: -0.01em;
+}
+
+.nif-figure dd span {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  letter-spacing: 0;
+}
+
+/* 진료시간 */
+.nif-hours {
+  margin: 36px 0;
+  padding: 28px;
+  background: var(--green-deep);
+  border-radius: 14px;
+  color: #fff;
+}
+
+.nif-hours h3 {
+  margin: 0 0 16px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.nif-hours dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 20px;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.nif-hours dt {
+  color: #cfe3dc;
+  white-space: nowrap;
+}
+
+.nif-hours dd {
+  margin: 0;
+  color: #fff;
+}
+
+.nif-hours__note {
+  margin: 18px 0 0;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #cfe3dc;
+}
+
+/* FAQ */
+.nif-faq {
+  margin: 68px 0 0;
+}
+
+.nif-faq h2 { margin-bottom: 8px; }
+
+.nif-faq details {
+  border-bottom: 1px solid var(--warm-gray);
+  padding: 18px 0;
+}
+
+.nif-faq summary {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--teal-dark);
+  line-height: 1.6;
+  list-style: none;
+}
+
+.nif-faq summary::-webkit-details-marker { display: none; }
+
+.nif-faq summary::after {
+  content: "+";
+  float: right;
+  color: var(--teal-soft);
+  font-weight: 400;
+}
+
+.nif-faq details[open] summary::after { content: "−"; }
+
+.nif-faq details p {
+  margin: 14px 0 0;
+  font-size: 15.5px;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+/* 참고 */
+.nif-refs {
+  margin: 60px 0 0;
+  padding-top: 26px;
+  border-top: 1px solid var(--warm-gray);
+}
+
+.nif-refs h2 {
+  font-size: 15px;
+  margin: 0 0 14px;
+  color: var(--teal-dark);
+}
+
+.nif-refs ol {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.nif-refs li {
+  font-size: 13.5px;
+  line-height: 1.82;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+@media (max-width: 640px) {
+  .nif-header { padding-top: 96px; }
+  .nif-article h2 { margin-top: 52px; }
+  .nif-hours dl { grid-template-columns: 1fr; gap: 4px 0; }
+  .nif-hours dt { margin-top: 10px; }
+}
