@@ -7935,27 +7935,29 @@ img, video {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -10px;
-  border: 6px solid transparent;
-  border-top: 7px solid var(--green-deep);
+  bottom: -12px;
+  border: 8px solid transparent;
+  border-top: 10px solid var(--green-deep);
   transform: translateX(-50%);
 }
 
 .map__pin-dot {
   position: absolute;
   left: 50%;
-  bottom: -4px;
-  width: 8px;
-  height: 8px;
+  bottom: -8px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--white);
   border-radius: 50%;
   background: var(--green-deep);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   transform: translateX(-50%);
 }
 
 .map__pin-dot::before {
   content: "";
   position: absolute;
-  inset: -8px;
+  inset: -9px;
   border-radius: 50%;
   border: 2px solid var(--green-deep);
   animation: map-pin-pulse 1.8s ease-out infinite;
@@ -7999,10 +8001,11 @@ img, video {
   color: var(--teal-dark);
 }
 
+/* 라벨 칸 너비를 그 언어의 가장 긴 라벨에 맞춘다. 중국어처럼 두 글자 라벨이면 본문 칸이 넓어진다. */
 .map__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.6rem 1.1rem;
   list-style: none;
   margin: 0;
   padding: 0.9rem 0;
@@ -8012,10 +8015,19 @@ img, video {
 
 .map__list li {
   display: grid;
-  grid-template-columns: 5.2rem 1fr;
-  gap: 0.5rem;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
   font-size: 0.88rem;
   color: var(--text-secondary);
+}
+
+.map__list li > span:last-child {
+  text-wrap: pretty;
+}
+
+/* 한글 지점명과 짧은 구절이 중간에서 끊기거나 끝 글자만 다음 줄로 떨어지지 않게 묶는다. */
+.map__nw {
+  white-space: nowrap;
 }
 
 .map__label {
@@ -8043,12 +8055,6 @@ img, video {
   .map--guided .map__frame {
     height: 340px;
     min-height: 0;
-  }
-}
-
-@media (max-width: 640px) {
-  .map__list li {
-    grid-template-columns: 4.6rem 1fr;
   }
 }
 

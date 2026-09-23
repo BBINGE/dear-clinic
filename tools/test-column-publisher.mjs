@@ -112,7 +112,7 @@ try {
 
   assert.match(article, /GENERATED_BY_DEAR_COLUMN_PUBLISHER/);
   assert.match(article, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/publisher-test-column\.html"/);
-  assert.match(article, /style\.css\?v=20260924-2/);
+  assert.match(article, /style\.css\?v=20260924-3/);
   assert.doesNotMatch(article, /href="\.\.\/index\.html/);
   assert.match(article, /class="footer__sns"/);
   assert.match(article, /href="https:\/\/www\.instagram\.com\/dearhani__\/"/);
