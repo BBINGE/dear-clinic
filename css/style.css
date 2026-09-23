@@ -7848,6 +7848,92 @@ img, video {
   filter: grayscale(75%) contrast(1.05) brightness(1.02);
 }
 
+.map--guided {
+  display: grid;
+  grid-template-columns: minmax(340px, 460px) 1fr;
+  background: var(--white);
+  line-height: 1.6;
+}
+
+.map--guided .map__frame {
+  height: 100%;
+  min-height: 420px;
+}
+
+.map__guide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: clamp(2rem, 4vw, 3rem);
+  word-break: keep-all;
+}
+
+.map__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--green-deep);
+}
+
+.map__address {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--teal-dark);
+}
+
+.map__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--warm-gray);
+  border-bottom: 1px solid var(--warm-gray);
+}
+
+.map__list li {
+  display: grid;
+  grid-template-columns: 5.2rem 1fr;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+}
+
+.map__label {
+  font-weight: 600;
+  color: var(--green-deep);
+}
+
+.map__help {
+  font-size: 0.85rem;
+  color: var(--teal-dark);
+}
+
+.map__help a {
+  font-weight: 700;
+  color: var(--green-deep);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .map--guided {
+    grid-template-columns: 1fr;
+  }
+
+  .map--guided .map__frame {
+    height: 320px;
+    min-height: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .map__list li {
+    grid-template-columns: 4.6rem 1fr;
+  }
+}
+
 /* ============ 다크 푸터 ============ */
 .footer {
   background: var(--teal-dark);

@@ -66,7 +66,7 @@
 <!-- Pretendard -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
 
-<link rel="stylesheet" href="css/style.css?v=20260922-1">
+<link rel="stylesheet" href="css/style.css?v=20260924-1">
 
 <!-- JSON-LD: Website, MedicalClinic, Director -->
 <script type="application/ld+json">
@@ -763,7 +763,6 @@
         <h3 class="info__title">진료문의</h3>
         <p class="info__desc">전화로 편하게 문의해 주세요.</p>
         <a class="info__phone" href="tel:02-3486-1777">02-3486-1777</a>
-        <p class="info__notice">주차 2시간 무료</p>
       </div>
 
       <div class="info__col">
@@ -778,7 +777,18 @@
   </section>
 
   <!-- ============ 9. 오시는 길 ============ -->
-  <section class="map">
+  <section class="map map--guided" aria-labelledby="map-title">
+    <div class="map__guide">
+      <h2 class="map__title" id="map-title">오시는 길</h2>
+      <p class="map__address">서울 서초구 사임당로 143<br>3층 309호, 310호</p>
+      <ul class="map__list">
+        <li><span class="map__label">건물</span><span>스타벅스 서이초교사거리점 건물에 있습니다.</span></li>
+        <li><span class="map__label">엘리베이터</span><span>건물 좌우 엘리베이터를 타고 올라오시면 3층에서 맞이하겠습니다.</span></li>
+        <li><span class="map__label">도보</span><span>강남역 5번 출구에서 약 10분</span></li>
+        <li><span class="map__label">주차</span><span>주차 가능, 2시간 무료</span></li>
+      </ul>
+      <p class="map__help">도움이 필요하시면 언제든 전화 주세요. <a href="tel:02-3486-1777">02-3486-1777</a></p>
+    </div>
     <iframe
       class="map__frame"
       src="https://maps.google.com/maps?q=37.4918829,127.0252346&t=&z=16&ie=UTF8&iwloc=&output=embed"

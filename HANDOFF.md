@@ -92,13 +92,21 @@
 
 ### 고정값
 
-- `sharedCssVersion = 20260922-1` · `sharedMainVersion = 20260923-1` · `dear-ai.js = 20260923-1`. **`css/style.css`나 `js/main.js`를 고치면 HTML 111장의 `?v=`와 `tools/publish-column.mjs`, `tools/test-seo-surfaces.mjs`의 고정값까지 함께 올린다.** 2026-09-23에 이 칸이 `20260922-1`로 낡아 있었고(실제는 `-4`) 같은 날 `js/main.js`를 고치고도 `?v=`를 안 올릴 뻔했다. **이 칸을 믿지 말고 `grep -roh "main.js?v=[0-9a-z-]*" --include="*.html" .`로 실제 값을 본다.**
+- `sharedCssVersion = 20260924-1` · `sharedMainVersion = 20260923-1` · `dear-ai.js = 20260923-1`. **`css/style.css`나 `js/main.js`를 고치면 HTML 111장의 `?v=`와 `tools/publish-column.mjs`, `tools/test-seo-surfaces.mjs`의 고정값까지 함께 올린다.** 2026-09-23에 이 칸이 `20260922-1`로 낡아 있었고(실제는 `-4`) 같은 날 `js/main.js`를 고치고도 `?v=`를 안 올릴 뻔했다. **이 칸을 믿지 말고 `grep -roh "main.js?v=[0-9a-z-]*" --include="*.html" .`로 실제 값을 본다.**
 - 본문 폰트는 **Pretendard Variable 동적 서브셋**(`variable/pretendardvariable-dynamic-subset.css`)이다. 새 페이지를 만들 때 옛 `static/pretendard.css`를 붙여넣지 않는다.
 - 칼럼 35편 · 사이트맵 96개. 칼럼을 늘리면 `tools/test-columns-serp.mjs`의 고정값도 올린다.
 - 칼럼 35편 전부에 네이버 예약·전화·주소가 있다(2026-09-22 대조, 35호는 발행 시 포함). 칼럼 하단을 건드리는 작업은 전후로 이 수를 대조한다.
 - **검사의 기준은 `.github/workflows/deploy-pages.yml`이다.** 여기서 돌리는 9종을 변경 뒤 전부 통과시킨다: `test-column-publisher` `test-columns-serp` `test-seo-surfaces` `test-medical-editorial-trust` `test-naver-tracking` `test-dear-ai` `test-dear-ai-public` `test-dear-ai-dialogue` `test-dear-ai-columns` (앞서 `node tools/build-dear-ai-columns.mjs`도 돈다). 이 자리에 적힌 목록이 아니라 **워크플로 파일을 직접 보고 맞춘다.** 2026-09-19에 이 칸이 `6종`으로 낡아 있어 배포가 한 번 멈췄다.
 
 ---
+
+## 2026-09-24 홈 지도 옆에 오시는 길 안내를 붙였다
+
+- 박성호 요청: 네이버 플레이스 오시는 길 문구처럼 친근하게. 문구는 플레이스 원문(스타벅스 서이초교사거리점 건물, 좌우 엘리베이터로 3층, 주차 2시간 무료, 도움이 필요하면 전화)을 거의 그대로 옮기고, 도보는 2026-09-17에 정한 `강남역 5번 출구 약 10분`을 썼다.
+- 자리는 홈 맨 아래 지도 섹션(`.map--guided`)이다. **PC는 왼쪽 안내·오른쪽 지도, 900px 이하는 안내 밑에 지도.** 한국어는 `keep-all`로 단어 중간 줄바꿈을 막았고 일본어·중국어는 기존 `html:lang` 규칙이 그대로 이긴다. 네 언어 × 1280·820·375px에서 가로 넘침이 없는 것을 쟀다.
+- **어제 진료문의 칸 전화번호 밑에 넣은 주차 한 줄은 이 안내로 옮기고 지웠다.**
+- 외국어판 스타벅스 지점명은 한글 그대로 괄호에 두었다(지도 앱에서 그 이름으로 찾으므로). 주소 표기는 각 언어 사이트의 기존 표기와 맞췄다.
+- 공용 CSS 캐시 `20260924-1`.
 
 ## 2026-09-23 주차 2시간 무료를 홈페이지에 넣었다
 
