@@ -21,7 +21,7 @@
   });
   const labels = {
     ko: ['네이버로 예약할게요', '톡톡으로 먼저 물어볼게요', '전화로 상담할게요', '외국인 진료 일정·예약 안내', '인스타그램 DM으로 물어볼게요'],
-    en: ['Naver booking', 'Naver Talk', 'Call DEAR', 'International appointment guide', 'Message us on Instagram'],
+    en: ['NAVER booking', 'NAVER TalkTalk', 'Call DEAR', 'International appointment guide', 'Message us on Instagram'],
     ja: ['NAVER予約', 'NAVERトーク', '電話で相談', '外国人の診療日程・予約案内', 'Instagramで問い合わせ'],
     zh: ['NAVER预约', 'NAVER咨询', '致电诊所', '国际患者就诊与预约指南', 'Instagram私信咨询']
   }[language];
