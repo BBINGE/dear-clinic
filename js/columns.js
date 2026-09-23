@@ -300,9 +300,12 @@
     const query = normalize(rawQuery);
     const discoveryVisible = renderDiscovery(rawQuery);
     let visible = 0;
+    // 맨 위 '오늘의 글'과 같은 글은 아래 목록에서 한 번 더 보여 주지 않는다. 오늘의 글이 숨는 검색 화면에서는 목록에 돌아온다.
+    const featuredHref = featured && !featured.hidden ? featured.getAttribute('href') : '';
     cards.forEach((card) => {
       const matchesCategory = category === 'all' || card.dataset.category === category;
-      card.hidden = discoveryVisible || !matchesCategory;
+      const isFeatured = featuredHref !== '' && card.getAttribute('href') === featuredHref;
+      card.hidden = discoveryVisible || !matchesCategory || isFeatured;
       if (!card.hidden) visible += 1;
     });
     if (!discoveryVisible) empty.hidden = visible !== 0;
