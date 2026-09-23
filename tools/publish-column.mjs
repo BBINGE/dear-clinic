@@ -775,7 +775,7 @@ ${previewMeta}  <title>${escapeHtml(content.title)} | 디어한의원</title>
   <meta name="twitter:image" content="${imageUrl}">
   <meta name="twitter:image:alt" content="${escapeHtml(content.coverAlt)}">
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260924-1">
+  <link rel="stylesheet" href="../css/style.css?v=20260924-2">
   <link rel="stylesheet" href="../css/dear-reads.css?v=20260922-4">
   <link rel="stylesheet" href="../css/column-contact.css?v=20260922-8">
   <script type="application/ld+json">${schema}</script>

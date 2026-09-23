@@ -66,7 +66,7 @@
 <!-- Pretendard -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css">
 
-<link rel="stylesheet" href="css/style.css?v=20260924-1">
+<link rel="stylesheet" href="css/style.css?v=20260924-2">
 
 <!-- JSON-LD: Website, MedicalClinic, Director -->
 <script type="application/ld+json">
@@ -789,13 +789,20 @@
       </ul>
       <p class="map__help">도움이 필요하시면 언제든 전화 주세요. <a href="tel:02-3486-1777">02-3486-1777</a></p>
     </div>
-    <iframe
-      class="map__frame"
-      src="https://maps.google.com/maps?q=37.4918829,127.0252346&t=&z=16&ie=UTF8&iwloc=&output=embed"
-      width="100%" height="400" style="border:0"
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-      title="디어한의원 오시는 길 지도 (서울 서초구 사임당로 143)"></iframe>
+    <div class="map__canvas">
+      <iframe
+        class="map__frame"
+        src="https://maps.google.com/maps?q=37.4918829,127.0252346&t=&z=16&ie=UTF8&iwloc=&output=embed"
+        width="100%" height="400" style="border:0"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="디어한의원 오시는 길 지도 (서울 서초구 사임당로 143)"></iframe>
+      <div class="map__pin" aria-hidden="true">
+        <span class="map__pin-label">여기가 디어한의원이에요!</span>
+        <span class="map__pin-face"><img src="assets/images/disoongi-face-58@2x.png" alt="" width="52" height="52"></span>
+        <span class="map__pin-dot"></span>
+      </div>
+    </div>
   </section>
 
 </main>
@@ -877,6 +884,18 @@
 </nav>
 
 <script src="js/main.js?v=20260923-1"></script>
+<script>
+/* 지도를 누르면 화면이 움직일 수 있어 겹쳐 올린 마커를 숨긴다. iframe 안을 누르면 창의 focus가 iframe으로 넘어간다. */
+(function () {
+  var canvas = document.querySelector(".map__canvas");
+  if (!canvas) return;
+  window.addEventListener("blur", function () {
+    setTimeout(function () {
+      if (document.activeElement && canvas.contains(document.activeElement)) canvas.classList.add("is-moved");
+    }, 0);
+  });
+})();
+</script>
 <script src="js/weather-scene.js?v=20260922-2"></script>
 <script src="js/weather-canvas.js?v=20260805-1"></script>
 <script src="js/click-tracking.js?v=20260728"></script>
