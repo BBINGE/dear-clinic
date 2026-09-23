@@ -110,7 +110,8 @@ for (const pageUrl of sitemapUrls) {
 const latest = JSON.parse(read("assets/data/latest-column.json"));
 assert.ok(latest.alt?.trim(), "최신 칼럼 메뉴 이미지의 대체 텍스트가 비어 있습니다.");
 assert.ok(fs.existsSync(path.join(siteRoot, localPathFromUrl(`${baseUrl}${latest.href}`))), "최신 칼럼 링크 파일이 없습니다.");
-assert.ok(fs.existsSync(path.join(siteRoot, latest.image.replace(/^\//, ""))), "최신 칼럼 이미지 파일이 없습니다.");
+// 썸네일을 바꾸며 ?v= 캐시 번호를 붙여도 배포가 멈추지 않게, 파일 존재는 쿼리를 뗀 경로로 본다.
+assert.ok(fs.existsSync(path.join(siteRoot, latest.image.split("?")[0].replace(/^\//, ""))), "최신 칼럼 이미지 파일이 없습니다.");
 
 const columns = read("columns.html");
 const directCardLinks = [...columns.matchAll(/<a\s+class="column-card[^>]+href="([^"]+)"/g)].map((match) => match[1]);

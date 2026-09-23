@@ -43,6 +43,24 @@ git log -10 --oneline
 - 기존 정적 HTML/CSS/Vanilla JS 구조를 유지한다.
 - 칼럼 CMS와 발행 흐름을 수정할 때는 비공개 저장소 `BBINGE/dear-clinic-content`와의 호환성을 함께 확인한다.
 
+## 배포가 멈추지 않게, 멈춰도 혼자 수습하게
+
+부끄님이 혼자 작업하다 사이트가 멈추거나 이상해지는 것이 이 저장소에서 가장 나쁜 결과다. 어느 세션이든 아래를 지킨다.
+
+- **push 전에 배포와 같은 순서로 검사한다.** 앞 단계가 파일을 다시 쓰므로 순서를 바꾸지 않는다.
+
+  ```powershell
+  node tools/publish-column.mjs --refresh-index
+  node tools/refresh-column-cards.mjs
+  node tools/build-dear-ai-columns.mjs
+  node tools/test-column-publisher.mjs; node tools/test-columns-serp.mjs; node tools/test-seo-surfaces.mjs; node tools/test-medical-editorial-trust.mjs; node tools/test-naver-tracking.mjs; node tools/test-dear-ai.mjs; node tools/test-dear-ai-public.mjs; node tools/test-dear-ai-dialogue.mjs; node tools/test-dear-ai-columns.mjs
+  ```
+
+- **하나라도 실패하면 push하지 않는다.** 원인을 고칠 수 없으면 거기서 멈추고 "박성호님께 넘깁니다"와 함께 실패한 검사 이름과 메시지를 남긴다.
+- **push한 뒤에는 https://github.com/BBINGE/dear-clinic/actions 의 배포 결과를 확인한다.** 실패하면 사이트는 직전 모습 그대로 남고, 고칠 때까지 이후 push도 반영되지 않는다. 실패한 단계의 로그를 읽고 고친다.
+- **사이트가 이상하게 보이면 방금 한 커밋을 `git revert <커밋번호>`로 되돌려 push한다.** `git reset --hard`, `git push --force`는 쓰지 않는다.
+- 썸네일이나 이미지를 바꿀 때는 새 파일 이름으로 올리고 참조를 함께 바꾼다. 같은 이름에 `?v=`를 붙이는 것보다 캐시가 확실히 풀린다.
+
 ## 작업 종료
 
 1. 변경 범위에 맞는 테스트와 PC·태블릿·모바일 검증을 수행한다.
