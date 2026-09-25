@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dearhani.com/</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -124,6 +124,9 @@
   <url><loc>https://dearhani.com/columns/gongjindan-effect.html</loc><lastmod>2026-09-18</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://dearhani.com/columns/chronic-headache-lying-down.html</loc><lastmod>2026-09-16</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <!-- COLUMN_SITEMAP:chronic-headache-lying-down:END -->
+  <!-- COLUMN_SITEMAP:chuseok-traffic-accident:START -->
+  <url><loc>https://dearhani.com/columns/chuseok-traffic-accident.html</loc><lastmod>2026-09-25</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <!-- COLUMN_SITEMAP:chuseok-traffic-accident:END -->
   <!-- COLUMN_SITEMAP_END -->
   <!-- COLUMN_SITEMAP:diet-without-hunger:START -->
   <url><loc>https://dearhani.com/columns/diet-without-hunger.html</loc><lastmod>2026-09-04</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -189,7 +192,7 @@
   </url>
   <url>
     <loc>https://dearhani.com/columns.html</loc>
-    <lastmod>2026-09-24</lastmod>
+    <lastmod>2026-09-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -100,6 +100,12 @@
 
 ---
 
+## 2026-09-25 칼럼 37호 `chuseok-traffic-accident` — 추석 연휴 교통사고 후 통증
+
+- 미리보기에서 확정한 수동 제작 칼럼을 `columns/chuseok-traffic-accident.html`로 발행했다. 제목은 `추석 연휴 교통사고 후 통증 한의원, 추석 당일 진료를 찾은 이유`이며, 추석 당일 늦은 오후 내원한 환자 사례와 사고 후 두통·목·어깨 통증의 초기 진료 기준을 김민지 대표원장 시점으로 설명한다.
+- 대표 이미지는 `assets/images/columns/chuseok-traffic-accident/cover.png`다. 칼럼 목록, 오늘의 글, RSS, sitemap, 최신 칼럼 데이터와 디숭이 칼럼 자료를 함께 갱신했다.
+- 공개 주소: `https://dearhani.com/columns/chuseok-traffic-accident.html`
+
 ## 2026-09-24 보안 점검 — 털리면 안 되는 것 기준
 
 - 박성호 기준: **홈페이지가 잠깐 꼬이는 건 고치면 된다. 기밀·계정·환자 대화가 털리면 안 된다. 그리고 부끄님이 혼자 작업하다 막히면 안 된다(가장 큰 리스크).** 부끄님은 GitHub `dear-hub-hub` 계정으로 Codex에서 직접 push한다.
