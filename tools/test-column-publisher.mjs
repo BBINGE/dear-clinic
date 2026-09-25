@@ -19,7 +19,7 @@ const siteNewest = [...siteColumns.matchAll(/<a class="column-card[^>]*href="([^
   .map((match) => ({ href: match[1], slug: match[2], image: match[3], date: match[4] }))
   .sort((a, b) => b.date.localeCompare(a.date))[0];
 const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const featuredPattern = (number) => new RegExp(`class="column-featured js-reveal" href="${escapeRegExp(siteNewest.href)}" data-journal-number="${number}"`);
+const featuredPattern = (number) => new RegExp(`class="column-featured(?: column-featured--square-art)? js-reveal" href="${escapeRegExp(siteNewest.href)}" data-journal-number="${number}"`);
 
 function publish(content = contentPath, mode = "publish") {
   return spawnSync(process.execPath, [

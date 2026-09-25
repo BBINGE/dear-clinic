@@ -915,9 +915,11 @@ function parseColumnCard(block) {
   }
   const imageSrc = image[1].match(/\bsrc="([^"]+)"/i)?.[1];
   const imageAlt = image[1].match(/\balt="([^"]*)"/i)?.[1] || "";
+  const imageWidth = Number(image[1].match(/\bwidth="(\d+)"/i)?.[1] || 0);
+  const imageHeight = Number(image[1].match(/\bheight="(\d+)"/i)?.[1] || 0);
   const meta = paragraphs[0][1].trim();
   const summary = paragraphs[1][1].trim();
-  return { block, anchorAttributes: anchor[1], body: anchor[2], date: time[1], displayDate: time[2], href, imageSrc, imageAlt, meta, slug, summary, title };
+  return { block, anchorAttributes: anchor[1], body: anchor[2], date: time[1], displayDate: time[2], href, imageSrc, imageAlt, imageWidth, imageHeight, meta, slug, summary, title };
 }
 
 // 발행기를 거치지 않고 손으로 넣은 카드는 주석 들여쓰기가 다를 수 있다.
@@ -1000,11 +1002,15 @@ function refreshColumnsPresentation(source) {
   source = source.replace(regionPattern, `${cardsStart}\n${cards.map((card) => card.block).join("\n")}\n${cardsEnd}`);
 
   const latest = cards[0];
+  const isSquareArtwork = latest.imageWidth > 0
+    && latest.imageHeight > 0
+    && Math.abs(latest.imageWidth / latest.imageHeight - 1) < 0.05;
+  const featuredLayoutClass = isSquareArtwork ? " column-featured--square-art" : "";
   const featuredStart = "      <!-- COLUMN_FEATURED_START -->";
   const featuredEnd = "      <!-- COLUMN_FEATURED_END -->";
   const featuredPattern = new RegExp(`${featuredStart}[\\s\\S]*?${featuredEnd}`);
   const featured = `${featuredStart}
-      <a class="column-featured js-reveal" href="${latest.href}" data-journal-number="${latest.number}">
+      <a class="column-featured${featuredLayoutClass} js-reveal" href="${latest.href}" data-journal-number="${latest.number}">
         <div class="column-featured__image">
           <img src="${latest.imageSrc}" alt="${latest.imageAlt}">
         </div>
