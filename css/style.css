@@ -2749,6 +2749,16 @@ body.has-notice-popup #dear-ai-widget {
   box-shadow: 0 24px 70px rgba(35, 61, 54, 0.07);
 }
 
+@media (min-width: 1101px) {
+  .columns-page-body .column-featured--square-art {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .columns-page-body .column-featured--square-art .column-featured__image {
+    aspect-ratio: 1;
+  }
+}
+
 .columns-page-body .column-featured::before {
   position: absolute;
   z-index: 2;
