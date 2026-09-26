@@ -65,6 +65,8 @@ const SVG = {
 const HOURS = '<ul class="dc-hours" aria-label="진료시간"><li><b>월·화·수·금</b>10:00–20:00</li><li><b>점심</b>13:00–14:00</li><li><b>목</b>14:00–20:00</li><li><b>토</b>10:00–15:00</li><li><b>일</b>정기휴무</li></ul>';
 const EXT = 'target="_blank" rel="noopener"';
 export const CONTACT_DOCK = `<section class="dc-dock" aria-labelledby="dc-dock-title"><div class="dc-dock__head"><strong id="dc-dock-title">디어한의원 오시는 길</strong><p>DEAR KOREAN MEDICINE CLINIC</p></div><div class="dc-dock__grid"><div class="dc-dock__map"><iframe src="https://maps.google.com/maps?q=37.4918829,127.0252346&amp;z=16&amp;output=embed" title="디어한의원 위치 지도 (서울 서초구 사임당로 143)" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="dc-dock__side"><div class="dc-dock__info"><strong>디어한의원</strong><address>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock">02-3486-1777</a> · <a href="https://map.naver.com/p/entry/place/1989406480" ${EXT} data-track-action="naver_map" data-track-location="column_dock">네이버 지도</a></address>${HOURS}</div><ul class="dc-tiles"><li><a class="dc-tile dc-tile--naver" href="https://m.booking.naver.com/booking/13/bizes/729883" ${EXT} data-track-action="naver_booking" data-track-location="column_dock"><i>${SVG.booking}</i>네이버 예약</a></li><li><a class="dc-tile dc-tile--talk" href="https://talk.naver.com/ct/w5zr5u" ${EXT} data-track-action="naver_talk" data-track-location="column_dock"><i>${SVG.talk}</i>톡톡 상담</a></li><li><a class="dc-tile dc-tile--phone" href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock"><i>${SVG.phone}</i>전화</a></li><li><a class="dc-tile dc-tile--insta" href="https://www.instagram.com/dearhani__/" ${EXT} data-track-action="instagram" data-track-location="column_dock"><i>${SVG.instagram}</i>인스타그램</a></li></ul></div></div></section>`;
+const CSAT_SLUG = "csat-gift-student-condition";
+const CONTACT_DOCK_CSAT = `<section class="dc-dock" data-csat-contact aria-labelledby="dc-dock-title"><div class="csat-contact__lead"><small>BEFORE THE EXAM</small><strong id="dc-dock-title">수능 전, 지금 필요한 처방을 대표원장과 상의하세요.</strong><p>코막힘처럼 공부를 끊는 증상인지, 누적된 피로와 컨디션 저하인지 진료에서 먼저 구분합니다.</p><div class="csat-contact__actions"><a href="https://m.booking.naver.com/booking/13/bizes/729883" ${EXT} data-track-action="naver_booking" data-track-location="column_dock">네이버 예약 <span aria-hidden="true">→</span></a><a href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock">전화 상담 <span aria-hidden="true">→</span></a></div></div><div class="csat-contact__details"><small>DEAR KOREAN MEDICINE CLINIC</small><strong>디어한의원</strong><address>서울 서초구 사임당로 143 3층 309호, 310호<br><a href="tel:02-3486-1777" data-track-action="phone" data-track-location="column_dock">02-3486-1777</a></address>${HOURS}<div class="csat-contact__minor"><a href="https://map.naver.com/p/entry/place/1989406480" ${EXT} data-track-action="naver_map" data-track-location="column_dock">네이버 지도</a><a href="https://talk.naver.com/ct/w5zr5u" ${EXT} data-track-action="naver_talk" data-track-location="column_dock">톡톡 상담</a></div></div></section>`;
 
 // 수험생 상자는 관련 자산이라 수능이 지나도 숨기지 않는다(박성호, 2026-09-22). 칼럼이 하나도 없을 때만 비운다.
 export function examSeason(cards) {
@@ -127,7 +129,8 @@ export function refreshAll(files, cards) {
   // 칼럼 하단 오시는 길 도크. 주소·전화·예약이 검색엔진이 읽는 HTML에 남도록 스크립트가 아니라 여기서 새긴다.
   for (const [file, html] of Object.entries(out)) {
     if (!file.startsWith("columns/") || !html.includes("<!-- CONTACT_DOCK:START -->")) continue;
-    out[file] = fillMarker(html, "CONTACT_DOCK", CONTACT_DOCK, file);
+    const slug = path.basename(file, ".html");
+    out[file] = fillMarker(html, "CONTACT_DOCK", slug === CSAT_SLUG ? CONTACT_DOCK_CSAT : CONTACT_DOCK, file);
   }
   // 칼럼 하단 "함께 읽으면 좋은 글": 같은 분류의 최신 3편(읽고 있는 글 제외).
   for (const [file, html] of Object.entries(out)) {
@@ -140,8 +143,14 @@ export function refreshAll(files, cards) {
     const slug = path.basename(file, ".html");
     const self = cards.find((c) => c.slug === slug);
     const pool = cards.filter((c) => c.slug !== slug && (!self || c.category === self.category));
-    const picks = (pool.length >= 3 ? pool : cards.filter((c) => c.slug !== slug)).slice(0, 3);
-    const content = `<section class="dear-reads dear-reads--in-column dear-reads--related" aria-labelledby="related-columns-title"><div class="dear-reads__head"><div><p>CONTINUE READING</p><h2 id="related-columns-title">함께 읽으면 좋은 글</h2></div></div><ul class="dear-reads__grid">${picks.map((c, i) => li(c, { badge: String(i + 1).padStart(2, "0"), inColumn: true })).join("")}</ul><div class="dear-reads__foot"><a class="dear-reads__all" href="../columns.html">칼럼 전체 보기 <span aria-hidden="true">→</span></a></div></section>`;
+    const csatRelatedSlugs = ["student-herbal-medicine", "gongjindan", "cheongdam-gongjindan"];
+    const focusedPicks = csatRelatedSlugs.map((candidate) => cards.find((c) => c.slug === candidate)).filter(Boolean);
+    const picks = slug === CSAT_SLUG
+      ? focusedPicks
+      : (pool.length >= 3 ? pool : cards.filter((c) => c.slug !== slug)).slice(0, 3);
+    const csatClass = slug === CSAT_SLUG ? " dear-reads--csat" : "";
+    const heading = slug === CSAT_SLUG ? "수능 전 함께 읽으면 좋은 글" : "함께 읽으면 좋은 글";
+    const content = `<section class="dear-reads dear-reads--in-column dear-reads--related${csatClass}" aria-labelledby="related-columns-title"><div class="dear-reads__head"><div><p>CONTINUE READING</p><h2 id="related-columns-title">${heading}</h2></div></div><ul class="dear-reads__grid">${picks.map((c, i) => li(c, { badge: String(i + 1).padStart(2, "0"), inColumn: true })).join("")}</ul><div class="dear-reads__foot"><a class="dear-reads__all" href="../columns.html">칼럼 전체 보기 <span aria-hidden="true">→</span></a></div></section>`;
     out[file] = fillMarker(html, "RELATED_COLUMNS", content, file);
   }
   return { out, season };

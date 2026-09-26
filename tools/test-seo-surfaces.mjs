@@ -11,6 +11,10 @@ function read(relativePath) {
   return fs.readFileSync(path.join(siteRoot, relativePath), "utf8");
 }
 
+function isRedirectAlias(html) {
+  return /<meta\s+http-equiv="refresh"/i.test(html) && /<link\s+rel="canonical"/i.test(html);
+}
+
 function localPathFromUrl(value) {
   const url = new URL(value);
   assert.equal(url.origin, baseUrl, `사이트맵에 외부 URL이 있습니다: ${value}`);
@@ -112,6 +116,11 @@ assert.ok(latest.alt?.trim(), "최신 칼럼 메뉴 이미지의 대체 텍스�
 assert.ok(fs.existsSync(path.join(siteRoot, localPathFromUrl(`${baseUrl}${latest.href}`))), "최신 칼럼 링크 파일이 없습니다.");
 // 썸네일을 바꾸며 ?v= 캐시 번호를 붙여도 배포가 멈추지 않게, 파일 존재는 쿼리를 뗀 경로로 본다.
 assert.ok(fs.existsSync(path.join(siteRoot, latest.image.split("?")[0].replace(/^\//, ""))), "최신 칼럼 이미지 파일이 없습니다.");
+
+const oldCsatColumn = read("columns/csat-gift-clinical-cases.html");
+assert.match(oldCsatColumn, /name="robots" content="noindex,follow"/, "이전 수능 칼럼 주소가 검색 색인에서 제외되지 않았습니다.");
+assert.match(oldCsatColumn, /rel="canonical" href="https:\/\/dearhani\.com\/columns\/csat-gift-student-condition\.html"/, "이전 수능 칼럼 주소가 새 대표 주소를 가리키지 않습니다.");
+assert.match(oldCsatColumn, /http-equiv="refresh" content="0; url=\/columns\/csat-gift-student-condition\.html"/, "이전 수능 칼럼 주소가 새 주소로 연결되지 않습니다.");
 
 const columns = read("columns.html");
 const directCardLinks = [...columns.matchAll(/<a\s+class="column-card[^>]+href="([^"]+)"/g)].map((match) => match[1]);
@@ -312,6 +321,7 @@ for (const absolutePath of koreanHtml) {
 
   for (const pageRelativePath of fontPages) {
     const html = fs.readFileSync(path.join(siteRoot, pageRelativePath), "utf8");
+    if (isRedirectAlias(html)) continue;
     const pageDir = path.dirname(path.join(siteRoot, pageRelativePath));
 
     const viaCdn = html.includes("pretendardvariable-dynamic-subset");
@@ -361,6 +371,7 @@ for (const absolutePath of koreanHtml) {
 // 모든 칼럼에 원장 상담 카드·오시는 길 도크(js/column-contact.js)와 "함께 읽으면 좋은 글" 자리가 있어야 한다.
 for (const name of fs.readdirSync(path.join(siteRoot, "columns")).filter((file) => file.endsWith(".html"))) {
   const html = read(`columns/${name}`);
+  if (isRedirectAlias(html)) continue;
   assert.match(html, /js\/column-contact\.js\?v=/, `칼럼에 원장 상담 카드 스크립트가 없습니다: ${name}`);
   assert.match(html, /css\/column-contact\.css\?v=/, `칼럼에 원장 상담 카드 스타일이 없습니다: ${name}`);
   assert.ok(html.includes("<!-- RELATED_COLUMNS:START -->"), `칼럼에 함께 읽을 글 자리가 없습니다: ${name}`);

@@ -100,9 +100,9 @@
 
 ---
 
-## 2026-09-26 칼럼 38호 `csat-gift-clinical-cases` — 수능 전 선물과 수험생 컨디션 관리
+## 2026-09-26 칼럼 38호 `csat-gift-student-condition` — 수능 전 선물과 수험생 컨디션 관리
 
-- `columns/csat-gift-clinical-cases.html`을 공개 발행했다. 환절기 코막힘·콧물·재채기로 집중이 어려웠던 수험생과, 외삼촌에게 선물받은 디어한의원 공진단을 복용한 뒤 수능 전 재처방을 위해 내원한 N수생의 익명 진료 사례를 담았다.
+- `columns/csat-gift-student-condition.html`을 공개 발행했다. 환절기 코막힘·콧물·재채기로 집중이 어려웠던 수험생과, 외삼촌에게 선물받은 디어한의원 공진단을 복용한 뒤 수능 전 재처방을 위해 내원한 N수생의 익명 진료 사례를 담았다. 기존 `csat-gift-clinical-cases.html`은 새 주소로 연결한다.
 - 대표 이미지는 코가 막힌 채 밤늦게 공부하는 디숭이 가로 일러스트이며, Columns 오늘의 글과 목록에는 같은 그림의 정사각형 썸네일을 사용한다. D-day 블록은 브랜드 그린 그라데이션, 공식 투명 로고 워터마크, 2026년 11월 19일 수능까지 남은 날짜를 자동 계산하는 달력으로 구성했다.
 - 공진단 실제 사진 두 장은 같은 정사각형 비율로 맞췄다. 직원·제약회사·원외탕전원이 아니라 김민지 대표원장이 진료, 처방, 약재 확인, 분쇄·배합·환 조제까지 원내에서 직접 맡는다는 차이를 설명한다.
 - `FOCUS · 집중`, `DEAR JOURNAL · 38`로 Columns 오늘의 글·최신 카드·CollectionPage ItemList·`assets/data/latest-column.json`·RSS·sitemap에 연결했다. 칼럼은 `MedicalWebPage`·`Article`·`BreadcrumbList`·`FAQPage`, 김민지 대표원장 저자·검수와 참고자료를 포함한다.
